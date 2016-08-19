@@ -16,7 +16,7 @@ import java.util.List;
  * Created by su on 2016/4/6.
  * Feature: RecyclerView适配器基类
  */
-public abstract class BaseDisplayAdapter<V extends RecyclerView.ViewHolder, E> extends RecyclerView.Adapter<V> {
+public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> extends RecyclerView.Adapter<VH> {
     protected Activity context;
 
     private RecyclerView recyclerView;
@@ -27,9 +27,9 @@ public abstract class BaseDisplayAdapter<V extends RecyclerView.ViewHolder, E> e
 
     private ItemClickCallback<E> itemClickCallback;
 
-    protected abstract V createVH(ViewGroup parent, int viewType);
+    protected abstract VH createVH(ViewGroup parent, int viewType);
 
-    protected abstract void bindVH(V viewHolder, int position);
+    protected abstract void bindVH(VH viewHolder, E entity, int position);
 
     public BaseDisplayAdapter(Activity context) {
         this.context = context;
@@ -42,13 +42,13 @@ public abstract class BaseDisplayAdapter<V extends RecyclerView.ViewHolder, E> e
     }
 
     @Override
-    public V onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
         return createVH(parent, viewType);
     }
 
     @Override
-    public void onBindViewHolder(V holder, int position) {
-        bindVH(holder, holder.getAdapterPosition());
+    public void onBindViewHolder(VH holder, int position) {
+        bindVH(holder, dataList.get(holder.getAdapterPosition()), holder.getAdapterPosition());
     }
 
     @Override
@@ -109,6 +109,5 @@ public abstract class BaseDisplayAdapter<V extends RecyclerView.ViewHolder, E> e
             selectedPosition = -1;
         }
     }
-
 
 }

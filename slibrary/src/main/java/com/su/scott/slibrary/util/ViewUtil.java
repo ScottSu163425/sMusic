@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * Created by Administrator on 2016/8/12.
@@ -53,7 +54,7 @@ public class ViewUtil {
         view.setVisibility(View.GONE);
     }
 
-    public static void setText(@NonNull EditText editText, String text, String defaultText) {
+    public static void setText(@NonNull TextView editText, String text, String defaultText) {
         editText.setText(TextUtils.isEmpty(text) ? defaultText : text);
     }
 

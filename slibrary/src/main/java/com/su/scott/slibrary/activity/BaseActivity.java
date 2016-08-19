@@ -60,22 +60,22 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
 
     @Override
     public void showSnackbarShort(String msg) {
-        Snack.showShort(getWindow().getDecorView(), msg);
+        Snack.showShort(getWindow().getDecorView().findViewById(android.R.id.content), msg);
     }
 
     @Override
     public void showSnackbarLong(String msg) {
-        Snack.showLong(getWindow().getDecorView(), msg);
+        Snack.showLong(getWindow().getDecorView().findViewById(android.R.id.content), msg);
     }
 
     @Override
     public void showSnackbarShort(String msg, String action, View.OnClickListener actionListener) {
-        Snack.showShort(getWindow().getDecorView(), msg, action, actionListener);
+        Snack.showShort(getWindow().getDecorView().findViewById(android.R.id.content), msg, action, actionListener);
     }
 
     @Override
     public void showSnackbarLong(String msg, String action, View.OnClickListener actionListener) {
-        Snack.showLong(getWindow().getDecorView(), msg, action, actionListener);
+        Snack.showLong(getWindow().getDecorView().findViewById(android.R.id.content), msg, action, actionListener);
     }
 
     @Override

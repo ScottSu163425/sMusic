@@ -29,8 +29,8 @@ public abstract class BaseDisplayFragment<E> extends BaseFragment implements Bas
     private FrameLayout mEmptyLayout;
     private FrameLayout mErrorLayout;
     private boolean mIsFirstTimeCreateView = true;
-    private boolean mSwipeRefreshEnable = true;
-    private boolean mLoadMoreEnable = true;
+    private boolean mSwipeRefreshEnable = false;
+    private boolean mLoadMoreEnable = false;
 
     protected abstract void onFirstTimeCreateView();
 
