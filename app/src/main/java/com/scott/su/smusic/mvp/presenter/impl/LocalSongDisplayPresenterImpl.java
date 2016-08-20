@@ -59,7 +59,7 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
 
     @Override
     public void onViewWillDestroy() {
-        mLocalSongModel.clearCache();
+//        mLocalSongModel.clearCache();
     }
 
     private void getAndDisplayLocalSongs() {
