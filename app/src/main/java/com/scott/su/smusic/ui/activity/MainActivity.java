@@ -27,10 +27,10 @@ import java.util.List;
  * 2016-8-18
  */
 public class MainActivity extends BaseActivity {
-    private Toolbar mToolbar;   //标题栏
-    private DrawerLayout mDrawerLayout;     //抽屉式布局
-    private ViewPager mViewPager;   //内容展示ViewPager
-    private TabLayout mTabLayout;   //ViewPager对应选项卡布局
+    private Toolbar mToolbar;   //Title bar.
+    private DrawerLayout mDrawerLayout;     //Content drawer.
+    private ViewPager mViewPager;   //Content ViewPager.
+    private TabLayout mTabLayout;   //Tabs for ViewPager.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
