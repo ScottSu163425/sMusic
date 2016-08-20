@@ -50,28 +50,28 @@ public class BaseFragment extends Fragment implements BaseView{
     }
 
     @Override
-    public void showSnackbarShort(String msg) {
-        Snack.showShort(getActivity().getWindow().getDecorView(), msg);
+    public void showSnackbarShort(View parent,String msg) {
+        Snack.showShort(parent, msg);
     }
 
     @Override
-    public void showSnackbarLong(String msg) {
-        Snack.showLong(getActivity().getWindow().getDecorView(), msg);
+    public void showSnackbarLong(View parent,String msg) {
+        Snack.showLong(parent, msg);
     }
 
     @Override
-    public void showSnackbarShort(String msg, String action, View.OnClickListener actionListener) {
-        Snack.showShort(getActivity().getWindow().getDecorView(), msg, action, actionListener);
+    public void showSnackbarShort(View parent,String msg, String action, View.OnClickListener actionListener) {
+        Snack.showShort(parent, msg, action, actionListener);
     }
 
     @Override
-    public void showSnackbarLong(String msg, String action, View.OnClickListener actionListener) {
-        Snack.showLong(getActivity().getWindow().getDecorView(), msg, action, actionListener);
+    public void showSnackbarLong(View parent,String msg, String action, View.OnClickListener actionListener) {
+        Snack.showLong(parent, msg, action, actionListener);
     }
 
     @Override
-    public void showNetworkError() {
-        showSnackbarShort(mNetworkErrorTip);
+    public void showNetworkError(View parent) {
+        showSnackbarShort(parent,mNetworkErrorTip);
     }
 
     protected void setNetworkErrorTip(String mNetworkErrorTip) {

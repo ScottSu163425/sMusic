@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:clickable="true"
     android:clipChildren="false"
     android:clipToPadding="false"
@@ -9,16 +10,29 @@
     android:foreground="?attr/selectableItemBackground"
     android:orientation="horizontal">
 
+    <View
+        android:id="@+id/view_indicator_view_holder_local_song"
+        android:layout_width="@dimen/width_indicator_selection_local_song"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/margin_xs"
+        android:layout_marginTop="@dimen/margin_xs"
+        android:background="@drawable/shape_indicator_selected_view_holder_local_song"
+        android:visibility="gone" />
+
     <FrameLayout
+        android:id="@+id/fl_cover_area_view_holder_local_song"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_number_view_holder_local_song"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/margin_s"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_xs"
+            android:padding="@dimen/margin_xs"
             android:text="1"
             android:textColor="@color/text_dark_2"
             android:textSize="@dimen/text_size_subhead" />
@@ -27,7 +41,9 @@
             android:id="@+id/iv_cover_view_holder_local_song"
             android:layout_width="@dimen/size_image_view_holder_local_song"
             android:layout_height="@dimen/size_image_view_holder_local_song"
-            android:layout_margin="@dimen/margin_xs"
+            android:layout_marginLeft="@dimen/margin_xs"
+            android:layout_marginRight="@dimen/margin_xs"
+            android:layout_marginTop="@dimen/margin_xs"
             android:visibility="gone" />
     </FrameLayout>
 
@@ -36,18 +52,22 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/margin_s">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_more_view_holder_local_song"
+
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_title_view_holder_local_song"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:maxLines="1"
                 android:text="桜色舞"
                 android:textColor="@color/text_dark_3"
@@ -71,22 +91,35 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
                     android:layout_marginLeft="@dimen/margin_xxs"
                     android:layout_marginRight="@dimen/margin_xxs"
+                    android:maxLines="1"
                     android:text="@string/divider_artist_album_view_holder_local_song"
                     android:textColor="@color/text_dark_2"
                     android:textSize="@dimen/text_size_caption" />
+
                 <TextView
                     android:id="@+id/tv_ablum_view_holder_local_song"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:maxLines="1"
                     android:text="初恋"
                     android:textColor="@color/text_dark_2"
                     android:textSize="@dimen/text_size_caption" />
             </LinearLayout>
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_more_view_holder_local_song"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="@dimen/margin_s"
+            android:src="@drawable/ic_more_vert_grey600_24dp" />
 
         <View
             android:layout_width="match_parent"

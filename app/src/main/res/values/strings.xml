@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">SMusic</string>
+
+    <string name="menu_search">搜索</string>
+
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
+
     <string name="divider_artist_album_view_holder_local_song">-</string>
 
 </resources>

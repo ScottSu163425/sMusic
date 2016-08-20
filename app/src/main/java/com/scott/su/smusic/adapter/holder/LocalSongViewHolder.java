@@ -2,6 +2,7 @@ package com.scott.su.smusic.adapter.holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,36 +12,53 @@ import com.scott.su.smusic.R;
  * Created by asus on 2016/8/19.
  */
 public class LocalSongViewHolder extends RecyclerView.ViewHolder {
-    private TextView mNumberTextView, mTitleTextView, mArtistTextView, mAlbumTextView;
-    private ImageView mCoverImageView;
+    private FrameLayout coverAreaLayout;
+    private View selectionIndicatorView;
+    private TextView numberTextView, titleTextView, artistTextView, albumTextView;
+    private ImageView coverImageView, moreImageView;
 
     public LocalSongViewHolder(View itemView) {
         super(itemView);
 
-        mNumberTextView = (TextView) itemView.findViewById(R.id.tv_number_view_holder_local_song);
-        mTitleTextView = (TextView) itemView.findViewById(R.id.tv_title_view_holder_local_song);
-        mArtistTextView = (TextView) itemView.findViewById(R.id.tv_artist_view_holder_local_song);
-        mAlbumTextView = (TextView) itemView.findViewById(R.id.tv_ablum_view_holder_local_song);
-        mCoverImageView = (ImageView) itemView.findViewById(R.id.iv_cover_view_holder_local_song);
+        coverAreaLayout = (FrameLayout) itemView.findViewById(R.id.fl_cover_area_view_holder_local_song);
+        selectionIndicatorView = itemView.findViewById(R.id.view_indicator_view_holder_local_song);
+        numberTextView = (TextView) itemView.findViewById(R.id.tv_number_view_holder_local_song);
+        titleTextView = (TextView) itemView.findViewById(R.id.tv_title_view_holder_local_song);
+        artistTextView = (TextView) itemView.findViewById(R.id.tv_artist_view_holder_local_song);
+        albumTextView = (TextView) itemView.findViewById(R.id.tv_ablum_view_holder_local_song);
+        coverImageView = (ImageView) itemView.findViewById(R.id.iv_cover_view_holder_local_song);
+        moreImageView = (ImageView) itemView.findViewById(R.id.iv_more_view_holder_local_song);
     }
 
     public TextView getNumberTextView() {
-        return mNumberTextView;
+        return numberTextView;
     }
 
     public TextView getArtistTextView() {
-        return mArtistTextView;
+        return artistTextView;
     }
 
     public TextView getTitleTextView() {
-        return mTitleTextView;
+        return titleTextView;
     }
 
     public TextView getAlbumTextView() {
-        return mAlbumTextView;
+        return albumTextView;
     }
 
     public ImageView getCoverImageView() {
-        return mCoverImageView;
+        return coverImageView;
+    }
+
+    public ImageView getMoreImageView() {
+        return moreImageView;
+    }
+
+    public FrameLayout getCoverAreaLayout() {
+        return coverAreaLayout;
+    }
+
+    public View getSelectionIndicatorView() {
+        return selectionIndicatorView;
     }
 }

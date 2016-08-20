@@ -3,4 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="size_image_view_holder_local_song">52dp</dimen>
+    <dimen name="size_image_view_holder_local_album">150dp</dimen>
+    <dimen name="width_indicator_selection_local_song">5dp</dimen>
 </resources>

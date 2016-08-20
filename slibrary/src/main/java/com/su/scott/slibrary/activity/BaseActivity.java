@@ -59,28 +59,28 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     }
 
     @Override
-    public void showSnackbarShort(String msg) {
-        Snack.showShort(getWindow().getDecorView().findViewById(android.R.id.content), msg);
+    public void showSnackbarShort(View parent,String msg) {
+        Snack.showShort(parent, msg);
     }
 
     @Override
-    public void showSnackbarLong(String msg) {
-        Snack.showLong(getWindow().getDecorView().findViewById(android.R.id.content), msg);
+    public void showSnackbarLong(View parent,String msg) {
+        Snack.showLong(parent, msg);
     }
 
     @Override
-    public void showSnackbarShort(String msg, String action, View.OnClickListener actionListener) {
-        Snack.showShort(getWindow().getDecorView().findViewById(android.R.id.content), msg, action, actionListener);
+    public void showSnackbarShort(View parent,String msg, String action, View.OnClickListener actionListener) {
+        Snack.showShort(parent, msg, action, actionListener);
     }
 
     @Override
-    public void showSnackbarLong(String msg, String action, View.OnClickListener actionListener) {
-        Snack.showLong(getWindow().getDecorView().findViewById(android.R.id.content), msg, action, actionListener);
+    public void showSnackbarLong(View parent,String msg, String action, View.OnClickListener actionListener) {
+        Snack.showLong(parent, msg, action, actionListener);
     }
 
     @Override
-    public void showNetworkError() {
-        showSnackbarShort(mNetworkErrorTip);
+    public void showNetworkError(View parent) {
+        showSnackbarShort(parent,mNetworkErrorTip);
     }
 
     protected void setNetworkErrorTip(String mNetworkErrorTip) {

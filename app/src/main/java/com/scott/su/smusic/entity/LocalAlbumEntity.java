@@ -3,6 +3,8 @@ package com.scott.su.smusic.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by asus on 2016/8/19.
  */
@@ -10,7 +12,7 @@ public class LocalAlbumEntity implements Parcelable {
     private long albumId;
     private String albumTitle;
     private String artist;
-    private int totalSongCount;
+    private List<LocalSongEntity> albumSongs;
 
 
     public LocalAlbumEntity() {
@@ -24,12 +26,12 @@ public class LocalAlbumEntity implements Parcelable {
         this.albumId = albumId;
     }
 
-    public int getTotalSongCount() {
-        return totalSongCount;
+    public List<LocalSongEntity> getAlbumSongs() {
+        return albumSongs;
     }
 
-    public void setTotalSongCount(int totalSongCount) {
-        this.totalSongCount = totalSongCount;
+    public void setAlbumSongs(List<LocalSongEntity> albumSongs) {
+        this.albumSongs = albumSongs;
     }
 
     public String getArtist() {
@@ -59,14 +61,14 @@ public class LocalAlbumEntity implements Parcelable {
         dest.writeLong(this.albumId);
         dest.writeString(this.albumTitle);
         dest.writeString(this.artist);
-        dest.writeInt(this.totalSongCount);
+        dest.writeTypedList(this.albumSongs);
     }
 
     protected LocalAlbumEntity(Parcel in) {
         this.albumId = in.readLong();
         this.albumTitle = in.readString();
         this.artist = in.readString();
-        this.totalSongCount = in.readInt();
+        this.albumSongs = in.createTypedArrayList(LocalSongEntity.CREATOR);
     }
 
     public static final Parcelable.Creator<LocalAlbumEntity> CREATOR = new Parcelable.Creator<LocalAlbumEntity>() {
@@ -80,4 +82,15 @@ public class LocalAlbumEntity implements Parcelable {
             return new LocalAlbumEntity[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "LocalAlbumEntity{" +
+                "albumId=" + albumId +
+                ", albumTitle='" + albumTitle + '\'' +
+                ", artist='" + artist + '\'' +
+                ", albumSongs=" + albumSongs +
+                '}';
+    }
+
 }

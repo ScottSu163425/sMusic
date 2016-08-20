@@ -20,14 +20,14 @@ public interface BaseView {
 
     void showToastLong(String msg);
 
-    void showSnackbarShort(String msg);
+    void showSnackbarShort(View parent,String msg);
 
-    void showSnackbarLong(String msg);
+    void showSnackbarLong(View parent,String msg);
 
-    void showSnackbarShort(String msg, String action, View.OnClickListener actionListener);
+    void showSnackbarShort(View parent,String msg, String action, View.OnClickListener actionListener);
 
-    void showSnackbarLong(String msg, String action, View.OnClickListener actionListener);
+    void showSnackbarLong(View parent,String msg, String action, View.OnClickListener actionListener);
 
-    void showNetworkError();
+    void showNetworkError(View parent);
 
 }

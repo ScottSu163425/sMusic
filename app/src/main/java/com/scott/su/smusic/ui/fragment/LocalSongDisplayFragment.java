@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
 import com.scott.su.smusic.entity.LocalSongEntity;
@@ -26,7 +25,7 @@ import java.util.List;
 public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity> implements LocalSongDisplayView {
     private LocalSongDisplayPresenter mLocalSongDisplayPresenter;
     private LocalSongDisplayAdapter mLocalSongDisplayAdapter;
-    private LocalSongDisplayAdapter.DISPLAY_TYPE mDisplayType = LocalSongDisplayAdapter.DISPLAY_TYPE.Simple;
+    private LocalSongDisplayAdapter.DISPLAY_TYPE mDisplayType = LocalSongDisplayAdapter.DISPLAY_TYPE.WithNumber;
 
     private static final String KEY_DISPLAY_TYPE = "KEY_DISPLAY_TYPE";
 
@@ -114,7 +113,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 
     @Override
     public void setDisplayData(@NonNull List<LocalSongEntity> dataList) {
-        mLocalSongDisplayAdapter.getDataList().addAll(dataList);
+        mLocalSongDisplayAdapter.setDataList(dataList);
         mLocalSongDisplayAdapter.notifyDataSetChanged();
     }
 
