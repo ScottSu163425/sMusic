@@ -5,4 +5,6 @@ package com.su.scott.slibrary.presenter;
  */
 public interface BasePresenter {
     void onViewFirstTimeCreated();
+
+    void onViewWillDestroy();
 }

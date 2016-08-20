@@ -3,11 +3,11 @@ package com.scott.su.smusic.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
 import com.scott.su.smusic.entity.LocalSongEntity;
@@ -26,9 +26,28 @@ import java.util.List;
 public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity> implements LocalSongDisplayView {
     private LocalSongDisplayPresenter mLocalSongDisplayPresenter;
     private LocalSongDisplayAdapter mLocalSongDisplayAdapter;
+    private LocalSongDisplayAdapter.DISPLAY_TYPE mDisplayType = LocalSongDisplayAdapter.DISPLAY_TYPE.Simple;
 
-    public static LocalSongDisplayFragment newInstance(){
-        return new LocalSongDisplayFragment();
+    private static final String KEY_DISPLAY_TYPE = "KEY_DISPLAY_TYPE";
+
+    public static LocalSongDisplayFragment newInstance(LocalSongDisplayAdapter.DISPLAY_TYPE displayType) {
+        LocalSongDisplayFragment instance = new LocalSongDisplayFragment();
+        Bundle arguments = new Bundle();
+        arguments.putSerializable(KEY_DISPLAY_TYPE, displayType);
+        instance.setArguments(arguments);
+        return instance;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.mDisplayType = (LocalSongDisplayAdapter.DISPLAY_TYPE) getArguments().get(KEY_DISPLAY_TYPE);
+    }
+
+    @Override
+    public void onDestroy() {
+        mLocalSongDisplayPresenter.onViewWillDestroy();
+        super.onDestroy();
     }
 
     @Override
@@ -41,12 +60,12 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 
     @Override
     protected RecyclerView.Adapter getAdapter() {
-        mLocalSongDisplayAdapter = new LocalSongDisplayAdapter(getActivity());
+        mLocalSongDisplayAdapter = new LocalSongDisplayAdapter(getActivity(), mDisplayType);
 
         mLocalSongDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalSongEntity>() {
             @Override
             public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-               mLocalSongDisplayPresenter.onItemClick(itemView,entity,position,sharedElements,transitionNames,data);
+                mLocalSongDisplayPresenter.onItemClick(itemView, entity, position, sharedElements, transitionNames, data);
             }
         });
 
@@ -55,7 +74,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 
     @Override
     protected RecyclerView.LayoutManager getLayoutManager() {
-        return new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
+        return new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
     }
 
     @Override
@@ -95,7 +114,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 
     @Override
     public void setDisplayData(@NonNull List<LocalSongEntity> dataList) {
-        mLocalSongDisplayAdapter.setDataList(dataList);
+        mLocalSongDisplayAdapter.getDataList().addAll(dataList);
         mLocalSongDisplayAdapter.notifyDataSetChanged();
     }
 
@@ -105,7 +124,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 
     @Override
     public void handleItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        T.showShort(getActivity(),entity.getTitle());
+        T.showShort(getActivity(), entity.getTitle());
     }
 
 

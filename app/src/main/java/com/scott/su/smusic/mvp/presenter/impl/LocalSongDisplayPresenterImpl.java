@@ -13,18 +13,15 @@ import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by asus on 2016/8/19.
  */
 public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter {
     private LocalSongDisplayView mLocalSongDisplayView;
-    private LocalSongModel mLocalSongModel;
+    private LocalSongModelImpl mLocalSongModel;
 
-    public LocalSongDisplayPresenterImpl(LocalSongDisplayView localSongDisplayView){
+    public LocalSongDisplayPresenterImpl(LocalSongDisplayView localSongDisplayView) {
         this.mLocalSongDisplayView = localSongDisplayView;
         this.mLocalSongModel = new LocalSongModelImpl();
     }
@@ -51,17 +48,22 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
 
     @Override
     public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        mLocalSongDisplayView.handleItemClick(itemView,entity,position,sharedElements,transitionNames,data);
+        mLocalSongDisplayView.handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
     }
 
     @Override
     public void onViewFirstTimeCreated() {
         mLocalSongDisplayView.showLoading();
-         getAndDisplayLocalSongs();
+        getAndDisplayLocalSongs();
+    }
+
+    @Override
+    public void onViewWillDestroy() {
+        mLocalSongModel.clearCache();
     }
 
     private void getAndDisplayLocalSongs() {
-        new AsyncTask<Void,Void,List<LocalSongEntity>>(){
+        new AsyncTask<Void, Void, List<LocalSongEntity>>() {
             @Override
             protected List<LocalSongEntity> doInBackground(Void... voids) {
                 return mLocalSongModel.getLocalSongs(mLocalSongDisplayView.getViewContext());

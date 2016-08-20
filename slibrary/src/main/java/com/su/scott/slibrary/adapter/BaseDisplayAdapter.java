@@ -17,6 +17,7 @@ import java.util.List;
  * Feature: RecyclerView适配器基类
  */
 public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> extends RecyclerView.Adapter<VH> {
+
     protected Activity context;
 
     private RecyclerView recyclerView;

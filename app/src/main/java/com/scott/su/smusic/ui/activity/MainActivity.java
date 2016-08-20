@@ -15,9 +15,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.util.PermissionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,24 +28,18 @@ import java.util.List;
  * 2016-8-18
  */
 public class MainActivity extends BaseActivity {
-    private Toolbar mToolbar;//标题栏
-    private DrawerLayout mDrawerLayout;//抽屉式布局
-    private ViewPager mViewPager; //内容展示ViewPager
-    private TabLayout mTabLayout; //ViewPager对应选项卡布局
-    private LocalSongDisplayFragment mLocalSongDisplayFragment; //本地音乐列表fragment
+    private Toolbar mToolbar;   //标题栏
+    private DrawerLayout mDrawerLayout;     //抽屉式布局
+    private ViewPager mViewPager;   //内容展示ViewPager
+    private TabLayout mTabLayout;   //ViewPager对应选项卡布局
+    private LocalSongDisplayFragment mLocalSongDisplayFragment;     //本地音乐列表fragment
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (Build.VERSION.SDK_INT >= 23) {
-            int checkCallPhonePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-            if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 111);
-                return;
-            }
-        }
+        PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
 
         setupToolbar();
         initView();
@@ -76,14 +72,14 @@ public class MainActivity extends BaseActivity {
         List<Fragment> pageFragments = new ArrayList<>();
         List<String> pageTitles = new ArrayList<>();
 
-        pageFragments.add(LocalSongDisplayFragment.newInstance());
-        pageFragments.add(LocalSongDisplayFragment.newInstance());
-        pageFragments.add(LocalSongDisplayFragment.newInstance());
+        pageFragments.add(LocalSongDisplayFragment.newInstance(LocalSongDisplayAdapter.DISPLAY_TYPE.WithCover));
+        pageFragments.add(LocalSongDisplayFragment.newInstance(LocalSongDisplayAdapter.DISPLAY_TYPE.Simple));
+        pageFragments.add(LocalSongDisplayFragment.newInstance(LocalSongDisplayAdapter.DISPLAY_TYPE.Simple));
         pageTitles.add("本地音乐");
         pageTitles.add("歌单");
         pageTitles.add("专辑");
 
-        mViewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(),pageFragments,pageTitles));
+        mViewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), pageFragments, pageTitles));
         mTabLayout.setupWithViewPager(mViewPager);
     }
 

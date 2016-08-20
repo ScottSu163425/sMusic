@@ -9,47 +9,90 @@
     android:foreground="?attr/selectableItemBackground"
     android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_number_view_holder_local_song"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="1"
-        android:padding="@dimen/margin_s"
-        android:textColor="@color/text_dark_2"
-        android:textSize="@dimen/text_size_subhead" />
+        android:layout_gravity="center">
 
-    <LinearLayout
+        <TextView
+            android:id="@+id/tv_number_view_holder_local_song"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_s"
+            android:text="1"
+            android:textColor="@color/text_dark_2"
+            android:textSize="@dimen/text_size_subhead" />
+
+        <ImageView
+            android:id="@+id/iv_cover_view_holder_local_song"
+            android:layout_width="@dimen/size_image_view_holder_local_song"
+            android:layout_height="@dimen/size_image_view_holder_local_song"
+            android:layout_margin="@dimen/margin_xs"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_title_view_holder_local_song"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:text="桜色舞"
-            android:paddingTop="@dimen/margin_xs"
-            android:paddingRight="@dimen/margin_xs"
-            android:textColor="@color/text_dark_3"
-            android:textSize="@dimen/text_size_subhead" />
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_artist_view_holder_local_song"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:text="中岛美嘉"
-            android:textColor="@color/text_dark_2"
-            android:textSize="@dimen/text_size_caption"
-            android:layout_marginTop="@dimen/margin_xs"
-            android:paddingBottom="@dimen/margin_xs"/>
+            <TextView
+                android:id="@+id/tv_title_view_holder_local_song"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="桜色舞"
+                android:textColor="@color/text_dark_3"
+                android:textSize="@dimen/text_size_subhead" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/margin_xxs">
+
+                <TextView
+                    android:id="@+id/tv_artist_view_holder_local_song"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="中岛美嘉"
+                    android:textColor="@color/text_dark_2"
+                    android:textSize="@dimen/text_size_caption" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:layout_marginLeft="@dimen/margin_xxs"
+                    android:layout_marginRight="@dimen/margin_xxs"
+                    android:text="@string/divider_artist_album_view_holder_local_song"
+                    android:textColor="@color/text_dark_2"
+                    android:textSize="@dimen/text_size_caption" />
+                <TextView
+                    android:id="@+id/tv_ablum_view_holder_local_song"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="初恋"
+                    android:textColor="@color/text_dark_2"
+                    android:textSize="@dimen/text_size_caption" />
+            </LinearLayout>
+        </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5px"
-            android:background="@color/text_dark_1"/>
-    </LinearLayout>
+            android:layout_alignParentBottom="true"
+            android:background="@color/text_dark_1" />
+    </RelativeLayout>
 
 </LinearLayout>
