@@ -25,7 +25,7 @@ import java.util.List;
 public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity> implements LocalSongDisplayView {
     private LocalSongDisplayPresenter mLocalSongDisplayPresenter;
     private LocalSongDisplayAdapter mLocalSongDisplayAdapter;
-    private LocalSongDisplayAdapter.DISPLAY_TYPE mDisplayType = LocalSongDisplayAdapter.DISPLAY_TYPE.WithNumber;
+    private LocalSongDisplayAdapter.DISPLAY_TYPE mDisplayType = LocalSongDisplayAdapter.DISPLAY_TYPE.NumberDivider;
 
     private static final String KEY_DISPLAY_TYPE = "KEY_DISPLAY_TYPE";
 

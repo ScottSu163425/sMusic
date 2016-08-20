@@ -21,14 +21,17 @@ import java.util.List;
  */
 public class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSongViewHolder, LocalSongEntity> {
 
-    private DISPLAY_TYPE displayType = DISPLAY_TYPE.WithNumber; //列表类型（有无专辑封面图片）
+    private DISPLAY_TYPE displayType = DISPLAY_TYPE.NumberDivider; //RecyclerView item layout type
 
     private LocalSongModelImpl localSongModel;
 
     public enum DISPLAY_TYPE {
-        WithNumber,
-        WithCover,
-        None
+        NumberDivider, //Type that item with number text and bottom divider line.
+        CoverDivider, //Type that item with album cover imageview and bottom divider line.
+        OnlyNumber, //Type that item only with number textview.
+        OnlyCover, //Type that item only with album cover imageview.
+        OnlyDivider, //Type that item only with bottom divider line.
+        None //Type that item without all above views.
     }
 
 
@@ -52,30 +55,45 @@ public class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSongViewHol
 
     @Override
     protected void bindVH(LocalSongViewHolder viewHolder, final LocalSongEntity entity, final int position) {
-        if (this.displayType == DISPLAY_TYPE.WithNumber) {
+        if (displayType == DISPLAY_TYPE.NumberDivider || displayType == DISPLAY_TYPE.OnlyNumber) {
+            if (displayType == DISPLAY_TYPE.NumberDivider) {
+                ViewUtil.setViewVisiable(viewHolder.getDividerView());
+            } else {
+                //OnlyNumber
+                ViewUtil.setViewGone(viewHolder.getDividerView());
+            }
             ViewUtil.setViewVisiable(viewHolder.getCoverAreaLayout());
-            ViewUtil.setViewGone(viewHolder.getCoverImageView());
             ViewUtil.setViewVisiable(viewHolder.getNumberTextView());
+            ViewUtil.setViewGone(viewHolder.getCoverImageView());
             ViewUtil.setText(viewHolder.getNumberTextView(), (position + 1) + "", "");
-        } else if (this.displayType == DISPLAY_TYPE.WithCover) {
+        } else if (displayType == DISPLAY_TYPE.CoverDivider ||displayType == DISPLAY_TYPE.OnlyCover) {
+            if (displayType == DISPLAY_TYPE.CoverDivider) {
+                ViewUtil.setViewVisiable(viewHolder.getDividerView());
+            } else {
+                ViewUtil.setViewGone(viewHolder.getDividerView());
+            }
             ViewUtil.setViewVisiable(viewHolder.getCoverAreaLayout());
-            ViewUtil.setViewGone(viewHolder.getNumberTextView());
             ViewUtil.setViewVisiable(viewHolder.getCoverImageView());
+            ViewUtil.setViewGone(viewHolder.getNumberTextView());
             //展示图片
             Glide.with(context)
                     .load(localSongModel.getAlbumCoverPath(context, entity.getAlbumId()))
                     .placeholder(R.color.place_holder_loading)
                     .error(R.color.place_holder_error)
                     .into(viewHolder.getCoverImageView());
-        } else if (this.displayType == DISPLAY_TYPE.None) {
+        } else if (displayType == DISPLAY_TYPE.OnlyDivider) {
             ViewUtil.setViewGone(viewHolder.getCoverAreaLayout());
+            ViewUtil.setViewVisiable(viewHolder.getDividerView());
+        } else if (displayType == DISPLAY_TYPE.None) {
+            ViewUtil.setViewGone(viewHolder.getCoverAreaLayout());
+            ViewUtil.setViewGone(viewHolder.getDividerView());
         }
 
-        if (getSelectedPosition() == position) {
-            ViewUtil.setViewVisiable(viewHolder.getSelectionIndicatorView());
-        } else {
-            ViewUtil.setViewGone(viewHolder.getSelectionIndicatorView());
-        }
+//        if (getSelectedPosition() == position) {
+//            ViewUtil.setViewVisiable(viewHolder.getSelectionIndicatorView());
+//        } else {
+//            ViewUtil.setViewGone(viewHolder.getSelectionIndicatorView());
+//        }
 
         ViewUtil.setText(viewHolder.getTitleTextView(), entity.getTitle(), "");
         ViewUtil.setText(viewHolder.getArtistTextView(), entity.getArtist(), "");

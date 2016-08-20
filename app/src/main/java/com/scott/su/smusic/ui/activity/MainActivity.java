@@ -82,8 +82,8 @@ public class MainActivity extends BaseActivity {
         List<Fragment> pageFragments = new ArrayList<>();
         List<String> pageTitles = new ArrayList<>();
 
-        pageFragments.add(LocalSongDisplayFragment.newInstance(LocalSongDisplayAdapter.DISPLAY_TYPE.WithCover));
-        pageFragments.add(LocalSongDisplayFragment.newInstance(LocalSongDisplayAdapter.DISPLAY_TYPE.None));
+        pageFragments.add(LocalSongDisplayFragment.newInstance(LocalSongDisplayAdapter.DISPLAY_TYPE.CoverDivider));
+        pageFragments.add(LocalSongDisplayFragment.newInstance(LocalSongDisplayAdapter.DISPLAY_TYPE.OnlyNumber));
         pageFragments.add(LocalAlbumDisplayFragment.newInstance());
         pageTitles.add("本地音乐");
         pageTitles.add("歌单");
