@@ -83,7 +83,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 
     @Override
     protected int getEmptyLayout() {
-        return R.layout.display_empty_default;
+        return R.layout.display_empty_local_song;
     }
 
     @Override

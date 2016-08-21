@@ -14,7 +14,6 @@ public class LocalAlbumEntity implements Parcelable {
     private String artist;
     private List<LocalSongEntity> albumSongs;
 
-
     public LocalAlbumEntity() {
     }
 

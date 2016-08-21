@@ -20,7 +20,7 @@ public class LocalAlbumViewHolder extends RecyclerView.ViewHolder {
         titleTextView = (TextView) itemView.findViewById(R.id.tv_title_view_holder_local_album);
         artistTextView = (TextView) itemView.findViewById(R.id.tv_artist_view_holder_local_album);
         coverImageView = (ImageView) itemView.findViewById(R.id.iv_cover_view_holder_local_album);
-        songCountTextView = (TextView) itemView.findViewById(R.id.tv_song_count_view_holder_local_album);
+        songCountTextView = (TextView) itemView.findViewById(R.id.tv_count_view_holder_local_album);
     }
 
     public TextView getArtistTextView() {

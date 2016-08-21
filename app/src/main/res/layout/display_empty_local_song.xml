@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/ic_display_error"
+        android:src="@drawable/ic_display_empty_local_song"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/margin_s"
         android:layout_above="@+id/tv"/>
@@ -17,7 +17,7 @@
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="你的网络出现异常"
+        android:text="没有任何一条数据"
         android:textSize="@dimen/text_size_title"
         android:layout_centerInParent="true"/>
 

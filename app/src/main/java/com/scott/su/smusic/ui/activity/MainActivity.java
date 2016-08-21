@@ -16,6 +16,7 @@ import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
 import com.scott.su.smusic.ui.fragment.LocalAlbumDisplayFragment;
+import com.scott.su.smusic.ui.fragment.LocalSongBillDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.PermissionUtil;
@@ -82,15 +83,16 @@ public class MainActivity extends BaseActivity {
         List<Fragment> pageFragments = new ArrayList<>();
         List<String> pageTitles = new ArrayList<>();
 
+        pageFragments.add(LocalSongBillDisplayFragment.newInstance());
         pageFragments.add(LocalSongDisplayFragment.newInstance(LocalSongDisplayAdapter.DISPLAY_TYPE.CoverDivider));
-        pageFragments.add(LocalSongDisplayFragment.newInstance(LocalSongDisplayAdapter.DISPLAY_TYPE.OnlyNumber));
         pageFragments.add(LocalAlbumDisplayFragment.newInstance());
-        pageTitles.add("本地音乐");
         pageTitles.add("歌单");
+        pageTitles.add("本地音乐");
         pageTitles.add("专辑");
 
         mViewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), pageFragments, pageTitles));
         mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setOffscreenPageLimit(pageFragments.size());
     }
 
     @Override

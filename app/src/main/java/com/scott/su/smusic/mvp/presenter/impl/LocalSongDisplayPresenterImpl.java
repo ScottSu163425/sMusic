@@ -2,6 +2,7 @@ package com.scott.su.smusic.mvp.presenter.impl;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 
@@ -72,6 +73,10 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
             @Override
             protected void onPostExecute(List<LocalSongEntity> localSongEntities) {
                 super.onPostExecute(localSongEntities);
+                if (localSongEntities == null || localSongEntities.size() == 0) {
+                    mLocalSongDisplayView.showEmpty();
+                    return;
+                }
                 mLocalSongDisplayView.setDisplayData(localSongEntities);
                 mLocalSongDisplayView.display();
             }

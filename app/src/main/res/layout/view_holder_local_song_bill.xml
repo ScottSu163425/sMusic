@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@android:style/Widget.DeviceDefault.Button"
+    android:layout_width="@dimen/size_image_view_holder_local_song_bill"
+    android:layout_height="@dimen/size_image_view_holder_local_song_bill"
+    android:layout_margin="@dimen/margin_xs"
+    android:clickable="true"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_cover_view_holder_local_song_bill"
+            android:layout_width="@dimen/size_image_view_holder_local_song_bill"
+            android:layout_height="@dimen/size_image_view_holder_local_song_bill"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_cover_default_song_bill_" />
+
+        <TextView
+            android:id="@+id/tv_title_view_holder_local_song_bill"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#30000000"
+            android:gravity="center"
+            android:padding="@dimen/margin_xs"
+            android:text="我喜欢"
+            android:textColor="@color/text_light_3"
+            android:textSize="@dimen/text_size_subhead"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_count_view_holder_local_song_bill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:padding="@dimen/margin_xs"
+            android:text="0首"
+            android:textColor="@color/text_light_3"
+            android:textSize="@dimen/text_size_body" />
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

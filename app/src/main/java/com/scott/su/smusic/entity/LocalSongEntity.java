@@ -3,17 +3,37 @@ package com.scott.su.smusic.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
+
 /**
  * Created by asus on 2016/8/19.
  */
+@Table(name = "LocalSongEntity")
 public class LocalSongEntity implements Parcelable{
+
+    @Column(name = "songId",isId = true)
     private long songId;
+
+    @Column(name = "title" )
     private String title;
+
+    @Column(name = "artist" )
     private String artist;
+
+    @Column(name = "album" )
     private String album;
+
+    @Column(name = "albumId" )
     private long albumId;
+
+    @Column(name = "duration" )
     private long duration;
+
+    @Column(name = "size" )
     private long size;
+
+    @Column(name = "path" )
     private String path;
 
     public LocalSongEntity() {

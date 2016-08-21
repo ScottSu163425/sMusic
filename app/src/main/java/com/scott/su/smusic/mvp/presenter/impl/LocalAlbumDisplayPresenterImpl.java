@@ -72,6 +72,10 @@ public class LocalAlbumDisplayPresenterImpl implements LocalAlbumDisplayPresente
             @Override
             protected void onPostExecute(List<LocalAlbumEntity> localAlbumEntities) {
                 super.onPostExecute(localAlbumEntities);
+                if (localAlbumEntities == null || localAlbumEntities.size() == 0) {
+                    mLocalAlbumDisplayView.showEmpty();
+                    return;
+                }
                 mLocalAlbumDisplayView.setDisplayData(localAlbumEntities);
                 mLocalAlbumDisplayView.display();
             }

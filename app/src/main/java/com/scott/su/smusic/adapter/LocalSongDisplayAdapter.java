@@ -79,7 +79,7 @@ public class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSongViewHol
             Glide.with(context)
                     .load(localSongModel.getAlbumCoverPath(context, entity.getAlbumId()))
                     .placeholder(R.color.place_holder_loading)
-                    .error(R.color.place_holder_error)
+                    .error(R.drawable.ic_cover_default_song_bill_)
                     .into(viewHolder.getCoverImageView());
         } else if (displayType == DISPLAY_TYPE.OnlyDivider) {
             ViewUtil.setViewGone(viewHolder.getCoverAreaLayout());
