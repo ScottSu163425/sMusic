@@ -33,8 +33,8 @@ public class LocalSongBillEntity implements Parcelable {
 
 
     public LocalSongBillEntity() {
-//        setBillId(System.currentTimeMillis());
-        setBillId(123);
+        //Auto set bill id with unique number;
+        setBillId(System.currentTimeMillis());
     }
 
     public int getId() {
