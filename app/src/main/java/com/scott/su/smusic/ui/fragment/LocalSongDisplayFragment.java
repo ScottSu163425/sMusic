@@ -9,7 +9,9 @@ import android.view.View;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
+import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.model.impl.LocalSongBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalSongDisplayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalSongDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
@@ -123,6 +125,11 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 
     @Override
     public void handleItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+        //Test add song to bill;
+//        LocalSongBillModelImpl billModel = new LocalSongBillModelImpl();
+//        LocalSongBillEntity billEntity = billModel.getBills(getActivity()).get(0);
+//        entity.appendBillId(billEntity.getBillId());
+//        billModel.addSongToBill(getActivity(), entity, billEntity.getBillId());
         T.showShort(getActivity(), entity.getTitle());
     }
 

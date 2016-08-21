@@ -2,6 +2,7 @@ package com.scott.su.smusic.adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
@@ -36,17 +37,32 @@ public class LocalSongBillDisplayAdapter extends BaseDisplayAdapter<LocalSongBil
     }
 
     @Override
-    protected void bindVH(LocalSongBillViewHolder viewHolder, LocalSongBillEntity entity, int position) {
+    protected void bindVH(LocalSongBillViewHolder viewHolder, final LocalSongBillEntity entity, final int position) {
         ViewUtil.setText(viewHolder.getTitleTextView(), entity.getBillTitle(), "");
         ViewUtil.setText(viewHolder.getCountTextView(),
                 (entity.getBillSongs() == null ? 0 : entity.getBillSongs().size()) + "首",
                 "0首");
-//
-//        Glide.with(context)
-//                .load(new LocalSongModelImpl().getAlbumCoverPath(context, entity.getBillSongEntities().get(0).getAlbumId()))
-//                .placeholder(R.color.place_holder_loading)
-//                .error(R.drawable.ic_cover_default_song_bill_)
-//                .into(viewHolder.getCoverImageView());
+
+        String billCoverPath = "";
+        if (entity.getBillSongs() != null && entity.getBillSongs().size() > 0) {
+            billCoverPath = new LocalSongModelImpl().getAlbumCoverPath(context,
+                    entity.getBillSongs().get(entity.getBillSongs().size()-1).getAlbumId());
+        }
+
+        Glide.with(context)
+                .load(billCoverPath)
+                .placeholder(R.color.place_holder_loading)
+                .error(R.drawable.ic_cover_default_song_bill_)
+                .into(viewHolder.getCoverImageView());
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getItemClickCallback() != null) {
+                    getItemClickCallback().onItemClick(view, entity, position, null, null, null);
+                }
+            }
+        });
     }
 
 }

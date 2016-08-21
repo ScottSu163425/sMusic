@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface LocalSongBillModel {
 
+    void addBill(Context context, LocalSongBillEntity billEntity);
+
     List<LocalSongEntity> getBillSongs(Context context);
 
     LocalSongBillEntity getBill(Context context, long billId);

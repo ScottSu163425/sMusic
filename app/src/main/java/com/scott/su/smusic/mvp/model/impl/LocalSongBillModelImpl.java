@@ -6,6 +6,7 @@ import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalSongBillModel;
 import com.su.scott.slibrary.manager.DbUtilHelper;
+import com.su.scott.slibrary.util.L;
 
 import org.xutils.ex.DbException;
 
@@ -18,9 +19,18 @@ import java.util.List;
 public class LocalSongBillModelImpl implements LocalSongBillModel {
 
     @Override
+    public void addBill(Context context, LocalSongBillEntity billEntity) {
+        try {
+            DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public List<LocalSongEntity> getBillSongs(Context context) {
         try {
-           return DbUtilHelper.getDefaultDbManager().findAll(LocalSongEntity.class);
+            return DbUtilHelper.getDefaultDbManager().findAll(LocalSongEntity.class);
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -61,6 +71,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
                 result = new ArrayList<>();
                 LocalSongBillEntity songBillEntity = new LocalSongBillEntity();
                 songBillEntity.setBillTitle("我喜欢");
+                addBill(context, songBillEntity);
                 result.add(songBillEntity);
             }
 

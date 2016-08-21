@@ -120,7 +120,7 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
 
     @Override
     public void handleItemClick(View itemView, LocalSongBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        T.showShort(getActivity(), entity.getBillTitle());
+        T.showLong(getActivity(), entity.getBillSongs().toString());
     }
 
 

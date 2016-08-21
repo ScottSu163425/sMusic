@@ -15,6 +15,8 @@ import android.view.View;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
+import com.scott.su.smusic.entity.LocalSongBillEntity;
+import com.scott.su.smusic.mvp.model.impl.LocalSongBillModelImpl;
 import com.scott.su.smusic.ui.fragment.LocalAlbumDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBillDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
@@ -84,11 +86,11 @@ public class MainActivity extends BaseActivity {
         List<Fragment> pageFragments = new ArrayList<>();
         List<String> pageTitles = new ArrayList<>();
 
-        pageFragments.add(LocalSongBillDisplayFragment.newInstance());
         pageFragments.add(LocalSongDisplayFragment.newInstance(LocalSongDisplayAdapter.DISPLAY_TYPE.CoverDivider));
+        pageFragments.add(LocalSongBillDisplayFragment.newInstance());
         pageFragments.add(LocalAlbumDisplayFragment.newInstance());
-        pageTitles.add("歌单");
         pageTitles.add("本地音乐");
+        pageTitles.add("歌单");
         pageTitles.add("专辑");
 
         mViewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), pageFragments, pageTitles));

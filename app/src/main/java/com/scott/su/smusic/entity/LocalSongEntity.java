@@ -128,11 +128,11 @@ public class LocalSongEntity implements Parcelable {
         this.title = title;
     }
 
-    public void appendBillId(long songId) {
+    public void appendBillId(long billId) {
         if (TextUtils.isEmpty(getBillIds())) {
-            setBillIds(songId + ID_DIVIDER);
+            setBillIds(billId + ID_DIVIDER);
         } else {
-            setBillIds(getBillIds() + songId + ID_DIVIDER);
+            setBillIds(getBillIds() + billId + ID_DIVIDER);
         }
     }
 
