@@ -39,7 +39,7 @@ public class LocalSongBillDisplayAdapter extends BaseDisplayAdapter<LocalSongBil
     protected void bindVH(LocalSongBillViewHolder viewHolder, LocalSongBillEntity entity, int position) {
         ViewUtil.setText(viewHolder.getTitleTextView(), entity.getBillTitle(), "");
         ViewUtil.setText(viewHolder.getCountTextView(),
-                (entity.getBillSongEntities() == null ? 0 : entity.getBillSongEntities().size()) + "首",
+                (entity.getBillSongs() == null ? 0 : entity.getBillSongs().size()) + "首",
                 "0首");
 //
 //        Glide.with(context)

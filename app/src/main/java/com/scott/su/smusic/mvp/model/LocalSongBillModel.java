@@ -3,6 +3,7 @@ package com.scott.su.smusic.mvp.model;
 import android.content.Context;
 
 import com.scott.su.smusic.entity.LocalSongBillEntity;
+import com.scott.su.smusic.entity.LocalSongEntity;
 
 import java.util.List;
 
@@ -11,10 +12,16 @@ import java.util.List;
  */
 public interface LocalSongBillModel {
 
-    List<LocalSongBillEntity> getLocalSongBills(Context context);
+    List<LocalSongEntity> getBillSongs(Context context);
 
-    //    Bitmap getLocalSongAlbumCover(Context context,long albumId,int size);
-//
-//    Bitmap getLocalSongAlbumBlurCover(Context context,long albumId,int size);
+    LocalSongBillEntity getBill(Context context, long billId);
+
+    List<LocalSongBillEntity> getBills(Context context);
+
+    void addSongToBill(Context context, LocalSongEntity songEntity, long billId);
+
+    void addSongsToBill(Context context, List<LocalSongEntity> songEntities, long billId);
+
+    List<LocalSongEntity> getSongsByBillId(Context context, long billId);
 
 }

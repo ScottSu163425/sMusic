@@ -2,6 +2,7 @@ package com.scott.su.smusic.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
@@ -14,14 +15,27 @@ import java.util.List;
 @Table(name = "LocalSongBillEntity")
 public class LocalSongBillEntity implements Parcelable {
 
+    public static final String ID_DIVIDER = "*";
+
     @Column(name = "id", isId = true)
     private int id;
+
+    @Column(name = "billId")
+    private long billId;
 
     @Column(name = "billTitle")
     private String billTitle;
 
-    @Column(name = "billSongEntities")
-    private List<LocalSongEntity> billSongEntities;
+    @Column(name = "billSongIds")
+    private String billSongIds;
+
+    private List<LocalSongEntity> billSongs; //Songs in this bill;
+
+
+    public LocalSongBillEntity() {
+//        setBillId(System.currentTimeMillis());
+        setBillId(123);
+    }
 
     public int getId() {
         return id;
@@ -29,6 +43,14 @@ public class LocalSongBillEntity implements Parcelable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public long getBillId() {
+        return billId;
+    }
+
+    public void setBillId(long billId) {
+        this.billId = billId;
     }
 
     public String getBillTitle() {
@@ -39,12 +61,28 @@ public class LocalSongBillEntity implements Parcelable {
         this.billTitle = billTitle;
     }
 
-    public List<LocalSongEntity> getBillSongEntities() {
-        return billSongEntities;
+    public String getBillSongIds() {
+        return billSongIds;
     }
 
-    public void setBillSongEntities(List<LocalSongEntity> billSongEntities) {
-        this.billSongEntities = billSongEntities;
+    public void setBillSongIds(String billSongIds) {
+        this.billSongIds = billSongIds;
+    }
+
+    public void appendBillSongId(long songId) {
+        if (TextUtils.isEmpty(getBillSongIds())) {
+            setBillSongIds(songId + ID_DIVIDER);
+        } else {
+            setBillSongIds(getBillSongIds() + songId + ID_DIVIDER);
+        }
+    }
+
+    public List<LocalSongEntity> getBillSongs() {
+        return billSongs;
+    }
+
+    public void setBillSongs(List<LocalSongEntity> billSongs) {
+        this.billSongs = billSongs;
     }
 
     @Override
@@ -55,17 +93,18 @@ public class LocalSongBillEntity implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
+        dest.writeLong(this.billId);
         dest.writeString(this.billTitle);
-        dest.writeTypedList(this.billSongEntities);
-    }
-
-    public LocalSongBillEntity() {
+        dest.writeString(this.billSongIds);
+        dest.writeTypedList(this.billSongs);
     }
 
     protected LocalSongBillEntity(Parcel in) {
         this.id = in.readInt();
+        this.billId = in.readLong();
         this.billTitle = in.readString();
-        this.billSongEntities = in.createTypedArrayList(LocalSongEntity.CREATOR);
+        this.billSongIds = in.readString();
+        this.billSongs = in.createTypedArrayList(LocalSongEntity.CREATOR);
     }
 
     public static final Parcelable.Creator<LocalSongBillEntity> CREATOR = new Parcelable.Creator<LocalSongBillEntity>() {
@@ -84,8 +123,10 @@ public class LocalSongBillEntity implements Parcelable {
     public String toString() {
         return "LocalSongBillEntity{" +
                 "id=" + id +
+                ", billId=" + billId +
                 ", billTitle='" + billTitle + '\'' +
-                ", billSongEntities=" + billSongEntities +
+                ", billSongIds='" + billSongIds + '\'' +
+                ", billSongs=" + billSongs +
                 '}';
     }
 }

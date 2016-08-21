@@ -3,14 +3,12 @@ package com.scott.su.smusic.mvp.presenter.impl;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 
 import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalSongBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalSongBillDisplayPresenter;
 import com.scott.su.smusic.mvp.view.LocalSongBillDisplayView;
-import com.su.scott.slibrary.util.L;
 
 import java.util.List;
 
@@ -60,21 +58,19 @@ public class LocalSongBillDisplayPresenterImpl implements LocalSongBillDisplayPr
 
     @Override
     public void onViewWillDestroy() {
-//        mLocalSongBillModel.clearCache();
+
     }
 
     private void getAndDisplayLocalSongBills() {
         new AsyncTask<Void, Void, List<LocalSongBillEntity>>() {
             @Override
             protected List<LocalSongBillEntity> doInBackground(Void... voids) {
-                return mLocalSongBillModel.getLocalSongBills(mLocalSongBillDisplayView.getViewContext());
+                return mLocalSongBillModel.getBills(mLocalSongBillDisplayView.getViewContext());
             }
 
             @Override
             protected void onPostExecute(List<LocalSongBillEntity> localSongBillEntities) {
                 super.onPostExecute(localSongBillEntities);
-
-                L.e("===>",localSongBillEntities.toString());
                 if (localSongBillEntities == null || localSongBillEntities.size() == 0) {
                     mLocalSongBillDisplayView.showEmpty();
                     return;

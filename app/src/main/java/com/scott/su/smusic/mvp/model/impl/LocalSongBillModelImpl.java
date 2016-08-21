@@ -1,14 +1,11 @@
 package com.scott.su.smusic.mvp.model.impl;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalSongBillModel;
 import com.su.scott.slibrary.manager.DbUtilHelper;
-import com.su.scott.slibrary.util.L;
-import com.su.scott.slibrary.util.T;
 
 import org.xutils.ex.DbException;
 
@@ -21,33 +18,94 @@ import java.util.List;
 public class LocalSongBillModelImpl implements LocalSongBillModel {
 
     @Override
-    public List<LocalSongBillEntity> getLocalSongBills(Context context) {
-        List<LocalSongBillEntity> songBillEntities = null;
+    public List<LocalSongEntity> getBillSongs(Context context) {
         try {
-            songBillEntities = DbUtilHelper.getDefaultDbManager().findAll(LocalSongBillEntity.class);
-            L.e("===>getLocalSongBills", songBillEntities == null ? "null" : songBillEntities.toString());
-            if (songBillEntities == null || songBillEntities.size() == 0) {
-                LocalSongBillEntity songBillEntity = new LocalSongBillEntity();
-                songBillEntity.setBillTitle("我喜欢");
-                songBillEntity.setId(0);
-
-                List<LocalSongEntity> songEntities = new ArrayList<LocalSongEntity>();
-                LocalSongEntity songEntity = new LocalSongEntity();
-                songEntity.setTitle("GaGa");
-                songEntity.setArtist("LadyGaga");
-                songEntities.add(songEntity);
-                songBillEntity.setBillSongEntities(songEntities);
-
-                //Keep result not null;
-                DbUtilHelper.getDefaultDbManager().saveOrUpdate(songBillEntity);
-                songBillEntities = new ArrayList<>();
-                songBillEntities.add(songBillEntity);
-            }
+           return DbUtilHelper.getDefaultDbManager().findAll(LocalSongEntity.class);
         } catch (DbException e) {
             e.printStackTrace();
         }
+        return null;
+    }
 
-        return songBillEntities;
+    @Override
+    public LocalSongBillEntity getBill(Context context, long billId) {
+        List<LocalSongBillEntity> bills = getBills(context);
+        LocalSongBillEntity bill = null;
+
+        if (bills == null) {
+            return null;
+        }
+
+        for (LocalSongBillEntity billEntity : bills) {
+            if (billEntity.getBillId() == billId) {
+                bill = billEntity;
+                break;
+            }
+        }
+
+        return bill;
+    }
+
+    @Override
+    public List<LocalSongBillEntity> getBills(Context context) {
+        List<LocalSongBillEntity> result = null;
+        try {
+            result = DbUtilHelper.getDefaultDbManager().findAll(LocalSongBillEntity.class);
+
+            if (result != null && result.size() > 0) {
+                for (LocalSongBillEntity billEntity : result) {
+                    billEntity.setBillSongs(getSongsByBillId(context, billEntity.getBillId()));
+                }
+            } else {
+                //First time open,auto create one bill;
+                result = new ArrayList<>();
+                LocalSongBillEntity songBillEntity = new LocalSongBillEntity();
+                songBillEntity.setBillTitle("我喜欢");
+                result.add(songBillEntity);
+            }
+
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public void addSongToBill(Context context, LocalSongEntity songEntity, long billId) {
+        LocalSongBillEntity billEntity = getBill(context, billId);
+
+        billEntity.appendBillSongId(songEntity.getSongId());
+        try {
+            DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
+            DbUtilHelper.getDefaultDbManager().saveOrUpdate(songEntity);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void addSongsToBill(Context context, List<LocalSongEntity> songEntities, long billId) {
+        for (LocalSongEntity songEntity : songEntities) {
+            addSongToBill(context, songEntity, billId);
+        }
+    }
+
+    @Override
+    public List<LocalSongEntity> getSongsByBillId(Context context, long billId) {
+        List<LocalSongEntity> billSongs = getBillSongs(context);
+        List<LocalSongEntity> result = new ArrayList<>();
+
+        if (billSongs == null) {
+            return null;
+        }
+
+        for (LocalSongEntity songEntity : billSongs) {
+            if (songEntity.getBillIds().contains(billId + "")) {
+                result.add(songEntity);
+            }
+        }
+
+        return result;
     }
 
 }

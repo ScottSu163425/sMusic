@@ -39,6 +39,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         setupToolbar();
         initView();
