@@ -11,13 +11,13 @@ import java.util.List;
  */
 public class MainPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragments;
-    private List<String> titles;
+    private String[] titles;
 
     public MainPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public MainPagerAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
+    public MainPagerAdapter(FragmentManager fm, List<Fragment> fragments, String[] titles) {
         super(fm);
         this.fragments = fragments;
         this.titles = titles;
@@ -31,27 +31,27 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         this.fragments = fragments;
     }
 
-    public List<String> getTitles() {
+    public String[] getTitles() {
         return titles;
     }
 
-    public void setTitles(List<String> titles) {
+    public void setTitles(String[] titles) {
         this.titles = titles;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return fragments==null?null:fragments.get(position);
+        return fragments == null ? null : fragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return  fragments==null?0:fragments.size();
+        return fragments == null ? 0 : fragments.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return titles==null?"":titles.get(position);
+        return titles == null ? "" : titles[position];
     }
 
 }

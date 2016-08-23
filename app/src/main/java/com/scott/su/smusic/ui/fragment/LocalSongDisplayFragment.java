@@ -114,6 +114,11 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     }
 
     @Override
+    public void reinitialize() {
+        mLocalSongDisplayPresenter.onViewFirstTimeCreated();
+    }
+
+    @Override
     public void setDisplayData(@NonNull List<LocalSongEntity> dataList) {
         mLocalSongDisplayAdapter.setDataList(dataList);
         mLocalSongDisplayAdapter.notifyDataSetChanged();
@@ -131,6 +136,16 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 //        entity.appendBillId(billEntity.getBillId());
 //        billModel.addSongToBill(getActivity(), entity, billEntity.getBillId());
         T.showShort(getActivity(), entity.getTitle());
+    }
+
+    @Override
+    public void scrollToTop() {
+        scrollToFirst();
+    }
+
+    @Override
+    public void scrollToBottm() {
+        scrollToLast();
     }
 
 

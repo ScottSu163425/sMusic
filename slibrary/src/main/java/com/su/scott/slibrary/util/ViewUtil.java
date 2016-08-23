@@ -33,21 +33,21 @@ public class ViewUtil {
         return view.getVisibility() == View.GONE;
     }
 
-    public static void setViewVisiable(View view) {
+    public static void setViewVisiable(@NonNull View view) {
         if (isViewVisiable(view)) {
             return;
         }
         view.setVisibility(View.VISIBLE);
     }
 
-    public static void setViewInVisiable(View view) {
+    public static void setViewInVisiable(@NonNull View view) {
         if (isViewInVisiable(view)) {
             return;
         }
         view.setVisibility(View.INVISIBLE);
     }
 
-    public static void setViewGone(View view) {
+    public static void setViewGone(@NonNull View view) {
         if (isViewGone(view)) {
             return;
         }

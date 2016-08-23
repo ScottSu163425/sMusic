@@ -15,7 +15,7 @@ import android.view.animation.DecelerateInterpolator;
  */
 public class AnimUtil {
 
-    private static final long DEFAULT_DURATION = 400;
+    public static final long DEFAULT_DURATION = 400;
 
     public interface SimpleAnimListener {
         void onAnimStart();

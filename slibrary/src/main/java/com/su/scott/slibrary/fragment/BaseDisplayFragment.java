@@ -212,8 +212,12 @@ public abstract class BaseDisplayFragment<E> extends BaseFragment implements Bas
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    protected void scrollUp() {
+    protected void scrollToFirst() {
         mDisplayRecyclerView.smoothScrollToPosition(0);
+    }
+
+    protected void scrollToLast() {
+        mDisplayRecyclerView.smoothScrollToPosition(getAdapter().getItemCount());
     }
 
 

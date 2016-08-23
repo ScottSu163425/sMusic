@@ -108,6 +108,11 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
     }
 
     @Override
+    public void reinitialize() {
+        mLocalAlbumDisplayPresenter.onViewFirstTimeCreated();
+    }
+
+    @Override
     public void setDisplayData(@NonNull List<LocalAlbumEntity> dataList) {
         mLocalAlbumDisplayAdapter.setDataList(dataList);
         mLocalAlbumDisplayAdapter.notifyDataSetChanged();
@@ -120,6 +125,16 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
     @Override
     public void handleItemClick(View itemView, LocalAlbumEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
         T.showShort(getActivity(), entity.getAlbumTitle());
+    }
+
+    @Override
+    public void scrollToTop() {
+        scrollToFirst();
+    }
+
+    @Override
+    public void scrollToBottm() {
+        scrollToLast();
     }
 
 

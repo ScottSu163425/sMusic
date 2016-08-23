@@ -19,6 +19,27 @@ import java.util.List;
 public class LocalSongBillModelImpl implements LocalSongBillModel {
 
     @Override
+    public boolean isBillExist(Context context, LocalSongBillEntity billEntity) {
+        for (LocalSongBillEntity entity : getBills(context)) {
+            if (entity.getBillId() == billEntity.getBillId()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean isBillTitleExist(Context context, LocalSongBillEntity billEntity) {
+        for (LocalSongBillEntity entity : getBills(context)) {
+            if (entity.getBillTitle().equals(billEntity.getBillTitle())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public void addBill(Context context, LocalSongBillEntity billEntity) {
         try {
             DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
@@ -34,6 +55,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
         } catch (DbException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
@@ -78,6 +100,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
         } catch (DbException e) {
             e.printStackTrace();
         }
+
         return result;
     }
 

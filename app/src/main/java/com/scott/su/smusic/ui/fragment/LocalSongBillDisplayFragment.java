@@ -27,7 +27,6 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
     private LocalSongBillDisplayPresenter mSongBillDisplayPresenter;
     private LocalSongBillDisplayAdapter mSongBillDisplayAdapter;
 
-    private static final String KEY_DISPLAY_TYPE = "KEY_DISPLAY_TYPE";
 
     public static LocalSongBillDisplayFragment newInstance() {
         LocalSongBillDisplayFragment instance = new LocalSongBillDisplayFragment();
@@ -108,6 +107,12 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
 
     }
 
+
+    @Override
+    public void reinitialize() {
+        mSongBillDisplayPresenter.onViewFirstTimeCreated();
+    }
+
     @Override
     public void setDisplayData(@NonNull List<LocalSongBillEntity> dataList) {
         mSongBillDisplayAdapter.setDataList(dataList);
@@ -120,7 +125,17 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
 
     @Override
     public void handleItemClick(View itemView, LocalSongBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        T.showLong(getActivity(), entity.getBillSongs().toString());
+//        T.showLong(getActivity(), entity.getBillSongs().toString());
+    }
+
+    @Override
+    public void scrollToTop() {
+        scrollToFirst();
+    }
+
+    @Override
+    public void scrollToBottm() {
+        scrollToLast();
     }
 
 

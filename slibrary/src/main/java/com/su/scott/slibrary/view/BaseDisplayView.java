@@ -21,6 +21,8 @@ public interface BaseDisplayView<E> extends BaseView {
 
     void showError();
 
+    void reinitialize();
+
     void performSwipeRefresh();
 
     void stopSwipeRefresh();
@@ -32,4 +34,8 @@ public interface BaseDisplayView<E> extends BaseView {
     void setLoadMoreData(@NonNull List<E> dataList);
 
     void handleItemClick(View itemView, E entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
+
+    void scrollToTop();
+
+    void scrollToBottm();
 }

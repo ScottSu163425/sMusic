@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:minWidth="300dp"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:padding="@dimen/margin_xs">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/margin_xs"
+        android:text="新建歌单"
+        android:textColor="@color/text_dark_3"
+        android:textSize="@dimen/text_size_title" />
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_bill_name_fragment_dialog_create_bill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_s">
+
+        <android.support.design.widget.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="歌单名称"
+            android:maxLines="1"
+            android:textColor="@color/text_dark_2"
+            android:textSize="@dimen/text_size_subhead" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_confirm_fragment_dialog_create_bill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_m"
+        android:background="@drawable/selector_button_primary"
+        android:gravity="center"
+        android:padding="@dimen/margin_xs"
+        android:text="确定"
+        android:textColor="@color/text_light_3"
+        android:textSize="@dimen/text_size_button" />
+</LinearLayout>

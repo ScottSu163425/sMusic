@@ -2,6 +2,7 @@ package com.scott.su.smusic.ui.activity;
 
 import android.Manifest;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -11,17 +12,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.OvershootInterpolator;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
-import com.scott.su.smusic.entity.LocalSongBillEntity;
-import com.scott.su.smusic.mvp.model.impl.LocalSongBillModelImpl;
+import com.scott.su.smusic.mvp.presenter.MainPresenter;
+import com.scott.su.smusic.mvp.presenter.impl.MainPresenterImpl;
+import com.scott.su.smusic.mvp.view.MainView;
+import com.scott.su.smusic.ui.fragment.CreateBillDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalAlbumDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBillDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.PermissionUtil;
+import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +36,19 @@ import java.util.List;
 /**
  * 2016-8-18
  */
-public class MainActivity extends BaseActivity {
-    private Toolbar mToolbar;   //Title bar.
-    private DrawerLayout mDrawerLayout;     //Content drawer.
-    private ViewPager mViewPager;   //Content ViewPager.
-    private TabLayout mTabLayout;   //Tabs for ViewPager.
+public class MainActivity extends BaseActivity implements MainView {
+    private MainPresenter mPresenter; //Presenter of mvp;
+    private Toolbar mToolbar;   //Title bar;
+    private DrawerLayout mDrawerLayout;     //Content drawer;
+    private ViewPager mViewPager;   //Content ViewPager;
+    private TabLayout mTabLayout;   //Tabs for ViewPager;
+    private FloatingActionButton mFloatingActionButton; //FAB;
+    private LocalSongDisplayFragment mSongDisplayFragment;
+    private LocalSongBillDisplayFragment mBillDisplayFragment;
+    private LocalAlbumDisplayFragment mAlbumDisplayFragment;
+    private CreateBillDialogFragment mCreateBillDialogFragment;
+
+    private static final int INDEX_PAGE_FAB = 1; //Index of page that fab will be shown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +61,15 @@ public class MainActivity extends BaseActivity {
         setupToolbar();
         initView();
         initData();
+        initListener();
+
+        mPresenter = new MainPresenterImpl(this);
+        mPresenter.onViewFirstTimeCreated();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-
         return true;
     }
 
@@ -64,6 +82,7 @@ public class MainActivity extends BaseActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_main);
         mViewPager = (ViewPager) findViewById(R.id.view_pager_main);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout_main);
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_main);
 
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.addDrawerListener(drawerToggle);
@@ -84,18 +103,144 @@ public class MainActivity extends BaseActivity {
 
     private void initData() {
         List<Fragment> pageFragments = new ArrayList<>();
-        List<String> pageTitles = new ArrayList<>();
 
-        pageFragments.add(LocalSongDisplayFragment.newInstance(LocalSongDisplayAdapter.DISPLAY_TYPE.CoverDivider));
-        pageFragments.add(LocalSongBillDisplayFragment.newInstance());
-        pageFragments.add(LocalAlbumDisplayFragment.newInstance());
-        pageTitles.add("本地音乐");
-        pageTitles.add("歌单");
-        pageTitles.add("专辑");
+        mSongDisplayFragment = LocalSongDisplayFragment.newInstance(LocalSongDisplayAdapter.DISPLAY_TYPE.CoverDivider);
+        mBillDisplayFragment = LocalSongBillDisplayFragment.newInstance();
+        mAlbumDisplayFragment = LocalAlbumDisplayFragment.newInstance();
 
-        mViewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), pageFragments, pageTitles));
-        mTabLayout.setupWithViewPager(mViewPager);
+        pageFragments.add(mSongDisplayFragment);
+        pageFragments.add(mBillDisplayFragment);
+        pageFragments.add(mAlbumDisplayFragment);
+
+        mViewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(),
+                pageFragments,
+                getResources().getStringArray(R.array.titles_tab_main)));
         mViewPager.setOffscreenPageLimit(pageFragments.size());
+        mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    private void initListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (ViewPager.SCROLL_STATE_IDLE == state) {
+                    if (mViewPager.getCurrentItem() == INDEX_PAGE_FAB) {
+                        showFab();
+                    } else {
+                        hideFab();
+                    }
+
+                }
+
+            }
+
+        });
+
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.onFabClick();
+            }
+        });
+    }
+
+    @Override
+    public void updateSongDisplay() {
+        mSongDisplayFragment.reinitialize();
+    }
+
+    @Override
+    public void updateBillDisplay() {
+        mBillDisplayFragment.reinitialize();
+    }
+
+    @Override
+    public void updateAlbumDisplay() {
+        mAlbumDisplayFragment.reinitialize();
+    }
+
+    @Override
+    public void scrollBillToLast() {
+        mBillDisplayFragment.scrollToBottm();
+    }
+
+    /**
+     * Show fab with animation.
+     */
+    @Override
+    public void showFab() {
+        if (!ViewUtil.isViewVisiable(mFloatingActionButton)) {
+            AnimUtil.scaleIn(mFloatingActionButton, AnimUtil.DEFAULT_DURATION,
+                    new OvershootInterpolator(),
+                    new AnimUtil.SimpleAnimListener() {
+                        @Override
+                        public void onAnimStart() {
+                            ViewUtil.setViewVisiable(mFloatingActionButton);
+                        }
+
+                        @Override
+                        public void onAnimEnd() {
+
+                        }
+                    }
+            );
+        }
+    }
+
+    /**
+     * Hide fab with animation.
+     */
+    @Override
+    public void hideFab() {
+        if (ViewUtil.isViewVisiable(mFloatingActionButton)) {
+            AnimUtil.scaleOut(mFloatingActionButton, AnimUtil.DEFAULT_DURATION,
+                    new AnticipateOvershootInterpolator(),
+                    new AnimUtil.SimpleAnimListener() {
+                        @Override
+                        public void onAnimStart() {
+                        }
+
+                        @Override
+                        public void onAnimEnd() {
+                            ViewUtil.setViewGone(mFloatingActionButton);
+                        }
+                    }
+            );
+        }
+    }
+
+    @Override
+    public void showCreateBillDialog() {
+//        if (mCreateBillDialogFragment == null) {
+        mCreateBillDialogFragment = new CreateBillDialogFragment() {
+            @Override
+            public void onConfirmClick(String text) {
+                mPresenter.onCreateBillConfirm(text);
+            }
+        };
+//        }
+
+        if (!mCreateBillDialogFragment.isVisible()) {
+            mCreateBillDialogFragment.show(getSupportFragmentManager(), "");
+        }
+    }
+
+    @Override
+    public void dismissCreateBillDialog() {
+        if (mCreateBillDialogFragment != null && mCreateBillDialogFragment.isVisible()) {
+            mCreateBillDialogFragment.dismiss();
+        }
     }
 
     @Override

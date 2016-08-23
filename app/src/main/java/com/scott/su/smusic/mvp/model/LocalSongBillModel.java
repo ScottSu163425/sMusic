@@ -12,6 +12,10 @@ import java.util.List;
  */
 public interface LocalSongBillModel {
 
+    boolean isBillExist(Context context, LocalSongBillEntity billEntity);
+
+    boolean isBillTitleExist(Context context, LocalSongBillEntity billEntity);
+
     void addBill(Context context, LocalSongBillEntity billEntity);
 
     List<LocalSongEntity> getBillSongs(Context context);
