@@ -7,5 +7,7 @@
     <string name="drawer_close">close</string>
 
     <string name="divider_artist_album_view_holder_local_song">-</string>
+    <string name="error_text_length_overflow">已超过最大长度限制</string>
+    <string name="error_input_empty_bill_name">你输入的歌单名称是空的?</string>
 
 </resources>

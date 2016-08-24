@@ -220,5 +220,14 @@ public abstract class BaseDisplayFragment<E> extends BaseFragment implements Bas
         mDisplayRecyclerView.smoothScrollToPosition(getAdapter().getItemCount());
     }
 
+//    @Override
+//    public void onDestroy() {
+//        //解决Viewpager切换重复加载
+//        if (null != mRootView) {
+//            ((ViewGroup) mRootView).removeView(mRootView);
+//        }
+//        super.onDestroy();
+//    }
+
 
 }

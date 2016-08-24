@@ -39,6 +39,7 @@ public class LocalSongBillEntity implements Parcelable {
 
     public LocalSongBillEntity(String billTitle) {
         this.billTitle = billTitle;
+        setBillId(System.currentTimeMillis());
     }
 
     public int getId() {

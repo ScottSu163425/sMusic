@@ -16,6 +16,7 @@ import com.scott.su.smusic.mvp.presenter.impl.LocalSongBillDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongBillDisplayView;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.T;
 
 import java.util.List;
@@ -51,6 +52,9 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
         mSongBillDisplayPresenter.onViewFirstTimeCreated();
 
         this.setSwipeRefreshEnable(true);
+
+        // TODO: 2016/8/24 Something wrong with the BaseDisplayFragment.
+        T.showShort(getActivity(),mSongBillDisplayAdapter.getDataList()==null?"onFirstTimeCreateView null":mSongBillDisplayAdapter.getDataList().toString());
     }
 
     @Override
@@ -110,7 +114,13 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
 
     @Override
     public void reinitialize() {
-        mSongBillDisplayPresenter.onViewFirstTimeCreated();
+//        mSongBillDisplayPresenter.onViewFirstTimeCreated();
+        List<LocalSongBillEntity> dataList = mSongBillDisplayAdapter.getDataList();
+        T.showShort(getActivity(), "before add:" + dataList.toString());
+        dataList.add(new LocalSongBillEntity(System.currentTimeMillis() + ""));
+        mSongBillDisplayAdapter.setDataList(dataList);
+        mSongBillDisplayAdapter.notifyDataSetChanged();
+        T.showShort(getActivity(), "after add:" + mSongBillDisplayAdapter.getDataList().toString());
     }
 
     @Override

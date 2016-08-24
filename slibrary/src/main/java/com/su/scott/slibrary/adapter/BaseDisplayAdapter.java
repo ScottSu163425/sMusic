@@ -34,7 +34,6 @@ public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> 
 
     public BaseDisplayAdapter(Activity context) {
         this.context = context;
-        this.dataList = new ArrayList<E>();
     }
 
     public BaseDisplayAdapter(Activity context, List<E> dataList) {
