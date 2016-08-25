@@ -127,15 +127,5 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
         T.showShort(getActivity(), entity.getAlbumTitle());
     }
 
-    @Override
-    public void scrollToTop() {
-        scrollToFirst();
-    }
-
-    @Override
-    public void scrollToBottm() {
-        scrollToLast();
-    }
-
 
 }

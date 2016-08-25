@@ -2,12 +2,10 @@ package com.scott.su.smusic.mvp.presenter.impl;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.model.LocalSongModel;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalSongDisplayPresenter;
 import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
@@ -19,12 +17,12 @@ import java.util.List;
  * Created by asus on 2016/8/19.
  */
 public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter {
-    private LocalSongDisplayView mLocalSongDisplayView;
-    private LocalSongModelImpl mLocalSongModel;
+    private LocalSongDisplayView mSongDisplayView;
+    private LocalSongModelImpl mSongModel;
 
     public LocalSongDisplayPresenterImpl(LocalSongDisplayView localSongDisplayView) {
-        this.mLocalSongDisplayView = localSongDisplayView;
-        this.mLocalSongModel = new LocalSongModelImpl();
+        this.mSongDisplayView = localSongDisplayView;
+        this.mSongModel = new LocalSongModelImpl();
     }
 
     @Override
@@ -49,36 +47,36 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
 
     @Override
     public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        mLocalSongDisplayView.handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
+        mSongDisplayView.handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
     }
 
     @Override
     public void onViewFirstTimeCreated() {
-        mLocalSongDisplayView.showLoading();
+        mSongDisplayView.showLoading();
         getAndDisplayLocalSongs();
     }
 
     @Override
     public void onViewWillDestroy() {
-//        mLocalSongModel.clearCache();
+//        mSongModel.clearCache();
     }
 
     private void getAndDisplayLocalSongs() {
         new AsyncTask<Void, Void, List<LocalSongEntity>>() {
             @Override
             protected List<LocalSongEntity> doInBackground(Void... voids) {
-                return mLocalSongModel.getLocalSongs(mLocalSongDisplayView.getViewContext());
+                return mSongModel.getLocalSongs(mSongDisplayView.getViewContext());
             }
 
             @Override
             protected void onPostExecute(List<LocalSongEntity> localSongEntities) {
                 super.onPostExecute(localSongEntities);
                 if (localSongEntities == null || localSongEntities.size() == 0) {
-                    mLocalSongDisplayView.showEmpty();
+                    mSongDisplayView.showEmpty();
                     return;
                 }
-                mLocalSongDisplayView.setDisplayData(localSongEntities);
-                mLocalSongDisplayView.display();
+                mSongDisplayView.setDisplayData(localSongEntities);
+                mSongDisplayView.display();
             }
         }.execute();
     }

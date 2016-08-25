@@ -9,7 +9,7 @@ import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalSongBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalSongBillDisplayPresenter;
 import com.scott.su.smusic.mvp.view.LocalSongBillDisplayView;
-import com.su.scott.slibrary.util.L;
+import com.su.scott.slibrary.util.T;
 
 import java.util.List;
 
@@ -18,17 +18,16 @@ import java.util.List;
  * Created by asus on 2016/8/19.
  */
 public class LocalSongBillDisplayPresenterImpl implements LocalSongBillDisplayPresenter {
-    private LocalSongBillDisplayView mLocalSongBillDisplayView;
-    private LocalSongBillModelImpl mLocalSongBillModel;
+    private LocalSongBillDisplayView mBillDisplayView;
+    private LocalSongBillModelImpl mBillModel;
 
-    public LocalSongBillDisplayPresenterImpl(LocalSongBillDisplayView LocalSongBillDisplayView) {
-        this.mLocalSongBillDisplayView = LocalSongBillDisplayView;
-        this.mLocalSongBillModel = new LocalSongBillModelImpl();
+    public LocalSongBillDisplayPresenterImpl(LocalSongBillDisplayView localSongBillDisplayView) {
+        this.mBillDisplayView = localSongBillDisplayView;
+        this.mBillModel = new LocalSongBillModelImpl();
     }
 
     @Override
     public void onSwipRefresh() {
-        mLocalSongBillDisplayView.showToastShort("onSwipRefresh");
         getAndDisplayLocalSongBills();
     }
 
@@ -49,12 +48,12 @@ public class LocalSongBillDisplayPresenterImpl implements LocalSongBillDisplayPr
 
     @Override
     public void onItemClick(View itemView, LocalSongBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        mLocalSongBillDisplayView.handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
+        mBillDisplayView.handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
     }
 
     @Override
     public void onViewFirstTimeCreated() {
-        mLocalSongBillDisplayView.showLoading();
+        mBillDisplayView.showLoading();
         getAndDisplayLocalSongBills();
     }
 
@@ -67,18 +66,18 @@ public class LocalSongBillDisplayPresenterImpl implements LocalSongBillDisplayPr
         new AsyncTask<Void, Void, List<LocalSongBillEntity>>() {
             @Override
             protected List<LocalSongBillEntity> doInBackground(Void... voids) {
-                return mLocalSongBillModel.getBills(mLocalSongBillDisplayView.getViewContext());
+                return mBillModel.getBills(mBillDisplayView.getViewContext());
             }
 
             @Override
             protected void onPostExecute(List<LocalSongBillEntity> localSongBillEntities) {
                 super.onPostExecute(localSongBillEntities);
                 if (localSongBillEntities == null || localSongBillEntities.size() == 0) {
-                    mLocalSongBillDisplayView.showEmpty();
+                    mBillDisplayView.showEmpty();
                     return;
                 }
-                mLocalSongBillDisplayView.setDisplayData(localSongBillEntities);
-                mLocalSongBillDisplayView.display();
+                mBillDisplayView.setDisplayData(localSongBillEntities);
+                mBillDisplayView.display();
             }
         }.execute();
     }

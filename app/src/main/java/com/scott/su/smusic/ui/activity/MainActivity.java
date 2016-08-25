@@ -170,11 +170,6 @@ public class MainActivity extends BaseActivity implements MainView {
         mAlbumDisplayFragment.reinitialize();
     }
 
-    @Override
-    public void scrollBillToLast() {
-        mBillDisplayFragment.scrollToBottm();
-    }
-
     /**
      * Show fab with animation.
      */

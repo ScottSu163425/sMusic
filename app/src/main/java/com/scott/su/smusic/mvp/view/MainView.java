@@ -13,8 +13,6 @@ public interface MainView extends BaseView {
 
     void updateAlbumDisplay();
 
-    void scrollBillToLast();
-
     void showFab();
 
     void hideFab();

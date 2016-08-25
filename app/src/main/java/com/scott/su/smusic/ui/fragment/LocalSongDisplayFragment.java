@@ -9,9 +9,7 @@ import android.view.View;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
-import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.model.impl.LocalSongBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalSongDisplayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalSongDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
@@ -25,8 +23,8 @@ import java.util.List;
  * Created by asus on 2016/8/19.
  */
 public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity> implements LocalSongDisplayView {
-    private LocalSongDisplayPresenter mLocalSongDisplayPresenter;
-    private LocalSongDisplayAdapter mLocalSongDisplayAdapter;
+    private LocalSongDisplayPresenter mSongDisplayPresenter;
+    private LocalSongDisplayAdapter mSongDisplayAdapter;
     private LocalSongDisplayAdapter.DISPLAY_TYPE mDisplayType = LocalSongDisplayAdapter.DISPLAY_TYPE.NumberDivider;
 
     private static final String KEY_DISPLAY_TYPE = "KEY_DISPLAY_TYPE";
@@ -47,30 +45,30 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 
     @Override
     public void onDestroy() {
-        mLocalSongDisplayPresenter.onViewWillDestroy();
+        mSongDisplayPresenter.onViewWillDestroy();
         super.onDestroy();
     }
 
     @Override
     protected void onFirstTimeCreateView() {
-        mLocalSongDisplayPresenter = new LocalSongDisplayPresenterImpl(this);
-        mLocalSongDisplayPresenter.onViewFirstTimeCreated();
+        mSongDisplayPresenter = new LocalSongDisplayPresenterImpl(this);
+        mSongDisplayPresenter.onViewFirstTimeCreated();
 
         this.setSwipeRefreshEnable(true);
     }
 
     @Override
     protected RecyclerView.Adapter getAdapter() {
-        mLocalSongDisplayAdapter = new LocalSongDisplayAdapter(getActivity(), mDisplayType);
+        mSongDisplayAdapter = new LocalSongDisplayAdapter(getActivity(), mDisplayType);
 
-        mLocalSongDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalSongEntity>() {
+        mSongDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalSongEntity>() {
             @Override
             public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-                mLocalSongDisplayPresenter.onItemClick(itemView, entity, position, sharedElements, transitionNames, data);
+                mSongDisplayPresenter.onItemClick(itemView, entity, position, sharedElements, transitionNames, data);
             }
         });
 
-        return mLocalSongDisplayAdapter;
+        return mSongDisplayAdapter;
     }
 
     @Override
@@ -95,7 +93,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 
     @Override
     protected void onSwipeRefresh() {
-        mLocalSongDisplayPresenter.onSwipRefresh();
+        mSongDisplayPresenter.onSwipRefresh();
     }
 
     @Override
@@ -115,13 +113,13 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 
     @Override
     public void reinitialize() {
-        mLocalSongDisplayPresenter.onViewFirstTimeCreated();
+        mSongDisplayPresenter.onViewFirstTimeCreated();
     }
 
     @Override
     public void setDisplayData(@NonNull List<LocalSongEntity> dataList) {
-        mLocalSongDisplayAdapter.setDataList(dataList);
-        mLocalSongDisplayAdapter.notifyDataSetChanged();
+        mSongDisplayAdapter.setDataList(dataList);
+        mSongDisplayAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -136,16 +134,6 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 //        entity.appendBillId(billEntity.getBillId());
 //        billModel.addSongToBill(getActivity(), entity, billEntity.getBillId());
         T.showShort(getActivity(), entity.getTitle());
-    }
-
-    @Override
-    public void scrollToTop() {
-        scrollToFirst();
-    }
-
-    @Override
-    public void scrollToBottm() {
-        scrollToLast();
     }
 
 

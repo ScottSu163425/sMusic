@@ -36,7 +36,6 @@ public class MainPresenterImpl implements MainPresenter {
         mBillModel.addBill(mView.getViewContext(), billEntity);
         mView.updateBillDisplay();
         mView.dismissCreateBillDialog();
-        mView.scrollBillToLast();
         mView.showToastShort("添加成功");
     }
 

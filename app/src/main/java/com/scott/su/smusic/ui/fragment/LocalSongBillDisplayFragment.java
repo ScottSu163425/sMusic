@@ -31,7 +31,6 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
 
     public static LocalSongBillDisplayFragment newInstance() {
         LocalSongBillDisplayFragment instance = new LocalSongBillDisplayFragment();
-
         return instance;
     }
 
@@ -52,9 +51,6 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
         mSongBillDisplayPresenter.onViewFirstTimeCreated();
 
         this.setSwipeRefreshEnable(true);
-
-        // TODO: 2016/8/24 Something wrong with the BaseDisplayFragment.
-        T.showShort(getActivity(),mSongBillDisplayAdapter.getDataList()==null?"onFirstTimeCreateView null":mSongBillDisplayAdapter.getDataList().toString());
     }
 
     @Override
@@ -114,13 +110,7 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
 
     @Override
     public void reinitialize() {
-//        mSongBillDisplayPresenter.onViewFirstTimeCreated();
-        List<LocalSongBillEntity> dataList = mSongBillDisplayAdapter.getDataList();
-        T.showShort(getActivity(), "before add:" + dataList.toString());
-        dataList.add(new LocalSongBillEntity(System.currentTimeMillis() + ""));
-        mSongBillDisplayAdapter.setDataList(dataList);
-        mSongBillDisplayAdapter.notifyDataSetChanged();
-        T.showShort(getActivity(), "after add:" + mSongBillDisplayAdapter.getDataList().toString());
+        mSongBillDisplayPresenter.onViewFirstTimeCreated();
     }
 
     @Override
@@ -135,17 +125,6 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
 
     @Override
     public void handleItemClick(View itemView, LocalSongBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-//        T.showLong(getActivity(), entity.getBillSongs().toString());
-    }
-
-    @Override
-    public void scrollToTop() {
-        scrollToFirst();
-    }
-
-    @Override
-    public void scrollToBottm() {
-        scrollToLast();
     }
 
 

@@ -35,7 +35,4 @@ public interface BaseDisplayView<E> extends BaseView {
 
     void handleItemClick(View itemView, E entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
 
-    void scrollToTop();
-
-    void scrollToBottm();
 }
