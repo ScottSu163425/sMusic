@@ -109,7 +109,7 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
 
 
     @Override
-    public void reinitialize() {
+    public void reInitialize() {
         mSongBillDisplayPresenter.onViewFirstTimeCreated();
     }
 

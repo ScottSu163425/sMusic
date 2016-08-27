@@ -1,5 +1,6 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
+import com.scott.su.smusic.R;
 import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.mvp.model.LocalSongBillModel;
 import com.scott.su.smusic.mvp.model.impl.LocalSongBillModelImpl;
@@ -29,14 +30,14 @@ public class MainPresenterImpl implements MainPresenter {
         LocalSongBillEntity billEntity = new LocalSongBillEntity(text);
 
         if (mBillModel.isBillTitleExist(mView.getViewContext(), billEntity)) {
-            mView.showToastShort(text + "已经存在");
+            mView.showCreateBillUnsuccessfully(text + mView.getViewContext().getString(R.string.error_already_exist));
             return;
         }
 
         mBillModel.addBill(mView.getViewContext(), billEntity);
         mView.updateBillDisplay();
         mView.dismissCreateBillDialog();
-        mView.showToastShort("添加成功");
+        mView.showCreateBillSuccessfully(billEntity);
     }
 
     @Override

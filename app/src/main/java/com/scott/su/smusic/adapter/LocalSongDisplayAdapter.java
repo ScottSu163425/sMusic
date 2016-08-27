@@ -119,5 +119,10 @@ public class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSongViewHol
 
     }
 
+    @Override
+    protected void onDataListChanged() {
+
+    }
+
 
 }

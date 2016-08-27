@@ -46,4 +46,9 @@ public class LocalAlbumDisplayAdapter extends BaseDisplayAdapter<LocalAlbumViewH
                 .into(viewHolder.getCoverImageView());
     }
 
+    @Override
+    protected void onDataListChanged() {
+
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.scott.su.smusic.ui.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -18,6 +19,7 @@ import android.view.animation.OvershootInterpolator;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
+import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.MainPresenterImpl;
 import com.scott.su.smusic.mvp.view.MainView;
@@ -65,6 +67,9 @@ public class MainActivity extends BaseActivity implements MainView {
 
         mPresenter = new MainPresenterImpl(this);
         mPresenter.onViewFirstTimeCreated();
+
+        //debug
+        startActivity(new Intent(MainActivity.this, LocalSongSelectionActivity.class));
     }
 
     @Override
@@ -124,7 +129,6 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -157,17 +161,17 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void updateSongDisplay() {
-        mSongDisplayFragment.reinitialize();
+        mSongDisplayFragment.reInitialize();
     }
 
     @Override
     public void updateBillDisplay() {
-        mBillDisplayFragment.reinitialize();
+        mBillDisplayFragment.reInitialize();
     }
 
     @Override
     public void updateAlbumDisplay() {
-        mAlbumDisplayFragment.reinitialize();
+        mAlbumDisplayFragment.reInitialize();
     }
 
     /**
@@ -239,12 +243,33 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
+    public void showCreateBillUnsuccessfully(String msg) {
+        showSnackbarShort(mToolbar, msg);
+    }
+
+    @Override
+    public void showCreateBillSuccessfully(final LocalSongBillEntity billEntity) {
+        showSnackbarLong(mToolbar,
+                getString(R.string.create_bill_successfully),
+                getString(R.string.confirm_positive),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(MainActivity.this, LocalSongSelectionActivity.class));
+                    }
+                });
+    }
+
+    @Override
     public void onBackPressed() {
-        showSnackbarShort(mToolbar, "退出应用？", "确定", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        showSnackbarShort(mToolbar,
+                getString(R.string.tips_exit_app),
+                getString(R.string.confirm_positive),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
     }
 }

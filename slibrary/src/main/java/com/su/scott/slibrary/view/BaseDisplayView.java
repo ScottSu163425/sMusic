@@ -21,7 +21,7 @@ public interface BaseDisplayView<E> extends BaseView {
 
     void showError();
 
-    void reinitialize();
+    void reInitialize();
 
     void performSwipeRefresh();
 

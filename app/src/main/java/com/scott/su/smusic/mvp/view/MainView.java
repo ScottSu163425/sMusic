@@ -1,5 +1,6 @@
 package com.scott.su.smusic.mvp.view;
 
+import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.su.scott.slibrary.view.BaseView;
 
 /**
@@ -20,6 +21,10 @@ public interface MainView extends BaseView {
     void showCreateBillDialog();
 
     void dismissCreateBillDialog();
+
+    void showCreateBillUnsuccessfully(String msg);
+
+    void showCreateBillSuccessfully(LocalSongBillEntity billEntity);
 
 
 }

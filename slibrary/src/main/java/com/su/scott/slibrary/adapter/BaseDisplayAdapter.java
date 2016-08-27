@@ -32,14 +32,16 @@ public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> 
 
     protected abstract void bindVH(VH viewHolder, E entity, int position);
 
+    protected abstract void onDataListChanged();
+
     public BaseDisplayAdapter(Activity context) {
         this.context = context;
-        this.dataList = new ArrayList<E>();
+        this.setDataList(new ArrayList<E>());
     }
 
     public BaseDisplayAdapter(Activity context, List<E> dataList) {
         this.context = context;
-        this.dataList = dataList;
+        this.setDataList(dataList);
     }
 
     @Override
@@ -69,6 +71,7 @@ public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> 
 
     public void setDataList(List<E> dataList) {
         this.dataList = dataList;
+        onDataListChanged();
     }
 
     protected ItemClickCallback<E> getItemClickCallback() {

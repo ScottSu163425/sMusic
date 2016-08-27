@@ -108,7 +108,7 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
     }
 
     @Override
-    public void reinitialize() {
+    public void reInitialize() {
         mLocalAlbumDisplayPresenter.onViewFirstTimeCreated();
     }
 

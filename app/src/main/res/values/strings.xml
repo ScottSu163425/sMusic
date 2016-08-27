@@ -2,6 +2,8 @@
     <string name="app_name">SMusic</string>
 
     <string name="menu_search">搜索</string>
+    <string name="menu_done_all">全选</string>
+    <string name="toolbar_title_local_song_selection">选择音乐</string>
 
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
@@ -9,5 +11,9 @@
     <string name="divider_artist_album_view_holder_local_song">-</string>
     <string name="error_text_length_overflow">已超过最大长度限制</string>
     <string name="error_input_empty_bill_name">你输入的歌单名称是空的?</string>
+    <string name="error_already_exist">已经存在</string>
+    <string name="tips_exit_app">退出应用？</string>
+    <string name="confirm_positive">确定</string>
+    <string name="create_bill_successfully">歌单创建成功，马上去添加歌曲？</string>
 
 </resources>

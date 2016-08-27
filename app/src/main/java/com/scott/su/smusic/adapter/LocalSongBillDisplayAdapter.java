@@ -65,4 +65,9 @@ public class LocalSongBillDisplayAdapter extends BaseDisplayAdapter<LocalSongBil
         });
     }
 
+    @Override
+    protected void onDataListChanged() {
+
+    }
+
 }
