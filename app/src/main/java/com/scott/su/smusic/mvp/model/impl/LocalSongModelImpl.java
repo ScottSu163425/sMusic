@@ -90,10 +90,12 @@ public class LocalSongModelImpl implements LocalSongModel {
         List<LocalSongEntity> result = new ArrayList<>();
         List<LocalSongEntity> songs = getLocalSongs(context);
 
-        for (LocalSongEntity songEntity : songs) {
-            for (long id : songIds) {
-                if (songEntity.getSongId() == id) {
-                    result.add(songEntity);
+        if (songIds != null) {
+            for (LocalSongEntity songEntity : songs) {
+                for (long id : songIds) {
+                    if (songEntity.getSongId() == id) {
+                        result.add(songEntity);
+                    }
                 }
             }
         }

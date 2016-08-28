@@ -130,7 +130,9 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
     public void handleItemClick(View itemView, LocalSongBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
         Intent intent = new Intent(getActivity(), LocalSongBillDetailActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_BILL, entity);
-        startActivity(intent);
+//        startActivity(intent);
+
+        goToWithSharedElement(intent, sharedElements[0], transitionNames[0]);
     }
 
 

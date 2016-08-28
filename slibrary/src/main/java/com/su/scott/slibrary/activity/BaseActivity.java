@@ -1,9 +1,14 @@
 package com.su.scott.slibrary.activity;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -88,5 +93,40 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
 
     protected void setNetworkErrorTip(String mNetworkErrorTip) {
         this.mNetworkErrorTip = mNetworkErrorTip;
+    }
+
+    protected void goTo(Class destination) {
+        startActivity(new Intent(this, destination));
+    }
+
+    protected void goTo(Intent intent) {
+        startActivity(intent);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    protected void goToWithTransition(Class destination) {
+        startActivity(new Intent(this, destination),
+                ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    protected void goToWithTransition(Intent intent) {
+        startActivity(intent,
+                ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    protected void goToWithSharedElement(Class destination, @NonNull View shareView, @NonNull String transitionName) {
+        Intent intent = new Intent(this, destination);
+        ActivityOptions options = ActivityOptions
+                .makeSceneTransitionAnimation(this, shareView, transitionName);
+        startActivity(intent, options.toBundle());
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    protected void goToWithSharedElement(Intent intent, @NonNull View shareView, @NonNull String transitionName) {
+        ActivityOptions options = ActivityOptions
+                .makeSceneTransitionAnimation(this, shareView, transitionName);
+        startActivity(intent, options.toBundle());
     }
 }

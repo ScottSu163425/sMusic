@@ -1,7 +1,13 @@
 package com.su.scott.slibrary.fragment;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
@@ -12,7 +18,7 @@ import com.su.scott.slibrary.view.BaseView;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public class BaseFragment extends Fragment implements BaseView{
+public class BaseFragment extends Fragment implements BaseView {
 
     private ProgressDialog mLoadingDialog;
 
@@ -54,33 +60,67 @@ public class BaseFragment extends Fragment implements BaseView{
     }
 
     @Override
-    public void showSnackbarShort(View parent,String msg) {
+    public void showSnackbarShort(View parent, String msg) {
         Snack.showShort(parent, msg);
     }
 
     @Override
-    public void showSnackbarLong(View parent,String msg) {
+    public void showSnackbarLong(View parent, String msg) {
         Snack.showLong(parent, msg);
     }
 
     @Override
-    public void showSnackbarShort(View parent,String msg, String action, View.OnClickListener actionListener) {
+    public void showSnackbarShort(View parent, String msg, String action, View.OnClickListener actionListener) {
         Snack.showShort(parent, msg, action, actionListener);
     }
 
     @Override
-    public void showSnackbarLong(View parent,String msg, String action, View.OnClickListener actionListener) {
+    public void showSnackbarLong(View parent, String msg, String action, View.OnClickListener actionListener) {
         Snack.showLong(parent, msg, action, actionListener);
     }
 
     @Override
     public void showNetworkError(View parent) {
-        showSnackbarShort(parent,mNetworkErrorTip);
+        showSnackbarShort(parent, mNetworkErrorTip);
     }
 
     protected void setNetworkErrorTip(String mNetworkErrorTip) {
         this.mNetworkErrorTip = mNetworkErrorTip;
     }
 
+    protected void goTo(Class destination) {
+        startActivity(new Intent(getActivity(), destination));
+    }
+
+    protected void goTo(Intent intent) {
+        startActivity(intent);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    protected void goToWithTransition(Class destination) {
+        startActivity(new Intent(getActivity(), destination),
+                ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    protected void goToWithTransition(Intent intent) {
+        startActivity(intent,
+                ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    protected void goToWithSharedElement(Class destination, @NonNull View shareView, @NonNull String transitionName) {
+        Intent intent = new Intent(getActivity(), destination);
+        ActivityOptions options = ActivityOptions
+                .makeSceneTransitionAnimation(getActivity(), shareView, transitionName);
+        startActivity(intent, options.toBundle());
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    protected void goToWithSharedElement(Intent intent, @NonNull View shareView, @NonNull String transitionName) {
+        ActivityOptions options = ActivityOptions
+                .makeSceneTransitionAnimation(getActivity(), shareView, transitionName);
+        startActivity(intent, options.toBundle());
+    }
 
 }

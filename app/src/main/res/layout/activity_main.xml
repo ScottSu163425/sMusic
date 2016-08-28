@@ -59,7 +59,9 @@
             android:src="@drawable/ic_add_white_24dp"
             android:visibility="gone"
             app:backgroundTint="@color/colorPrimary"
-            app:fabSize="normal" />
+            app:elevation="@dimen/elevation_fab_normal"
+            app:fabSize="normal"
+            app:pressedTranslationZ="@dimen/elevation_fab_pressed" />
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView

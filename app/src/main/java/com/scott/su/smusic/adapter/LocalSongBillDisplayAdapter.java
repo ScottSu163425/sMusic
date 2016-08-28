@@ -35,7 +35,7 @@ public class LocalSongBillDisplayAdapter extends BaseDisplayAdapter<LocalSongBil
     }
 
     @Override
-    protected void bindVH(LocalSongBillViewHolder viewHolder, final LocalSongBillEntity entity, final int position) {
+    protected void bindVH(final LocalSongBillViewHolder viewHolder, final LocalSongBillEntity entity, final int position) {
         ViewUtil.setText(viewHolder.getTitleTextView(), entity.getBillTitle(), "");
         ViewUtil.setText(viewHolder.getCountTextView(),
                 (entity.getBillSongs() == null ? 0 : entity.getBillSongs().size()) + "首",
@@ -57,7 +57,10 @@ public class LocalSongBillDisplayAdapter extends BaseDisplayAdapter<LocalSongBil
             @Override
             public void onClick(View view) {
                 if (getItemClickCallback() != null) {
-                    getItemClickCallback().onItemClick(view, entity, position, null, null, null);
+                    getItemClickCallback().onItemClick(view, entity, position,
+                            new View[]{viewHolder.getCoverImageView()},
+                            new String[]{context.getResources().getString(R.string.transition_name_bill_cover)},
+                            null);
                 }
             }
         });

@@ -15,5 +15,7 @@
     <string name="tips_exit_app">退出应用？</string>
     <string name="confirm_positive">确定</string>
     <string name="create_bill_successfully">歌单创建成功，马上去添加歌曲？</string>
+    <string name="transition_name_bill_cover">transition_name_bill_cover</string>
+
 
 </resources>

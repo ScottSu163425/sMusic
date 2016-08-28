@@ -19,8 +19,9 @@
             android:id="@+id/iv_cover_view_holder_local_song_bill"
             android:layout_width="@dimen/size_image_view_holder_local_song_bill"
             android:layout_height="@dimen/size_image_view_holder_local_song_bill"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_cover_default_song_bill" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_cover_default_song_bill"
+            android:transitionName="@string/transition_name_bill_cover" />
 
         <TextView
             android:id="@+id/tv_title_view_holder_local_song_bill"

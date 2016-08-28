@@ -1,6 +1,7 @@
 package com.scott.su.smusic.ui.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,7 +24,7 @@ public class LocalSongBillDetailActivity extends BaseActivity {
     private LocalSongBillEntity mBillEntity;
     private ImageView mCoverImageView;
     private LocalSongDisplayFragment mBillSongDisplayFragment;
-
+    private FloatingActionButton mFloatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class LocalSongBillDetailActivity extends BaseActivity {
 
     private void initView() {
         mCoverImageView = (ImageView) findViewById(R.id.iv_cover_local_song_bill_detail);
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_local_song_bill_detail);
     }
 
     private void initData() {
@@ -87,6 +89,13 @@ public class LocalSongBillDetailActivity extends BaseActivity {
 
             @Override
             public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
+
+            }
+        });
+
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
             }
         });
