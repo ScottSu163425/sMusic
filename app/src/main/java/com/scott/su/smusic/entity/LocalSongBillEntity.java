@@ -4,9 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.su.scott.slibrary.util.L;
+import com.su.scott.slibrary.util.T;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +19,7 @@ import java.util.List;
 @Table(name = "LocalSongBillEntity")
 public class LocalSongBillEntity implements Parcelable {
 
-    public static final String ID_DIVIDER = "*";
+    public static final String ID_DIVIDER = "~";
 
     @Column(name = "id", isId = true)
     private int id;
@@ -67,6 +71,9 @@ public class LocalSongBillEntity implements Parcelable {
     }
 
     public String getBillSongIds() {
+        if (billSongIds == null) {
+            billSongIds = "";
+        }
         return billSongIds;
     }
 
@@ -82,12 +89,48 @@ public class LocalSongBillEntity implements Parcelable {
         }
     }
 
+    public long[] getBillSongIdsArray() {
+        if (TextUtils.isEmpty(getBillSongIds())) {
+            return null;
+        }
+
+        String[] idsStrArr = getBillSongIds().split(ID_DIVIDER);
+        long[] idsLongArr = new long[idsStrArr.length];
+
+        for (int i = 0; i < idsStrArr.length; i++) {
+            idsLongArr[i] = Long.valueOf(idsStrArr[i]);
+        }
+
+        return idsLongArr;
+    }
+
     public List<LocalSongEntity> getBillSongs() {
+        //Keep billSongs not null;
+        if (billSongs == null) {
+            billSongs = new ArrayList<>();
+        }
         return billSongs;
     }
 
     public void setBillSongs(List<LocalSongEntity> billSongs) {
         this.billSongs = billSongs;
+    }
+
+    public LocalSongEntity getLatestSong() {
+        if (isBillEmpty()) {
+            return null;
+        }
+
+        return getBillSongs().get(getBillSongs().size() - 1);
+    }
+
+    /**
+     * Return ture if the bill has one song at least;
+     *
+     * @return
+     */
+    public boolean isBillEmpty() {
+        return getBillSongs().size() == 0;
     }
 
     @Override

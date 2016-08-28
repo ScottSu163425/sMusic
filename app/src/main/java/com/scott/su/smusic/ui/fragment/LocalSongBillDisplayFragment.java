@@ -1,5 +1,6 @@
 package com.scott.su.smusic.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,10 +11,12 @@ import android.view.View;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongBillDisplayAdapter;
+import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.mvp.presenter.LocalSongBillDisplayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalSongBillDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongBillDisplayView;
+import com.scott.su.smusic.ui.activity.LocalSongBillDetailActivity;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 import com.su.scott.slibrary.util.L;
@@ -125,6 +128,9 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
 
     @Override
     public void handleItemClick(View itemView, LocalSongBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+        Intent intent = new Intent(getActivity(), LocalSongBillDetailActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_BILL, entity);
+        startActivity(intent);
     }
 
 

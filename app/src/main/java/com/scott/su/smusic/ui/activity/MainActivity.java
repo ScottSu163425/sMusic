@@ -96,7 +96,7 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     private void setupToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.tool_bar_main);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_main);
         mToolbar.setTitle(getResources().getString(R.string.app_name));
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -110,7 +110,8 @@ public class MainActivity extends BaseActivity implements MainView {
     private void initData() {
         List<Fragment> pageFragments = new ArrayList<>();
 
-        mSongDisplayFragment = LocalSongDisplayFragment.newInstance(LocalSongDisplayAdapter.DISPLAY_TYPE.CoverDivider);
+        mSongDisplayFragment = LocalSongDisplayFragment.newInstance(null,
+                LocalSongDisplayAdapter.DISPLAY_TYPE.CoverDivider);
         mBillDisplayFragment = LocalSongBillDisplayFragment.newInstance();
         mAlbumDisplayFragment = LocalAlbumDisplayFragment.newInstance();
 
@@ -126,6 +127,18 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     private void initListener() {
+        mSongDisplayFragment.setDisplayCallback(new LocalSongDisplayFragment.LocalSongDisplayCallback() {
+            @Override
+            public void onItemClick(View view, int position, LocalSongEntity entity) {
+                showToastShort("Click item:" + entity.getTitle());
+            }
+
+            @Override
+            public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
+                showToastShort("Click item more:" + entity.getTitle());
+            }
+        });
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -258,7 +271,7 @@ public class MainActivity extends BaseActivity implements MainView {
                     public void onClick(View view) {
                         Intent intent = new Intent(MainActivity.this, LocalSongSelectionActivity.class);
                         intent.setExtrasClassLoader(LocalSongBillEntity.class.getClassLoader());
-                        intent.putExtra(Constants.KEY_EXTRA_BILL_TO_ADD_SONG, billEntity);
+                        intent.putExtra(Constants.KEY_EXTRA_BILL, billEntity);
                         startActivityForResult(intent, REQUEST_CODE_LOCAL_SONG_SELECTION);
                     }
                 });
@@ -269,8 +282,8 @@ public class MainActivity extends BaseActivity implements MainView {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CODE_LOCAL_SONG_SELECTION && data != null) {
-                List<LocalSongEntity> selectedSongs = data.getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONG_SELECTION);
-                LocalSongBillEntity billToAddSong = data.getParcelableExtra(Constants.KEY_EXTRA_BILL_TO_ADD_SONG);
+                List<LocalSongEntity> selectedSongs = data.getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS);
+                LocalSongBillEntity billToAddSong = data.getParcelableExtra(Constants.KEY_EXTRA_BILL);
                 mPresenter.onLocalSongSelectionResult(billToAddSong, selectedSongs);
             }
         }

@@ -18,6 +18,9 @@ import com.scott.su.smusic.mvp.view.LocalSongSelectionView;
 import com.scott.su.smusic.ui.fragment.LocalSongSlectionDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 
+/**
+ * 2016-8-27
+ */
 public class LocalSongSelectionActivity extends BaseActivity implements LocalSongSelectionView {
     private LinearLayout mRootLayout;
     private Button mFinishSelectionButton;
@@ -64,7 +67,7 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
     }
 
     private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar_local_song_selection);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_local_song_selection);
         toolbar.setTitle(getResources().getString(R.string.toolbar_title_local_song_selection));
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -113,8 +116,8 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
         //Put all selected song entities to the result;
         Intent intent = new Intent();
         Bundle data = new Bundle();
-        data.putParcelable(Constants.KEY_EXTRA_BILL_TO_ADD_SONG, getIntent().getParcelableExtra(Constants.KEY_EXTRA_BILL_TO_ADD_SONG));
-        data.putParcelableArrayList(Constants.KEY_EXTRA_LOCAL_SONG_SELECTION, mLocalSongSlectionDisplayFragment.getSelectedSongs());
+        data.putParcelable(Constants.KEY_EXTRA_BILL, getIntent().getParcelableExtra(Constants.KEY_EXTRA_BILL));
+        data.putParcelableArrayList(Constants.KEY_EXTRA_LOCAL_SONGS, mLocalSongSlectionDisplayFragment.getSelectedSongs());
         intent.setExtrasClassLoader(LocalSongBillEntity.class.getClassLoader());
         intent.putExtras(data);
         setResult(RESULT_OK, intent);

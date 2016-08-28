@@ -7,9 +7,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.adapter.holder.LocalAlbumViewHolder;
 import com.scott.su.smusic.adapter.holder.LocalSongBillViewHolder;
-import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
@@ -44,15 +42,15 @@ public class LocalSongBillDisplayAdapter extends BaseDisplayAdapter<LocalSongBil
                 "0首");
 
         String billCoverPath = "";
-        if (entity.getBillSongs() != null && entity.getBillSongs().size() > 0) {
+        if (!entity.isBillEmpty()) {
             billCoverPath = new LocalSongModelImpl().getAlbumCoverPath(context,
-                    entity.getBillSongs().get(entity.getBillSongs().size()-1).getAlbumId());
+                    entity.getLatestSong().getAlbumId());
         }
 
         Glide.with(context)
                 .load(billCoverPath)
                 .placeholder(R.color.place_holder_loading)
-                .error(R.drawable.ic_cover_default_song_bill_)
+                .error(R.drawable.ic_cover_default_song_bill)
                 .into(viewHolder.getCoverImageView());
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

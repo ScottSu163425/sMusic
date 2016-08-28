@@ -85,6 +85,22 @@ public class LocalSongModelImpl implements LocalSongModel {
         return songEntities;
     }
 
+    @Override
+    public List<LocalSongEntity> getLocalSongsBySongIds(Context context, long... songIds) {
+        List<LocalSongEntity> result = new ArrayList<>();
+        List<LocalSongEntity> songs = getLocalSongs(context);
+
+        for (LocalSongEntity songEntity : songs) {
+            for (long id : songIds) {
+                if (songEntity.getSongId() == id) {
+                    result.add(songEntity);
+                }
+            }
+        }
+
+        return result;
+    }
+
 //    @Override
 //    public Bitmap getLocalSongAlbumCover(Context context, long albumId,int size) {
 //        Bitmap coverBitmap = getCover(albumId + "");

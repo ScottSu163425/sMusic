@@ -185,7 +185,6 @@ public abstract class BaseDisplayFragment<E> extends BaseFragment implements Bas
 
     public void setSwipeRefreshEnable(boolean mSwipeRefreshEnable) {
         this.mSwipeRefreshEnable = mSwipeRefreshEnable;
-        mSwipeRefreshLayout.setEnabled(mSwipeRefreshEnable);
     }
 
     public boolean isLoadMoreEnable() {

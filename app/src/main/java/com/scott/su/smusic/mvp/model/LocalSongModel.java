@@ -14,6 +14,8 @@ public interface LocalSongModel {
 
     List<LocalSongEntity> getLocalSongs(Context context);
 
+    List<LocalSongEntity> getLocalSongsBySongIds(Context context, long... songIds);
+
     //    Bitmap getLocalSongAlbumCover(Context context,long albumId,int size);
 //
 //    Bitmap getLocalSongAlbumBlurCover(Context context,long albumId,int size);

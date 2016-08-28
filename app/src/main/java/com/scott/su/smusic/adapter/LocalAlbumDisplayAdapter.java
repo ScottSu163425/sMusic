@@ -42,7 +42,7 @@ public class LocalAlbumDisplayAdapter extends BaseDisplayAdapter<LocalAlbumViewH
         Glide.with(context)
                 .load(new LocalSongModelImpl().getAlbumCoverPath(context, entity.getAlbumId()))
                 .placeholder(R.color.place_holder_loading)
-                .error(R.drawable.ic_cover_default_song_bill_)
+                .error(R.drawable.ic_cover_default_song_bill)
                 .into(viewHolder.getCoverImageView());
     }
 

@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSongViewHolder, LocalSongEntity> {
+public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSongViewHolder, LocalSongEntity> {
 
     private DISPLAY_TYPE displayType = DISPLAY_TYPE.NumberDivider; //RecyclerView item layout type
 
@@ -33,6 +33,8 @@ public class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSongViewHol
         OnlyDivider, //Type that item only with bottom divider line.
         None //Type that item without all above views.
     }
+
+    public abstract void onItemMoreClick(View view, int position, LocalSongEntity entity);
 
 
     public LocalSongDisplayAdapter(Activity context, DISPLAY_TYPE displayType) {
@@ -66,7 +68,7 @@ public class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSongViewHol
             ViewUtil.setViewVisiable(viewHolder.getNumberTextView());
             ViewUtil.setViewGone(viewHolder.getCoverImageView());
             ViewUtil.setText(viewHolder.getNumberTextView(), (position + 1) + "", "");
-        } else if (displayType == DISPLAY_TYPE.CoverDivider ||displayType == DISPLAY_TYPE.OnlyCover) {
+        } else if (displayType == DISPLAY_TYPE.CoverDivider || displayType == DISPLAY_TYPE.OnlyCover) {
             if (displayType == DISPLAY_TYPE.CoverDivider) {
                 ViewUtil.setViewVisiable(viewHolder.getDividerView());
             } else {
@@ -79,7 +81,7 @@ public class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSongViewHol
             Glide.with(context)
                     .load(localSongModel.getAlbumCoverPath(context, entity.getAlbumId()))
                     .placeholder(R.color.place_holder_loading)
-                    .error(R.drawable.ic_cover_default_song_bill_)
+                    .error(R.drawable.ic_cover_default_song_bill)
                     .into(viewHolder.getCoverImageView());
         } else if (displayType == DISPLAY_TYPE.OnlyDivider) {
             ViewUtil.setViewGone(viewHolder.getCoverAreaLayout());
@@ -113,7 +115,7 @@ public class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSongViewHol
         viewHolder.getMoreImageView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                T.showShort(context, entity.getTitle());
+                onItemMoreClick(view, position, entity);
             }
         });
 

@@ -20,7 +20,7 @@
             android:layout_width="@dimen/size_image_view_holder_local_song_bill"
             android:layout_height="@dimen/size_image_view_holder_local_song_bill"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_cover_default_song_bill_" />
+            android:src="@drawable/ic_cover_default_song_bill" />
 
         <TextView
             android:id="@+id/tv_title_view_holder_local_song_bill"

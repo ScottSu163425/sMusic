@@ -14,7 +14,7 @@
         app:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/tool_bar_local_song_selection"
+            android:id="@+id/toolbar_local_song_selection"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="?attr/homeAsUpIndicator"
