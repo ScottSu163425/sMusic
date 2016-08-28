@@ -34,8 +34,11 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     }
 
     @Override
-    public void showLoadingDialog(String msg, boolean cancelable) {
+    public void showLoadingDialog(Activity activity, String msg, boolean cancelable) {
         dismissLoadingDialog();
+        if (mLoadingDialog == null) {
+            mLoadingDialog = new ProgressDialog(activity);
+        }
         mLoadingDialog.setCancelable(cancelable);
         mLoadingDialog.setMessage(msg);
         mLoadingDialog.show();
@@ -43,7 +46,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
 
     @Override
     public void dismissLoadingDialog() {
-        if (mLoadingDialog.isShowing()) {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
         }
     }
@@ -59,28 +62,28 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     }
 
     @Override
-    public void showSnackbarShort(View parent,String msg) {
+    public void showSnackbarShort(View parent, String msg) {
         Snack.showShort(parent, msg);
     }
 
     @Override
-    public void showSnackbarLong(View parent,String msg) {
+    public void showSnackbarLong(View parent, String msg) {
         Snack.showLong(parent, msg);
     }
 
     @Override
-    public void showSnackbarShort(View parent,String msg, String action, View.OnClickListener actionListener) {
+    public void showSnackbarShort(View parent, String msg, String action, View.OnClickListener actionListener) {
         Snack.showShort(parent, msg, action, actionListener);
     }
 
     @Override
-    public void showSnackbarLong(View parent,String msg, String action, View.OnClickListener actionListener) {
+    public void showSnackbarLong(View parent, String msg, String action, View.OnClickListener actionListener) {
         Snack.showLong(parent, msg, action, actionListener);
     }
 
     @Override
     public void showNetworkError(View parent) {
-        showSnackbarShort(parent,mNetworkErrorTip);
+        showSnackbarShort(parent, mNetworkErrorTip);
     }
 
     protected void setNetworkErrorTip(String mNetworkErrorTip) {

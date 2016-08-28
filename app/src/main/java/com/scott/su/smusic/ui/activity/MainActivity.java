@@ -19,7 +19,9 @@ import android.view.animation.OvershootInterpolator;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
+import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalSongBillEntity;
+import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.MainPresenterImpl;
 import com.scott.su.smusic.mvp.view.MainView;
@@ -51,6 +53,8 @@ public class MainActivity extends BaseActivity implements MainView {
     private CreateBillDialogFragment mCreateBillDialogFragment;
 
     private static final int INDEX_PAGE_FAB = 1; //Index of page that fab will be shown;
+    private static final int REQUEST_CODE_LOCAL_SONG_SELECTION = 1111;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +71,6 @@ public class MainActivity extends BaseActivity implements MainView {
 
         mPresenter = new MainPresenterImpl(this);
         mPresenter.onViewFirstTimeCreated();
-
-        //debug
-        startActivity(new Intent(MainActivity.this, LocalSongSelectionActivity.class));
     }
 
     @Override
@@ -255,9 +256,25 @@ public class MainActivity extends BaseActivity implements MainView {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(MainActivity.this, LocalSongSelectionActivity.class));
+                        Intent intent = new Intent(MainActivity.this, LocalSongSelectionActivity.class);
+                        intent.setExtrasClassLoader(LocalSongBillEntity.class.getClassLoader());
+                        intent.putExtra(Constants.KEY_EXTRA_BILL_TO_ADD_SONG, billEntity);
+                        startActivityForResult(intent, REQUEST_CODE_LOCAL_SONG_SELECTION);
                     }
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CODE_LOCAL_SONG_SELECTION && data != null) {
+                List<LocalSongEntity> selectedSongs = data.getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONG_SELECTION);
+                LocalSongBillEntity billToAddSong = data.getParcelableExtra(Constants.KEY_EXTRA_BILL_TO_ADD_SONG);
+                mPresenter.onLocalSongSelectionResult(billToAddSong, selectedSongs);
+            }
+        }
+
     }
 
     @Override

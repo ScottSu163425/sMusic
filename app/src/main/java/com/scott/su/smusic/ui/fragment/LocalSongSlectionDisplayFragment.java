@@ -16,6 +16,7 @@ import com.scott.su.smusic.mvp.view.LocalSongSelectionDisplayView;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -117,7 +118,7 @@ public abstract class LocalSongSlectionDisplayFragment extends BaseDisplayFragme
     }
 
     @Override
-    public List<LocalSongEntity> getSelectedSongs() {
-        return mSongSelectionDisplayAdapter.getSelectedSongs();
+    public ArrayList<LocalSongEntity> getSelectedSongs() {
+        return (ArrayList<LocalSongEntity>) mSongSelectionDisplayAdapter.getSelectedSongs();
     }
 }

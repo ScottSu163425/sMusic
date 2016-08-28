@@ -24,9 +24,13 @@ public class BaseFragment extends Fragment implements BaseView{
     public Activity getViewContext() {
         return getActivity();
     }
+
     @Override
-    public void showLoadingDialog(String msg, boolean cancelable) {
+    public void showLoadingDialog(Activity activity, String msg, boolean cancelable) {
         dismissLoadingDialog();
+        if (mLoadingDialog == null) {
+            mLoadingDialog = new ProgressDialog(activity);
+        }
         mLoadingDialog.setCancelable(cancelable);
         mLoadingDialog.setMessage(msg);
         mLoadingDialog.show();
@@ -34,7 +38,7 @@ public class BaseFragment extends Fragment implements BaseView{
 
     @Override
     public void dismissLoadingDialog() {
-        if (mLoadingDialog.isShowing()) {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
         }
     }

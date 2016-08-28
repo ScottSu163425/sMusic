@@ -133,7 +133,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 //        LocalSongBillEntity billEntity = billModel.getBills(getActivity()).get(0);
 //        entity.appendBillId(billEntity.getBillId());
 //        billModel.addSongToBill(getActivity(), entity, billEntity.getBillId());
-        T.showShort(getActivity(), entity.getTitle());
+        T.showShort(getActivity(), entity.toString());
     }
 
 

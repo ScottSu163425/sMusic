@@ -12,7 +12,7 @@ public interface BaseView {
 
     Activity getViewContext();
 
-    void showLoadingDialog(String msg, boolean cancelable);
+    void showLoadingDialog(Activity activity,String msg, boolean cancelable);
 
     void dismissLoadingDialog();
 

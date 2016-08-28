@@ -83,7 +83,6 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
         List<LocalSongBillEntity> result = null;
         try {
             result = DbUtilHelper.getDefaultDbManager().findAll(LocalSongBillEntity.class);
-
             if (result != null && result.size() > 0) {
                 for (LocalSongBillEntity billEntity : result) {
                     billEntity.setBillSongs(getSongsByBillId(context, billEntity.getBillId()));
@@ -105,10 +104,12 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public void addSongToBill(Context context, LocalSongEntity songEntity, long billId) {
-        LocalSongBillEntity billEntity = getBill(context, billId);
+    public void addSongToBill(Context context, LocalSongEntity songEntity, LocalSongBillEntity billToAddSong) {
+        LocalSongBillEntity billEntity = getBill(context, billToAddSong.getBillId());
 
         billEntity.appendBillSongId(songEntity.getSongId());
+        songEntity.appendBillId(billToAddSong.getBillId());
+
         try {
             DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
             DbUtilHelper.getDefaultDbManager().saveOrUpdate(songEntity);
@@ -118,9 +119,9 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public void addSongsToBill(Context context, List<LocalSongEntity> songEntities, long billId) {
+    public void addSongsToBill(Context context, List<LocalSongEntity> songEntities, LocalSongBillEntity billToAddSong) {
         for (LocalSongEntity songEntity : songEntities) {
-            addSongToBill(context, songEntity, billId);
+            addSongToBill(context, songEntity, billToAddSong);
         }
     }
 
@@ -138,7 +139,6 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
                 result.add(songEntity);
             }
         }
-
         return result;
     }
 

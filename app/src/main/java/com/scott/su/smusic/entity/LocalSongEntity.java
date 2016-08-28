@@ -65,6 +65,9 @@ public class LocalSongEntity implements Parcelable {
     }
 
     public String getBillIds() {
+        if (billIds == null) {
+            billIds = "";
+        }
         return billIds;
     }
 

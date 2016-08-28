@@ -1,8 +1,8 @@
 package com.scott.su.smusic.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.transition.TransitionManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,13 +10,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.constant.Constants;
+import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.mvp.presenter.LocalSongSelectionPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalSongSelectionPresenterImp;
 import com.scott.su.smusic.mvp.view.LocalSongSelectionView;
 import com.scott.su.smusic.ui.fragment.LocalSongSlectionDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
-import com.su.scott.slibrary.util.SdkUtil;
-import com.su.scott.slibrary.util.ViewUtil;
 
 public class LocalSongSelectionActivity extends BaseActivity implements LocalSongSelectionView {
     private LinearLayout mRootLayout;
@@ -110,7 +110,15 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
 
     @Override
     public void finishSelection() {
-        showToastShort(mLocalSongSlectionDisplayFragment.getSelectedSongs().toString());
+        //Put all selected song entities to the result;
+        Intent intent = new Intent();
+        Bundle data = new Bundle();
+        data.putParcelable(Constants.KEY_EXTRA_BILL_TO_ADD_SONG, getIntent().getParcelableExtra(Constants.KEY_EXTRA_BILL_TO_ADD_SONG));
+        data.putParcelableArrayList(Constants.KEY_EXTRA_LOCAL_SONG_SELECTION, mLocalSongSlectionDisplayFragment.getSelectedSongs());
+        intent.setExtrasClassLoader(LocalSongBillEntity.class.getClassLoader());
+        intent.putExtras(data);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override
@@ -124,8 +132,7 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
 //        } else {
 //            ViewUtil.setViewGone(mFinishSelectionButton);
 //        }
-
-
+        mFinishSelectionButton.setEnabled(isShow);
     }
 
 }

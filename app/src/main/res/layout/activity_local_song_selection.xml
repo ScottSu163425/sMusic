@@ -33,9 +33,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/selector_button_primary"
+        android:enabled="false"
         android:text="选好了"
         android:textColor="@color/text_light_3"
-        android:textSize="@dimen/text_size_button"
-        android:visibility="gone" />
+        android:textSize="@dimen/text_size_button" />
 
 </LinearLayout>
