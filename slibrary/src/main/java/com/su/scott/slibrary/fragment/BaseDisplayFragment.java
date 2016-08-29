@@ -88,8 +88,9 @@ public abstract class BaseDisplayFragment<E> extends BaseFragment implements Bas
                 }
             });
 
-            mDisplayRecyclerView.setAdapter(getAdapter());
+            mDisplayRecyclerView.setHasFixedSize(true);
             mDisplayRecyclerView.setLayoutManager(getLayoutManager());
+            mDisplayRecyclerView.setAdapter(getAdapter());
 
             //setup loadmore
             mDisplayRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -185,6 +186,9 @@ public abstract class BaseDisplayFragment<E> extends BaseFragment implements Bas
 
     public void setSwipeRefreshEnable(boolean mSwipeRefreshEnable) {
         this.mSwipeRefreshEnable = mSwipeRefreshEnable;
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setEnabled(mSwipeRefreshEnable);
+        }
     }
 
     public boolean isLoadMoreEnable() {

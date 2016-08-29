@@ -65,8 +65,6 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     protected void onFirstTimeCreateView() {
         mSongDisplayPresenter = new LocalSongDisplayPresenterImpl(this);
         mSongDisplayPresenter.onViewFirstTimeCreated();
-
-        this.setSwipeRefreshEnable(true);
     }
 
     @Override

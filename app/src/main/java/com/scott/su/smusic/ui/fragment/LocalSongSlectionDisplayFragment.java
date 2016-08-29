@@ -22,16 +22,14 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/27.
  */
-public abstract class LocalSongSlectionDisplayFragment extends BaseDisplayFragment<LocalSongEntity> implements LocalSongSelectionDisplayView {
+public class LocalSongSlectionDisplayFragment extends BaseDisplayFragment<LocalSongEntity> implements LocalSongSelectionDisplayView {
     private LocalSongSelectionDisplayAdapter mSongSelectionDisplayAdapter;
     private LocalSongSelectionDisplayPresenter mSongSelectionDisplayPresenter;
+    private OnSelectedSongChangedListener mOnSelectedSongChangedListener;
 
-    public abstract void onSelectedCountChanged(boolean isEmpty);
 
     @Override
     protected void onFirstTimeCreateView() {
-        this.setSwipeRefreshEnable(false);
-        this.setLoadMoreEnable(false);
         mSongSelectionDisplayPresenter = new LocalSongSelectionDisplayPresenterImpl(this);
         mSongSelectionDisplayPresenter.onViewFirstTimeCreated();
     }
@@ -42,7 +40,9 @@ public abstract class LocalSongSlectionDisplayFragment extends BaseDisplayFragme
         mSongSelectionDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalSongEntity>() {
             @Override
             public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-                onSelectedCountChanged(mSongSelectionDisplayAdapter.getSelectedSongsCount() == 0);
+                if (mOnSelectedSongChangedListener != null) {
+                    mOnSelectedSongChangedListener.onSelectedCountChanged(mSongSelectionDisplayAdapter.getSelectedSongsCount() == 0);
+                }
             }
         });
 
@@ -114,11 +114,21 @@ public abstract class LocalSongSlectionDisplayFragment extends BaseDisplayFragme
     @Override
     public void selectAll() {
         mSongSelectionDisplayAdapter.selectAll();
-        onSelectedCountChanged(mSongSelectionDisplayAdapter.getSelectedSongsCount() == 0);
+        if (mOnSelectedSongChangedListener != null) {
+            mOnSelectedSongChangedListener.onSelectedCountChanged(mSongSelectionDisplayAdapter.getSelectedSongsCount() == 0);
+        }
     }
 
     @Override
     public ArrayList<LocalSongEntity> getSelectedSongs() {
         return (ArrayList<LocalSongEntity>) mSongSelectionDisplayAdapter.getSelectedSongs();
+    }
+
+    public void setOnSelectedSongChangedListener(OnSelectedSongChangedListener onSelectedSongChangedListener) {
+        this.mOnSelectedSongChangedListener = onSelectedSongChangedListener;
+    }
+
+    public interface OnSelectedSongChangedListener {
+        void onSelectedCountChanged(boolean isEmpty);
     }
 }

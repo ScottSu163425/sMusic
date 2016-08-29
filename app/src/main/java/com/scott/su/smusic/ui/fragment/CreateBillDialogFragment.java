@@ -20,12 +20,11 @@ import com.su.scott.slibrary.util.CirclarRevealUtil;
 /**
  * Created by asus on 2016/8/23.
  */
-public abstract class CreateBillDialogFragment extends DialogFragment {
+public class CreateBillDialogFragment extends DialogFragment {
     private View mRootView;
     private TextInputLayout mInputLayout;
     private Button mConfirmButton;
-
-    public abstract void onConfirmClick(String text);
+    private CreateBillDialogCallback mCallback;
 
     @Nullable
     @Override
@@ -69,7 +68,10 @@ public abstract class CreateBillDialogFragment extends DialogFragment {
                         mInputLayout.setError(getResources().getString(R.string.error_input_empty_bill_name));
                         return;
                     }
-                    onConfirmClick(input);
+
+                    if (mCallback != null) {
+                        mCallback.onConfirmClick(input);
+                    }
                 }
             });
         }
@@ -86,6 +88,14 @@ public abstract class CreateBillDialogFragment extends DialogFragment {
             }
         });
 
+    }
+
+    public void setCallback(CreateBillDialogCallback mCallback) {
+        this.mCallback = mCallback;
+    }
+
+    public interface CreateBillDialogCallback {
+        void onConfirmClick(String text);
     }
 
 }

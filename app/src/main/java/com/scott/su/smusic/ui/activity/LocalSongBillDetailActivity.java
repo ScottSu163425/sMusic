@@ -15,6 +15,7 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.util.ViewUtil;
 
 /**
  * 2016-8-28
@@ -54,6 +55,10 @@ public class LocalSongBillDetailActivity extends BaseActivity {
     private void initView() {
         mCoverImageView = (ImageView) findViewById(R.id.iv_cover_local_song_bill_detail);
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_local_song_bill_detail);
+
+        if (mBillEntity.isBillEmpty()) {
+            ViewUtil.setViewGone(mFloatingActionButton);
+        }
     }
 
     private void initData() {
@@ -78,6 +83,7 @@ public class LocalSongBillDetailActivity extends BaseActivity {
                 .beginTransaction()
                 .replace(R.id.fl_container_display_local_song_bill_detail, mBillSongDisplayFragment)
                 .commit();
+
     }
 
     private void initListener() {

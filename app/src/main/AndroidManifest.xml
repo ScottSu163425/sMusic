@@ -24,7 +24,7 @@
         <activity android:name=".ui.activity.LocalSongSelectionActivity" />
         <activity
             android:name=".ui.activity.LocalSongBillDetailActivity"
-            android:theme="@style/AppTheme.ImmersiveStatusBar"></activity>
+            android:theme="@style/AppTheme.ImmersiveStatusBar" />
     </application>
 
 </manifest>

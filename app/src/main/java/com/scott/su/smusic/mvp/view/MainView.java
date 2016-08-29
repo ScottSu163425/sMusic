@@ -17,10 +17,6 @@ public interface MainView extends BaseView {
 
     void updateAlbumDisplay();
 
-    void showFab();
-
-    void hideFab();
-
     void showCreateBillDialog();
 
     void dismissCreateBillDialog();

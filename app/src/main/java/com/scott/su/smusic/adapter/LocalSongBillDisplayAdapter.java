@@ -1,6 +1,7 @@
 package com.scott.su.smusic.adapter;
 
 import android.app.Activity;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.scott.su.smusic.adapter.holder.LocalSongBillViewHolder;
 import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
+import com.su.scott.slibrary.util.ScreenUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -51,6 +53,7 @@ public class LocalSongBillDisplayAdapter extends BaseDisplayAdapter<LocalSongBil
                 .load(billCoverPath)
                 .placeholder(R.color.place_holder_loading)
                 .error(R.drawable.ic_cover_default_song_bill)
+                .centerCrop()
                 .into(viewHolder.getCoverImageView());
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

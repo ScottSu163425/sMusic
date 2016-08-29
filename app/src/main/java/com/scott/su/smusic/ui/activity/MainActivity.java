@@ -13,8 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AnticipateOvershootInterpolator;
-import android.view.animation.OvershootInterpolator;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
@@ -30,9 +28,7 @@ import com.scott.su.smusic.ui.fragment.LocalAlbumDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBillDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
-import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.PermissionUtil;
-import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,6 +110,8 @@ public class MainActivity extends BaseActivity implements MainView {
                 LocalSongDisplayAdapter.DISPLAY_TYPE.CoverDivider);
         mBillDisplayFragment = LocalSongBillDisplayFragment.newInstance();
         mAlbumDisplayFragment = LocalAlbumDisplayFragment.newInstance();
+        mSongDisplayFragment.setSwipeRefreshEnable(true);
+        mSongDisplayFragment.setLoadMoreEnable(false);
 
         pageFragments.add(mSongDisplayFragment);
         pageFragments.add(mBillDisplayFragment);
@@ -143,6 +141,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                mFloatingActionButton.setTranslationX(positionOffsetPixels);
             }
 
             @Override
@@ -152,14 +151,14 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                if (ViewPager.SCROLL_STATE_IDLE == state) {
-                    if (mViewPager.getCurrentItem() == INDEX_PAGE_FAB) {
-                        showFab();
-                    } else {
-                        hideFab();
-                    }
-
-                }
+//                if (ViewPager.SCROLL_STATE_IDLE == state) {
+//                    if (mViewPager.getCurrentItem() == INDEX_PAGE_FAB) {
+//                        showFab();
+//                    } else {
+//                        hideFab();
+//                    }
+//
+//                }
 
             }
 
@@ -191,57 +190,58 @@ public class MainActivity extends BaseActivity implements MainView {
     /**
      * Show fab with animation.
      */
-    @Override
-    public void showFab() {
-        if (!ViewUtil.isViewVisiable(mFloatingActionButton)) {
-            AnimUtil.scaleIn(mFloatingActionButton, AnimUtil.DEFAULT_DURATION,
-                    new OvershootInterpolator(),
-                    new AnimUtil.SimpleAnimListener() {
-                        @Override
-                        public void onAnimStart() {
-                            ViewUtil.setViewVisiable(mFloatingActionButton);
-                        }
-
-                        @Override
-                        public void onAnimEnd() {
-
-                        }
-                    }
-            );
-        }
-    }
+//    @Override
+//    public void showFab() {
+//        if (!ViewUtil.isViewVisiable(mFloatingActionButton)) {
+//            AnimUtil.scaleIn(mFloatingActionButton, AnimUtil.DEFAULT_DURATION,
+//                    new OvershootInterpolator(),
+//                    new AnimUtil.SimpleAnimListener() {
+//                        @Override
+//                        public void onAnimStart() {
+//                            ViewUtil.setViewVisiable(mFloatingActionButton);
+//                        }
+//
+//                        @Override
+//                        public void onAnimEnd() {
+//
+//                        }
+//                    }
+//            );
+//        }
+//    }
 
     /**
      * Hide fab with animation.
      */
-    @Override
-    public void hideFab() {
-        if (ViewUtil.isViewVisiable(mFloatingActionButton)) {
-            AnimUtil.scaleOut(mFloatingActionButton, AnimUtil.DEFAULT_DURATION,
-                    new AnticipateOvershootInterpolator(),
-                    new AnimUtil.SimpleAnimListener() {
-                        @Override
-                        public void onAnimStart() {
-                        }
-
-                        @Override
-                        public void onAnimEnd() {
-                            ViewUtil.setViewGone(mFloatingActionButton);
-                        }
-                    }
-            );
-        }
-    }
+//    @Override
+//    public void hideFab() {
+//        if (ViewUtil.isViewVisiable(mFloatingActionButton)) {
+//            AnimUtil.scaleOut(mFloatingActionButton, AnimUtil.DEFAULT_DURATION,
+//                    new AnticipateOvershootInterpolator(),
+//                    new AnimUtil.SimpleAnimListener() {
+//                        @Override
+//                        public void onAnimStart() {
+//                        }
+//
+//                        @Override
+//                        public void onAnimEnd() {
+//                            ViewUtil.setViewGone(mFloatingActionButton);
+//                        }
+//                    }
+//            );
+//        }
+//    }
 
     @Override
     public void showCreateBillDialog() {
 //        if (mCreateBillDialogFragment == null) {
-        mCreateBillDialogFragment = new CreateBillDialogFragment() {
+        mCreateBillDialogFragment = new CreateBillDialogFragment();
+        mCreateBillDialogFragment.setCallback(new CreateBillDialogFragment.CreateBillDialogCallback() {
             @Override
             public void onConfirmClick(String text) {
                 mPresenter.onCreateBillConfirm(text);
             }
-        };
+        });
 //        }
 
         if (!mCreateBillDialogFragment.isVisible()) {

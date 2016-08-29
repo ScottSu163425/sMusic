@@ -84,12 +84,15 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
     }
 
     private void initData() {
-        mLocalSongSlectionDisplayFragment = new LocalSongSlectionDisplayFragment() {
+        mLocalSongSlectionDisplayFragment = new LocalSongSlectionDisplayFragment();
+        mLocalSongSlectionDisplayFragment.setOnSelectedSongChangedListener(new LocalSongSlectionDisplayFragment.OnSelectedSongChangedListener() {
             @Override
             public void onSelectedCountChanged(boolean isEmpty) {
                 mSongSelectionPresenter.onSelectedCountChanged(isEmpty);
             }
-        };
+        });
+        mLocalSongSlectionDisplayFragment.setSwipeRefreshEnable(false);
+        mLocalSongSlectionDisplayFragment.setLoadMoreEnable(false);
 
         getSupportFragmentManager().
                 beginTransaction().
