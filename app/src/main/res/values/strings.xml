@@ -3,6 +3,10 @@
 
     <string name="menu_search">搜索</string>
     <string name="menu_done_all">全选</string>
+    <string name="menu_add">添加</string>
+
+
+
     <string name="toolbar_title_local_song_selection">选择音乐</string>
 
     <string name="drawer_open">open</string>

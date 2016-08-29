@@ -91,8 +91,9 @@ public class LocalSongModelImpl implements LocalSongModel {
         List<LocalSongEntity> songs = getLocalSongs(context);
 
         if (songIds != null) {
-            for (LocalSongEntity songEntity : songs) {
-                for (long id : songIds) {
+            //Traverse in the order to make sure that the latest added song always in the first postion;
+            for (long id : songIds) {
+                for (LocalSongEntity songEntity : songs) {
                     if (songEntity.getSongId() == id) {
                         result.add(songEntity);
                     }

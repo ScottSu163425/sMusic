@@ -30,4 +30,6 @@ public interface LocalSongBillModel {
 
     List<LocalSongEntity> getSongsByBillId(Context context, long billId);
 
+    boolean isBillContains(LocalSongBillEntity billEntity,LocalSongEntity songEntity);
+
 }

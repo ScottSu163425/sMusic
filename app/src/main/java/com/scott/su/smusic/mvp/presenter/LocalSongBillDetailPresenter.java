@@ -7,14 +7,10 @@ import com.su.scott.slibrary.presenter.BasePresenter;
 import java.util.List;
 
 /**
- * Created by asus on 2016/8/19.
+ * Created by asus on 2016/8/29.
  */
-public interface MainPresenter extends BasePresenter {
-
-    void onFabClick();
-
-    void onCreateBillConfirm(String text);
+public interface LocalSongBillDetailPresenter extends BasePresenter {
+    void onAddSongsMenuClick();
 
     void onSelectedLocalSongsResult(LocalSongBillEntity billToAddSong, List<LocalSongEntity> songsToAdd);
-
 }

@@ -19,7 +19,7 @@ import com.su.scott.slibrary.view.BaseView;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public class BaseActivity extends AppCompatActivity implements BaseView {
+public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
     private ProgressDialog mLoadingDialog;
 

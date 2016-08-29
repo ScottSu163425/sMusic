@@ -18,7 +18,7 @@ import com.su.scott.slibrary.view.BaseView;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public class BaseFragment extends Fragment implements BaseView {
+public abstract class BaseFragment extends Fragment implements BaseView {
 
     private ProgressDialog mLoadingDialog;
 

@@ -225,4 +225,28 @@ public abstract class BaseDisplayFragment<E> extends BaseFragment implements Bas
 //    }
 
 
+    @Override
+    public void initPreData() {
+
+    }
+
+    @Override
+    public void initToolbar() {
+
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initListener() {
+
+    }
 }

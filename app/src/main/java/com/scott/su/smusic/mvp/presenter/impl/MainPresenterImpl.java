@@ -46,7 +46,7 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void onLocalSongSelectionResult(final LocalSongBillEntity billToAddSong, final List<LocalSongEntity> songsToAdd) {
+    public void onSelectedLocalSongsResult(final LocalSongBillEntity billToAddSong, final List<LocalSongEntity> songsToAdd) {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected void onPreExecute() {
@@ -73,7 +73,11 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onViewFirstTimeCreated() {
-
+        mMainView.initPreData();
+        mMainView.initToolbar();
+        mMainView.initView();
+        mMainView.initData();
+        mMainView.initListener();
     }
 
     @Override

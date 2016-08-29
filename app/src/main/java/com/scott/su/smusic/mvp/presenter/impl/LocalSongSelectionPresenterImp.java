@@ -30,7 +30,11 @@ public class LocalSongSelectionPresenterImp implements LocalSongSelectionPresent
 
     @Override
     public void onViewFirstTimeCreated() {
-
+        mSongSelectionView.initPreData();
+        mSongSelectionView.initToolbar();
+        mSongSelectionView.initView();
+        mSongSelectionView.initData();
+        mSongSelectionView.initListener();
     }
 
     @Override

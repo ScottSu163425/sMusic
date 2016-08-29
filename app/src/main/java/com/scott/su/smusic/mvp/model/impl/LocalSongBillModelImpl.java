@@ -88,7 +88,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
                     billEntity.setBillSongs(getSongsByBillId(context, billEntity.getBillId()));
                 }
             } else {
-                //First time open,auto create one bill;
+                //If it is the first time to open, create one bill automatically;
                 result = new ArrayList<>();
                 LocalSongBillEntity songBillEntity = new LocalSongBillEntity();
                 songBillEntity.setBillTitle("我喜欢");
@@ -139,7 +139,18 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
                 result.add(songEntity);
             }
         }
+
         return result;
     }
+
+    @Override
+    public boolean isBillContains(LocalSongBillEntity billEntity, LocalSongEntity songEntity) {
+        if (billEntity.isBillEmpty()) {
+            return false;
+        }
+
+        return billEntity.getBillSongIds().contains(songEntity.getSongId() + "");
+    }
+
 
 }

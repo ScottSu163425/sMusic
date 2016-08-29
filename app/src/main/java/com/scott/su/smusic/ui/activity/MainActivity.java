@@ -57,14 +57,6 @@ public class MainActivity extends BaseActivity implements MainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        setupToolbar();
-        initView();
-        initData();
-        initListener();
-
         mPresenter = new MainPresenterImpl(this);
         mPresenter.onViewFirstTimeCreated();
     }
@@ -80,18 +72,14 @@ public class MainActivity extends BaseActivity implements MainView {
         return true;
     }
 
-    private void initView() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_main);
-        mViewPager = (ViewPager) findViewById(R.id.view_pager_main);
-        mTabLayout = (TabLayout) findViewById(R.id.tab_layout_main);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_main);
-
-        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
-        mDrawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
+    @Override
+    public void initPreData() {
+        PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
-    private void setupToolbar() {
+    @Override
+    public void initToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_main);
         mToolbar.setTitle(getResources().getString(R.string.app_name));
         setSupportActionBar(mToolbar);
@@ -103,7 +91,20 @@ public class MainActivity extends BaseActivity implements MainView {
         });
     }
 
-    private void initData() {
+    @Override
+    public void initView() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_main);
+        mViewPager = (ViewPager) findViewById(R.id.view_pager_main);
+        mTabLayout = (TabLayout) findViewById(R.id.tab_layout_main);
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_main);
+
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+        mDrawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void initData() {
         List<Fragment> pageFragments = new ArrayList<>();
 
         mSongDisplayFragment = LocalSongDisplayFragment.newInstance(null,
@@ -124,7 +125,8 @@ public class MainActivity extends BaseActivity implements MainView {
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
-    private void initListener() {
+    @Override
+    public void initListener() {
         mSongDisplayFragment.setDisplayCallback(new LocalSongDisplayFragment.LocalSongDisplayCallback() {
             @Override
             public void onItemClick(View view, int position, LocalSongEntity entity) {
@@ -231,7 +233,6 @@ public class MainActivity extends BaseActivity implements MainView {
 //            );
 //        }
 //    }
-
     @Override
     public void showCreateBillDialog() {
 //        if (mCreateBillDialogFragment == null) {
@@ -284,7 +285,7 @@ public class MainActivity extends BaseActivity implements MainView {
             if (requestCode == REQUEST_CODE_LOCAL_SONG_SELECTION && data != null) {
                 List<LocalSongEntity> selectedSongs = data.getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS);
                 LocalSongBillEntity billToAddSong = data.getParcelableExtra(Constants.KEY_EXTRA_BILL);
-                mPresenter.onLocalSongSelectionResult(billToAddSong, selectedSongs);
+                mPresenter.onSelectedLocalSongsResult(billToAddSong, selectedSongs);
             }
         }
 

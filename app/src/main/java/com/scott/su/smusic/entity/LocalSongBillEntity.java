@@ -98,7 +98,8 @@ public class LocalSongBillEntity implements Parcelable {
         long[] idsLongArr = new long[idsStrArr.length];
 
         for (int i = 0; i < idsStrArr.length; i++) {
-            idsLongArr[i] = Long.valueOf(idsStrArr[i]);
+            //Reverse the array:The latest added song should be set on first position;
+            idsLongArr[idsStrArr.length-1-i] = Long.valueOf(idsStrArr[i]);
         }
 
         return idsLongArr;

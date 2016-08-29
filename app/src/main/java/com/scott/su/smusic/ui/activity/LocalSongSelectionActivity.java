@@ -33,29 +33,8 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_song_selection);
 
-        setupToolbar();
-
-        initView();
-        initData();
-        initListener();
-
         mSongSelectionPresenter = new LocalSongSelectionPresenterImp(this);
         mSongSelectionPresenter.onViewFirstTimeCreated();
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        //If the local song list is empty, hide the menu;
-        menu.findItem(R.id.action_done_all_local_song_selection)
-                .setVisible(mLocalSongSlectionDisplayFragment.getSelectedSongs().size() == 0);
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.local_song_selection, menu);
-        return true;
     }
 
     @Override
@@ -66,7 +45,13 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
         return true;
     }
 
-    private void setupToolbar() {
+    @Override
+    public void initPreData() {
+
+    }
+
+    @Override
+    public void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_local_song_selection);
         toolbar.setTitle(getResources().getString(R.string.toolbar_title_local_song_selection));
         setSupportActionBar(toolbar);
@@ -78,12 +63,14 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
         });
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
         mRootLayout = (LinearLayout) findViewById(R.id.ll_root_local_song_selection);
         mFinishSelectionButton = (Button) findViewById(R.id.btn_finish_selection_local_song_selection);
     }
 
-    private void initData() {
+    @Override
+    public void initData() {
         mLocalSongSlectionDisplayFragment = new LocalSongSlectionDisplayFragment();
         mLocalSongSlectionDisplayFragment.setOnSelectedSongChangedListener(new LocalSongSlectionDisplayFragment.OnSelectedSongChangedListener() {
             @Override
@@ -100,7 +87,8 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
                 .commit();
     }
 
-    private void initListener() {
+    @Override
+    public void initListener() {
         mFinishSelectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,6 +127,21 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
 //            ViewUtil.setViewGone(mFinishSelectionButton);
 //        }
         mFinishSelectionButton.setEnabled(isShow);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        //If the local song list is empty, hide the menu;
+        menu.findItem(R.id.action_done_all_local_song_selection)
+                .setVisible(mLocalSongSlectionDisplayFragment.getSelectedSongs().size() == 0);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.local_song_selection, menu);
+        return true;
     }
 
 }

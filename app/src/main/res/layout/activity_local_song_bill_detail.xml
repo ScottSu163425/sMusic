@@ -25,7 +25,7 @@
             <ImageView
                 android:id="@+id/iv_cover_local_song_bill_detail"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="@dimen/height_top_area"
                 android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
                 android:transitionName="@string/transition_name_bill_cover"

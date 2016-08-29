@@ -2,8 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_done_all_local_song_selection"
-        android:icon="@drawable/ic_done_all_white_24dp"
+        android:id="@+id/action_add_local_song_bill_detaile"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:title="@string/menu_add"
+        app:showAsAction="never" />
+    <item
+        android:icon="@drawable/ic_add_white_24dp"
+        android:title="@string/menu_done_all"
+        app:showAsAction="never" />
+    <item
+        android:icon="@drawable/ic_add_white_24dp"
         android:title="@string/menu_search"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
 </menu>

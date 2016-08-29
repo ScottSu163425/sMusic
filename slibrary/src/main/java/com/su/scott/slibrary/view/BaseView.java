@@ -12,6 +12,16 @@ public interface BaseView {
 
     Activity getViewContext();
 
+    void initPreData();
+
+    void initToolbar();
+
+    void initView();
+
+    void initData();
+
+    void initListener();
+
     void showLoadingDialog(Activity activity,String msg, boolean cancelable);
 
     void dismissLoadingDialog();
