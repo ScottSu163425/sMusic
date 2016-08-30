@@ -99,7 +99,7 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
             @Override
             public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
                 BillDetailBottomSheetFragment.newInstance()
-                        .setTitle(entity.getTitle())
+                        .setLocalSongEntity(entity)
                         .setMenuClickCallback(new BillDetailBottomSheetFragment.BillDetailBottomMenuClickCallback() {
                             @Override
                             public void onAddClick() {
