@@ -28,7 +28,9 @@ import com.scott.su.smusic.ui.fragment.LocalAlbumDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBillDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.PermissionUtil;
+import com.su.scott.slibrary.util.T;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +39,7 @@ import java.util.List;
  * 2016-8-18
  */
 public class MainActivity extends BaseActivity implements MainView {
-    private MainPresenter mPresenter; //Presenter of mvp;
+    private MainPresenter mMainPresenter; //Presenter of mvp;
     private Toolbar mToolbar;   //Title bar;
     private DrawerLayout mDrawerLayout;     //Content drawer;
     private ViewPager mViewPager;   //Content ViewPager;
@@ -47,6 +49,7 @@ public class MainActivity extends BaseActivity implements MainView {
     private LocalSongBillDisplayFragment mBillDisplayFragment;
     private LocalAlbumDisplayFragment mAlbumDisplayFragment;
     private CreateBillDialogFragment mCreateBillDialogFragment;
+    private boolean mDataInitFinish = false;
 
     private static final int INDEX_PAGE_FAB = 1; //Index of page that fab will be shown;
     private static final int REQUEST_CODE_LOCAL_SONG_SELECTION = 1111;
@@ -57,8 +60,14 @@ public class MainActivity extends BaseActivity implements MainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mPresenter = new MainPresenterImpl(this);
-        mPresenter.onViewFirstTimeCreated();
+        mMainPresenter = new MainPresenterImpl(this);
+        mMainPresenter.onViewFirstTimeCreated();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mMainPresenter.onViewResume();
     }
 
     @Override
@@ -123,6 +132,7 @@ public class MainActivity extends BaseActivity implements MainView {
                 getResources().getStringArray(R.array.titles_tab_main)));
         mViewPager.setOffscreenPageLimit(pageFragments.size());
         mTabLayout.setupWithViewPager(mViewPager);
+        mDataInitFinish = true;
     }
 
     @Override
@@ -169,24 +179,35 @@ public class MainActivity extends BaseActivity implements MainView {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.onFabClick();
+                mMainPresenter.onFabClick();
             }
         });
     }
 
     @Override
+    public boolean isDataInitFinish() {
+        return mDataInitFinish;
+    }
+
+    @Override
     public void updateSongDisplay() {
-        mSongDisplayFragment.reInitialize();
+        if (mSongDisplayFragment.isVisible()) {
+            mSongDisplayFragment.reInitialize();
+        }
     }
 
     @Override
     public void updateBillDisplay() {
-        mBillDisplayFragment.reInitialize();
+        if (mBillDisplayFragment.isVisible()) {
+            mBillDisplayFragment.reInitialize();
+        }
     }
 
     @Override
     public void updateAlbumDisplay() {
-        mAlbumDisplayFragment.reInitialize();
+        if (mAlbumDisplayFragment.isVisible()) {
+            mAlbumDisplayFragment.reInitialize();
+        }
     }
 
     /**
@@ -240,7 +261,7 @@ public class MainActivity extends BaseActivity implements MainView {
         mCreateBillDialogFragment.setCallback(new CreateBillDialogFragment.CreateBillDialogCallback() {
             @Override
             public void onConfirmClick(String text) {
-                mPresenter.onCreateBillConfirm(text);
+                mMainPresenter.onCreateBillConfirm(text);
             }
         });
 //        }
@@ -285,7 +306,7 @@ public class MainActivity extends BaseActivity implements MainView {
             if (requestCode == REQUEST_CODE_LOCAL_SONG_SELECTION && data != null) {
                 List<LocalSongEntity> selectedSongs = data.getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS);
                 LocalSongBillEntity billToAddSong = data.getParcelableExtra(Constants.KEY_EXTRA_BILL);
-                mPresenter.onSelectedLocalSongsResult(billToAddSong, selectedSongs);
+                mMainPresenter.onSelectedLocalSongsResult(billToAddSong, selectedSongs);
             }
         }
 

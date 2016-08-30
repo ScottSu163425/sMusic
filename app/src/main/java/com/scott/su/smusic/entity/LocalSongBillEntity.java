@@ -89,7 +89,7 @@ public class LocalSongBillEntity implements Parcelable {
         }
     }
 
-    public long[] getBillSongIdsArray() {
+    public long[] getBillSongIdsLongArray() {
         if (TextUtils.isEmpty(getBillSongIds())) {
             return null;
         }

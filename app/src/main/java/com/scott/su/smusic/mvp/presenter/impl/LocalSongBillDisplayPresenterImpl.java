@@ -58,6 +58,11 @@ public class LocalSongBillDisplayPresenterImpl implements LocalSongBillDisplayPr
     }
 
     @Override
+    public void onViewResume() {
+
+    }
+
+    @Override
     public void onViewWillDestroy() {
 
     }

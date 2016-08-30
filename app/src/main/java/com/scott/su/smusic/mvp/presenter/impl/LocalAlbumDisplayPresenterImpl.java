@@ -58,6 +58,11 @@ public class LocalAlbumDisplayPresenterImpl implements LocalAlbumDisplayPresente
     }
 
     @Override
+    public void onViewResume() {
+
+    }
+
+    @Override
     public void onViewWillDestroy() {
 
     }

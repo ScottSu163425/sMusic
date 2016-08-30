@@ -6,6 +6,7 @@ import com.scott.su.smusic.mvp.model.LocalSongBillModel;
 import com.scott.su.smusic.mvp.model.impl.LocalSongBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalSongBillDetailPresenter;
 import com.scott.su.smusic.mvp.view.LocalSongBillDetailView;
+import com.su.scott.slibrary.util.L;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
     @Override
     public void onSelectedLocalSongsResult(LocalSongBillEntity billToAddSong, List<LocalSongEntity> songsToAdd) {
         if (songsToAdd.size() == 1) {
+            //Only select one song to add;
             LocalSongEntity songToAdd = songsToAdd.get(0);
             if (mBillModel.isBillContains(billToAddSong, songToAdd)) {
                 mBillDetailView.showAddSongsUnsuccessfully(songToAdd.getTitle()
@@ -38,8 +40,12 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
                 mBillDetailView.showAddSongsSuccessfully("添加成功");
                 mBillDetailView.refreshBillCover(mBillModel.getBill(mBillDetailView.getViewContext(),
                         billToAddSong.getBillId()));
-                mBillDetailView.refreshBillSongDisplay();
+                mBillDetailView.refreshBillSongDisplay(mBillModel.getBill(mBillDetailView.getViewContext(),
+                        billToAddSong.getBillId()));
             }
+        } else {
+            //More than one song was selected to be added into current bill;
+
         }
     }
 
@@ -51,6 +57,11 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
         mBillDetailView.initView();
         mBillDetailView.initData();
         mBillDetailView.initListener();
+    }
+
+    @Override
+    public void onViewResume() {
+
     }
 
     @Override

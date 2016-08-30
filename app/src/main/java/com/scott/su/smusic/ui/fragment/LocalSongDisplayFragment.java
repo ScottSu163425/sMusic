@@ -16,6 +16,7 @@ import com.scott.su.smusic.mvp.presenter.impl.LocalSongDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
+import com.su.scott.slibrary.util.L;
 
 import java.util.List;
 
@@ -72,8 +73,8 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
         mSongDisplayAdapter = new LocalSongDisplayAdapter(getActivity(), mDisplayType) {
             @Override
             public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
-                if (mDisplayCallback!=null){
-                    mDisplayCallback.onItemMoreClick(view,position,entity);
+                if (mDisplayCallback != null) {
+                    mDisplayCallback.onItemMoreClick(view, position, entity);
                 }
             }
         };
@@ -145,8 +146,8 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 
     @Override
     public void handleItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        if (mDisplayCallback!=null){
-            mDisplayCallback.onItemClick(itemView,position,entity);
+        if (mDisplayCallback != null) {
+            mDisplayCallback.onItemClick(itemView, position, entity);
         }
     }
 
@@ -155,13 +156,22 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
         return mSongsBillEntity;
     }
 
+    public void setSongBillEntity(LocalSongBillEntity billEntity) {
+        this.mSongsBillEntity = billEntity;
+    }
+
+    public void setDisplayType(LocalSongDisplayAdapter.DISPLAY_TYPE mDisplayType) {
+        this.mDisplayType = mDisplayType;
+    }
+
     public void setDisplayCallback(LocalSongDisplayCallback callback) {
         this.mDisplayCallback = callback;
     }
 
-    public interface LocalSongDisplayCallback{
-        void onItemClick(View view,int position,LocalSongEntity entity);
-        void onItemMoreClick(View view,int position,LocalSongEntity entity);
+    public interface LocalSongDisplayCallback {
+        void onItemClick(View view, int position, LocalSongEntity entity);
+
+        void onItemMoreClick(View view, int position, LocalSongEntity entity);
     }
 
 }

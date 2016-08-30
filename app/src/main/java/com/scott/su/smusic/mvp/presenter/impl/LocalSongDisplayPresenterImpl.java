@@ -9,6 +9,7 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalSongDisplayPresenter;
 import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
+import com.su.scott.slibrary.util.L;
 
 import java.util.List;
 
@@ -57,6 +58,11 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
     }
 
     @Override
+    public void onViewResume() {
+
+    }
+
+    @Override
     public void onViewWillDestroy() {
 //        mSongModel.clearCache();
     }
@@ -69,7 +75,7 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
                     return mSongModel.getLocalSongs(mSongDisplayView.getViewContext());
                 } else {
                     return mSongModel.getLocalSongsBySongIds(mSongDisplayView.getViewContext(),
-                            mSongDisplayView.getSongBillEntity().getBillSongIdsArray());
+                            mSongDisplayView.getSongBillEntity().getBillSongIdsLongArray());
                 }
 
             }

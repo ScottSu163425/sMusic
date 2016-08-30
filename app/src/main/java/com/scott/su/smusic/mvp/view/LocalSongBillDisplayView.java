@@ -1,6 +1,5 @@
 package com.scott.su.smusic.mvp.view;
 
-import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.su.scott.slibrary.view.BaseDisplayView;
 

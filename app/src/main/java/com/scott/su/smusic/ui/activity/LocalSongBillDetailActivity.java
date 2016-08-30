@@ -21,6 +21,7 @@ import com.scott.su.smusic.mvp.presenter.impl.LocalSongBillDetailPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongBillDetailView;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -179,7 +180,8 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
     }
 
     @Override
-    public void refreshBillSongDisplay() {
+    public void refreshBillSongDisplay(LocalSongBillEntity billEntity) {
+        mBillSongDisplayFragment.setSongBillEntity(billEntity);
         mBillSongDisplayFragment.reInitialize();
     }
 

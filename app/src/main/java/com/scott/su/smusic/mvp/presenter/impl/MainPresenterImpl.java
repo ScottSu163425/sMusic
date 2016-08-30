@@ -81,6 +81,15 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
+    public void onViewResume() {
+        if (mMainView.isDataInitFinish()) {
+            mMainView.updateSongDisplay();
+            mMainView.updateBillDisplay();
+            mMainView.updateAlbumDisplay();
+        }
+    }
+
+    @Override
     public void onViewWillDestroy() {
 
     }

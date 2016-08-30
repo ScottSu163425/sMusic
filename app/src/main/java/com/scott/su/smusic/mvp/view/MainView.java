@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface MainView extends BaseView {
 
+    boolean isDataInitFinish();
+
     void updateSongDisplay();
 
     void updateBillDisplay();

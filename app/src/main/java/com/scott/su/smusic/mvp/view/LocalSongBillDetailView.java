@@ -16,6 +16,6 @@ public interface LocalSongBillDetailView extends BaseView {
 
     void refreshBillCover(LocalSongBillEntity billEntity);
 
-    void refreshBillSongDisplay();
+    void refreshBillSongDisplay(LocalSongBillEntity billEntity);
 
 }

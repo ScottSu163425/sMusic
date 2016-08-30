@@ -57,6 +57,11 @@ public class LocalSongSelectionDisplayPresenterImpl implements LocalSongSelectio
     }
 
     @Override
+    public void onViewResume() {
+
+    }
+
+    @Override
     public void onViewWillDestroy() {
 
     }

@@ -38,6 +38,11 @@ public class LocalSongSelectionPresenterImp implements LocalSongSelectionPresent
     }
 
     @Override
+    public void onViewResume() {
+
+    }
+
+    @Override
     public void onViewWillDestroy() {
 
     }
