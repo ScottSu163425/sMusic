@@ -2,6 +2,7 @@ package com.scott.su.smusic.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -15,13 +16,11 @@ import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalSongBillDetailPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalSongBillDetailPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongBillDetailView;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
-import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -78,8 +77,6 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
 
     @Override
     public void initData() {
-        loadCover();
-
         mBillSongDisplayFragment = LocalSongDisplayFragment.newInstance(mBillEntity,
                 LocalSongDisplayAdapter.DISPLAY_TYPE.NumberDivider);
         mBillSongDisplayFragment.setSwipeRefreshEnable(false);
@@ -101,7 +98,13 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
 
             @Override
             public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
-
+//                new BottomSheet.Builder(LocalSongBillDetailActivity.this).title("title").sheet(R.menu.navigation_main).listener(new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                    }
+//                }).show();
+                new BottomSheetDialogFragment().show(getSupportFragmentManager(), "");
             }
         });
 
@@ -111,20 +114,6 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
 
             }
         });
-    }
-
-    private void loadCover() {
-        String billCoverPath = "";
-        if (!mBillEntity.isBillEmpty()) {
-            billCoverPath = new LocalSongModelImpl().getAlbumCoverPath(this,
-                    mBillEntity.getLatestSong().getAlbumId());
-        }
-
-        Glide.with(this)
-                .load(billCoverPath)
-                .placeholder(R.color.place_holder_loading)
-                .error(R.drawable.ic_cover_default_song_bill)
-                .into(mCoverImageView);
     }
 
     @Override
@@ -162,6 +151,26 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
     }
 
     @Override
+    public void setBillEntity(LocalSongBillEntity billEntity) {
+        this.mBillEntity = billEntity;
+    }
+
+    @Override
+    public void loadCover(String coverPath) {
+//        String billCoverPath = "";
+//        if (!mBillEntity.isBillEmpty()) {
+//            billCoverPath = new LocalSongModelImpl().getAlbumCoverPath(this,
+//                    mBillEntity.getLatestSong().getAlbumId());
+//        }
+
+        Glide.with(this)
+                .load(coverPath)
+                .placeholder(R.color.place_holder_loading)
+                .error(R.drawable.ic_cover_default_song_bill)
+                .into(mCoverImageView);
+    }
+
+    @Override
     public void showFab() {
         if (!ViewUtil.isViewVisiable(mFloatingActionButton)) {
             ViewUtil.setViewVisiable(mFloatingActionButton);
@@ -190,12 +199,6 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
     @Override
     public void showAddSongsSuccessfully(String msg) {
         showSnackbarShort(mCoverImageView, msg);
-    }
-
-    @Override
-    public void refreshBillCover(LocalSongBillEntity billEntity) {
-        mBillEntity = billEntity;
-        loadCover();
     }
 
     @Override

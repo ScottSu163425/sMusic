@@ -1,11 +1,16 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.model.AppConfigModel;
 import com.scott.su.smusic.mvp.model.LocalSongBillModel;
+import com.scott.su.smusic.mvp.model.impl.AppConfigModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalSongBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.view.MainView;
@@ -18,11 +23,13 @@ import java.util.List;
 public class MainPresenterImpl implements MainPresenter {
     private MainView mMainView;
     private LocalSongBillModel mBillModel;
+    private AppConfigModel mConfigModel;
 
 
     public MainPresenterImpl(MainView mView) {
         this.mMainView = mView;
-        mBillModel = new LocalSongBillModelImpl();
+        this.mBillModel = new LocalSongBillModelImpl();
+        this.mConfigModel = new AppConfigModelImpl();
     }
 
     @Override
@@ -41,8 +48,14 @@ public class MainPresenterImpl implements MainPresenter {
 
         mBillModel.addBill(mMainView.getViewContext(), billEntity);
         mMainView.updateBillDisplay();
+        mConfigModel.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), false);
         mMainView.dismissCreateBillDialog();
         mMainView.showCreateBillSuccessfully(billEntity);
+    }
+
+    @Override
+    public void onBillItemClick(View itemView, LocalSongBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+        mMainView.goToBillDetailWithSharedElement(entity, sharedElements[0], transitionNames[0]);
     }
 
     @Override
@@ -66,6 +79,7 @@ public class MainPresenterImpl implements MainPresenter {
                 mMainView.updateBillDisplay();
                 mMainView.dismissLoadingDialog();
                 mMainView.showToastShort("添加成功");
+                mMainView.goToBillDetail(mBillModel.getBill(mMainView.getViewContext(), billToAddSong.getBillId()));
             }
         }.execute();
 
@@ -83,9 +97,20 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onViewResume() {
         if (mMainView.isDataInitFinish()) {
-            mMainView.updateSongDisplay();
-            mMainView.updateBillDisplay();
-            mMainView.updateAlbumDisplay();
+            if (mConfigModel.isNeedToRefreshLocalSongDisplay(mMainView.getViewContext())) {
+                mMainView.updateSongDisplay();
+                mConfigModel.setNeedToRefreshLocalSongDisplay(mMainView.getViewContext(), false);
+            }
+
+            if (mConfigModel.isNeedToRefreshLocalBillDisplay(mMainView.getViewContext())) {
+                mMainView.updateBillDisplay();
+                mConfigModel.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), false);
+            }
+
+            if (mConfigModel.isNeedToRefreshLocalAlbumDisplay(mMainView.getViewContext())) {
+                mMainView.updateAlbumDisplay();
+                mConfigModel.setNeedToRefreshLocalAlbumDisplay(mMainView.getViewContext(), false);
+            }
         }
     }
 

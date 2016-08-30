@@ -10,6 +10,10 @@ public interface LocalSongBillDetailView extends BaseView {
 
     LocalSongBillEntity getBillEntity();
 
+    void setBillEntity(LocalSongBillEntity billEntity);
+
+    void loadCover(String coverPath);
+
     void showFab();
 
     void hideFab();
@@ -19,8 +23,6 @@ public interface LocalSongBillDetailView extends BaseView {
     void showAddSongsUnsuccessfully(String msg);
 
     void showAddSongsSuccessfully(String msg);
-
-    void refreshBillCover(LocalSongBillEntity billEntity);
 
     void refreshBillSongDisplay(LocalSongBillEntity billEntity);
 

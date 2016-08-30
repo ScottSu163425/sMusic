@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -19,8 +18,6 @@ import com.scott.su.smusic.mvp.view.LocalSongBillDisplayView;
 import com.scott.su.smusic.ui.activity.LocalSongBillDetailActivity;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
-import com.su.scott.slibrary.util.L;
-import com.su.scott.slibrary.util.T;
 
 import java.util.List;
 
@@ -31,6 +28,7 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
     private LocalSongBillDisplayPresenter mSongBillDisplayPresenter;
     private LocalSongBillDisplayAdapter mSongBillDisplayAdapter;
 
+    private BillItemClickCallback mBillItemClickCallback;
 
     public static LocalSongBillDisplayFragment newInstance() {
         LocalSongBillDisplayFragment instance = new LocalSongBillDisplayFragment();
@@ -128,12 +126,17 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
 
     @Override
     public void handleItemClick(View itemView, LocalSongBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        Intent intent = new Intent(getActivity(), LocalSongBillDetailActivity.class);
-        intent.putExtra(Constants.KEY_EXTRA_BILL, entity);
-//        startActivity(intent);
-
-        goToWithSharedElement(intent, sharedElements[0], transitionNames[0]);
+        if (mBillItemClickCallback!=null){
+            mBillItemClickCallback.onBillItemClick(itemView,entity,position,sharedElements,transitionNames,data);
+        }
     }
 
+    public void setBillItemClickCallback(BillItemClickCallback mBillItemClickCallback) {
+        this.mBillItemClickCallback = mBillItemClickCallback;
+    }
+
+    public interface BillItemClickCallback {
+       void onBillItemClick(View itemView, LocalSongBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
+    }
 
 }

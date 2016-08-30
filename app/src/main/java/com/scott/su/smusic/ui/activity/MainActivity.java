@@ -3,6 +3,7 @@ package com.scott.su.smusic.ui.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -144,6 +145,13 @@ public class MainActivity extends BaseActivity implements MainView {
             @Override
             public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
                 showToastShort("Click item more:" + entity.getTitle());
+            }
+        });
+
+        mBillDisplayFragment.setBillItemClickCallback(new LocalSongBillDisplayFragment.BillItemClickCallback() {
+            @Override
+            public void onBillItemClick(View itemView, LocalSongBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+                mMainPresenter.onBillItemClick(itemView, entity, position, sharedElements, transitionNames, data);
             }
         });
 
@@ -295,6 +303,20 @@ public class MainActivity extends BaseActivity implements MainView {
                         startActivityForResult(intent, REQUEST_CODE_LOCAL_SONG_SELECTION);
                     }
                 });
+    }
+
+    @Override
+    public void goToBillDetailWithSharedElement(LocalSongBillEntity entity, View sharedElement, String transitionName) {
+        Intent intent = new Intent(MainActivity.this, LocalSongBillDetailActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_BILL, entity);
+        goToWithSharedElement(intent, sharedElement, transitionName);
+    }
+
+    @Override
+    public void goToBillDetail(LocalSongBillEntity entity) {
+        Intent intent = new Intent(MainActivity.this, LocalSongBillDetailActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_BILL, entity);
+        goTo(intent);
     }
 
     @Override
