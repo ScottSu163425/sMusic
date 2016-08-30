@@ -6,12 +6,6 @@
         android:icon="@drawable/ic_add_white_24dp"
         android:title="@string/menu_add"
         app:showAsAction="never" />
-    <item
-        android:icon="@drawable/ic_add_white_24dp"
-        android:title="@string/menu_done_all"
-        app:showAsAction="never" />
-    <item
-        android:icon="@drawable/ic_add_white_24dp"
-        android:title="@string/menu_search"
-        app:showAsAction="never" />
+
+
 </menu>

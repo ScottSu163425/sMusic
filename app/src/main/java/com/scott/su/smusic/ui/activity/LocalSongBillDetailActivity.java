@@ -2,7 +2,6 @@ package com.scott.su.smusic.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -19,6 +18,7 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.LocalSongBillDetailPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalSongBillDetailPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongBillDetailView;
+import com.scott.su.smusic.ui.fragment.BillDetailBottomSheetFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.ViewUtil;
@@ -98,13 +98,20 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
 
             @Override
             public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
-//                new BottomSheet.Builder(LocalSongBillDetailActivity.this).title("title").sheet(R.menu.navigation_main).listener(new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                    }
-//                }).show();
-                new BottomSheetDialogFragment().show(getSupportFragmentManager(), "");
+                BillDetailBottomSheetFragment.newInstance()
+                        .setTitle(entity.getTitle())
+                        .setMenuClickCallback(new BillDetailBottomSheetFragment.BillDetailBottomMenuClickCallback() {
+                            @Override
+                            public void onAddClick() {
+                                showToastShort("onAddClick");
+                            }
+
+                            @Override
+                            public void onMoreClick() {
+                                showToastShort("onMoreClick");
+                            }
+                        })
+                        .show(getSupportFragmentManager(), "");
             }
         });
 

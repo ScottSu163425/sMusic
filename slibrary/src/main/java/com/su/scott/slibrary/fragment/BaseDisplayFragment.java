@@ -3,7 +3,6 @@ package com.su.scott.slibrary.fragment;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -64,7 +63,7 @@ public abstract class BaseDisplayFragment<E> extends BaseFragment implements Bas
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
             mRootView = inflater.inflate(R.layout.fragment_base_display, container, false);
-            mDisplayRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_layout_fragment_base_display);
+            mDisplayRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_fragment_base_display);
             mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipe_refresh_layout_fragment_base_display);
             mLoadingLayout = (FrameLayout) mRootView.findViewById(R.id.fl_container_loading_layout_fragment_base_display);
             mEmptyLayout = (FrameLayout) mRootView.findViewById(R.id.fl_container_empty_layout_fragment_base_display);

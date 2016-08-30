@@ -104,13 +104,18 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
 
     @Override
     public void addSongToBill(Context context, LocalSongEntity songEntity, LocalSongBillEntity billToAddSong) {
-        LocalSongBillEntity billEntity = getBill(context, billToAddSong.getBillId());
+//        LocalSongBillEntity billEntity = getBill(context, billToAddSong.getBillId());
 
-        billEntity.appendBillSongId(songEntity.getSongId());
+        if (isBillContains(billToAddSong,songEntity)){
+            //Already contain this song.
+            return;
+        }
+
+        billToAddSong.appendBillSongId(songEntity.getSongId());
         songEntity.appendBillId(billToAddSong.getBillId());
 
         try {
-            DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
+            DbUtilHelper.getDefaultDbManager().saveOrUpdate(billToAddSong);
             DbUtilHelper.getDefaultDbManager().saveOrUpdate(songEntity);
         } catch (DbException e) {
             e.printStackTrace();
