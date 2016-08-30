@@ -157,6 +157,25 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
     }
 
     @Override
+    public LocalSongBillEntity getBillEntity() {
+        return mBillEntity;
+    }
+
+    @Override
+    public void showFab() {
+        if (!ViewUtil.isViewVisiable(mFloatingActionButton)) {
+            ViewUtil.setViewVisiable(mFloatingActionButton);
+        }
+    }
+
+    @Override
+    public void hideFab() {
+        if (ViewUtil.isViewVisiable(mFloatingActionButton)) {
+            ViewUtil.setViewGone(mFloatingActionButton);
+        }
+    }
+
+    @Override
     public void goToLocalSongSelectionActivity() {
         Intent intent = new Intent(LocalSongBillDetailActivity.this, LocalSongSelectionActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_BILL, mBillEntity);

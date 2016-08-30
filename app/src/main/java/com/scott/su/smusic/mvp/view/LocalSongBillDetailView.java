@@ -8,6 +8,12 @@ import com.su.scott.slibrary.view.BaseView;
  */
 public interface LocalSongBillDetailView extends BaseView {
 
+    LocalSongBillEntity getBillEntity();
+
+    void showFab();
+
+    void hideFab();
+
     void goToLocalSongSelectionActivity();
 
     void showAddSongsUnsuccessfully(String msg);

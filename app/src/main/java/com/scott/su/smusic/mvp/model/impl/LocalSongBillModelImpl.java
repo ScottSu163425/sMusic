@@ -6,7 +6,6 @@ import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalSongBillModel;
 import com.su.scott.slibrary.manager.DbUtilHelper;
-import com.su.scott.slibrary.util.L;
 
 import org.xutils.ex.DbException;
 
@@ -150,6 +149,16 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
         }
 
         return billEntity.getBillSongIds().contains(songEntity.getSongId() + "");
+    }
+
+    @Override
+    public boolean isBillContainsAll(LocalSongBillEntity billEntity, List<LocalSongEntity> songEntities) {
+        for (LocalSongEntity songEntity : songEntities) {
+            if (!isBillContains(billEntity, songEntity)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

@@ -28,9 +28,7 @@ import com.scott.su.smusic.ui.fragment.LocalAlbumDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBillDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
-import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.PermissionUtil;
-import com.su.scott.slibrary.util.T;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -286,7 +284,7 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void showCreateBillSuccessfully(final LocalSongBillEntity billEntity) {
         showSnackbarLong(mToolbar,
-                getString(R.string.create_bill_successfully),
+                getString(R.string.success_create_bill),
                 getString(R.string.confirm_positive),
                 new View.OnClickListener() {
                     @Override
@@ -315,7 +313,7 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void onBackPressed() {
         showSnackbarShort(mToolbar,
-                getString(R.string.tips_exit_app),
+                getString(R.string.ask_exit_app),
                 getString(R.string.confirm_positive),
                 new View.OnClickListener() {
                     @Override

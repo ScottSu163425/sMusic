@@ -6,7 +6,6 @@
     <string name="menu_add">添加</string>
 
 
-
     <string name="toolbar_title_local_song_selection">选择音乐</string>
 
     <string name="drawer_open">open</string>
@@ -16,9 +15,15 @@
     <string name="error_text_length_overflow">已超过最大长度限制</string>
     <string name="error_input_empty_bill_name">你输入的歌单名称是空的?</string>
     <string name="error_already_exist">已经存在</string>
-    <string name="tips_exit_app">退出应用？</string>
+
+    <string name="ask_exit_app">退出应用？</string>
     <string name="confirm_positive">确定</string>
-    <string name="create_bill_successfully">歌单创建成功，马上去添加歌曲？</string>
+
+    <string name="success_create_bill">歌单创建成功，马上去添加歌曲？</string>
+    <string name="success_add_songs_to_bill"> 添加成功</string>
+
+
+
     <string name="transition_name_bill_cover">transition_name_bill_cover</string>
 
 
