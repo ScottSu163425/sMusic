@@ -14,6 +14,7 @@ import com.scott.su.smusic.R;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalSongModel;
 import com.su.scott.slibrary.util.ImageUtil;
+import com.su.scott.slibrary.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +102,6 @@ public class LocalSongModelImpl implements LocalSongModel {
                 }
             }
         }
-
         return result;
     }
 

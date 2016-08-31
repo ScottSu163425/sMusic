@@ -22,6 +22,8 @@ public interface LocalSongBillModel {
 
     LocalSongBillEntity getBill(Context context, long billId);
 
+    LocalSongEntity getBillSong(Context context, long songId);
+
     List<LocalSongBillEntity> getBills(Context context);
 
     void addSongToBill(Context context, LocalSongEntity songEntity, LocalSongBillEntity billToAddSong);

@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +22,8 @@ import com.scott.su.smusic.mvp.view.LocalSongBillDetailView;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.util.AnimUtil;
+import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -98,7 +101,7 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
 
             @Override
             public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
-                mBillDetailPresenter.onBillSongItemMoreClick(view,position,entity);
+                mBillDetailPresenter.onBillSongItemMoreClick(view, position, entity);
             }
         });
 
@@ -150,18 +153,36 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
     }
 
     @Override
-    public void loadCover(String coverPath) {
-//        String billCoverPath = "";
-//        if (!mBillEntity.isBillEmpty()) {
-//            billCoverPath = new LocalSongModelImpl().getAlbumCoverPath(this,
-//                    mBillEntity.getLatestSong().getAlbumId());
-//        }
+    public void loadCover(final String coverPath, boolean needReveal) {
+        if (needReveal) {
+            CirclarRevealUtil.revealIn(mCoverImageView,
+                    CirclarRevealUtil.DIRECTION.LEFT_TOP,
+                    CirclarRevealUtil.DEFAULT_REVEAL_DURATION,
+                    new DecelerateInterpolator(),
+                    new AnimUtil.SimpleAnimListener() {
+                        @Override
+                        public void onAnimStart() {
+                            Glide.with(LocalSongBillDetailActivity.this)
+                                    .load(coverPath)
+                                    .placeholder(R.color.place_holder_loading)
+                                    .error(R.drawable.ic_cover_default_song_bill)
+                                    .into(mCoverImageView);
+                        }
 
-        Glide.with(this)
-                .load(coverPath)
-                .placeholder(R.color.place_holder_loading)
-                .error(R.drawable.ic_cover_default_song_bill)
-                .into(mCoverImageView);
+                        @Override
+                        public void onAnimEnd() {
+
+                        }
+                    });
+
+        } else {
+            Glide.with(this)
+                    .load(coverPath)
+                    .placeholder(R.color.place_holder_loading)
+                    .error(R.drawable.ic_cover_default_song_bill)
+                    .into(mCoverImageView);
+        }
+
     }
 
     @Override
@@ -197,6 +218,13 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
 
     @Override
     public void refreshBillSongDisplay(LocalSongBillEntity billEntity) {
+        if (billEntity.isBillEmpty()) {
+            CirclarRevealUtil.revealOut(mFloatingActionButton, CirclarRevealUtil.DIRECTION.CENTER, true);
+        } else {
+            if (ViewUtil.isViewGone(mFloatingActionButton)) {
+                CirclarRevealUtil.revealIn(mFloatingActionButton, CirclarRevealUtil.DIRECTION.CENTER);
+            }
+        }
         mBillSongDisplayFragment.setSongBillEntity(billEntity);
         mBillSongDisplayFragment.reInitialize();
     }

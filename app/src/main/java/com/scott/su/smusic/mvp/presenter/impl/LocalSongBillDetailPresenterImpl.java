@@ -54,7 +54,7 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
             mBillModel.addSongToBill(mBillDetailView.getViewContext(), songToAdd, billToAddSong);
             mBillDetailView.showAddSongsSuccessfully(mBillDetailView.getViewContext().getString(R.string.success_add_songs_to_bill));
             mBillDetailView.setBillEntity(mBillModel.getBill(mBillDetailView.getViewContext(), billToAddSong.getBillId()));
-            loadCover();
+            loadCover(true);
             mBillDetailView.refreshBillSongDisplay(mBillModel.getBill(mBillDetailView.getViewContext(),
                     billToAddSong.getBillId()));
             //When back to main activity ,the bill display show be updated
@@ -68,7 +68,7 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
             mBillModel.addSongsToBill(mBillDetailView.getViewContext(), songsToAdd, billToAddSong);
             mBillDetailView.showAddSongsSuccessfully(mBillDetailView.getViewContext().getString(R.string.success_add_songs_to_bill));
             mBillDetailView.setBillEntity(mBillModel.getBill(mBillDetailView.getViewContext(), billToAddSong.getBillId()));
-            loadCover();
+            loadCover(true);
             mBillDetailView.refreshBillSongDisplay(mBillModel.getBill(mBillDetailView.getViewContext(),
                     billToAddSong.getBillId()));
             mAppConfigModel.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
@@ -84,7 +84,7 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
         mBillDetailView.initData();
         mBillDetailView.initListener();
 
-        loadCover();
+        loadCover(false);
 
         if (mBillDetailView.getBillEntity().isBillEmpty()) {
             mBillDetailView.hideFab();
@@ -93,11 +93,11 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
         }
     }
 
-    private void loadCover() {
+    private void loadCover(boolean needReveal) {
         String path = mBillDetailView.getBillEntity().isBillEmpty() ? "" :
                 mSongModel.getAlbumCoverPath(mBillDetailView.getViewContext(),
                         mBillDetailView.getBillEntity().getLatestSong().getAlbumId());
-        mBillDetailView.loadCover(path);
+        mBillDetailView.loadCover(path,needReveal);
     }
 
     @Override
@@ -112,26 +112,32 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
 
     @Override
     public void onBottomSheetAddToBillClick(LocalSongEntity songEntity) {
-        mBillDetailView.showToastShort("Add :"+songEntity.getTitle());
+        mBillDetailView.showToastShort("Add :" + songEntity.getTitle());
     }
 
     @Override
     public void onBottomSheetArtistClick(LocalSongEntity songEntity) {
-        mBillDetailView.showToastShort("Artist :"+songEntity.getTitle());
+        mBillDetailView.showToastShort("Artist :" + songEntity.getTitle());
     }
 
     @Override
     public void onBottomSheetAlbumClick(LocalSongEntity songEntity) {
-        mBillDetailView.showToastShort("Album :"+songEntity.getTitle());
+        mBillDetailView.showToastShort("Album :" + songEntity.getTitle());
     }
 
     @Override
     public void onBottomSheetShareClick(LocalSongEntity songEntity) {
-        mBillDetailView.showToastShort("Share :"+songEntity.getTitle());
+        mBillDetailView.showToastShort("Share :" + songEntity.getTitle());
     }
 
     @Override
     public void onBottomSheetDeleteClick(LocalSongEntity songEntity) {
-        mBillDetailView.showToastShort("Delete :"+songEntity.getTitle());
+        mBillModel.removeBillSong(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity(), songEntity);
+        mBillDetailView.refreshBillSongDisplay(mBillModel.getBill(mBillDetailView.getViewContext(),
+                mBillDetailView.getBillEntity().getBillId()));
+        mBillDetailView.setBillEntity(mBillModel.getBill(mBillDetailView.getViewContext(),  mBillDetailView.getBillEntity().getBillId()));
+        loadCover(true);
+        mAppConfigModel.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
+        mBillDetailView.showToastShort("删除成功");
     }
 }

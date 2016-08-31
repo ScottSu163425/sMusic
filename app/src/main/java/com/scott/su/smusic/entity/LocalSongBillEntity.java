@@ -89,6 +89,14 @@ public class LocalSongBillEntity implements Parcelable {
         }
     }
 
+    public void removeSongId(long songId) {
+        if (TextUtils.isEmpty(getBillSongIds())) {
+            return;
+        }
+
+        setBillSongIds(getBillSongIds().replace(songId + ID_DIVIDER, ""));
+    }
+
     public long[] getBillSongIdsLongArray() {
         if (TextUtils.isEmpty(getBillSongIds())) {
             return null;
@@ -99,7 +107,7 @@ public class LocalSongBillEntity implements Parcelable {
 
         for (int i = 0; i < idsStrArr.length; i++) {
             //Reverse the array:The latest added song should be set on first position;
-            idsLongArr[idsStrArr.length-1-i] = Long.valueOf(idsStrArr[i]);
+            idsLongArr[idsStrArr.length - 1 - i] = Long.valueOf(idsStrArr[i]);
         }
 
         return idsLongArr;

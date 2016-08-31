@@ -13,7 +13,7 @@ public interface LocalSongBillDetailView extends BaseView {
 
     void setBillEntity(LocalSongBillEntity billEntity);
 
-    void loadCover(String coverPath);
+    void loadCover(String coverPath, boolean needReveal);
 
     void showFab();
 

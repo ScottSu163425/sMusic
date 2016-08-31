@@ -1,11 +1,13 @@
 package com.scott.su.smusic.mvp.model.impl;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalSongBillModel;
 import com.su.scott.slibrary.manager.DbUtilHelper;
+import com.su.scott.slibrary.util.L;
 
 import org.xutils.ex.DbException;
 
@@ -78,6 +80,16 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
+    public LocalSongEntity getBillSong(Context context, long songId) {
+        for (LocalSongEntity billSongEntity : getBillSongs(context)) {
+            if (billSongEntity.getSongId() == songId) {
+                return billSongEntity;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public List<LocalSongBillEntity> getBills(Context context) {
         List<LocalSongBillEntity> result = null;
         try {
@@ -89,10 +101,12 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
             } else {
                 //If it is the first time to open, create one bill automatically;
                 result = new ArrayList<>();
-                LocalSongBillEntity songBillEntity = new LocalSongBillEntity();
-                songBillEntity.setBillTitle("我喜欢");
-                addBill(context, songBillEntity);
-                result.add(songBillEntity);
+                LocalSongBillEntity defaultBill = new LocalSongBillEntity();
+                defaultBill.setBillTitle("我喜欢");
+                //debug
+                defaultBill.setBillId(123);
+                addBill(context, defaultBill);
+                result.add(defaultBill);
             }
 
         } catch (DbException e) {
@@ -139,7 +153,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
         }
 
         for (LocalSongEntity songEntity : billSongs) {
-            if (songEntity.getBillIds().contains(billId + "")) {
+            if (!TextUtils.isEmpty(songEntity.getBillIds()) && songEntity.getBillIds().contains(billId + "")) {
                 result.add(songEntity);
             }
         }
@@ -185,13 +199,19 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
 
     @Override
     public void removeBillSong(Context context, LocalSongBillEntity billEntity, LocalSongEntity songEntity) {
-        if (!isBillContains(billEntity,songEntity)){
+        LocalSongEntity billSongEntity = getBillSong(context, songEntity.getSongId());
+        if (!isBillContains(billEntity, billSongEntity)) {
             return;
         }
+        billSongEntity.removeBillId(billEntity.getBillId());
+        billEntity.removeSongId(billSongEntity.getSongId());
 
-        songEntity.removeBillId(billEntity.getBillId());
         try {
-            DbUtilHelper.getDefaultDbManager().saveOrUpdate(songEntity);
+            DbUtilHelper.getDefaultDbManager().saveOrUpdate(billSongEntity);
+            DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
+            if (!billSongEntity.isBelongingToAnyBill()){
+                DbUtilHelper.getDefaultDbManager().delete(billSongEntity);
+            }
         } catch (DbException e) {
             e.printStackTrace();
         }

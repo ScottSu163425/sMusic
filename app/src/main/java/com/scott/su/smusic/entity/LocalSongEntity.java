@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.su.scott.slibrary.util.L;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
@@ -144,7 +146,7 @@ public class LocalSongEntity implements Parcelable {
             return;
         }
 
-        getBillIds().replace(billId + ID_DIVIDER, "");
+        setBillIds(getBillIds().replace(billId + ID_DIVIDER, ""));
     }
 
     public boolean isBelongingToAnyBill() {
