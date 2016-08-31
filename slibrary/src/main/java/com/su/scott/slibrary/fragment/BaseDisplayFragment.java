@@ -248,4 +248,13 @@ public abstract class BaseDisplayFragment<E> extends BaseFragment implements Bas
     public void initListener() {
 
     }
+
+    @Override
+    public View getSnackbarParent() {
+        return mDisplayRecyclerView;
+    }
+
+    protected RecyclerView getDisplayRecyclerView() {
+        return mDisplayRecyclerView;
+    }
 }

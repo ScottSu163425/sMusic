@@ -29,4 +29,10 @@ public interface LocalSongBillDetailView extends BaseView {
 
     void showSongBottomSheet(LocalSongEntity songEntity);
 
+    void showDeleteBillSongConfirmDialog(LocalSongEntity songEntity);
+
+    void showClearBillSongsConfirmDialog(LocalSongBillEntity billEntity);
+
+    void showDeleteBillConfirmDialog(LocalSongBillEntity billEntity);
+
 }

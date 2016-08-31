@@ -12,6 +12,8 @@ public interface BaseView {
 
     Activity getViewContext();
 
+    View getSnackbarParent();
+
     void initPreData();
 
     void initToolbar();
@@ -22,7 +24,7 @@ public interface BaseView {
 
     void initListener();
 
-    void showLoadingDialog(Activity activity,String msg, boolean cancelable);
+    void showLoadingDialog(Activity activity, String msg, boolean cancelable);
 
     void dismissLoadingDialog();
 
@@ -30,13 +32,13 @@ public interface BaseView {
 
     void showToastLong(String msg);
 
-    void showSnackbarShort(View parent,String msg);
+    void showSnackbarShort(View parent, String msg);
 
-    void showSnackbarLong(View parent,String msg);
+    void showSnackbarLong(View parent, String msg);
 
-    void showSnackbarShort(View parent,String msg, String action, View.OnClickListener actionListener);
+    void showSnackbarShort(View parent, String msg, String action, View.OnClickListener actionListener);
 
-    void showSnackbarLong(View parent,String msg, String action, View.OnClickListener actionListener);
+    void showSnackbarLong(View parent, String msg, String action, View.OnClickListener actionListener);
 
     void showNetworkError(View parent);
 

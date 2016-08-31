@@ -81,6 +81,11 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
+    public View getSnackbarParent() {
+        return mToolbar;
+    }
+
+    @Override
     public void initPreData() {
         PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
         PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);

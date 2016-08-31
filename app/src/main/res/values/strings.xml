@@ -22,6 +22,7 @@
 
     <string name="success_create_bill">歌单创建成功，马上去添加歌曲？</string>
     <string name="success_add_songs_to_bill"> 添加成功</string>
+    <string name="success_delete">删除成功</string>
 
 
 

@@ -27,7 +27,7 @@ public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragmen
     @NonNull
     @Override
     protected int[] getMenuItemIcons() {
-        return new int[]{R.drawable.ic_my_library_music_grey600_24dp, R.drawable.ic_supervisor_account_grey600_24dp,
+        return new int[]{R.drawable.ic_my_library_music_grey600_24dp,/* R.drawable.ic_supervisor_account_grey600_24dp,*/
                 R.drawable.ic_album_grey600_24dp, R.drawable.ic_share_grey600_24dp,
                 R.drawable.ic_delete_grey600_24dp};
     }
@@ -35,7 +35,7 @@ public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragmen
     @NonNull
     @Override
     protected String[] getMenuItemNames() {
-        return new String[]{"添加到歌单", "歌手: " + mSongEntity.getArtist(),
+        return new String[]{"添加到歌单",/* "歌手: " + mSongEntity.getArtist(),*/
                 "专辑: " + mSongEntity.getAlbum(), "分享", "删除",};
     }
 
@@ -46,12 +46,10 @@ public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragmen
             if (position == 0) {
                 mMenuClickCallback.onAddToBillClick(mSongEntity);
             } else if (position == 1) {
-                mMenuClickCallback.onArtistClick(mSongEntity);
-            } else if (position == 2) {
                 mMenuClickCallback.onAlbumClick(mSongEntity);
-            } else if (position == 3) {
+            } else if (position == 2) {
                 mMenuClickCallback.onShareClick(mSongEntity);
-            } else if (position == 4) {
+            } else if (position == 3) {
                 mMenuClickCallback.onDeleteClick(mSongEntity);
             }
         }

@@ -46,6 +46,11 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
     }
 
     @Override
+    public View getSnackbarParent() {
+        return mFinishSelectionButton;
+    }
+
+    @Override
     public void initPreData() {
 
     }

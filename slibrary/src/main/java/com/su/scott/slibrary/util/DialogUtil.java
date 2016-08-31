@@ -18,9 +18,9 @@ public class DialogUtil {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         if (title != null) {
             builder.setTitle(title);
-        }else {
-            builder.setTitle("提示");
-        }
+        }/*else {
+            builder.setTitle("");
+        }*/
         builder.setMessage((msg == null ? "" : msg));
         builder.setPositiveButton((textPos == null ? "确定" : textPos), (listenerPos == null ? new DialogInterface.OnClickListener() {
             @Override
@@ -36,6 +36,7 @@ public class DialogUtil {
         } : listenerNeg));
         AlertDialog dialog = builder.create();
         dialog.show();
+
         return dialog;
     }
 

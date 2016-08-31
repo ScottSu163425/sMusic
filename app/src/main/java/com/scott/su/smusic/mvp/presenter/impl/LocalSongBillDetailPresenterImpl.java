@@ -75,6 +75,27 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
         }
     }
 
+    @Override
+    public void onDeleteBillSongConfirm(LocalSongEntity songEntity) {
+        LocalSongBillEntity billBeforeDelete = mBillDetailView.getBillEntity();
+
+        mBillModel.removeBillSong(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity(), songEntity);
+
+        LocalSongBillEntity billAfterDelete = mBillModel.getBill(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity().getBillId());
+
+        mBillDetailView.refreshBillSongDisplay(billAfterDelete);
+
+        mBillDetailView.setBillEntity(billAfterDelete);
+
+        //Only when the deleted song is the latest song of the bill,should the bill cover perform reveal animation;
+        loadCover(billBeforeDelete.getLatestSong().getSongId() == songEntity.getSongId());
+
+        mAppConfigModel.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
+
+        mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(),
+                mBillDetailView.getViewContext().getString(R.string.success_delete));
+    }
+
 
     @Override
     public void onViewFirstTimeCreated() {
@@ -97,7 +118,7 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
         String path = mBillDetailView.getBillEntity().isBillEmpty() ? "" :
                 mSongModel.getAlbumCoverPath(mBillDetailView.getViewContext(),
                         mBillDetailView.getBillEntity().getLatestSong().getAlbumId());
-        mBillDetailView.loadCover(path,needReveal);
+        mBillDetailView.loadCover(path, needReveal);
     }
 
     @Override
@@ -132,12 +153,6 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
 
     @Override
     public void onBottomSheetDeleteClick(LocalSongEntity songEntity) {
-        mBillModel.removeBillSong(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity(), songEntity);
-        mBillDetailView.refreshBillSongDisplay(mBillModel.getBill(mBillDetailView.getViewContext(),
-                mBillDetailView.getBillEntity().getBillId()));
-        mBillDetailView.setBillEntity(mBillModel.getBill(mBillDetailView.getViewContext(),  mBillDetailView.getBillEntity().getBillId()));
-        loadCover(true);
-        mAppConfigModel.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
-        mBillDetailView.showToastShort("删除成功");
+        mBillDetailView.showDeleteBillSongConfirmDialog(songEntity);
     }
 }

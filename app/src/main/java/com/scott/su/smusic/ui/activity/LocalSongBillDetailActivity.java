@@ -1,5 +1,6 @@
 package com.scott.su.smusic.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +25,7 @@ import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
+import com.su.scott.slibrary.util.DialogUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -48,6 +50,11 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
 
         mBillDetailPresenter = new LocalSongBillDetailPresenterImpl(this);
         mBillDetailPresenter.onViewFirstTimeCreated();
+    }
+
+    @Override
+    public View getSnackbarParent() {
+        return mCoverImageView;
     }
 
     @Override
@@ -261,6 +268,31 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
                     }
                 })
                 .show(getSupportFragmentManager(), "");
+    }
+
+    @Override
+    public void showDeleteBillSongConfirmDialog(final LocalSongEntity songEntity) {
+        DialogUtil.showDialog(getViewContext(),
+                null,
+                "是否将《" + songEntity.getTitle() + "》从歌单中移除?",
+                null,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mBillDetailPresenter.onDeleteBillSongConfirm(songEntity);
+                    }
+                }, null, null
+        );
+    }
+
+    @Override
+    public void showClearBillSongsConfirmDialog(LocalSongBillEntity billEntity) {
+
+    }
+
+    @Override
+    public void showDeleteBillConfirmDialog(LocalSongBillEntity billEntity) {
+
     }
 
 

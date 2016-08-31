@@ -11,10 +11,13 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/29.
  */
-public interface LocalSongBillDetailPresenter extends BasePresenter,LocalSongBottomSheetPresenter  {
+public interface LocalSongBillDetailPresenter extends BasePresenter, LocalSongBottomSheetPresenter {
+
     void onAddSongsMenuClick();
 
     void onBillSongItemMoreClick(View view, int position, LocalSongEntity entity);
 
     void onSelectedLocalSongsResult(LocalSongBillEntity billToAddSong, List<LocalSongEntity> songsToAdd);
+
+    void onDeleteBillSongConfirm(LocalSongEntity songEntity);
 }
