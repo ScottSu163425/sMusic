@@ -112,10 +112,11 @@
 
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/checkbox_view_holder_local_song_selection"
-            android:layout_width="@dimen/size_check_box"
-            android:layout_height="@dimen/size_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin_xs"
             android:clickable="false"
             android:focusable="false" />
 

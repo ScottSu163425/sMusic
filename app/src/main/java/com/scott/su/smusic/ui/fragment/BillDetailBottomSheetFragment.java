@@ -1,21 +1,20 @@
 package com.scott.su.smusic.ui.fragment;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.fragment.BaseListBottomSheetMenuFragment;
 
 /**
  * Created by Administrator on 2016/8/30.
  */
 public class BillDetailBottomSheetFragment extends BaseListBottomSheetMenuFragment {
-    private String mTitle = "";
+    private LocalSongEntity mSongEntity;
     private BillDetailBottomMenuClickCallback mMenuClickCallback;
 
 
-    public static BillDetailBottomSheetFragment newInstance( ) {
+    public static BillDetailBottomSheetFragment newInstance() {
         BillDetailBottomSheetFragment instance = new BillDetailBottomSheetFragment();
 
         return instance;
@@ -23,15 +22,15 @@ public class BillDetailBottomSheetFragment extends BaseListBottomSheetMenuFragme
 
     @Override
     protected String getTitle() {
-        return mTitle;
+        return mSongEntity == null ? "" : "歌曲: " + mSongEntity.getTitle();
     }
 
     @NonNull
     @Override
     protected int[] getMenuItemIcons() {
-        return new int[]{R.drawable.ic_more_vert_grey600_24dp, R.drawable.ic_more_vert_grey600_24dp,
-                R.drawable.ic_more_vert_grey600_24dp, R.drawable.ic_more_vert_grey600_24dp,
-                R.drawable.ic_more_vert_grey600_24dp, R.drawable.ic_more_vert_grey600_24dp,};
+        return new int[]{R.drawable.ic_cover_default_song_bill, R.drawable.ic_cover_default_song_bill,
+                R.drawable.ic_cover_default_song_bill, R.drawable.ic_cover_default_song_bill,
+                R.drawable.ic_cover_default_song_bill, R.drawable.ic_cover_default_song_bill,};
     }
 
     @NonNull
@@ -43,17 +42,17 @@ public class BillDetailBottomSheetFragment extends BaseListBottomSheetMenuFragme
 
     @Override
     protected void onMenuItemClick(int position, String itemName) {
-        if (mMenuClickCallback!=null){
-            if (position==0){
+        if (mMenuClickCallback != null) {
+            if (position == 0) {
                 mMenuClickCallback.onAddClick();
-            }else if (position==getMenuItemIcons().length-1){
+            } else if (position == getMenuItemIcons().length - 1) {
                 mMenuClickCallback.onMoreClick();
             }
         }
     }
 
-    public BillDetailBottomSheetFragment setTitle(String mTitle) {
-        this.mTitle = mTitle;
+    public BillDetailBottomSheetFragment setLocalSongEntity(LocalSongEntity songEntity) {
+        this.mSongEntity = songEntity;
         return BillDetailBottomSheetFragment.this;
     }
 
@@ -62,8 +61,9 @@ public class BillDetailBottomSheetFragment extends BaseListBottomSheetMenuFragme
         return BillDetailBottomSheetFragment.this;
     }
 
-    public interface  BillDetailBottomMenuClickCallback {
+    public interface BillDetailBottomMenuClickCallback {
         void onAddClick();
+
         void onMoreClick();
     }
 

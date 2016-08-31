@@ -108,14 +108,14 @@
 
         <ImageView
             android:id="@+id/iv_more_view_holder_local_song"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:clickable="true"
             android:foreground="?attr/selectableItemBackground"
-            android:padding="@dimen/margin_s"
-            android:src="@drawable/ic_more_vert_grey600_24dp" />
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_more_vert_grey_500_18dp" />
 
         <View
             android:id="@+id/view_divider_view_holder_local_song"
