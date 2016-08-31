@@ -1,6 +1,7 @@
 package com.scott.su.smusic.mvp.view;
 
 import com.scott.su.smusic.entity.LocalSongBillEntity;
+import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.view.BaseView;
 
 /**
@@ -25,5 +26,7 @@ public interface LocalSongBillDetailView extends BaseView {
     void showAddSongsSuccessfully(String msg);
 
     void refreshBillSongDisplay(LocalSongBillEntity billEntity);
+
+    void showSongBottomSheet(LocalSongEntity songEntity);
 
 }

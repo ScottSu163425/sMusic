@@ -11,6 +11,7 @@ import com.scott.su.smusic.adapter.holder.LocalSongViewHolder;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 

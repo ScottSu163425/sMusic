@@ -3,10 +3,11 @@
 
     <string name="menu_search">搜索</string>
     <string name="menu_done_all">全选</string>
-    <string name="menu_add">添加</string>
+    <string name="menu_add_song">添加歌曲</string>
+    <string name="menu_clear_bill">清空歌单</string>
+    <string name="menu_delete_bill">删除歌单</string>
 
-
-    <string name="toolbar_title_local_song_selection">选择音乐</string>
+    <string name="toolbar_title_local_song_selection">选择歌曲</string>
 
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>

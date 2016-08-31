@@ -13,7 +13,7 @@ import org.xutils.db.annotation.Table;
 @Table(name = "LocalSongEntity")
 public class LocalSongEntity implements Parcelable {
 
-    public static final String ID_DIVIDER = "*";
+    public static final String ID_DIVIDER = "~";
 
     @Column(name = "id", isId = true)
     private int id;
@@ -138,6 +138,19 @@ public class LocalSongEntity implements Parcelable {
             setBillIds(getBillIds() + billId + ID_DIVIDER);
         }
     }
+
+    public void removeBillId(long billId) {
+        if (!isBelongingToAnyBill()) {
+            return;
+        }
+
+        getBillIds().replace(billId + ID_DIVIDER, "");
+    }
+
+    public boolean isBelongingToAnyBill() {
+        return !TextUtils.isEmpty(getBillIds());
+    }
+
 
     @Override
     public int describeContents() {

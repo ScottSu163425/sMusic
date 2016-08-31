@@ -41,4 +41,10 @@ public interface LocalSongBillModel {
      */
     boolean isBillContainsAll(LocalSongBillEntity billEntity, List<LocalSongEntity> songEntities);
 
+    void removeBill(Context context, LocalSongBillEntity billEntity);
+
+    void removeBillSong(Context context, LocalSongBillEntity billEntity, LocalSongEntity songEntity);
+
+    void removeBillSongs(Context context, LocalSongBillEntity billEntity);
+
 }

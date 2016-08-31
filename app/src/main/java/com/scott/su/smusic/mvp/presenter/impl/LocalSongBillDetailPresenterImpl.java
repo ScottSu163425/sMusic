@@ -1,5 +1,7 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
+import android.view.View;
+
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.entity.LocalSongBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
@@ -33,6 +35,11 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
     @Override
     public void onAddSongsMenuClick() {
         mBillDetailView.goToLocalSongSelectionActivity();
+    }
+
+    @Override
+    public void onBillSongItemMoreClick(View view, int position, LocalSongEntity entity) {
+        mBillDetailView.showSongBottomSheet(entity);
     }
 
     @Override
@@ -103,5 +110,28 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
 
     }
 
+    @Override
+    public void onBottomSheetAddToBillClick(LocalSongEntity songEntity) {
+        mBillDetailView.showToastShort("Add :"+songEntity.getTitle());
+    }
 
+    @Override
+    public void onBottomSheetArtistClick(LocalSongEntity songEntity) {
+        mBillDetailView.showToastShort("Artist :"+songEntity.getTitle());
+    }
+
+    @Override
+    public void onBottomSheetAlbumClick(LocalSongEntity songEntity) {
+        mBillDetailView.showToastShort("Album :"+songEntity.getTitle());
+    }
+
+    @Override
+    public void onBottomSheetShareClick(LocalSongEntity songEntity) {
+        mBillDetailView.showToastShort("Share :"+songEntity.getTitle());
+    }
+
+    @Override
+    public void onBottomSheetDeleteClick(LocalSongEntity songEntity) {
+        mBillDetailView.showToastShort("Delete :"+songEntity.getTitle());
+    }
 }

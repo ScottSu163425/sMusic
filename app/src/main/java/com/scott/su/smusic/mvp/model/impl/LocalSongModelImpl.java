@@ -1,5 +1,6 @@
 package com.scott.su.smusic.mvp.model.impl;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -173,15 +174,17 @@ public class LocalSongModelImpl implements LocalSongModel {
 
     public String getAlbumCoverPath(Context context, long albumId) {
         String path = null;
-
-        Cursor cursor = context.getContentResolver().query(
-                Uri.parse("content://media/external/audio/albums/" + albumId),
-                new String[]{"album_art"}, null, null, null);
-        if (cursor != null) {
-            cursor.moveToNext();
-            path = cursor.getString(0);
-            cursor.close();
-        }
+//        //Somehow it dosen`t work suddenly
+//        Cursor cursor = context.getContentResolver().query(
+//                Uri.parse("content://media/external/audio/albums/" + albumId),
+//                new String[]{"album_art"}, null, null, null);
+//        if (cursor != null) {
+//            cursor.moveToNext();
+//            path = cursor.getString(0);
+//            cursor.close();
+//        }
+        //Use second way to get the path of album cover;
+        path = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"), albumId).toString();
         return path;
     }
 

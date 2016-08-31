@@ -106,7 +106,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     public void addSongToBill(Context context, LocalSongEntity songEntity, LocalSongBillEntity billToAddSong) {
 //        LocalSongBillEntity billEntity = getBill(context, billToAddSong.getBillId());
 
-        if (isBillContains(billToAddSong,songEntity)){
+        if (isBillContains(billToAddSong, songEntity)) {
             //Already contain this song.
             return;
         }
@@ -164,6 +164,52 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
             }
         }
         return true;
+    }
+
+    @Override
+    public void removeBill(Context context, LocalSongBillEntity billEntity) {
+        if (!isBillExist(context, billEntity)) {
+            return;
+        }
+
+        try {
+            DbUtilHelper.getDefaultDbManager().delete(billEntity);
+            if (!billEntity.isBillEmpty()) {
+                removeBillSongs(context, billEntity);
+            }
+
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void removeBillSong(Context context, LocalSongBillEntity billEntity, LocalSongEntity songEntity) {
+        if (!isBillContains(billEntity,songEntity)){
+            return;
+        }
+
+        songEntity.removeBillId(billEntity.getBillId());
+        try {
+            DbUtilHelper.getDefaultDbManager().saveOrUpdate(songEntity);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void removeBillSongs(Context context, LocalSongBillEntity billEntity) {
+        List<LocalSongEntity> billSongs = getBillSongs(context);
+        for (LocalSongEntity songEntity : billSongs) {
+            if (isBillContains(billEntity, songEntity)) {
+                songEntity.removeBillId(billEntity.getBillId());
+            }
+        }
+        try {
+            DbUtilHelper.getDefaultDbManager().saveOrUpdate(billSongs);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 
 

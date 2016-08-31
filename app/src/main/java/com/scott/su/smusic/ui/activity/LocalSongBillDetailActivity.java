@@ -18,7 +18,7 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.LocalSongBillDetailPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalSongBillDetailPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongBillDetailView;
-import com.scott.su.smusic.ui.fragment.BillDetailBottomSheetFragment;
+import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.ViewUtil;
@@ -98,20 +98,7 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
 
             @Override
             public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
-                BillDetailBottomSheetFragment.newInstance()
-                        .setLocalSongEntity(entity)
-                        .setMenuClickCallback(new BillDetailBottomSheetFragment.BillDetailBottomMenuClickCallback() {
-                            @Override
-                            public void onAddClick() {
-                                showToastShort("onAddClick");
-                            }
-
-                            @Override
-                            public void onMoreClick() {
-                                showToastShort("onMoreClick");
-                            }
-                        })
-                        .show(getSupportFragmentManager(), "");
+                mBillDetailPresenter.onBillSongItemMoreClick(view,position,entity);
             }
         });
 
@@ -212,6 +199,40 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
     public void refreshBillSongDisplay(LocalSongBillEntity billEntity) {
         mBillSongDisplayFragment.setSongBillEntity(billEntity);
         mBillSongDisplayFragment.reInitialize();
+    }
+
+    @Override
+    public void showSongBottomSheet(LocalSongEntity songEntity) {
+        LocalSongBottomSheetFragment.newInstance()
+                .setLocalSongEntity(songEntity)
+                .setMenuClickCallback(new LocalSongBottomSheetFragment.MenuClickCallback() {
+
+                    @Override
+                    public void onAddToBillClick(LocalSongEntity songEntity) {
+                        mBillDetailPresenter.onBottomSheetAddToBillClick(songEntity);
+                    }
+
+                    @Override
+                    public void onArtistClick(LocalSongEntity songEntity) {
+                        mBillDetailPresenter.onBottomSheetArtistClick(songEntity);
+                    }
+
+                    @Override
+                    public void onAlbumClick(LocalSongEntity songEntity) {
+                        mBillDetailPresenter.onBottomSheetAlbumClick(songEntity);
+                    }
+
+                    @Override
+                    public void onShareClick(LocalSongEntity songEntity) {
+                        mBillDetailPresenter.onBottomSheetShareClick(songEntity);
+                    }
+
+                    @Override
+                    public void onDeleteClick(LocalSongEntity songEntity) {
+                        mBillDetailPresenter.onBottomSheetDeleteClick(songEntity);
+                    }
+                })
+                .show(getSupportFragmentManager(), "");
     }
 
 
