@@ -27,6 +27,7 @@
 
 
     <string name="transition_name_bill_cover">transition_name_bill_cover</string>
+    <string name="error_empty_bill">歌单是空的</string>
 
 
 </resources>

@@ -34,8 +34,9 @@ public class CirclarRevealUtil {
         REVEAL_OUT,
     }
 
-    public static final long DEFAULT_REVEAL_DURATION = 400;
-    public static final long DEFAULT_REVEAL_DURATION_SHORT = 250;
+    public static final long DURATION_REVEAL_LONG= 600;
+    public static final long DURATION_REVEAL_DEFAULT = 400;
+    public static final long DURATION_REVEAL_SHORT = 250;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static Animator createReveal(@NonNull View view, DIRECTION direction, ACTION action) {
@@ -44,7 +45,7 @@ public class CirclarRevealUtil {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealIn(@NonNull View view, DIRECTION direction ) {
-        revealIn(view, direction, DEFAULT_REVEAL_DURATION, null, null);
+        revealIn(view, direction, DURATION_REVEAL_DEFAULT, null, null);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -59,7 +60,7 @@ public class CirclarRevealUtil {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealOut(@NonNull View view, DIRECTION direction,boolean autoHide) {
-        revealOut(view, direction, DEFAULT_REVEAL_DURATION, null, null,autoHide);
+        revealOut(view, direction, DURATION_REVEAL_DEFAULT, null, null,autoHide);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

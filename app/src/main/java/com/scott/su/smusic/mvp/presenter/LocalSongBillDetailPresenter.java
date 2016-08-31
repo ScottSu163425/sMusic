@@ -13,11 +13,20 @@ import java.util.List;
  */
 public interface LocalSongBillDetailPresenter extends BasePresenter, LocalSongBottomSheetPresenter {
 
-    void onAddSongsMenuClick();
+    void onAddSongsMenuItemClick();
+
+    void onClearBillMenuItemClick();
+
+    void onDeleteBillMenuItemClick();
 
     void onBillSongItemMoreClick(View view, int position, LocalSongEntity entity);
 
     void onSelectedLocalSongsResult(LocalSongBillEntity billToAddSong, List<LocalSongEntity> songsToAdd);
 
-    void onDeleteBillSongConfirm(LocalSongEntity songEntity);
+    void onDeleteBillSongConfirmed(LocalSongEntity songEntity);
+
+    void onClearBillConfirmed();
+
+    void onDeleteBillConfirmed();
+
 }

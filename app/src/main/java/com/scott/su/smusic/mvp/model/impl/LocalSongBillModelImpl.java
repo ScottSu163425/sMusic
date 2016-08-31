@@ -181,7 +181,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public void removeBill(Context context, LocalSongBillEntity billEntity) {
+    public void DeleteBill(Context context, LocalSongBillEntity billEntity) {
         if (!isBillExist(context, billEntity)) {
             return;
         }
@@ -189,7 +189,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
         try {
             DbUtilHelper.getDefaultDbManager().delete(billEntity);
             if (!billEntity.isBillEmpty()) {
-                removeBillSongs(context, billEntity);
+                clearBillSongs(context, billEntity);
             }
 
         } catch (DbException e) {
@@ -198,18 +198,19 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public void removeBillSong(Context context, LocalSongBillEntity billEntity, LocalSongEntity songEntity) {
+    public void DeleteBillSong(Context context, LocalSongBillEntity billEntity, LocalSongEntity songEntity) {
         LocalSongEntity billSongEntity = getBillSong(context, songEntity.getSongId());
         if (!isBillContains(billEntity, billSongEntity)) {
             return;
         }
+
         billSongEntity.removeBillId(billEntity.getBillId());
         billEntity.removeSongId(billSongEntity.getSongId());
 
         try {
             DbUtilHelper.getDefaultDbManager().saveOrUpdate(billSongEntity);
             DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
-            if (!billSongEntity.isBelongingToAnyBill()){
+            if (!billSongEntity.isBelongingToAnyBill()) {
                 DbUtilHelper.getDefaultDbManager().delete(billSongEntity);
             }
         } catch (DbException e) {
@@ -218,15 +219,24 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public void removeBillSongs(Context context, LocalSongBillEntity billEntity) {
+    public void clearBillSongs(Context context, LocalSongBillEntity billEntity) {
         List<LocalSongEntity> billSongs = getBillSongs(context);
-        for (LocalSongEntity songEntity : billSongs) {
-            if (isBillContains(billEntity, songEntity)) {
-                songEntity.removeBillId(billEntity.getBillId());
-            }
-        }
+
         try {
-            DbUtilHelper.getDefaultDbManager().saveOrUpdate(billSongs);
+            for (LocalSongEntity songEntity : billSongs) {
+                if (isBillContains(billEntity, songEntity)) {
+                    songEntity.removeBillId(billEntity.getBillId());
+                    billEntity.removeSongId(songEntity.getSongId());
+                    DbUtilHelper.getDefaultDbManager().saveOrUpdate(songEntity);
+                    //Delete the song if the song doesn`t belong to any bill;
+                    if (!songEntity.isBelongingToAnyBill()) {
+                        DbUtilHelper.getDefaultDbManager().delete(songEntity);
+                    }
+
+                }
+            }
+            //Update the bill;
+            DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
         } catch (DbException e) {
             e.printStackTrace();
         }

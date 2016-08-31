@@ -131,7 +131,9 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
         int id = item.getItemId();
 
         if (id == R.id.action_add_local_song_bill_detaile) {
-            mBillDetailPresenter.onAddSongsMenuClick();
+            mBillDetailPresenter.onAddSongsMenuItemClick();
+        } else if (id == R.id.action_clear_local_song_bill_detaile) {
+            mBillDetailPresenter.onClearBillMenuItemClick();
         }
 
         return true;
@@ -163,8 +165,8 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
     public void loadCover(final String coverPath, boolean needReveal) {
         if (needReveal) {
             CirclarRevealUtil.revealIn(mCoverImageView,
-                    CirclarRevealUtil.DIRECTION.LEFT_TOP,
-                    CirclarRevealUtil.DEFAULT_REVEAL_DURATION,
+                    CirclarRevealUtil.DIRECTION.RIGHT_BOTTOM,
+                    CirclarRevealUtil.DURATION_REVEAL_LONG,
                     new DecelerateInterpolator(),
                     new AnimUtil.SimpleAnimListener() {
                         @Override
@@ -181,6 +183,28 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
 
                         }
                     });
+            //Second way to reveal;
+//            CirclarRevealUtil.revealOut(mCoverImageView,
+//                    CirclarRevealUtil.DIRECTION.CENTER,
+//                    CirclarRevealUtil.DURATION_REVEAL_DEFAULT,
+//                    new DecelerateInterpolator(),
+//                    new AnimUtil.SimpleAnimListener() {
+//                        @Override
+//                        public void onAnimStart() {
+//
+//                        }
+//
+//                        @Override
+//                        public void onAnimEnd() {
+//
+//                            Glide.with(LocalSongBillDetailActivity.this)
+//                                    .load(coverPath)
+//                                    .placeholder(R.color.place_holder_loading)
+//                                    .error(R.drawable.ic_cover_default_song_bill)
+//                                    .into(mCoverImageView);
+//                            CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER);
+//                        }
+//                    }, false);
 
         } else {
             Glide.with(this)
@@ -219,8 +243,8 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
     }
 
     @Override
-    public void showAddSongsSuccessfully(String msg) {
-        showSnackbarShort(mCoverImageView, msg);
+    public void showAddSongsSuccessfully() {
+//        showSnackbarShort(mCoverImageView, msg);
     }
 
     @Override
@@ -273,25 +297,35 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
     @Override
     public void showDeleteBillSongConfirmDialog(final LocalSongEntity songEntity) {
         DialogUtil.showDialog(getViewContext(),
-                null,
-                "是否将《" + songEntity.getTitle() + "》从歌单中移除?",
+                "《" + songEntity.getTitle() + "》",
+                "是否将它从歌单中移除?",
                 null,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mBillDetailPresenter.onDeleteBillSongConfirm(songEntity);
+                        mBillDetailPresenter.onDeleteBillSongConfirmed(songEntity);
                     }
                 }, null, null
         );
     }
 
     @Override
-    public void showClearBillSongsConfirmDialog(LocalSongBillEntity billEntity) {
-
+    public void showClearBillSongsConfirmDialog() {
+        DialogUtil.showDialog(getViewContext(),
+                "提示",
+                "确定移除歌单中的所有歌曲?",
+                null,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mBillDetailPresenter.onClearBillConfirmed();
+                    }
+                }, null, null
+        );
     }
 
     @Override
-    public void showDeleteBillConfirmDialog(LocalSongBillEntity billEntity) {
+    public void showDeleteBillConfirmDialog() {
 
     }
 

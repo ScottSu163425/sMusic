@@ -23,7 +23,7 @@ public interface LocalSongBillDetailView extends BaseView {
 
     void showAddSongsUnsuccessfully(String msg);
 
-    void showAddSongsSuccessfully(String msg);
+    void showAddSongsSuccessfully( );
 
     void refreshBillSongDisplay(LocalSongBillEntity billEntity);
 
@@ -31,8 +31,8 @@ public interface LocalSongBillDetailView extends BaseView {
 
     void showDeleteBillSongConfirmDialog(LocalSongEntity songEntity);
 
-    void showClearBillSongsConfirmDialog(LocalSongBillEntity billEntity);
+    void showClearBillSongsConfirmDialog();
 
-    void showDeleteBillConfirmDialog(LocalSongBillEntity billEntity);
+    void showDeleteBillConfirmDialog();
 
 }
