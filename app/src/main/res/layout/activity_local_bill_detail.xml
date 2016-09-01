@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:fitsSystemWindows="true"
-    tools:context="com.scott.su.smusic.ui.activity.LocalSongBillDetailActivity">
+    tools:context=".ui.activity.LocalBillDetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -30,7 +30,7 @@
                 app:layout_collapseMode="parallax">
 
                 <ImageView
-                    android:id="@+id/iv_cover_local_song_bill_detail"
+                    android:id="@+id/iv_cover_local_bill_detail"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_top_area"
                     android:fitsSystemWindows="true"
@@ -40,7 +40,7 @@
             </FrameLayout>
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_local_song_bill_detail"
+                android:id="@+id/toolbar_local_bill_detail"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
@@ -51,7 +51,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_local_song_bill_detail"
+        android:id="@+id/fab_local_bill_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_s"
@@ -65,7 +65,7 @@
         app:rippleColor="@color/colorPrimaryDark" />
 
     <FrameLayout
-        android:id="@+id/fl_container_display_local_song_bill_detail"
+        android:id="@+id/fl_container_display_local_bill_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"

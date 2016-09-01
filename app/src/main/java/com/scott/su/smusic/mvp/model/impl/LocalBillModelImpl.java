@@ -3,11 +3,10 @@ package com.scott.su.smusic.mvp.model.impl;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.scott.su.smusic.entity.LocalSongBillEntity;
+import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.model.LocalSongBillModel;
+import com.scott.su.smusic.mvp.model.LocalBillModel;
 import com.su.scott.slibrary.manager.DbUtilHelper;
-import com.su.scott.slibrary.util.L;
 
 import org.xutils.ex.DbException;
 
@@ -17,18 +16,18 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/21.
  */
-public class LocalSongBillModelImpl implements LocalSongBillModel {
+public class LocalBillModelImpl implements LocalBillModel {
     private static final String BILL_NAME_DEFAULT_BILL = "我喜欢";
     private static final long BILL_ID_DEFAULT_BILL = 1111111;
 
     @Override
-    public boolean isDefaultBill(LocalSongBillEntity billEntity) {
+    public boolean isDefaultBill(LocalBillEntity billEntity) {
         return billEntity.getBillId() == BILL_ID_DEFAULT_BILL;
     }
 
     @Override
-    public boolean isBillExist(Context context, LocalSongBillEntity billEntity) {
-        for (LocalSongBillEntity entity : getBills(context)) {
+    public boolean isBillExist(Context context, LocalBillEntity billEntity) {
+        for (LocalBillEntity entity : getBills(context)) {
             if (entity.getBillId() == billEntity.getBillId()) {
                 return true;
             }
@@ -38,8 +37,8 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public boolean isBillTitleExist(Context context, LocalSongBillEntity billEntity) {
-        for (LocalSongBillEntity entity : getBills(context)) {
+    public boolean isBillTitleExist(Context context, LocalBillEntity billEntity) {
+        for (LocalBillEntity entity : getBills(context)) {
             if (entity.getBillTitle().equals(billEntity.getBillTitle())) {
                 return true;
             }
@@ -48,7 +47,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public void addBill(Context context, LocalSongBillEntity billEntity) {
+    public void addBill(Context context, LocalBillEntity billEntity) {
         try {
             DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
         } catch (DbException e) {
@@ -68,15 +67,15 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public LocalSongBillEntity getBill(Context context, long billId) {
-        List<LocalSongBillEntity> bills = getBills(context);
-        LocalSongBillEntity bill = null;
+    public LocalBillEntity getBill(Context context, long billId) {
+        List<LocalBillEntity> bills = getBills(context);
+        LocalBillEntity bill = null;
 
         if (bills == null) {
             return null;
         }
 
-        for (LocalSongBillEntity billEntity : bills) {
+        for (LocalBillEntity billEntity : bills) {
             if (billEntity.getBillId() == billId) {
                 bill = billEntity;
                 break;
@@ -97,18 +96,18 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public List<LocalSongBillEntity> getBills(Context context) {
-        List<LocalSongBillEntity> result = null;
+    public List<LocalBillEntity> getBills(Context context) {
+        List<LocalBillEntity> result = null;
         try {
-            result = DbUtilHelper.getDefaultDbManager().findAll(LocalSongBillEntity.class);
+            result = DbUtilHelper.getDefaultDbManager().findAll(LocalBillEntity.class);
             if (result != null && result.size() > 0) {
-                for (LocalSongBillEntity billEntity : result) {
+                for (LocalBillEntity billEntity : result) {
                     billEntity.setBillSongs(getSongsByBillId(context, billEntity.getBillId()));
                 }
             } else {
                 //If it is the first time to open, create one bill automatically;
                 result = new ArrayList<>();
-                LocalSongBillEntity defaultBill = new LocalSongBillEntity();
+                LocalBillEntity defaultBill = new LocalBillEntity();
                 defaultBill.setBillTitle(BILL_NAME_DEFAULT_BILL);
                 defaultBill.setBillId(BILL_ID_DEFAULT_BILL);
                 addBill(context, defaultBill);
@@ -123,8 +122,8 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public void addSongToBill(Context context, LocalSongEntity songEntity, LocalSongBillEntity billToAddSong) {
-//        LocalSongBillEntity billEntity = getBill(context, billToAddSong.getBillId());
+    public void addSongToBill(Context context, LocalSongEntity songEntity, LocalBillEntity billToAddSong) {
+//        LocalBillEntity billEntity = getBill(context, billToAddSong.getBillId());
 
         if (isBillContains(billToAddSong, songEntity)) {
             //Already contain this song.
@@ -143,7 +142,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public void addSongsToBill(Context context, List<LocalSongEntity> songEntities, LocalSongBillEntity billToAddSong) {
+    public void addSongsToBill(Context context, List<LocalSongEntity> songEntities, LocalBillEntity billToAddSong) {
         for (LocalSongEntity songEntity : songEntities) {
             addSongToBill(context, songEntity, billToAddSong);
         }
@@ -168,7 +167,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public boolean isBillContains(LocalSongBillEntity billEntity, LocalSongEntity songEntity) {
+    public boolean isBillContains(LocalBillEntity billEntity, LocalSongEntity songEntity) {
         if (billEntity.isBillEmpty()) {
             return false;
         }
@@ -177,7 +176,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public boolean isBillContainsAll(LocalSongBillEntity billEntity, List<LocalSongEntity> songEntities) {
+    public boolean isBillContainsAll(LocalBillEntity billEntity, List<LocalSongEntity> songEntities) {
         for (LocalSongEntity songEntity : songEntities) {
             if (!isBillContains(billEntity, songEntity)) {
                 return false;
@@ -187,7 +186,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public void deleteBill(Context context, LocalSongBillEntity billEntity) {
+    public void deleteBill(Context context, LocalBillEntity billEntity) {
         if (!isBillExist(context, billEntity)) {
             return;
         }
@@ -204,7 +203,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public void deleteBillSong(Context context, LocalSongBillEntity billEntity, LocalSongEntity songEntity) {
+    public void deleteBillSong(Context context, LocalBillEntity billEntity, LocalSongEntity songEntity) {
         LocalSongEntity billSongEntity = getBillSong(context, songEntity.getSongId());
         if (!isBillContains(billEntity, billSongEntity)) {
             return;
@@ -225,7 +224,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public void clearBillSongs(Context context, LocalSongBillEntity billEntity) {
+    public void clearBillSongs(Context context, LocalBillEntity billEntity) {
         List<LocalSongEntity> billSongs = getBillSongs(context);
 
         try {

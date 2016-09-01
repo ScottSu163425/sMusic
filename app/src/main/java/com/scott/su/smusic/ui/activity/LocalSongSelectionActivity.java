@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.constant.Constants;
-import com.scott.su.smusic.entity.LocalSongBillEntity;
+import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.mvp.presenter.LocalSongSelectionPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalSongSelectionPresenterImp;
 import com.scott.su.smusic.mvp.view.LocalSongSelectionView;
@@ -114,7 +114,7 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
         Bundle data = new Bundle();
         data.putParcelable(Constants.KEY_EXTRA_BILL, getIntent().getParcelableExtra(Constants.KEY_EXTRA_BILL));
         data.putParcelableArrayList(Constants.KEY_EXTRA_LOCAL_SONGS, mLocalSongSlectionDisplayFragment.getSelectedSongs());
-        intent.setExtrasClassLoader(LocalSongBillEntity.class.getClassLoader());
+        intent.setExtrasClassLoader(LocalBillEntity.class.getClassLoader());
         intent.putExtras(data);
         setResult(RESULT_OK, intent);
 //        finish();

@@ -1,7 +1,9 @@
 package com.scott.su.smusic.ui.activity;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -11,22 +13,25 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.transition.TransitionInflater;
+import android.transition.TransitionManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
 import com.scott.su.smusic.constant.Constants;
-import com.scott.su.smusic.entity.LocalSongBillEntity;
+import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.MainPresenterImpl;
 import com.scott.su.smusic.mvp.view.MainView;
 import com.scott.su.smusic.ui.fragment.CreateBillDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalAlbumDisplayFragment;
-import com.scott.su.smusic.ui.fragment.LocalSongBillDisplayFragment;
+import com.scott.su.smusic.ui.fragment.LocalBillDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.PermissionUtil;
@@ -45,7 +50,7 @@ public class MainActivity extends BaseActivity implements MainView {
     private TabLayout mTabLayout;   //Tabs for ViewPager;
     private FloatingActionButton mFloatingActionButton; //FAB;
     private LocalSongDisplayFragment mSongDisplayFragment;
-    private LocalSongBillDisplayFragment mBillDisplayFragment;
+    private LocalBillDisplayFragment mBillDisplayFragment;
     private LocalAlbumDisplayFragment mAlbumDisplayFragment;
     private CreateBillDialogFragment mCreateBillDialogFragment;
     private boolean mDataInitFinish = false;
@@ -122,7 +127,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
         mSongDisplayFragment = LocalSongDisplayFragment.newInstance(null,
                 LocalSongDisplayAdapter.DISPLAY_TYPE.CoverDivider);
-        mBillDisplayFragment = LocalSongBillDisplayFragment.newInstance();
+        mBillDisplayFragment = LocalBillDisplayFragment.newInstance();
         mAlbumDisplayFragment = LocalAlbumDisplayFragment.newInstance();
         mSongDisplayFragment.setSwipeRefreshEnable(true);
         mSongDisplayFragment.setLoadMoreEnable(false);
@@ -153,9 +158,9 @@ public class MainActivity extends BaseActivity implements MainView {
             }
         });
 
-        mBillDisplayFragment.setBillItemClickCallback(new LocalSongBillDisplayFragment.BillItemClickCallback() {
+        mBillDisplayFragment.setBillItemClickCallback(new LocalBillDisplayFragment.BillItemClickCallback() {
             @Override
-            public void onBillItemClick(View itemView, LocalSongBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+            public void onBillItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
                 mMainPresenter.onBillItemClick(itemView, entity, position, sharedElements, transitionNames, data);
             }
         });
@@ -295,7 +300,7 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public void showCreateBillSuccessfully(final LocalSongBillEntity billEntity) {
+    public void showCreateBillSuccessfully(final LocalBillEntity billEntity) {
         showSnackbarLong(mToolbar,
                 getString(R.string.success_create_bill),
                 getString(R.string.confirm_positive),
@@ -303,23 +308,24 @@ public class MainActivity extends BaseActivity implements MainView {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(MainActivity.this, LocalSongSelectionActivity.class);
-                        intent.setExtrasClassLoader(LocalSongBillEntity.class.getClassLoader());
+                        intent.setExtrasClassLoader(LocalBillEntity.class.getClassLoader());
                         intent.putExtra(Constants.KEY_EXTRA_BILL, billEntity);
                         goToForResult(intent, REQUEST_CODE_LOCAL_SONG_SELECTION);
                     }
                 });
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public void goToBillDetailWithSharedElement(LocalSongBillEntity entity, View sharedElement, String transitionName) {
-        Intent intent = new Intent(MainActivity.this, LocalSongBillDetailActivity.class);
+    public void goToBillDetailWithSharedElement(LocalBillEntity entity, View sharedElement, String transitionName) {
+        Intent intent = new Intent(MainActivity.this, LocalBillDetailActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_BILL, entity);
         goToWithSharedElement(intent, sharedElement, transitionName);
     }
 
     @Override
-    public void goToBillDetail(LocalSongBillEntity entity) {
-        Intent intent = new Intent(MainActivity.this, LocalSongBillDetailActivity.class);
+    public void goToBillDetail(LocalBillEntity entity) {
+        Intent intent = new Intent(MainActivity.this, LocalBillDetailActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_BILL, entity);
         goTo(intent);
     }
@@ -330,7 +336,7 @@ public class MainActivity extends BaseActivity implements MainView {
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CODE_LOCAL_SONG_SELECTION && data != null) {
                 List<LocalSongEntity> selectedSongs = data.getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS);
-                LocalSongBillEntity billToAddSong = data.getParcelableExtra(Constants.KEY_EXTRA_BILL);
+                LocalBillEntity billToAddSong = data.getParcelableExtra(Constants.KEY_EXTRA_BILL);
                 mMainPresenter.onSelectedLocalSongsResult(billToAddSong, selectedSongs);
             }
         }

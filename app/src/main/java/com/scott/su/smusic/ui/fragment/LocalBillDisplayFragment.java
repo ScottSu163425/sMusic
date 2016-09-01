@@ -8,10 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.adapter.LocalSongBillDisplayAdapter;
-import com.scott.su.smusic.entity.LocalSongBillEntity;
-import com.scott.su.smusic.mvp.presenter.LocalSongBillDisplayPresenter;
-import com.scott.su.smusic.mvp.presenter.impl.LocalSongBillDisplayPresenterImpl;
+import com.scott.su.smusic.adapter.LocalBillDisplayAdapter;
+import com.scott.su.smusic.entity.LocalBillEntity;
+import com.scott.su.smusic.mvp.presenter.LocalBillDisplayPresenter;
+import com.scott.su.smusic.mvp.presenter.impl.LocalBillDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongBillDisplayView;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
@@ -21,14 +21,14 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongBillEntity> implements LocalSongBillDisplayView {
-    private LocalSongBillDisplayPresenter mSongBillDisplayPresenter;
-    private LocalSongBillDisplayAdapter mSongBillDisplayAdapter;
+public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntity> implements LocalSongBillDisplayView {
+    private LocalBillDisplayPresenter mSongBillDisplayPresenter;
+    private LocalBillDisplayAdapter mSongBillDisplayAdapter;
 
     private BillItemClickCallback mBillItemClickCallback;
 
-    public static LocalSongBillDisplayFragment newInstance() {
-        LocalSongBillDisplayFragment instance = new LocalSongBillDisplayFragment();
+    public static LocalBillDisplayFragment newInstance() {
+        LocalBillDisplayFragment instance = new LocalBillDisplayFragment();
         return instance;
     }
 
@@ -45,7 +45,7 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
 
     @Override
     protected void onFirstTimeCreateView() {
-        mSongBillDisplayPresenter = new LocalSongBillDisplayPresenterImpl(this);
+        mSongBillDisplayPresenter = new LocalBillDisplayPresenterImpl(this);
         mSongBillDisplayPresenter.onViewFirstTimeCreated();
 
         this.setSwipeRefreshEnable(true);
@@ -53,11 +53,11 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
 
     @Override
     protected RecyclerView.Adapter getAdapter() {
-        mSongBillDisplayAdapter = new LocalSongBillDisplayAdapter(getActivity());
+        mSongBillDisplayAdapter = new LocalBillDisplayAdapter(getActivity());
 
-        mSongBillDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalSongBillEntity>() {
+        mSongBillDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalBillEntity>() {
             @Override
-            public void onItemClick(View itemView, LocalSongBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+            public void onItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
                 mSongBillDisplayPresenter.onItemClick(itemView, entity, position, sharedElements, transitionNames, data);
             }
         });
@@ -112,17 +112,17 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
     }
 
     @Override
-    public void setDisplayData(@NonNull List<LocalSongBillEntity> dataList) {
+    public void setDisplayData(@NonNull List<LocalBillEntity> dataList) {
         mSongBillDisplayAdapter.setDataList(dataList);
         mSongBillDisplayAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void setLoadMoreData(@NonNull List<LocalSongBillEntity> dataList) {
+    public void setLoadMoreData(@NonNull List<LocalBillEntity> dataList) {
     }
 
     @Override
-    public void handleItemClick(View itemView, LocalSongBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+    public void handleItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
         if (mBillItemClickCallback!=null){
             mBillItemClickCallback.onBillItemClick(itemView,entity,position,sharedElements,transitionNames,data);
         }
@@ -133,7 +133,7 @@ public class LocalSongBillDisplayFragment extends BaseDisplayFragment<LocalSongB
     }
 
     public interface BillItemClickCallback {
-       void onBillItemClick(View itemView, LocalSongBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
+       void onBillItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.scott.su.smusic.mvp.view;
 
-import com.scott.su.smusic.entity.LocalSongBillEntity;
+import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.view.BaseView;
 
@@ -9,9 +9,9 @@ import com.su.scott.slibrary.view.BaseView;
  */
 public interface LocalSongBillDetailView extends BaseView {
 
-    LocalSongBillEntity getBillEntity();
+    LocalBillEntity getBillEntity();
 
-    void setBillEntity(LocalSongBillEntity billEntity);
+    void setBillEntity(LocalBillEntity billEntity);
 
     void loadCover(String coverPath, boolean needReveal);
 
@@ -25,7 +25,7 @@ public interface LocalSongBillDetailView extends BaseView {
 
     void showAddSongsSuccessfully();
 
-    void refreshBillSongDisplay(LocalSongBillEntity billEntity);
+    void refreshBillSongDisplay(LocalBillEntity billEntity);
 
     void showSongBottomSheet(LocalSongEntity songEntity);
 

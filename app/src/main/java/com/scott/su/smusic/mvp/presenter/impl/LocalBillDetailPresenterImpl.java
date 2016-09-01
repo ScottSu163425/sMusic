@@ -3,15 +3,15 @@ package com.scott.su.smusic.mvp.presenter.impl;
 import android.view.View;
 
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.entity.LocalSongBillEntity;
+import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.AppConfigModel;
-import com.scott.su.smusic.mvp.model.LocalSongBillModel;
+import com.scott.su.smusic.mvp.model.LocalBillModel;
 import com.scott.su.smusic.mvp.model.LocalSongModel;
 import com.scott.su.smusic.mvp.model.impl.AppConfigModelImpl;
-import com.scott.su.smusic.mvp.model.impl.LocalSongBillModelImpl;
+import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
-import com.scott.su.smusic.mvp.presenter.LocalSongBillDetailPresenter;
+import com.scott.su.smusic.mvp.presenter.LocalBillDetailPresenter;
 import com.scott.su.smusic.mvp.view.LocalSongBillDetailView;
 
 import java.util.List;
@@ -19,15 +19,15 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/29.
  */
-public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPresenter {
+public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     private LocalSongBillDetailView mBillDetailView;
-    private LocalSongBillModel mBillModel;
+    private LocalBillModel mBillModel;
     private LocalSongModel mSongModel;
     private AppConfigModel mAppConfigModel;
 
-    public LocalSongBillDetailPresenterImpl(LocalSongBillDetailView mBillDetailView) {
+    public LocalBillDetailPresenterImpl(LocalSongBillDetailView mBillDetailView) {
         this.mBillDetailView = mBillDetailView;
-        this.mBillModel = new LocalSongBillModelImpl();
+        this.mBillModel = new LocalBillModelImpl();
         this.mSongModel = new LocalSongModelImpl();
         this.mAppConfigModel = new AppConfigModelImpl();
     }
@@ -63,7 +63,7 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
     }
 
     @Override
-    public void onSelectedLocalSongsResult(LocalSongBillEntity billToAddSong, List<LocalSongEntity> songsToAdd) {
+    public void onSelectedLocalSongsResult(LocalBillEntity billToAddSong, List<LocalSongEntity> songsToAdd) {
         if (songsToAdd.size() == 1) {
             //Only select one song to add;
             LocalSongEntity songToAdd = songsToAdd.get(0);
@@ -81,7 +81,7 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
             }
             mBillModel.addSongsToBill(mBillDetailView.getViewContext(), songsToAdd, billToAddSong);
         }
-        LocalSongBillEntity billAfterAddSong = mBillModel.getBill(mBillDetailView.getViewContext(), billToAddSong.getBillId());
+        LocalBillEntity billAfterAddSong = mBillModel.getBill(mBillDetailView.getViewContext(), billToAddSong.getBillId());
         //Update the bill entitiy of the activity;
         mBillDetailView.setBillEntity(billAfterAddSong);
         //Update the bill songs display;
@@ -95,9 +95,9 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
 
     @Override
     public void onDeleteBillSongConfirmed(LocalSongEntity songEntity) {
-        LocalSongBillEntity billBeforeDelete = mBillDetailView.getBillEntity();
+        LocalBillEntity billBeforeDelete = mBillDetailView.getBillEntity();
         mBillModel.deleteBillSong(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity(), songEntity);
-        LocalSongBillEntity billAfterDelete = mBillModel.getBill(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity().getBillId());
+        LocalBillEntity billAfterDelete = mBillModel.getBill(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity().getBillId());
         mBillDetailView.refreshBillSongDisplay(billAfterDelete);
         mBillDetailView.setBillEntity(billAfterDelete);
         //Only when the deleted song is the latest song of the bill,should the bill cover perform reveal animation;
@@ -111,7 +111,7 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
     @Override
     public void onClearBillConfirmed() {
         mBillModel.clearBillSongs(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity());
-        LocalSongBillEntity billAfterClear = mBillModel.getBill(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity().getBillId());
+        LocalBillEntity billAfterClear = mBillModel.getBill(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity().getBillId());
         mBillDetailView.refreshBillSongDisplay(billAfterClear);
         mBillDetailView.setBillEntity(billAfterClear);
         loadCover(true);

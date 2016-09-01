@@ -1,18 +1,16 @@
 package com.scott.su.smusic.adapter;
 
 import android.app.Activity;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.adapter.holder.LocalSongBillViewHolder;
-import com.scott.su.smusic.entity.LocalSongBillEntity;
+import com.scott.su.smusic.adapter.holder.LocalBillViewHolder;
+import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
-import com.su.scott.slibrary.util.ScreenUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -20,24 +18,24 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/20.
  */
-public class LocalSongBillDisplayAdapter extends BaseDisplayAdapter<LocalSongBillViewHolder, LocalSongBillEntity> {
+public class LocalBillDisplayAdapter extends BaseDisplayAdapter<LocalBillViewHolder, LocalBillEntity> {
 
-    public LocalSongBillDisplayAdapter(Activity context) {
+    public LocalBillDisplayAdapter(Activity context) {
         super(context);
     }
 
-    public LocalSongBillDisplayAdapter(Activity context, List<LocalSongBillEntity> dataList) {
+    public LocalBillDisplayAdapter(Activity context, List<LocalBillEntity> dataList) {
         super(context, dataList);
     }
 
     @Override
-    protected LocalSongBillViewHolder createVH(ViewGroup parent, int viewType) {
-        return new LocalSongBillViewHolder(LayoutInflater.from(context)
-                .inflate(R.layout.view_holder_local_song_bill, parent, false));
+    protected LocalBillViewHolder createVH(ViewGroup parent, int viewType) {
+        return new LocalBillViewHolder(LayoutInflater.from(context)
+                .inflate(R.layout.view_holder_local_bill, parent, false));
     }
 
     @Override
-    protected void bindVH(final LocalSongBillViewHolder viewHolder, final LocalSongBillEntity entity, final int position) {
+    protected void bindVH(final LocalBillViewHolder viewHolder, final LocalBillEntity entity, final int position) {
         ViewUtil.setText(viewHolder.getTitleTextView(), entity.getBillTitle(), "");
         ViewUtil.setText(viewHolder.getCountTextView(),
                 (entity.getBillSongs() == null ? 0 : entity.getBillSongs().size()) + "首",

@@ -6,12 +6,12 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.entity.LocalSongBillEntity;
+import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.AppConfigModel;
-import com.scott.su.smusic.mvp.model.LocalSongBillModel;
+import com.scott.su.smusic.mvp.model.LocalBillModel;
 import com.scott.su.smusic.mvp.model.impl.AppConfigModelImpl;
-import com.scott.su.smusic.mvp.model.impl.LocalSongBillModelImpl;
+import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.view.MainView;
 
@@ -22,13 +22,13 @@ import java.util.List;
  */
 public class MainPresenterImpl implements MainPresenter {
     private MainView mMainView;
-    private LocalSongBillModel mBillModel;
+    private LocalBillModel mBillModel;
     private AppConfigModel mConfigModel;
 
 
     public MainPresenterImpl(MainView mView) {
         this.mMainView = mView;
-        this.mBillModel = new LocalSongBillModelImpl();
+        this.mBillModel = new LocalBillModelImpl();
         this.mConfigModel = new AppConfigModelImpl();
     }
 
@@ -39,7 +39,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onCreateBillConfirm(String text) {
-        LocalSongBillEntity billEntity = new LocalSongBillEntity(text);
+        LocalBillEntity billEntity = new LocalBillEntity(text);
 
         if (mBillModel.isBillTitleExist(mMainView.getViewContext(), billEntity)) {
             mMainView.showCreateBillUnsuccessfully(text + mMainView.getViewContext().getString(R.string.error_already_exist));
@@ -54,12 +54,12 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void onBillItemClick(View itemView, LocalSongBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+    public void onBillItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
         mMainView.goToBillDetailWithSharedElement(entity, sharedElements[0], transitionNames[0]);
     }
 
     @Override
-    public void onSelectedLocalSongsResult(final LocalSongBillEntity billToAddSong, final List<LocalSongEntity> songsToAdd) {
+    public void onSelectedLocalSongsResult(final LocalBillEntity billToAddSong, final List<LocalSongEntity> songsToAdd) {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected void onPreExecute() {

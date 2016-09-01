@@ -9,14 +9,13 @@ import android.view.View;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
-import com.scott.su.smusic.entity.LocalSongBillEntity;
+import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.LocalSongDisplayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalSongDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
-import com.su.scott.slibrary.util.L;
 
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     private LocalSongDisplayPresenter mSongDisplayPresenter;
     private LocalSongDisplayAdapter mSongDisplayAdapter;
     private LocalSongDisplayAdapter.DISPLAY_TYPE mDisplayType = LocalSongDisplayAdapter.DISPLAY_TYPE.NumberDivider;
-    private LocalSongBillEntity mSongsBillEntity;
+    private LocalBillEntity mSongsBillEntity;
     private LocalSongDisplayCallback mDisplayCallback;
 
     private static final String KEY_DISPLAY_BILL_ENTITY = "KEY_DISPLAY_BILL_ENTITY";
@@ -40,7 +39,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
      * @param displayType
      * @return
      */
-    public static LocalSongDisplayFragment newInstance(@Nullable LocalSongBillEntity songsBillEntity, LocalSongDisplayAdapter.DISPLAY_TYPE displayType) {
+    public static LocalSongDisplayFragment newInstance(@Nullable LocalBillEntity songsBillEntity, LocalSongDisplayAdapter.DISPLAY_TYPE displayType) {
         LocalSongDisplayFragment instance = new LocalSongDisplayFragment();
         Bundle arguments = new Bundle();
         arguments.putSerializable(KEY_DISPLAY_TYPE, displayType);
@@ -52,7 +51,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.mSongsBillEntity = (LocalSongBillEntity) getArguments().get(KEY_DISPLAY_BILL_ENTITY);
+        this.mSongsBillEntity = (LocalBillEntity) getArguments().get(KEY_DISPLAY_BILL_ENTITY);
         this.mDisplayType = (LocalSongDisplayAdapter.DISPLAY_TYPE) getArguments().get(KEY_DISPLAY_TYPE);
     }
 
@@ -152,11 +151,11 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     }
 
     @Override
-    public LocalSongBillEntity getSongBillEntity() {
+    public LocalBillEntity getSongBillEntity() {
         return mSongsBillEntity;
     }
 
-    public void setSongBillEntity(LocalSongBillEntity billEntity) {
+    public void setSongBillEntity(LocalBillEntity billEntity) {
         this.mSongsBillEntity = billEntity;
     }
 

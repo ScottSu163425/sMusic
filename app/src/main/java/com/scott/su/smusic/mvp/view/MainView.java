@@ -2,11 +2,8 @@ package com.scott.su.smusic.mvp.view;
 
 import android.view.View;
 
-import com.scott.su.smusic.entity.LocalSongBillEntity;
-import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.entity.LocalBillEntity;
 import com.su.scott.slibrary.view.BaseView;
-
-import java.util.List;
 
 /**
  * Created by asus on 2016/8/19.
@@ -27,10 +24,10 @@ public interface MainView extends BaseView {
 
     void showCreateBillUnsuccessfully(String msg);
 
-    void showCreateBillSuccessfully(LocalSongBillEntity billEntity);
+    void showCreateBillSuccessfully(LocalBillEntity billEntity);
 
-    void goToBillDetailWithSharedElement(LocalSongBillEntity entity, View sharedElement, String transitionName);
+    void goToBillDetailWithSharedElement(LocalBillEntity entity, View sharedElement, String transitionName);
 
-    void goToBillDetail(LocalSongBillEntity entity);
+    void goToBillDetail(LocalBillEntity entity);
 
 }

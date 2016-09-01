@@ -4,9 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
-import com.su.scott.slibrary.util.L;
-import com.su.scott.slibrary.util.T;
-
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
@@ -16,8 +13,8 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/21.
  */
-@Table(name = "LocalSongBillEntity")
-public class LocalSongBillEntity implements Parcelable {
+@Table(name = "LocalBillEntity")
+public class LocalBillEntity implements Parcelable {
 
     public static final String ID_DIVIDER = "~";
 
@@ -36,12 +33,12 @@ public class LocalSongBillEntity implements Parcelable {
     private List<LocalSongEntity> billSongs; //Songs in this bill;
 
 
-    public LocalSongBillEntity() {
+    public LocalBillEntity() {
         //Auto set bill id with unique number;
         setBillId(System.currentTimeMillis());
     }
 
-    public LocalSongBillEntity(String billTitle) {
+    public LocalBillEntity(String billTitle) {
         this.billTitle = billTitle;
         setBillId(System.currentTimeMillis());
     }
@@ -156,7 +153,7 @@ public class LocalSongBillEntity implements Parcelable {
         dest.writeTypedList(this.billSongs);
     }
 
-    protected LocalSongBillEntity(Parcel in) {
+    protected LocalBillEntity(Parcel in) {
         this.id = in.readInt();
         this.billId = in.readLong();
         this.billTitle = in.readString();
@@ -164,21 +161,21 @@ public class LocalSongBillEntity implements Parcelable {
         this.billSongs = in.createTypedArrayList(LocalSongEntity.CREATOR);
     }
 
-    public static final Parcelable.Creator<LocalSongBillEntity> CREATOR = new Parcelable.Creator<LocalSongBillEntity>() {
+    public static final Parcelable.Creator<LocalBillEntity> CREATOR = new Parcelable.Creator<LocalBillEntity>() {
         @Override
-        public LocalSongBillEntity createFromParcel(Parcel source) {
-            return new LocalSongBillEntity(source);
+        public LocalBillEntity createFromParcel(Parcel source) {
+            return new LocalBillEntity(source);
         }
 
         @Override
-        public LocalSongBillEntity[] newArray(int size) {
-            return new LocalSongBillEntity[size];
+        public LocalBillEntity[] newArray(int size) {
+            return new LocalBillEntity[size];
         }
     };
 
     @Override
     public String toString() {
-        return "LocalSongBillEntity{" +
+        return "LocalBillEntity{" +
                 "id=" + id +
                 ", billId=" + billId +
                 ", billTitle='" + billTitle + '\'' +
