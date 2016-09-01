@@ -18,6 +18,13 @@ import java.util.List;
  * Created by asus on 2016/8/21.
  */
 public class LocalSongBillModelImpl implements LocalSongBillModel {
+    private static final String BILL_NAME_DEFAULT_BILL = "我喜欢";
+    private static final long BILL_ID_DEFAULT_BILL = 1111111;
+
+    @Override
+    public boolean isDefaultBill(LocalSongBillEntity billEntity) {
+        return billEntity.getBillId() == BILL_ID_DEFAULT_BILL;
+    }
 
     @Override
     public boolean isBillExist(Context context, LocalSongBillEntity billEntity) {
@@ -102,9 +109,8 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
                 //If it is the first time to open, create one bill automatically;
                 result = new ArrayList<>();
                 LocalSongBillEntity defaultBill = new LocalSongBillEntity();
-                defaultBill.setBillTitle("我喜欢");
-                //debug
-                defaultBill.setBillId(123);
+                defaultBill.setBillTitle(BILL_NAME_DEFAULT_BILL);
+                defaultBill.setBillId(BILL_ID_DEFAULT_BILL);
                 addBill(context, defaultBill);
                 result.add(defaultBill);
             }
@@ -181,7 +187,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public void DeleteBill(Context context, LocalSongBillEntity billEntity) {
+    public void deleteBill(Context context, LocalSongBillEntity billEntity) {
         if (!isBillExist(context, billEntity)) {
             return;
         }
@@ -198,7 +204,7 @@ public class LocalSongBillModelImpl implements LocalSongBillModel {
     }
 
     @Override
-    public void DeleteBillSong(Context context, LocalSongBillEntity billEntity, LocalSongEntity songEntity) {
+    public void deleteBillSong(Context context, LocalSongBillEntity billEntity, LocalSongEntity songEntity) {
         LocalSongEntity billSongEntity = getBillSong(context, songEntity.getSongId());
         if (!isBillContains(billEntity, billSongEntity)) {
             return;

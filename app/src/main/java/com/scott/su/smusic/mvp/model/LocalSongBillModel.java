@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface LocalSongBillModel {
 
+    boolean isDefaultBill(LocalSongBillEntity billEntity);
+
     boolean isBillExist(Context context, LocalSongBillEntity billEntity);
 
     boolean isBillTitleExist(Context context, LocalSongBillEntity billEntity);
@@ -43,9 +45,9 @@ public interface LocalSongBillModel {
      */
     boolean isBillContainsAll(LocalSongBillEntity billEntity, List<LocalSongEntity> songEntities);
 
-    void DeleteBill(Context context, LocalSongBillEntity billEntity);
+    void deleteBill(Context context, LocalSongBillEntity billEntity);
 
-    void DeleteBillSong(Context context, LocalSongBillEntity billEntity, LocalSongEntity songEntity);
+    void deleteBillSong(Context context, LocalSongBillEntity billEntity, LocalSongEntity songEntity);
 
     void clearBillSongs(Context context, LocalSongBillEntity billEntity);
 

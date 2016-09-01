@@ -305,7 +305,7 @@ public class MainActivity extends BaseActivity implements MainView {
                         Intent intent = new Intent(MainActivity.this, LocalSongSelectionActivity.class);
                         intent.setExtrasClassLoader(LocalSongBillEntity.class.getClassLoader());
                         intent.putExtra(Constants.KEY_EXTRA_BILL, billEntity);
-                        startActivityForResult(intent, REQUEST_CODE_LOCAL_SONG_SELECTION);
+                        goToForResult(intent, REQUEST_CODE_LOCAL_SONG_SELECTION);
                     }
                 });
     }

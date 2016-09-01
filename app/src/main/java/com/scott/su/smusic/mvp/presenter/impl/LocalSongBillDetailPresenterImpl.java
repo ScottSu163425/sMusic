@@ -50,6 +50,10 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
 
     @Override
     public void onDeleteBillMenuItemClick() {
+        if (mBillModel.isDefaultBill(mBillDetailView.getBillEntity())) {
+            mBillDetailView.showDeleteBillUnsuccessfully("这张歌单不能删除");
+            return;
+        }
         mBillDetailView.showDeleteBillConfirmDialog();
     }
 
@@ -92,7 +96,7 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
     @Override
     public void onDeleteBillSongConfirmed(LocalSongEntity songEntity) {
         LocalSongBillEntity billBeforeDelete = mBillDetailView.getBillEntity();
-        mBillModel.DeleteBillSong(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity(), songEntity);
+        mBillModel.deleteBillSong(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity(), songEntity);
         LocalSongBillEntity billAfterDelete = mBillModel.getBill(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity().getBillId());
         mBillDetailView.refreshBillSongDisplay(billAfterDelete);
         mBillDetailView.setBillEntity(billAfterDelete);
@@ -116,7 +120,9 @@ public class LocalSongBillDetailPresenterImpl implements LocalSongBillDetailPres
 
     @Override
     public void onDeleteBillConfirmed() {
-
+        mBillModel.deleteBill(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity());
+        mAppConfigModel.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
+        mBillDetailView.showDeleteBillSuccessfully();
     }
 
 

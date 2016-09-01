@@ -7,6 +7,11 @@ import android.os.Build;
  */
 public class SdkUtil {
 
+    /**
+     * return true if the android version of device is above 5.0;
+     *
+     * @return
+     */
     public static boolean isLolipopOrLatter() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }

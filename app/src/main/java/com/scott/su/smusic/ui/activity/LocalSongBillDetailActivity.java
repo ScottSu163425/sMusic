@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +28,7 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.DialogUtil;
+import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -134,6 +137,8 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
             mBillDetailPresenter.onAddSongsMenuItemClick();
         } else if (id == R.id.action_clear_local_song_bill_detaile) {
             mBillDetailPresenter.onClearBillMenuItemClick();
+        } else if (id == R.id.action_delete_local_song_bill_detaile) {
+            mBillDetailPresenter.onDeleteBillMenuItemClick();
         }
 
         return true;
@@ -234,7 +239,7 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
     public void goToLocalSongSelectionActivity() {
         Intent intent = new Intent(LocalSongBillDetailActivity.this, LocalSongSelectionActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_BILL, mBillEntity);
-        startActivityForResult(intent, REQUESt_CODE_LOCAL_SONG_SELECTION);
+        goToForResult(intent, REQUESt_CODE_LOCAL_SONG_SELECTION);
     }
 
     @Override
@@ -326,7 +331,33 @@ public class LocalSongBillDetailActivity extends BaseActivity implements LocalSo
 
     @Override
     public void showDeleteBillConfirmDialog() {
+        DialogUtil.showDialog(getViewContext(),
+                "提示",
+                "确定删除歌单?",
+                null,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mBillDetailPresenter.onDeleteBillConfirmed();
+                    }
+                }, null, null
+        );
+    }
 
+    @Override
+    public void showDeleteBillSuccessfully() {
+//        if (SdkUtil.isLolipopOrLatter()) {
+//            getWindow().setExitTransition(new Explode());
+//        }
+        if (SdkUtil.isLolipopOrLatter()) {
+            getWindow().setSharedElementReenterTransition(new Fade());
+        }
+        this.onBackPressed();
+    }
+
+    @Override
+    public void showDeleteBillUnsuccessfully(String msg) {
+        showSnackbarShort(getSnackbarParent(), msg);
     }
 
 

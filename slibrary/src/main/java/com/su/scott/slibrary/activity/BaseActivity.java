@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.Snack;
 import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.view.BaseView;
@@ -96,23 +97,27 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     protected void goTo(Class destination) {
-        startActivity(new Intent(this, destination));
+        if (SdkUtil.isLolipopOrLatter()) {
+            startActivity(new Intent(this, destination), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        } else {
+            startActivity(new Intent(this, destination));
+        }
     }
 
     protected void goTo(Intent intent) {
-        startActivity(intent);
+        if (SdkUtil.isLolipopOrLatter()) {
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        } else {
+            startActivity(intent);
+        }
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    protected void goToWithTransition(Class destination) {
-        startActivity(new Intent(this, destination),
-                ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    protected void goToWithTransition(Intent intent) {
-        startActivity(intent,
-                ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    protected void goToForResult(Intent intent, int requestCode) {
+        if (SdkUtil.isLolipopOrLatter()) {
+            startActivityForResult(intent, requestCode, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        } else {
+            startActivityForResult(intent, requestCode);
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

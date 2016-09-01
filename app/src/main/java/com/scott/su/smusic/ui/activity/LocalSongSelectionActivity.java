@@ -117,7 +117,8 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
         intent.setExtrasClassLoader(LocalSongBillEntity.class.getClassLoader());
         intent.putExtras(data);
         setResult(RESULT_OK, intent);
-        finish();
+//        finish();
+        this.onBackPressed();
     }
 
     @Override
