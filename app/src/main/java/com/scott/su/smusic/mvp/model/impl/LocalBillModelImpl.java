@@ -21,6 +21,7 @@ public class LocalBillModelImpl implements LocalBillModel {
     private static final String BILL_NAME_DEFAULT_BILL = "我喜欢";
     private static final long BILL_ID_DEFAULT_BILL = 1111111;
 
+
     @Override
     public boolean isDefaultBill(LocalBillEntity billEntity) {
         return billEntity.getBillId() == BILL_ID_DEFAULT_BILL;
@@ -58,13 +59,17 @@ public class LocalBillModelImpl implements LocalBillModel {
 
     @Override
     public List<LocalSongEntity> getBillSongs(Context context) {
+        List<LocalSongEntity> billSongs = new ArrayList<>();
         try {
-            return DbUtilHelper.getDefaultDbManager().findAll(LocalSongEntity.class);
+            billSongs = DbUtilHelper.getDefaultDbManager().findAll(LocalSongEntity.class);
+            if (billSongs == null) {
+                billSongs = new ArrayList<>();
+            }
         } catch (DbException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return billSongs;
     }
 
     @Override
@@ -124,19 +129,21 @@ public class LocalBillModelImpl implements LocalBillModel {
 
     @Override
     public void addSongToBill(Context context, LocalSongEntity songEntity, LocalBillEntity billToAddSong) {
-//        LocalBillEntity billEntity = getBill(context, billToAddSong.getBillId());
+        LocalBillEntity bill = getBill(context, billToAddSong.getBillId());
+        LocalSongEntity billSong = getBillSong(context, songEntity.getSongId());
+        LocalSongEntity song = billSong == null ? songEntity : billSong;
 
-        if (isBillContainsSong(billToAddSong, songEntity)) {
+        if (isBillContainsSong(bill, songEntity)) {
             //Already contain this song.
             return;
         }
 
-        billToAddSong.appendBillSongId(songEntity.getSongId());
-        songEntity.appendBillId(billToAddSong.getBillId());
+        bill.appendBillSongId(song.getSongId());
+        song.appendBillId(bill.getBillId());
 
         try {
-            DbUtilHelper.getDefaultDbManager().saveOrUpdate(billToAddSong);
-            DbUtilHelper.getDefaultDbManager().saveOrUpdate(songEntity);
+            DbUtilHelper.getDefaultDbManager().saveOrUpdate(bill);
+            DbUtilHelper.getDefaultDbManager().saveOrUpdate(song);
         } catch (DbException e) {
             e.printStackTrace();
         }

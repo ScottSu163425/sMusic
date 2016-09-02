@@ -29,7 +29,7 @@
     <dimen name="height_item_l">72dp</dimen>
 
     <dimen name="elevation_fab_normal">8dp</dimen>
-    <dimen name="elevation_fab_pressed">15dp</dimen>
+    <dimen name="elevation_fab_pressed">16dp</dimen>
 
 
 </resources>

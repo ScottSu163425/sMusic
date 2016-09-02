@@ -24,6 +24,10 @@ public interface BaseView {
 
     void initListener();
 
+    void showLoadingDialog(Activity activity);
+
+    void showLoadingDialog(Activity activity, boolean cancelable);
+
     void showLoadingDialog(Activity activity, String msg, boolean cancelable);
 
     void dismissLoadingDialog();

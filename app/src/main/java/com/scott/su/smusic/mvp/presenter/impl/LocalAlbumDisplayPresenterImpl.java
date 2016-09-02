@@ -10,6 +10,7 @@ import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalAlbumDisplayPresenter;
 import com.scott.su.smusic.mvp.view.LocalAlbumDisplayView;
+import com.su.scott.slibrary.manager.AsyncTaskHelper;
 
 import java.util.List;
 
@@ -53,7 +54,6 @@ public class LocalAlbumDisplayPresenterImpl implements LocalAlbumDisplayPresente
 
     @Override
     public void onViewFirstTimeCreated() {
-        mLocalAlbumDisplayView.showLoading();
         getAndDisplayLocalSongs();
     }
 
@@ -69,6 +69,12 @@ public class LocalAlbumDisplayPresenterImpl implements LocalAlbumDisplayPresente
 
     private void getAndDisplayLocalSongs() {
         new AsyncTask<Void, Void, List<LocalAlbumEntity>>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mLocalAlbumDisplayView.showLoading();
+            }
+
             @Override
             protected List<LocalAlbumEntity> doInBackground(Void... voids) {
                 return mLocalAlbumModel.getLocalAlbums(mLocalAlbumDisplayView.getViewContext());

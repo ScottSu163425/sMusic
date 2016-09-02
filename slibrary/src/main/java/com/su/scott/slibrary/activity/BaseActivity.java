@@ -21,12 +21,11 @@ import com.su.scott.slibrary.view.BaseView;
  * Created by Administrator on 2016/8/4.
  */
 public abstract class BaseActivity extends AppCompatActivity implements BaseView {
-
     private ProgressDialog mLoadingDialog;
+    private String mNetworkErrorTip = TIP_DEFAULT_NETWORK_ERROR;
 
-    private String mNetworkErrorTip = DEFAULT_NETWORK_ERROR_TIP;
-
-    private static final String DEFAULT_NETWORK_ERROR_TIP = "网络异常，请检查设备的网络连接状况";
+    private static final String TIP_DEFAULT_LOADING = "请稍候...";
+    private static final String TIP_DEFAULT_NETWORK_ERROR = "网络异常，请检查设备的网络连接状况";
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
@@ -37,6 +36,16 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @Override
     public Activity getViewContext() {
         return this;
+    }
+
+    @Override
+    public void showLoadingDialog(Activity activity) {
+        showLoadingDialog(activity, true);
+    }
+
+    @Override
+    public void showLoadingDialog(Activity activity, boolean cancelable) {
+        showLoadingDialog(activity, TIP_DEFAULT_LOADING, cancelable);
     }
 
     @Override
