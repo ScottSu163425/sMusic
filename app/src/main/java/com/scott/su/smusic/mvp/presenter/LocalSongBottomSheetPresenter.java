@@ -1,5 +1,6 @@
 package com.scott.su.smusic.mvp.presenter;
 
+import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 
 /**
@@ -8,11 +9,19 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 public interface LocalSongBottomSheetPresenter {
     void onBottomSheetAddToBillClick(LocalSongEntity songEntity);
 
-    void onBottomSheetArtistClick(LocalSongEntity songEntity);
-
     void onBottomSheetAlbumClick(LocalSongEntity songEntity);
 
     void onBottomSheetShareClick(LocalSongEntity songEntity);
 
     void onBottomSheetDeleteClick(LocalSongEntity songEntity);
+
+    void onBottomSheetAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity);
+
+    void onBottomSheetAlbumConfirmed(LocalSongEntity songEntity);
+
+    void onBottomSheetShareConfirmed(LocalSongEntity songEntity);
+
+    void onBottomSheetDeleteConfirmed(LocalSongEntity songEntity);
+
+
 }

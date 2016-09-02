@@ -68,8 +68,6 @@ public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragmen
     public interface MenuClickCallback {
         void onAddToBillClick(LocalSongEntity songEntity);
 
-        void onArtistClick(LocalSongEntity songEntity);
-
         void onAlbumClick(LocalSongEntity songEntity);
 
         void onShareClick(LocalSongEntity songEntity);

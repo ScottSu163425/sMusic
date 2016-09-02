@@ -3,6 +3,7 @@ package com.scott.su.smusic.mvp.view;
 import android.view.View;
 
 import com.scott.su.smusic.entity.LocalBillEntity;
+import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.view.BaseView;
 
 /**
@@ -11,6 +12,10 @@ import com.su.scott.slibrary.view.BaseView;
 public interface MainView extends BaseView {
 
     boolean isDataInitFinish();
+
+    void showLocalSongBottomSheet(LocalSongEntity songEntity);
+
+    void showBillSelectionDialog(LocalSongEntity songToBeAdd);
 
     void updateSongDisplay();
 
@@ -21,8 +26,6 @@ public interface MainView extends BaseView {
     void showCreateBillDialog();
 
     void dismissCreateBillDialog();
-
-    void showCreateBillUnsuccessfully(String msg);
 
     void showCreateBillSuccessfully(LocalBillEntity billEntity);
 

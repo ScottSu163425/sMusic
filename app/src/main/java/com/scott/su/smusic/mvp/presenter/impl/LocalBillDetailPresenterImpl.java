@@ -13,6 +13,7 @@ import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalBillDetailPresenter;
 import com.scott.su.smusic.mvp.view.LocalSongBillDetailView;
+import com.su.scott.slibrary.util.L;
 
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     @Override
     public void onDeleteBillMenuItemClick() {
         if (mBillModel.isDefaultBill(mBillDetailView.getBillEntity())) {
-            mBillDetailView.showDeleteBillUnsuccessfully("这张歌单不能删除");
+            mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), "这张歌单不能删除");
             return;
         }
         mBillDetailView.showDeleteBillConfirmDialog();
@@ -59,7 +60,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
 
     @Override
     public void onBillSongItemMoreClick(View view, int position, LocalSongEntity entity) {
-        mBillDetailView.showSongBottomSheet(entity);
+        mBillDetailView.showBillSongBottomSheet(entity);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
             //Only select one song to add;
             LocalSongEntity songToAdd = songsToAdd.get(0);
             if (mBillModel.isBillContainsSong(billToAddSong, songToAdd)) {
-                mBillDetailView.showAddSongsToBillUnsuccessfully(mBillDetailView.getViewContext().getString(R.string.error_already_exist));
+                mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), mBillDetailView.getViewContext().getString(R.string.error_already_exist));
                 return;
             }
             mBillModel.addSongToBill(mBillDetailView.getViewContext(), songToAdd, billToAddSong);
@@ -76,7 +77,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
             //More than one song was selected to be added into current bill;
             if (mBillModel.isBillContainsSongs(billToAddSong, songsToAdd)) {
                 //Add songs failed if the bill contains all these selected songs;
-                mBillDetailView.showAddSongsToBillUnsuccessfully(mBillDetailView.getViewContext().getString(R.string.error_already_exist));
+                mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), mBillDetailView.getViewContext().getString(R.string.error_already_exist));
                 return;
             }
             mBillModel.addSongsToBill(mBillDetailView.getViewContext(), songsToAdd, billToAddSong);
@@ -94,21 +95,6 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     }
 
     @Override
-    public void onDeleteBillSongConfirmed(LocalSongEntity songEntity) {
-        LocalBillEntity billBeforeDelete = mBillDetailView.getBillEntity();
-        mBillModel.deleteBillSong(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity(), songEntity);
-        LocalBillEntity billAfterDelete = mBillModel.getBill(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity().getBillId());
-        mBillDetailView.refreshBillSongDisplay(billAfterDelete);
-        mBillDetailView.setBillEntity(billAfterDelete);
-        //Only when the deleted song is the latest song of the bill,should the bill cover perform reveal animation;
-        loadCover(billBeforeDelete.getLatestSong().getSongId() == songEntity.getSongId());
-        mAppConfigModel.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
-
-//        mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(),
-//                mBillDetailView.getViewContext().getString(R.string.success_delete));
-    }
-
-    @Override
     public void onClearBillConfirmed() {
         mBillModel.clearBillSongs(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity());
         LocalBillEntity billAfterClear = mBillModel.getBill(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity().getBillId());
@@ -119,22 +105,10 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     }
 
     @Override
-    public void onDeleteBillConfirmed() {
+    public void onDeleteBillMenuItemConfirmed() {
         mBillModel.deleteBill(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity());
         mAppConfigModel.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
         mBillDetailView.showDeleteBillSuccessfully();
-    }
-
-    @Override
-    public void onAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity) {
-        if (mBillModel.isBillContainsSong(billEntity, songEntity)) {
-            mBillDetailView.showAddSongToSelectedBillUnsuccessfully("歌单中已存在");
-            return;
-        }
-
-        mBillModel.addSongToBill(mBillDetailView.getViewContext(), songEntity, billEntity);
-        mAppConfigModel.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
-        mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), "添加成功");
     }
 
 
@@ -178,11 +152,6 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     }
 
     @Override
-    public void onBottomSheetArtistClick(LocalSongEntity songEntity) {
-        mBillDetailView.showToastShort("Artist :" + songEntity.getTitle());
-    }
-
-    @Override
     public void onBottomSheetAlbumClick(LocalSongEntity songEntity) {
         mBillDetailView.showToastShort("Album :" + songEntity.getTitle());
     }
@@ -195,5 +164,42 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     @Override
     public void onBottomSheetDeleteClick(LocalSongEntity songEntity) {
         mBillDetailView.showDeleteBillSongConfirmDialog(songEntity);
+    }
+
+    @Override
+    public void onBottomSheetAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity) {
+        if (mBillModel.isBillContainsSong(billEntity, songEntity)) {
+            mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), "歌单中已存在");
+            return;
+        }
+
+        mBillModel.addSongToBill(mBillDetailView.getViewContext(), songEntity, billEntity);
+        mAppConfigModel.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
+        mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), "添加成功");
+    }
+
+    @Override
+    public void onBottomSheetAlbumConfirmed(LocalSongEntity songEntity) {
+
+    }
+
+    @Override
+    public void onBottomSheetShareConfirmed(LocalSongEntity songEntity) {
+
+    }
+
+    @Override
+    public void onBottomSheetDeleteConfirmed(LocalSongEntity songEntity) {
+        LocalBillEntity billBeforeDelete = mBillDetailView.getBillEntity();
+        mBillModel.deleteBillSong(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity(), songEntity);
+        LocalBillEntity billAfterDelete = mBillModel.getBill(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity().getBillId());
+        mBillDetailView.refreshBillSongDisplay(billAfterDelete);
+        mBillDetailView.setBillEntity(billAfterDelete);
+        //Only when the deleted song is the latest song of the bill,should the bill cover perform reveal animation;
+        loadCover(billBeforeDelete.getLatestSong().getSongId() == songEntity.getSongId());
+        mAppConfigModel.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
+
+//        mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(),
+//                mBillDetailView.getViewContext().getString(R.string.success_delete));
     }
 }

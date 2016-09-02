@@ -8,4 +8,5 @@
     <dimen name="width_indicator_selection_local_song">5dp</dimen>
     <dimen name="size_check_box">46dp</dimen>
     <dimen name="height_top_area">300dp</dimen>
+    <dimen name="width_dialog_fragment">300dp</dimen>
 </resources>

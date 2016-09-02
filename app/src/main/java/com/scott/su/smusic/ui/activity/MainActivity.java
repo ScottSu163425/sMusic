@@ -13,13 +13,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.transition.TransitionInflater;
-import android.transition.TransitionManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
@@ -32,6 +29,8 @@ import com.scott.su.smusic.mvp.view.MainView;
 import com.scott.su.smusic.ui.fragment.CreateBillDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalAlbumDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillDisplayFragment;
+import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
+import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.PermissionUtil;
@@ -149,12 +148,12 @@ public class MainActivity extends BaseActivity implements MainView {
         mSongDisplayFragment.setDisplayCallback(new LocalSongDisplayFragment.LocalSongDisplayCallback() {
             @Override
             public void onItemClick(View view, int position, LocalSongEntity entity) {
-                showToastShort("Click item:" + entity.getTitle());
+                mMainPresenter.onLocalSongItemClick(entity);
             }
 
             @Override
             public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
-                showToastShort("Click item more:" + entity.getTitle());
+                mMainPresenter.onLocalSongItemMoreClick(entity);
             }
         });
 
@@ -204,6 +203,53 @@ public class MainActivity extends BaseActivity implements MainView {
     public boolean isDataInitFinish() {
         return mDataInitFinish;
     }
+
+    @Override
+    public void showLocalSongBottomSheet(LocalSongEntity songEntity) {
+        final LocalSongBottomSheetFragment songBottomSheetFragment = new LocalSongBottomSheetFragment();
+        songBottomSheetFragment.setLocalSongEntity(songEntity);
+        songBottomSheetFragment.setMenuClickCallback(new LocalSongBottomSheetFragment.MenuClickCallback() {
+            @Override
+            public void onAddToBillClick(LocalSongEntity songEntity) {
+                mMainPresenter.onBottomSheetAddToBillClick(songEntity);
+                songBottomSheetFragment.dismissAllowingStateLoss();
+            }
+
+            @Override
+            public void onAlbumClick(LocalSongEntity songEntity) {
+                mMainPresenter.onBottomSheetAlbumClick(songEntity);
+                songBottomSheetFragment.dismissAllowingStateLoss();
+            }
+
+            @Override
+            public void onShareClick(LocalSongEntity songEntity) {
+                mMainPresenter.onBottomSheetShareClick(songEntity);
+                songBottomSheetFragment.dismissAllowingStateLoss();
+            }
+
+            @Override
+            public void onDeleteClick(LocalSongEntity songEntity) {
+                mMainPresenter.onBottomSheetDeleteClick(songEntity);
+                songBottomSheetFragment.dismissAllowingStateLoss();
+            }
+        });
+
+        songBottomSheetFragment.show(getSupportFragmentManager(), "");
+    }
+
+    @Override
+    public void showBillSelectionDialog(final LocalSongEntity songToBeAdd) {
+        final LocalBillSelectionDialogFragment billSelectionDialogFragment = new LocalBillSelectionDialogFragment();
+        billSelectionDialogFragment.setCallback(new LocalBillSelectionDialogFragment.BillSelectionCallback() {
+            @Override
+            public void onBillSelected(LocalBillEntity billEntity) {
+                mMainPresenter.onBottomSheetAddToBillConfirmed(billEntity,songToBeAdd);
+                billSelectionDialogFragment.dismissAllowingStateLoss();
+            }
+        });
+        billSelectionDialogFragment.show(getSupportFragmentManager(),"");
+    }
+
 
     @Override
     public void updateSongDisplay() {
@@ -292,11 +338,6 @@ public class MainActivity extends BaseActivity implements MainView {
         if (mCreateBillDialogFragment != null && mCreateBillDialogFragment.isVisible()) {
             mCreateBillDialogFragment.dismiss();
         }
-    }
-
-    @Override
-    public void showCreateBillUnsuccessfully(String msg) {
-        showSnackbarShort(mToolbar, msg);
     }
 
     @Override

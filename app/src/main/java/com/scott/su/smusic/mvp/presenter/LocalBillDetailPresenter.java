@@ -19,16 +19,13 @@ public interface LocalBillDetailPresenter extends BasePresenter, LocalSongBottom
 
     void onDeleteBillMenuItemClick();
 
+    void onClearBillConfirmed();
+
+    void onDeleteBillMenuItemConfirmed();
+
     void onBillSongItemMoreClick(View view, int position, LocalSongEntity entity);
 
     void onSelectedLocalSongsResult(LocalBillEntity billToAddSong, List<LocalSongEntity> songsToAdd);
 
-    void onDeleteBillSongConfirmed(LocalSongEntity songEntity);
-
-    void onClearBillConfirmed();
-
-    void onDeleteBillConfirmed();
-
-    void onAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity);
 
 }

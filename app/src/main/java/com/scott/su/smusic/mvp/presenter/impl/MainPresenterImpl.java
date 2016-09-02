@@ -23,13 +23,23 @@ import java.util.List;
 public class MainPresenterImpl implements MainPresenter {
     private MainView mMainView;
     private LocalBillModel mBillModel;
-    private AppConfigModel mConfigModel;
+    private AppConfigModel mAppConfigModel;
 
 
     public MainPresenterImpl(MainView mView) {
         this.mMainView = mView;
         this.mBillModel = new LocalBillModelImpl();
-        this.mConfigModel = new AppConfigModelImpl();
+        this.mAppConfigModel = new AppConfigModelImpl();
+    }
+
+    @Override
+    public void onLocalSongItemClick(LocalSongEntity songEntity) {
+        mMainView.showToastShort("click " + songEntity.getTitle());
+    }
+
+    @Override
+    public void onLocalSongItemMoreClick(LocalSongEntity songEntity) {
+        mMainView.showLocalSongBottomSheet(songEntity);
     }
 
     @Override
@@ -42,13 +52,13 @@ public class MainPresenterImpl implements MainPresenter {
         LocalBillEntity billEntity = new LocalBillEntity(text);
 
         if (mBillModel.isBillTitleExist(mMainView.getViewContext(), billEntity)) {
-            mMainView.showCreateBillUnsuccessfully(text + mMainView.getViewContext().getString(R.string.error_already_exist));
+            mMainView.showSnackbarShort(mMainView.getSnackbarParent(), mMainView.getViewContext().getString(R.string.error_already_exist));
             return;
         }
 
         mBillModel.addBill(mMainView.getViewContext(), billEntity);
         mMainView.updateBillDisplay();
-        mConfigModel.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), false);
+        mAppConfigModel.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), false);
         mMainView.dismissCreateBillDialog();
         mMainView.showCreateBillSuccessfully(billEntity);
     }
@@ -97,19 +107,19 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onViewResume() {
         if (mMainView.isDataInitFinish()) {
-            if (mConfigModel.isNeedToRefreshLocalSongDisplay(mMainView.getViewContext())) {
+            if (mAppConfigModel.isNeedToRefreshLocalSongDisplay(mMainView.getViewContext())) {
                 mMainView.updateSongDisplay();
-                mConfigModel.setNeedToRefreshLocalSongDisplay(mMainView.getViewContext(), false);
+                mAppConfigModel.setNeedToRefreshLocalSongDisplay(mMainView.getViewContext(), false);
             }
 
-            if (mConfigModel.isNeedToRefreshLocalBillDisplay(mMainView.getViewContext())) {
+            if (mAppConfigModel.isNeedToRefreshLocalBillDisplay(mMainView.getViewContext())) {
                 mMainView.updateBillDisplay();
-                mConfigModel.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), false);
+                mAppConfigModel.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), false);
             }
 
-            if (mConfigModel.isNeedToRefreshLocalAlbumDisplay(mMainView.getViewContext())) {
+            if (mAppConfigModel.isNeedToRefreshLocalAlbumDisplay(mMainView.getViewContext())) {
                 mMainView.updateAlbumDisplay();
-                mConfigModel.setNeedToRefreshLocalAlbumDisplay(mMainView.getViewContext(), false);
+                mAppConfigModel.setNeedToRefreshLocalAlbumDisplay(mMainView.getViewContext(), false);
             }
         }
     }
@@ -120,4 +130,51 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
 
+    @Override
+    public void onBottomSheetAddToBillClick(LocalSongEntity songEntity) {
+        mMainView.showBillSelectionDialog(songEntity);
+    }
+
+    @Override
+    public void onBottomSheetAlbumClick(LocalSongEntity songEntity) {
+
+    }
+
+    @Override
+    public void onBottomSheetShareClick(LocalSongEntity songEntity) {
+
+    }
+
+    @Override
+    public void onBottomSheetDeleteClick(LocalSongEntity songEntity) {
+
+    }
+
+    @Override
+    public void onBottomSheetAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity) {
+        if (mBillModel.isBillContainsSong(billEntity, songEntity)) {
+            mMainView.showSnackbarShort(mMainView.getSnackbarParent(), "歌单中已存在");
+            return;
+        }
+
+        mBillModel.addSongToBill(mMainView.getViewContext(), songEntity, billEntity);
+//        mAppConfigModel.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), true);
+        mMainView.updateBillDisplay();
+        mMainView.showSnackbarShort(mMainView.getSnackbarParent(), "添加成功");
+    }
+
+    @Override
+    public void onBottomSheetAlbumConfirmed(LocalSongEntity songEntity) {
+        mMainView.showToastShort("Album:" + songEntity.getAlbum());
+    }
+
+    @Override
+    public void onBottomSheetShareConfirmed(LocalSongEntity songEntity) {
+        mMainView.showToastShort("Share:" + songEntity.getTitle());
+    }
+
+    @Override
+    public void onBottomSheetDeleteConfirmed(LocalSongEntity songEntity) {
+        mMainView.showToastShort("Delete:" + songEntity.getTitle());
+    }
 }

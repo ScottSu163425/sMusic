@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
-import android.transition.Fade;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +27,6 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.DialogUtil;
-import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -243,11 +241,6 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     }
 
     @Override
-    public void showAddSongsToBillUnsuccessfully(String msg) {
-        showSnackbarShort(mCoverImageView, msg);
-    }
-
-    @Override
     public void showAddSongsToBillSuccessfully() {
 //        showSnackbarShort(mCoverImageView, msg);
     }
@@ -266,7 +259,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     }
 
     @Override
-    public void showSongBottomSheet(LocalSongEntity songEntity) {
+    public void showBillSongBottomSheet(LocalSongEntity songEntity) {
         LocalSongBottomSheetFragment.newInstance()
                 .setLocalSongEntity(songEntity)
                 .setMenuClickCallback(new LocalSongBottomSheetFragment.MenuClickCallback() {
@@ -274,11 +267,6 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
                     @Override
                     public void onAddToBillClick(LocalSongEntity songEntity) {
                         mBillDetailPresenter.onBottomSheetAddToBillClick(songEntity);
-                    }
-
-                    @Override
-                    public void onArtistClick(LocalSongEntity songEntity) {
-                        mBillDetailPresenter.onBottomSheetArtistClick(songEntity);
                     }
 
                     @Override
@@ -308,7 +296,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mBillDetailPresenter.onDeleteBillSongConfirmed(songEntity);
+                        mBillDetailPresenter.onBottomSheetDeleteConfirmed(songEntity);
                     }
                 }, null, null
         );
@@ -338,7 +326,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mBillDetailPresenter.onDeleteBillConfirmed();
+                        mBillDetailPresenter.onDeleteBillMenuItemConfirmed();
                     }
                 }, null, null
         );
@@ -350,27 +338,17 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     }
 
     @Override
-    public void showDeleteBillUnsuccessfully(String msg) {
-        showSnackbarShort(getSnackbarParent(), msg);
-    }
-
-    @Override
     public void showBillSelectionDialog(final LocalSongEntity songToBeAdd) {
         final LocalBillSelectionDialogFragment billSelectionDialogFragment = new LocalBillSelectionDialogFragment();
         billSelectionDialogFragment.setCallback(new LocalBillSelectionDialogFragment.BillSelectionCallback() {
             @Override
             public void onBillSelected(LocalBillEntity billEntity) {
-                mBillDetailPresenter.onAddToBillConfirmed(billEntity,songToBeAdd);
+                mBillDetailPresenter.onBottomSheetAddToBillConfirmed(billEntity,songToBeAdd);
                 billSelectionDialogFragment.dismissAllowingStateLoss();
             }
         });
         billSelectionDialogFragment.show(getSupportFragmentManager(),"");
 
-    }
-
-    @Override
-    public void showAddSongToSelectedBillUnsuccessfully(String msg) {
-        showSnackbarShort(getSnackbarParent(),msg);
     }
 
 

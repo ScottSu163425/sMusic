@@ -13,7 +13,11 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public interface MainPresenter extends BasePresenter {
+public interface MainPresenter extends BasePresenter, LocalSongBottomSheetPresenter {
+
+    void onLocalSongItemClick(LocalSongEntity songEntity);
+
+    void onLocalSongItemMoreClick(LocalSongEntity songEntity);
 
     void onFabClick();
 
