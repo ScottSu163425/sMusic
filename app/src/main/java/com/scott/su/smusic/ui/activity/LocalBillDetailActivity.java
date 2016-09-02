@@ -21,6 +21,7 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.LocalBillDetailPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalBillDetailPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongBillDetailView;
+import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
@@ -242,12 +243,12 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     }
 
     @Override
-    public void showAddSongsUnsuccessfully(String msg) {
+    public void showAddSongsToBillUnsuccessfully(String msg) {
         showSnackbarShort(mCoverImageView, msg);
     }
 
     @Override
-    public void showAddSongsSuccessfully() {
+    public void showAddSongsToBillSuccessfully() {
 //        showSnackbarShort(mCoverImageView, msg);
     }
 
@@ -351,6 +352,25 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     @Override
     public void showDeleteBillUnsuccessfully(String msg) {
         showSnackbarShort(getSnackbarParent(), msg);
+    }
+
+    @Override
+    public void showBillSelectionDialog(final LocalSongEntity songToBeAdd) {
+        final LocalBillSelectionDialogFragment billSelectionDialogFragment = new LocalBillSelectionDialogFragment();
+        billSelectionDialogFragment.setCallback(new LocalBillSelectionDialogFragment.BillSelectionCallback() {
+            @Override
+            public void onBillSelected(LocalBillEntity billEntity) {
+                mBillDetailPresenter.onAddToBillConfirmed(billEntity,songToBeAdd);
+                billSelectionDialogFragment.dismissAllowingStateLoss();
+            }
+        });
+        billSelectionDialogFragment.show(getSupportFragmentManager(),"");
+
+    }
+
+    @Override
+    public void showAddSongToSelectedBillUnsuccessfully(String msg) {
+        showSnackbarShort(getSnackbarParent(),msg);
     }
 
 

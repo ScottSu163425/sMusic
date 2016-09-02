@@ -34,7 +34,7 @@ public interface LocalBillModel {
 
     List<LocalSongEntity> getSongsByBillId(Context context, long billId);
 
-    boolean isBillContains(LocalBillEntity billEntity, LocalSongEntity songEntity);
+    boolean isBillContainsSong(LocalBillEntity billEntity, LocalSongEntity songEntity);
 
     /**
      * Return true if bill contains all these songs;
@@ -43,7 +43,7 @@ public interface LocalBillModel {
      * @param songEntities
      * @return
      */
-    boolean isBillContainsAll(LocalBillEntity billEntity, List<LocalSongEntity> songEntities);
+    boolean isBillContainsSongs(LocalBillEntity billEntity, List<LocalSongEntity> songEntities);
 
     void deleteBill(Context context, LocalBillEntity billEntity);
 

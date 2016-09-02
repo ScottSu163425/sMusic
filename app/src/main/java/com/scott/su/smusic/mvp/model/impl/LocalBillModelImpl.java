@@ -125,7 +125,7 @@ public class LocalBillModelImpl implements LocalBillModel {
     public void addSongToBill(Context context, LocalSongEntity songEntity, LocalBillEntity billToAddSong) {
 //        LocalBillEntity billEntity = getBill(context, billToAddSong.getBillId());
 
-        if (isBillContains(billToAddSong, songEntity)) {
+        if (isBillContainsSong(billToAddSong, songEntity)) {
             //Already contain this song.
             return;
         }
@@ -167,7 +167,7 @@ public class LocalBillModelImpl implements LocalBillModel {
     }
 
     @Override
-    public boolean isBillContains(LocalBillEntity billEntity, LocalSongEntity songEntity) {
+    public boolean isBillContainsSong(LocalBillEntity billEntity, LocalSongEntity songEntity) {
         if (billEntity.isBillEmpty()) {
             return false;
         }
@@ -176,9 +176,9 @@ public class LocalBillModelImpl implements LocalBillModel {
     }
 
     @Override
-    public boolean isBillContainsAll(LocalBillEntity billEntity, List<LocalSongEntity> songEntities) {
+    public boolean isBillContainsSongs(LocalBillEntity billEntity, List<LocalSongEntity> songEntities) {
         for (LocalSongEntity songEntity : songEntities) {
-            if (!isBillContains(billEntity, songEntity)) {
+            if (!isBillContainsSong(billEntity, songEntity)) {
                 return false;
             }
         }
@@ -205,7 +205,7 @@ public class LocalBillModelImpl implements LocalBillModel {
     @Override
     public void deleteBillSong(Context context, LocalBillEntity billEntity, LocalSongEntity songEntity) {
         LocalSongEntity billSongEntity = getBillSong(context, songEntity.getSongId());
-        if (!isBillContains(billEntity, billSongEntity)) {
+        if (!isBillContainsSong(billEntity, billSongEntity)) {
             return;
         }
 
@@ -229,7 +229,7 @@ public class LocalBillModelImpl implements LocalBillModel {
 
         try {
             for (LocalSongEntity songEntity : billSongs) {
-                if (isBillContains(billEntity, songEntity)) {
+                if (isBillContainsSong(billEntity, songEntity)) {
                     songEntity.removeBillId(billEntity.getBillId());
                     billEntity.removeSongId(songEntity.getSongId());
                     DbUtilHelper.getDefaultDbManager().saveOrUpdate(songEntity);

@@ -29,4 +29,6 @@ public interface LocalBillDetailPresenter extends BasePresenter, LocalSongBottom
 
     void onDeleteBillConfirmed();
 
+    void onAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity);
+
 }
