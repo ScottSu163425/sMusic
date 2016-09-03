@@ -68,7 +68,6 @@ public class LocalBillModelImpl implements LocalBillModel {
         } catch (DbException e) {
             e.printStackTrace();
         }
-
         return billSongs;
     }
 
@@ -123,7 +122,6 @@ public class LocalBillModelImpl implements LocalBillModel {
         } catch (DbException e) {
             e.printStackTrace();
         }
-
         return result;
     }
 
@@ -223,9 +221,9 @@ public class LocalBillModelImpl implements LocalBillModel {
         try {
             DbUtilHelper.getDefaultDbManager().saveOrUpdate(billSongEntity);
             DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
-            if (!billSongEntity.isBelongingToAnyBill()) {
-                DbUtilHelper.getDefaultDbManager().delete(billSongEntity);
-            }
+//            if (!billSongEntity.isBelongingToAnyBill()) {
+//                DbUtilHelper.getDefaultDbManager().delete(billSongEntity);
+//            }
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -239,15 +237,15 @@ public class LocalBillModelImpl implements LocalBillModel {
             for (LocalSongEntity songEntity : billSongs) {
                 if (isBillContainsSong(billEntity, songEntity)) {
                     songEntity.removeBillId(billEntity.getBillId());
-                    billEntity.removeSongId(songEntity.getSongId());
                     DbUtilHelper.getDefaultDbManager().saveOrUpdate(songEntity);
                     //Delete the song if the song doesn`t belong to any bill;
-                    if (!songEntity.isBelongingToAnyBill()) {
-                        DbUtilHelper.getDefaultDbManager().delete(songEntity);
-                    }
+//                    if (!songEntity.isBelongingToAnyBill()) {
+//                        DbUtilHelper.getDefaultDbManager().delete(songEntity);
+//                    }
 
                 }
             }
+            billEntity.clearSongId();
             //Update the bill;
             DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
         } catch (DbException e) {

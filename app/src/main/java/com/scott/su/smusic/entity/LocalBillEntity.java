@@ -94,6 +94,10 @@ public class LocalBillEntity implements Parcelable {
         setBillSongIds(getBillSongIds().replace(songId + ID_DIVIDER, ""));
     }
 
+    public void clearSongId( ) {
+        setBillSongIds("");
+    }
+
     public long[] getBillSongIdsLongArray() {
         if (TextUtils.isEmpty(getBillSongIds())) {
             return null;
