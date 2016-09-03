@@ -112,11 +112,6 @@ public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntit
     }
 
     @Override
-    public void notifyItemChanged(int position) {
-
-    }
-
-    @Override
     public void setDisplayData(@NonNull List<LocalBillEntity> dataList) {
         mSongBillDisplayAdapter.setDataList(dataList);
         mSongBillDisplayAdapter.notifyDataSetChanged();
@@ -128,8 +123,8 @@ public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntit
 
     @Override
     public void handleItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        if (mBillItemClickCallback!=null){
-            mBillItemClickCallback.onBillItemClick(itemView,entity,position,sharedElements,transitionNames,data);
+        if (mBillItemClickCallback != null) {
+            mBillItemClickCallback.onBillItemClick(itemView, entity, position, sharedElements, transitionNames, data);
         }
     }
 
@@ -138,7 +133,7 @@ public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntit
     }
 
     public interface BillItemClickCallback {
-       void onBillItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
+        void onBillItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
     }
 
 }

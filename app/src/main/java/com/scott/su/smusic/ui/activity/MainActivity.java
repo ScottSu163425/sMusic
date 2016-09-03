@@ -243,11 +243,11 @@ public class MainActivity extends BaseActivity implements MainView {
         billSelectionDialogFragment.setCallback(new LocalBillSelectionDialogFragment.BillSelectionCallback() {
             @Override
             public void onBillSelected(LocalBillEntity billEntity) {
-                mMainPresenter.onBottomSheetAddToBillConfirmed(billEntity,songToBeAdd);
+                mMainPresenter.onBottomSheetAddToBillConfirmed(billEntity, songToBeAdd);
                 billSelectionDialogFragment.dismissAllowingStateLoss();
             }
         });
-        billSelectionDialogFragment.show(getSupportFragmentManager(),"");
+        billSelectionDialogFragment.show(getSupportFragmentManager(), "");
     }
 
 

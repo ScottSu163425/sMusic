@@ -23,8 +23,6 @@ public interface BaseDisplayView<E> extends BaseView {
 
     void reInitialize();
 
-    void notifyItemChanged(int position);
-
     void performSwipeRefresh();
 
     void stopSwipeRefresh();
