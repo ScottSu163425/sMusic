@@ -16,6 +16,8 @@ public interface LocalBillModel {
 
     boolean isBillExist(Context context, LocalBillEntity billEntity);
 
+    int getBillPosition(Context context, LocalBillEntity billEntity);
+
     boolean isBillTitleExist(Context context, LocalBillEntity billEntity);
 
     void addBill(Context context, LocalBillEntity billEntity);

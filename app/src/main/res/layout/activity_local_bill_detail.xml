@@ -34,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_top_area"
                     android:fitsSystemWindows="true"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitXY"
                     android:src="@drawable/ic_cover_default_song_bill"
                     android:transitionName="@string/transition_name_bill_cover" />
             </FrameLayout>

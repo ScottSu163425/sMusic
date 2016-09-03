@@ -175,16 +175,16 @@ public class LocalSongModelImpl implements LocalSongModel {
     public String getAlbumCoverPath(Context context, long albumId) {
         String path = null;
 //        //Somehow it dosen`t work suddenly
-//        Cursor cursor = context.getContentResolver().query(
-//                Uri.parse("content://media/external/audio/albums/" + albumId),
-//                new String[]{"album_art"}, null, null, null);
-//        if (cursor != null) {
-//            cursor.moveToNext();
-//            path = cursor.getString(0);
-//            cursor.close();
-//        }
-        //Use second way to get the path of album cover;
-        path = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"), albumId).toString();
+        Cursor cursor = context.getContentResolver().query(
+                Uri.parse("content://media/external/audio/albums/" + albumId),
+                new String[]{"album_art"}, null, null, null);
+        if (cursor != null) {
+            cursor.moveToNext();
+            path = cursor.getString(0);
+            cursor.close();
+        }
+        //Second way to get the path(Uri) of album cover;
+//        path = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"), albumId).toString();
         return path;
     }
 

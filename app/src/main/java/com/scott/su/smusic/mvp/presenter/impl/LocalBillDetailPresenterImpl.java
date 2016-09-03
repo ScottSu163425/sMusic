@@ -182,6 +182,16 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
         } else {
             mBillDetailView.showFab();
         }
+
+        AsyncTaskHelper.excuteSimpleTask(new Runnable() {
+            @Override
+            public void run() {
+                mAppConfigModel.setPositionOfBillToRefresh(mBillDetailView.getViewContext(),
+                        mBillModel.getBillPosition(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity()));
+            }
+        }, null);
+
+
     }
 
     private void loadCover(boolean needReveal) {

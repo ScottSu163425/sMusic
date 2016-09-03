@@ -113,6 +113,11 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
     }
 
     @Override
+    public void notifyItemChanged(int position) {
+
+    }
+
+    @Override
     public void setDisplayData(@NonNull List<LocalAlbumEntity> dataList) {
         mLocalAlbumDisplayAdapter.setDataList(dataList);
         mLocalAlbumDisplayAdapter.notifyDataSetChanged();

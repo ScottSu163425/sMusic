@@ -7,7 +7,6 @@ import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
 import com.su.scott.slibrary.manager.DbUtilHelper;
-import com.su.scott.slibrary.util.L;
 
 import org.xutils.ex.DbException;
 
@@ -36,6 +35,22 @@ public class LocalBillModelImpl implements LocalBillModel {
         }
 
         return false;
+    }
+
+    @Override
+    public int getBillPosition(Context context, LocalBillEntity billEntity) {
+        if (!isBillExist(context, billEntity)) {
+            return -1;
+        }
+
+        List<LocalBillEntity> bills = getBills(context);
+        for (int i = 0; i < bills.size(); i++) {
+            if (bills.get(i).getBillId() == billEntity.getBillId()){
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     @Override

@@ -112,6 +112,11 @@ public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntit
     }
 
     @Override
+    public void notifyItemChanged(int position) {
+
+    }
+
+    @Override
     public void setDisplayData(@NonNull List<LocalBillEntity> dataList) {
         mSongBillDisplayAdapter.setDataList(dataList);
         mSongBillDisplayAdapter.notifyDataSetChanged();

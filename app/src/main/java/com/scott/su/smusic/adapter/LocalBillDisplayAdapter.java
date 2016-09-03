@@ -51,7 +51,6 @@ public class LocalBillDisplayAdapter extends BaseDisplayAdapter<LocalBillViewHol
                 .load(billCoverPath)
                 .placeholder(R.color.place_holder_loading)
                 .error(R.drawable.ic_cover_default_song_bill)
-                .centerCrop()
                 .into(viewHolder.getCoverImageView());
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

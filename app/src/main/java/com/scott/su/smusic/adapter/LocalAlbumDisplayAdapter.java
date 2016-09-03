@@ -43,7 +43,6 @@ public class LocalAlbumDisplayAdapter extends BaseDisplayAdapter<LocalAlbumViewH
                 .load(new LocalSongModelImpl().getAlbumCoverPath(context, entity.getAlbumId()))
                 .placeholder(R.color.place_holder_loading)
                 .error(R.drawable.ic_cover_default_song_bill)
-                .centerCrop()
                 .into(viewHolder.getCoverImageView());
     }
 

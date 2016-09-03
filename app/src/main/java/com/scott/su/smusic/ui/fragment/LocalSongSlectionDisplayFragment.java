@@ -95,6 +95,11 @@ public class LocalSongSlectionDisplayFragment extends BaseDisplayFragment<LocalS
     }
 
     @Override
+    public void notifyItemChanged(int position) {
+
+    }
+
+    @Override
     public void setDisplayData(@NonNull List<LocalSongEntity> dataList) {
         mSongSelectionDisplayAdapter.setDataList(dataList);
         mSongSelectionDisplayAdapter.notifyDataSetChanged();

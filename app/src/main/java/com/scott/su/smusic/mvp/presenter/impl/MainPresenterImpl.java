@@ -65,7 +65,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onBillItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        mMainView.goToBillDetailWithSharedElement(entity, sharedElements[0], transitionNames[0]);
+        mMainView.goToBillDetailWithSharedElement(entity,sharedElements[0],  transitionNames[0]);
     }
 
     @Override

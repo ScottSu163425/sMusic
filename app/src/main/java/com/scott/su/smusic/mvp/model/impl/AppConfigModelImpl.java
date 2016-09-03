@@ -12,6 +12,7 @@ public class AppConfigModelImpl implements AppConfigModel {
     private static final String NEED_TO_REFRESH_SONG = "NEED_REFRESH_SONG";
     private static final String NEED_TO_REFRESH_BILL = "NEED_REFRESH_BILL";
     private static final String NEED_TO_REFRESH_ALBUM = "NEED_REFRESH_ALBUM";
+    private static final String POSITION_OF_BILL_TO_REFRESH_ = "POSITION_OF_BILL_TO_REFRESH_";
 
     @Override
     public boolean isNeedToRefreshLocalSongDisplay(Context context) {
@@ -30,16 +31,40 @@ public class AppConfigModelImpl implements AppConfigModel {
 
     @Override
     public void setNeedToRefreshLocalSongDisplay(Context context, boolean isNeedToRefresh) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(NEED_TO_REFRESH_SONG, isNeedToRefresh).apply();
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putBoolean(NEED_TO_REFRESH_SONG, isNeedToRefresh)
+                .apply();
     }
 
     @Override
     public void setNeedToRefreshLocalBillDisplay(Context context, boolean isNeedToRefresh) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(NEED_TO_REFRESH_BILL, isNeedToRefresh).apply();
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putBoolean(NEED_TO_REFRESH_BILL, isNeedToRefresh)
+                .apply();
     }
 
     @Override
     public void setNeedToRefreshLocalAlbumDisplay(Context context, boolean isNeedToRefresh) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(NEED_TO_REFRESH_ALBUM, isNeedToRefresh).apply();
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putBoolean(NEED_TO_REFRESH_ALBUM, isNeedToRefresh)
+                .apply();
     }
+
+    @Override
+    public int getPositionOfBillToRefresh(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(POSITION_OF_BILL_TO_REFRESH_, 0);
+    }
+
+    @Override
+    public void setPositionOfBillToRefresh(Context context, int positionOfBillToRefresh) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putInt(POSITION_OF_BILL_TO_REFRESH_, positionOfBillToRefresh)
+                .apply();
+    }
+
+
 }

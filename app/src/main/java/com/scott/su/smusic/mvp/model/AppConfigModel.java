@@ -17,4 +17,9 @@ public interface AppConfigModel {
     void setNeedToRefreshLocalBillDisplay(Context context, boolean isNeedToRefresh);
 
     void setNeedToRefreshLocalAlbumDisplay(Context context, boolean isNeedToRefresh);
+
+    int getPositionOfBillToRefresh(Context context);
+
+    void setPositionOfBillToRefresh(Context context, int positionOfBillToRefresh);
+
 }
