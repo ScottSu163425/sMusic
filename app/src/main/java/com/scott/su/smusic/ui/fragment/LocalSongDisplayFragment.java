@@ -146,7 +146,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     @Override
     public void handleItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
         if (mDisplayCallback != null) {
-            mDisplayCallback.onItemClick(itemView, position, entity);
+            mDisplayCallback.onItemClick(itemView, entity, position, sharedElements, transitionNames, data);
         }
     }
 
@@ -168,7 +168,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     }
 
     public interface LocalSongDisplayCallback {
-        void onItemClick(View view, int position, LocalSongEntity entity);
+        void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
 
         void onItemMoreClick(View view, int position, LocalSongEntity entity);
     }

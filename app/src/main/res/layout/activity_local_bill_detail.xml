@@ -36,7 +36,7 @@
                     android:fitsSystemWindows="true"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_cover_default_song_bill"
-                    android:transitionName="@string/transition_name_bill_cover" />
+                    android:transitionName="@string/transition_name_cover" />
             </FrameLayout>
 
             <android.support.v7.widget.Toolbar
@@ -56,6 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_s"
         android:src="@drawable/ic_play_arrow_white_24dp"
+        android:transitionName="@string/transition_name_fab"
         app:backgroundTint="@color/colorPrimary"
         app:elevation="@dimen/elevation_fab_normal"
         app:fabSize="normal"

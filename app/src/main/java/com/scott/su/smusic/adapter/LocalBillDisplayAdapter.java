@@ -59,7 +59,7 @@ public class LocalBillDisplayAdapter extends BaseDisplayAdapter<LocalBillViewHol
                 if (getItemClickCallback() != null) {
                     getItemClickCallback().onItemClick(view, entity, position,
                             new View[]{viewHolder.getCoverImageView()},
-                            new String[]{context.getResources().getString(R.string.transition_name_bill_cover)},
+                            new String[]{context.getResources().getString(R.string.transition_name_cover)},
                             null);
                 }
             }

@@ -151,10 +151,12 @@ public class MainActivity extends BaseActivity implements MainView {
     public void initListener() {
         mSongDisplayFragment.setDisplayCallback(new LocalSongDisplayFragment.LocalSongDisplayCallback() {
             @Override
-            public void onItemClick(View view, int position, LocalSongEntity entity) {
+            public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
                 mMainPresenter.onLocalSongItemClick(entity);
 
-                goTo(MusicPlayActivity.class);
+                Intent intent = new Intent(MainActivity.this, MusicPlayActivity.class);
+                intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, entity);
+                goToWithSharedElement(intent, sharedElements[0], transitionNames[0]);
             }
 
             @Override

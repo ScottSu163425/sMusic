@@ -3,6 +3,7 @@ package com.scott.su.smusic.ui.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -39,7 +40,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     private LocalBillEntity mBillEntity;
     private ImageView mCoverImageView;
     private LocalSongDisplayFragment mBillSongDisplayFragment;
-    private FloatingActionButton mFloatingActionButton;
+    private FloatingActionButton mPlayFAB;
 
     private static final int REQUESt_CODE_LOCAL_SONG_SELECTION = 123;
 
@@ -79,10 +80,10 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     @Override
     public void initView() {
         mCoverImageView = (ImageView) findViewById(R.id.iv_cover_local_bill_detail);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_local_bill_detail);
+        mPlayFAB = (FloatingActionButton) findViewById(R.id.fab_local_bill_detail);
 
         if (mBillEntity.isBillEmpty()) {
-            ViewUtil.setViewGone(mFloatingActionButton);
+            ViewUtil.setViewGone(mPlayFAB);
         }
     }
 
@@ -102,9 +103,13 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     @Override
     public void initListener() {
         mBillSongDisplayFragment.setDisplayCallback(new LocalSongDisplayFragment.LocalSongDisplayCallback() {
+
             @Override
-            public void onItemClick(View view, int position, LocalSongEntity entity) {
-                goTo(MusicPlayActivity.class);
+            public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+//                goTo(MusicPlayActivity.class);
+                Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
+                intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, entity);
+                goToWithSharedElement(intent, mPlayFAB, getString(R.string.transition_name_fab));
             }
 
             @Override
@@ -113,7 +118,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
             }
         });
 
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+        mPlayFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -221,15 +226,15 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
 
     @Override
     public void showFab() {
-        if (!ViewUtil.isViewVisiable(mFloatingActionButton)) {
-            CirclarRevealUtil.revealIn(mFloatingActionButton, CirclarRevealUtil.DIRECTION.CENTER);
+        if (!ViewUtil.isViewVisiable(mPlayFAB)) {
+            CirclarRevealUtil.revealIn(mPlayFAB, CirclarRevealUtil.DIRECTION.CENTER);
         }
     }
 
     @Override
     public void hideFab() {
-        if (ViewUtil.isViewVisiable(mFloatingActionButton)) {
-            ViewUtil.setViewGone(mFloatingActionButton);
+        if (ViewUtil.isViewVisiable(mPlayFAB)) {
+            ViewUtil.setViewGone(mPlayFAB);
         }
     }
 
@@ -248,10 +253,10 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     @Override
     public void refreshBillSongDisplay(LocalBillEntity billEntity) {
         if (billEntity.isBillEmpty()) {
-            CirclarRevealUtil.revealOut(mFloatingActionButton, CirclarRevealUtil.DIRECTION.CENTER, true);
+            CirclarRevealUtil.revealOut(mPlayFAB, CirclarRevealUtil.DIRECTION.CENTER, true);
         } else {
-            if (ViewUtil.isViewGone(mFloatingActionButton)) {
-                CirclarRevealUtil.revealIn(mFloatingActionButton, CirclarRevealUtil.DIRECTION.CENTER);
+            if (ViewUtil.isViewGone(mPlayFAB)) {
+                CirclarRevealUtil.revealIn(mPlayFAB, CirclarRevealUtil.DIRECTION.CENTER);
             }
         }
         mBillSongDisplayFragment.setSongBillEntity(billEntity);
@@ -343,11 +348,11 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
         billSelectionDialogFragment.setCallback(new LocalBillSelectionDialogFragment.BillSelectionCallback() {
             @Override
             public void onBillSelected(LocalBillEntity billEntity) {
-                mBillDetailPresenter.onBottomSheetAddToBillConfirmed(billEntity,songToBeAdd);
+                mBillDetailPresenter.onBottomSheetAddToBillConfirmed(billEntity, songToBeAdd);
                 billSelectionDialogFragment.dismissAllowingStateLoss();
             }
         });
-        billSelectionDialogFragment.show(getSupportFragmentManager(),"");
+        billSelectionDialogFragment.show(getSupportFragmentManager(), "");
 
     }
 

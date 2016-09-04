@@ -21,7 +21,7 @@
             android:layout_height="@dimen/size_image_view_holder_local_bill"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_cover_default_song_bill"
-            android:transitionName="@string/transition_name_bill_cover" />
+            android:transitionName="@string/transition_name_cover" />
 
         <TextView
             android:id="@+id/tv_title_view_holder_local_bill"

@@ -57,7 +57,7 @@ public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSo
     }
 
     @Override
-    protected void bindVH(LocalSongViewHolder viewHolder, final LocalSongEntity entity, final int position) {
+    protected void bindVH(final LocalSongViewHolder viewHolder, final LocalSongEntity entity, final int position) {
         if (displayType == DISPLAY_TYPE.NumberDivider || displayType == DISPLAY_TYPE.OnlyNumber) {
             if (displayType == DISPLAY_TYPE.NumberDivider) {
                 ViewUtil.setViewVisiable(viewHolder.getDividerView());
@@ -108,7 +108,10 @@ public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSo
 //                setSelectedPosition(position);
 
                 if (getItemClickCallback() != null) {
-                    getItemClickCallback().onItemClick(v, entity, position, null, null, null);
+                    getItemClickCallback().onItemClick(v, entity, position,
+                            new View[]{viewHolder.getCoverImageView()},
+                            new String[]{context.getString(R.string.transition_name_cover)},
+                            null);
                 }
             }
         });

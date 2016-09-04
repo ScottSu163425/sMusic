@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Pair;
 import android.view.View;
 
 import com.su.scott.slibrary.util.SdkUtil;
@@ -143,4 +144,5 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
                 .makeSceneTransitionAnimation(this, shareView, transitionName);
         startActivity(intent, options.toBundle());
     }
+
 }
