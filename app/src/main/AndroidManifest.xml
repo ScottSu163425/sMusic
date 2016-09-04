@@ -25,6 +25,9 @@
         <activity
             android:name=".ui.activity.LocalBillDetailActivity"
             android:theme="@style/AppTheme.ImmersiveStatusBar" />
+        <activity
+            android:name=".ui.activity.MusicPlayActivity"
+            android:theme="@style/AppTheme.ImmersiveStatusBar"></activity>
     </application>
 
 </manifest>

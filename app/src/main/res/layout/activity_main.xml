@@ -5,6 +5,7 @@
     android:id="@+id/drawer_layout_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.activity.MainActivity">
 
     <android.support.design.widget.CoordinatorLayout
@@ -42,7 +43,8 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_main"
@@ -51,6 +53,7 @@
             android:layout_gravity="right|bottom"
             android:layout_margin="@dimen/margin_s"
             android:src="@drawable/ic_add_white_24dp"
+            android:visibility="gone"
             app:backgroundTint="@color/colorPrimary"
             app:elevation="@dimen/elevation_fab_normal"
             app:fabSize="normal"
@@ -63,7 +66,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_navigation_main"
         app:menu="@menu/navigation_main" />
 

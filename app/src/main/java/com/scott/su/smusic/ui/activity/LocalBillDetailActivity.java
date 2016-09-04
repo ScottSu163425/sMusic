@@ -104,7 +104,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
         mBillSongDisplayFragment.setDisplayCallback(new LocalSongDisplayFragment.LocalSongDisplayCallback() {
             @Override
             public void onItemClick(View view, int position, LocalSongEntity entity) {
-
+                goTo(MusicPlayActivity.class);
             }
 
             @Override

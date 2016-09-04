@@ -8,14 +8,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 
 /**
  * Created by Administrator on 2016/8/12.
  */
 public class AnimUtil {
 
-    public static final long DEFAULT_DURATION = 400;
+    public static final long DURATION_SHORT = 300;
+    public static final long DURATION_DEFAULT = 400;
+    public static final long DURATION_LONG = 600;
 
     public interface SimpleAnimListener {
         void onAnimStart();
@@ -29,7 +30,7 @@ public class AnimUtil {
     }
 
     public static void scaleIn(@NonNull View view) {
-        scale(view, ACTION.IN, 1, 1, DEFAULT_DURATION,null, null);
+        scale(view, ACTION.IN, 1, 1, DURATION_DEFAULT,null, null);
     }
 
     public static void scaleIn(@NonNull View view, long duration) {
@@ -42,7 +43,7 @@ public class AnimUtil {
     }
 
     public static void scaleOut(@NonNull View view) {
-        scale(view, ACTION.OUT, 0, 0, DEFAULT_DURATION, null, null);
+        scale(view, ACTION.OUT, 0, 0, DURATION_DEFAULT, null, null);
     }
 
     public static void scaleOut(@NonNull View view, long duration) {
@@ -54,7 +55,7 @@ public class AnimUtil {
     }
 
     public static void alphaIn(@NonNull View view) {
-        alpha(view, ACTION.IN, 1, DEFAULT_DURATION, null, null);
+        alpha(view, ACTION.IN, 1, DURATION_DEFAULT, null, null);
     }
 
     public static void alphaIn(@NonNull View view, long duration) {
@@ -62,7 +63,7 @@ public class AnimUtil {
     }
 
     public static void alphaOut(@NonNull View view) {
-        alpha(view, ACTION.OUT, 0, DEFAULT_DURATION, null, null);
+        alpha(view, ACTION.OUT, 0, DURATION_DEFAULT, null, null);
     }
 
     public static void alphaOut(@NonNull View view, long duration) {
