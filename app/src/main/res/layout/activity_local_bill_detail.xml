@@ -19,7 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
+            app:collapsedTitleGravity="left"
             app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleGravity="left|bottom"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <FrameLayout
@@ -43,6 +45,7 @@
                 android:id="@+id/toolbar_local_bill_detail"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:minHeight="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="?attr/homeAsUpIndicator"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />

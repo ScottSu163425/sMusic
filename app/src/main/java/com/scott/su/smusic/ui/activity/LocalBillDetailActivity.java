@@ -121,7 +121,9 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
         mPlayFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
+                intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, getBillEntity().getLatestSong());
+                goToWithSharedElement(intent, mPlayFAB, getString(R.string.transition_name_fab));
             }
         });
     }

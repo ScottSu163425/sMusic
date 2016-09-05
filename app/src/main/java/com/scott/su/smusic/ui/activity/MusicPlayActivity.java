@@ -1,8 +1,11 @@
 package com.scott.su.smusic.ui.activity;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
@@ -24,6 +27,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     private ImageButton mRepeatButton, mSkipPreviousButton, mSkipNextButton, mShuffleButton;
     private LocalSongEntity mCurrentPlayingSong;
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
