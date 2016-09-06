@@ -12,30 +12,29 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        app:theme="@style/AppTheme.AppBarOverlay">
+        app:theme="@style/AppTheme.AppBarOverlay"
+        android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
             app:collapsedTitleGravity="left"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="left|bottom"
+            android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/background"
-                android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax">
+                app:layout_collapseMode="parallax"
+                android:fitsSystemWindows="true">
 
                 <ImageView
                     android:id="@+id/iv_cover_local_bill_detail"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_top_area"
-                    android:fitsSystemWindows="true"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_cover_default_song_bill"
                     android:transitionName="@string/transition_name_cover" />

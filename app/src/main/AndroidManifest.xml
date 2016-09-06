@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.MainActivity"
-            android:theme="@style/AppTheme.PrimaryColorStatusBar">
+            android:theme="@style/AppTheme.ImmersiveStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +27,7 @@
             android:theme="@style/AppTheme.ImmersiveStatusBar" />
         <activity
             android:name=".ui.activity.MusicPlayActivity"
-            android:theme="@style/AppTheme.ImmersiveStatusBar"/>
+            android:theme="@style/AppTheme.FullScreenStatusBar" />
     </application>
 
 </manifest>
