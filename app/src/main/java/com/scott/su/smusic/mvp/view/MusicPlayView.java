@@ -1,5 +1,7 @@
 package com.scott.su.smusic.mvp.view;
 
+import android.graphics.Bitmap;
+
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.view.BaseView;
 
@@ -10,4 +12,6 @@ public interface MusicPlayView extends BaseView {
     LocalSongEntity getCurrentPlayingLocalSongEntity();
 
     void loadCover(String path);
+
+    void loadBlurCover(Bitmap bitmap);
 }

@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#121212"
     android:clipChildren="false"
     android:clipToPadding="false">
 
     <ImageView
+        android:id="@+id/iv_cover_blur_music_play"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/bg_header_drawer" />
+        android:scaleType="centerCrop" />
+
 
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
@@ -28,27 +30,49 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:theme="@style/AppTheme.AppBarOverlay" />
 
-        <android.support.v7.widget.CardView
+        <TextView
+            android:id="@+id/tv_music_title_music_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_cover_music_play"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_m"
+            android:maxLines="1"
+            android:text="Try"
+            android:textColor="@color/text_light_3"
+            android:textSize="@dimen/text_size_headline" />
+
+        <TextView
+            android:id="@+id/tv_music_artist_music_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_music_title_music_play"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_xs"
+            android:maxLines="1"
+            android:text="Adam"
+            android:textColor="@color/text_light_2"
+            android:textSize="@dimen/text_size_subhead" />
+
+        <ImageView
+            android:id="@+id/iv_cover_music_play"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_centerInParent="true"
+            android:layout_below="@+id/toolbar_music_play"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_l"
+            android:scaleType="fitXY"
             android:transitionName="@string/transition_name_cover"
-            app:cardElevation="60dp"
-            app:layout_heightPercent="42%"
-            app:layout_widthPercent="70%">
-
-            <ImageView
-                android:id="@+id/iv_cover_music_play"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop" />
-        </android.support.v7.widget.CardView>
+            app:layout_heightPercent="43%"
+            app:layout_widthPercent="73%" />
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/margin_s"
+            android:layout_marginBottom="@dimen/margin_s"
+            android:layout_marginLeft="@dimen/margin_s"
+            android:layout_marginRight="@dimen/margin_s"
             app:cardElevation="60dp">
 
             <LinearLayout
@@ -57,7 +81,6 @@
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:orientation="vertical">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"

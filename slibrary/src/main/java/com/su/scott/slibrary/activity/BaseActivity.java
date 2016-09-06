@@ -145,4 +145,16 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         startActivity(intent, options.toBundle());
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    protected void goToWithSharedElements(Intent intent, @NonNull View[] shareViews, @NonNull String[] transitionNames) {
+        Pair<View, String>[] pairs = new Pair[shareViews.length];
+        for (int i = 0; i < shareViews.length; i++) {
+            pairs[i] = new Pair<>(shareViews[i], transitionNames[i]);
+        }
+
+        ActivityOptions options = ActivityOptions
+                .makeSceneTransitionAnimation(this, pairs);
+        startActivity(intent, options.toBundle());
+    }
+
 }

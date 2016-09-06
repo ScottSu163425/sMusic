@@ -16,6 +16,7 @@
     <string name="error_text_length_overflow">已超过最大长度限制</string>
     <string name="error_input_empty_bill_name">你输入的歌单名称是空的?</string>
     <string name="error_already_exist">已经存在</string>
+    <string name="error_empty_bill">歌单是空的</string>
 
     <string name="ask_exit_app">退出应用？</string>
     <string name="confirm_positive">确定</string>
@@ -27,7 +28,7 @@
 
     <string name="transition_name_cover">transition_name_bill_cover</string>
     <string name="transition_name_fab">transition_name_fab</string>
-    <string name="error_empty_bill">歌单是空的</string>
+
 
 
 </resources>

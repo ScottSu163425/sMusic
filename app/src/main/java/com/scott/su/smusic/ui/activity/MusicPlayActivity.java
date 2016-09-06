@@ -1,30 +1,40 @@
 package com.scott.su.smusic.ui.activity;
 
 import android.annotation.TargetApi;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.Toolbar;
-import android.transition.Transition;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.MusicPlayPresenterImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.util.AnimUtil;
+import com.su.scott.slibrary.util.BlurUtil;
+import com.su.scott.slibrary.util.CirclarRevealUtil;
+import com.su.scott.slibrary.util.ViewUtil;
 
 public class MusicPlayActivity extends BaseActivity implements MusicPlayView, View.OnClickListener {
     private MusicPlayPresenter mMusicPlayPresenter;
-    private ImageView mCoverImageView;
+    private TextView mMusicTitleTextView, mMusicArtistTextView;
+    private ImageView mCoverImageView, mBlurCoverImageView;
     private FloatingActionButton mPlayButton;
     private ImageButton mRepeatButton, mSkipPreviousButton, mSkipNextButton, mShuffleButton;
+    private AppCompatSeekBar mPlayingSeekBar;
     private LocalSongEntity mCurrentPlayingSong;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -67,7 +77,10 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public void initView() {
+        mMusicTitleTextView = (TextView) findViewById(R.id.tv_music_title_music_play);
+        mMusicArtistTextView = (TextView) findViewById(R.id.tv_music_artist_music_play);
         mCoverImageView = (ImageView) findViewById(R.id.iv_cover_music_play);
+        mBlurCoverImageView = (ImageView) findViewById(R.id.iv_cover_blur_music_play);
         mPlayButton = (FloatingActionButton) findViewById(R.id.fab_play_music_play);
         mSkipPreviousButton = (ImageButton) findViewById(R.id.imgbtn_skip_previous_music_play);
         mSkipNextButton = (ImageButton) findViewById(R.id.imgbtn_skip_next_music_play);
@@ -77,7 +90,8 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public void initData() {
-
+        ViewUtil.setText(mMusicTitleTextView, mCurrentPlayingSong.getTitle(), "");
+        ViewUtil.setText(mMusicArtistTextView, mCurrentPlayingSong.getArtist(), "");
     }
 
     @Override
@@ -118,6 +132,15 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                 .centerCrop()
                 .placeholder(R.color.place_holder_loading)
                 .into(mCoverImageView);
+    }
+
+    @Override
+    public void loadBlurCover(Bitmap bitmap) {
+        if (this.isFinishing()) {
+            return;
+        }
+        mBlurCoverImageView.setImageBitmap(bitmap);
+        CirclarRevealUtil.revealIn(mBlurCoverImageView, CirclarRevealUtil.DIRECTION.CENTER_BOTTOM, AnimUtil.DURATION_LONG);
     }
 
 

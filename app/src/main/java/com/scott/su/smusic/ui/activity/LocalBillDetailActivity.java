@@ -111,7 +111,13 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
 //                goTo(MusicPlayActivity.class);
                 Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
                 intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, entity);
-                goToWithSharedElement(intent, mPlayFAB, getString(R.string.transition_name_fab));
+                if (position == 0) {
+                    goToWithSharedElements(intent,
+                            new View[]{mPlayFAB, mCoverImageView},
+                            new String[]{getString(R.string.transition_name_fab), getString(R.string.transition_name_cover)});
+                } else {
+                    goToWithSharedElement(intent, mPlayFAB, getString(R.string.transition_name_fab));
+                }
             }
 
             @Override
@@ -125,7 +131,9 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
             public void onClick(View view) {
                 Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
                 intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, getBillEntity().getLatestSong());
-                goToWithSharedElement(intent, mPlayFAB, getString(R.string.transition_name_fab));
+                goToWithSharedElements(intent,
+                        new View[]{mPlayFAB, mCoverImageView},
+                        new String[]{getString(R.string.transition_name_fab), getString(R.string.transition_name_cover)});
             }
         });
     }
