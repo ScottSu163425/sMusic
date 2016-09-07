@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#101010"
+    android:background="#140406"
     android:clipChildren="false"
     android:clipToPadding="false">
 
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_music_title_music_play"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_xs"
+            android:layout_marginTop="@dimen/margin_xxs"
             android:maxLines="1"
             android:text="Adam"
             android:textColor="@color/text_light_2"

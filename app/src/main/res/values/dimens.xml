@@ -9,4 +9,5 @@
     <dimen name="size_check_box">46dp</dimen>
     <dimen name="height_top_area">345dp</dimen>
     <dimen name="width_dialog_fragment">300dp</dimen>
+    <dimen name="width_menu_main">330dp</dimen>
 </resources>
