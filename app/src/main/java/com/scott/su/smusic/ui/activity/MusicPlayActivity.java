@@ -6,7 +6,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatSeekBar;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
@@ -31,7 +33,8 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     private MusicPlayPresenter mMusicPlayPresenter;
     private TextView mMusicTitleTextView, mMusicArtistTextView, mCurrentTimeTextView, mTotalTimeTextView;
     private ImageView mCoverImageView, mBlurCoverImageView;
-    private FloatingActionButton mPlayButton;
+    private CardView mPlayControlCardView;
+    private FloatingActionButton mRevealFab, mPlayButton;
     private ImageButton mRepeatButton, mSkipPreviousButton, mSkipNextButton, mShuffleButton;
     private AppCompatSeekBar mPlayingSeekBar;
     private LocalSongEntity mInitialPlayingSong;
@@ -53,7 +56,35 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         setContentView(R.layout.activity_music_play);
 
         mMusicPlayPresenter = new MusicPlayPresenterImpl(this);
-        mMusicPlayPresenter.onViewFirstTimeCreated();
+
+        if (SdkUtil.isLolipopOrLatter()) {
+            getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionStart(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionEnd(Transition transition) {
+                    mMusicPlayPresenter.onViewFirstTimeCreated();
+                }
+
+                @Override
+                public void onTransitionCancel(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionPause(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionResume(Transition transition) {
+
+                }
+            });
+        }
     }
 
     @Override
@@ -168,12 +199,24 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public void loadCover(String path) {
-        Glide.with(MusicPlayActivity.this)
-                .load(path)
-                .centerCrop()
-                .placeholder(R.color.place_holder_loading)
-                .into(mCoverImageView);
+    public void loadCover(final String path) {
+        CirclarRevealUtil.revealOut(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER, CirclarRevealUtil.DURATION_REVEAL_DEFAULT
+                , null, new AnimUtil.SimpleAnimListener() {
+                    @Override
+                    public void onAnimStart() {
+                        Glide.with(MusicPlayActivity.this)
+                                .load(path)
+                                .centerCrop()
+                                .placeholder(R.color.place_holder_loading)
+                                .into(mCoverImageView);
+                        CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER);
+                    }
+
+                    @Override
+                    public void onAnimEnd() {
+
+                    }
+                }, false);
     }
 
     @Override
