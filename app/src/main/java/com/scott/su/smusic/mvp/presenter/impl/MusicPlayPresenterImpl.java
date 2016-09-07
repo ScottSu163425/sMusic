@@ -33,7 +33,7 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
         mMusicPlayView.initView();
         mMusicPlayView.initData();
         mMusicPlayView.initListener();
-        updateCurrentPlayingSong();
+        updateCurrentPlayingSong(false);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
         } else if (mMusicPlayView.isPlayShuffle()) {
             mMusicPlayView.setCurrentPlayingSongPosition(mMusicPlayModel.shuffle(mMusicPlayView.getCurrentPlayingSong(), mMusicPlayView.getCurrentPlayingSongList()));
         }
-        updateCurrentPlayingSong();
+        updateCurrentPlayingSong(true);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
         } else if (mMusicPlayView.isPlayShuffle()) {
             mMusicPlayView.setCurrentPlayingSongPosition(mMusicPlayModel.shuffle(mMusicPlayView.getCurrentPlayingSong(), mMusicPlayView.getCurrentPlayingSongList()));
         }
-        updateCurrentPlayingSong();
+        updateCurrentPlayingSong(true);
     }
 
     @Override
@@ -99,9 +99,9 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
         }
     }
 
-    private void updateCurrentPlayingSong() {
+    private void updateCurrentPlayingSong(boolean needReveal) {
         String path = mAlbumModel.getAlbumCoverPath(mMusicPlayView.getViewContext(), mMusicPlayView.getCurrentPlayingSong().getAlbumId());
-        mMusicPlayView.loadCover(path);
+        mMusicPlayView.loadCover(path, needReveal);
 
         new AsyncTask<Void, Void, Bitmap>() {
             @Override

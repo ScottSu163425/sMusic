@@ -26,7 +26,7 @@ public interface MusicPlayView extends BaseView {
 
     void setTotalPlayTime(String totalPlayTime);
 
-    void loadCover(String path);
+    void loadCover(String path,boolean needReveal);
 
     void loadBlurCover(Bitmap bitmap);
 

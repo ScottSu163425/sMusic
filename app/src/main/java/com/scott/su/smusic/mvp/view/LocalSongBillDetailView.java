@@ -37,4 +37,8 @@ public interface LocalSongBillDetailView extends BaseView {
 
     void showBillSelectionDialog(LocalSongEntity songToBeAdd);
 
+    void goToMusicPlayWithCoverSharedElement();
+
+    void goToMusicPlay(LocalSongEntity entity);
+
 }

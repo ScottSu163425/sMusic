@@ -1,14 +1,11 @@
 package com.scott.su.smusic.ui.activity;
 
-import android.annotation.TargetApi;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.transition.Transition;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
@@ -29,12 +26,15 @@ import com.su.scott.slibrary.util.SdkUtil;
 
 import java.util.List;
 
+/**
+ * 2016-09-07 22:01:51
+ */
 public class MusicPlayActivity extends BaseActivity implements MusicPlayView, View.OnClickListener {
     private MusicPlayPresenter mMusicPlayPresenter;
     private TextView mMusicTitleTextView, mMusicArtistTextView, mCurrentTimeTextView, mTotalTimeTextView;
     private ImageView mCoverImageView, mBlurCoverImageView;
     private CardView mPlayControlCardView;
-    private FloatingActionButton mRevealFab, mPlayButton;
+    private FloatingActionButton mPlayButton;
     private ImageButton mRepeatButton, mSkipPreviousButton, mSkipNextButton, mShuffleButton;
     private AppCompatSeekBar mPlayingSeekBar;
     private LocalSongEntity mInitialPlayingSong;
@@ -49,42 +49,13 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         Shuffle
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_play);
 
         mMusicPlayPresenter = new MusicPlayPresenterImpl(this);
-
-        if (SdkUtil.isLolipopOrLatter()) {
-            getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
-                @Override
-                public void onTransitionStart(Transition transition) {
-
-                }
-
-                @Override
-                public void onTransitionEnd(Transition transition) {
-                    mMusicPlayPresenter.onViewFirstTimeCreated();
-                }
-
-                @Override
-                public void onTransitionCancel(Transition transition) {
-
-                }
-
-                @Override
-                public void onTransitionPause(Transition transition) {
-
-                }
-
-                @Override
-                public void onTransitionResume(Transition transition) {
-
-                }
-            });
-        }
+        mMusicPlayPresenter.onViewFirstTimeCreated();
     }
 
     @Override
@@ -121,6 +92,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     public void initView() {
         mMusicTitleTextView = (TextView) findViewById(R.id.tv_music_title_music_play);
         mMusicArtistTextView = (TextView) findViewById(R.id.tv_music_artist_music_play);
+        mPlayControlCardView = (CardView) findViewById(R.id.card_view_play_control_music_play);
         mCurrentTimeTextView = (TextView) findViewById(R.id.tv_current_time_music_play);
         mTotalTimeTextView = (TextView) findViewById(R.id.tv_total_time_music_play);
         mCoverImageView = (ImageView) findViewById(R.id.iv_cover_music_play);
@@ -199,24 +171,31 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public void loadCover(final String path) {
-        CirclarRevealUtil.revealOut(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER, CirclarRevealUtil.DURATION_REVEAL_DEFAULT
-                , null, new AnimUtil.SimpleAnimListener() {
-                    @Override
-                    public void onAnimStart() {
-                        Glide.with(MusicPlayActivity.this)
-                                .load(path)
-                                .centerCrop()
-                                .placeholder(R.color.place_holder_loading)
-                                .into(mCoverImageView);
-                        CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER);
-                    }
+    public void loadCover(final String path, boolean needReveal) {
+        if (needReveal) {
+            CirclarRevealUtil.revealOut(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER, CirclarRevealUtil.DURATION_REVEAL_DEFAULT
+                    , null, new AnimUtil.SimpleAnimListener() {
+                        @Override
+                        public void onAnimStart() {
+                        }
 
-                    @Override
-                    public void onAnimEnd() {
-
-                    }
-                }, false);
+                        @Override
+                        public void onAnimEnd() {
+                            Glide.with(MusicPlayActivity.this)
+                                    .load(path)
+                                    .centerCrop()
+                                    .placeholder(R.color.place_holder_loading)
+                                    .into(mCoverImageView);
+                            CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER);
+                        }
+                    }, false);
+        } else {
+            Glide.with(MusicPlayActivity.this)
+                    .load(path)
+                    .centerCrop()
+                    .placeholder(R.color.place_holder_loading)
+                    .into(mCoverImageView);
+        }
     }
 
     @Override

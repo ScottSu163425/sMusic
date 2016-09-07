@@ -38,6 +38,11 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     }
 
     @Override
+    public void onPlayFabClick() {
+        mBillDetailView.goToMusicPlayWithCoverSharedElement();
+    }
+
+    @Override
     public void onAddSongsMenuItemClick() {
         mBillDetailView.goToLocalSongSelectionActivity();
     }
@@ -168,6 +173,16 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
                 mBillDetailView.showDeleteBillSuccessfully();
             }
         });
+    }
+
+    @Override
+    public void onBillSongItemClick(View view, int position, LocalSongEntity entity) {
+        if (position == 0) {
+            mBillDetailView.goToMusicPlayWithCoverSharedElement();
+        } else {
+            mBillDetailView.goToMusicPlay(entity);
+        }
+
     }
 
 

@@ -28,7 +28,6 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.DialogUtil;
-import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -107,16 +106,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
 
             @Override
             public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-//                goTo(MusicPlayActivity.class);
-                Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
-                intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, entity);
-                if (position == 0) {
-                    goToWithSharedElements(intent,
-                            new View[]{mPlayFAB, mCoverImageView},
-                            new String[]{getString(R.string.transition_name_fab), getString(R.string.transition_name_cover)});
-                } else {
-                    goToWithSharedElement(intent, mPlayFAB, getString(R.string.transition_name_fab));
-                }
+                mBillDetailPresenter.onBillSongItemClick(itemView, position, entity);
             }
 
             @Override
@@ -128,11 +118,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
         mPlayFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
-                intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, getBillEntity().getLatestSong());
-                goToWithSharedElements(intent,
-                        new View[]{mPlayFAB, mCoverImageView},
-                        new String[]{getString(R.string.transition_name_fab), getString(R.string.transition_name_cover)});
+                mBillDetailPresenter.onPlayFabClick();
             }
         });
     }
@@ -183,47 +169,27 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     @Override
     public void loadCover(final String coverPath, boolean needReveal) {
         if (needReveal) {
-            CirclarRevealUtil.revealIn(mCoverImageView,
-                    CirclarRevealUtil.DIRECTION.RIGHT_BOTTOM,
-                    CirclarRevealUtil.DURATION_REVEAL_LONG,
+            CirclarRevealUtil.revealOut(mCoverImageView,
+                    CirclarRevealUtil.DIRECTION.CENTER,
+                    CirclarRevealUtil.DURATION_REVEAL_DEFAULT,
                     new DecelerateInterpolator(),
                     new AnimUtil.SimpleAnimListener() {
                         @Override
                         public void onAnimStart() {
-                            Glide.with(LocalBillDetailActivity.this)
-                                    .load(coverPath)
-                                    .placeholder(R.color.place_holder_loading)
-                                    .error(R.drawable.ic_cover_default_song_bill)
-                                    .into(mCoverImageView);
+
                         }
 
                         @Override
                         public void onAnimEnd() {
 
+                            Glide.with(LocalBillDetailActivity.this)
+                                    .load(coverPath)
+                                    .placeholder(R.color.place_holder_loading)
+                                    .error(R.drawable.ic_cover_default_song_bill)
+                                    .into(mCoverImageView);
+                            CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER);
                         }
-                    });
-            //Second way to reveal;
-//            CirclarRevealUtil.revealOut(mCoverImageView,
-//                    CirclarRevealUtil.DIRECTION.CENTER,
-//                    CirclarRevealUtil.DURATION_REVEAL_DEFAULT,
-//                    new DecelerateInterpolator(),
-//                    new AnimUtil.SimpleAnimListener() {
-//                        @Override
-//                        public void onAnimStart() {
-//
-//                        }
-//
-//                        @Override
-//                        public void onAnimEnd() {
-//
-//                            Glide.with(LocalBillDetailActivity.this)
-//                                    .load(coverPath)
-//                                    .placeholder(R.color.place_holder_loading)
-//                                    .error(R.drawable.ic_cover_default_song_bill)
-//                                    .into(mCoverImageView);
-//                            CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER);
-//                        }
-//                    }, false);
+                    }, false);
 
         } else {
             Glide.with(this)
@@ -367,5 +333,24 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
 
     }
 
+    @Override
+    public void goToMusicPlayWithCoverSharedElement() {
+        Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, getBillEntity().getLatestSong());
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mBillSongDisplayFragment.getDisplayDataList());
+
+        goToWithSharedElements(intent,
+                new View[]{mPlayFAB, mCoverImageView},
+                new String[]{getString(R.string.transition_name_fab), getString(R.string.transition_name_cover)});
+    }
+
+    @Override
+    public void goToMusicPlay(LocalSongEntity songEntity) {
+        Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mBillSongDisplayFragment.getDisplayDataList());
+
+        goToWithSharedElement(intent, mPlayFAB, getString(R.string.transition_name_fab));
+    }
 
 }

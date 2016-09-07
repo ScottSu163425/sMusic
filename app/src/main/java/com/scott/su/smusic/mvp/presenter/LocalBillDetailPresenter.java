@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface LocalBillDetailPresenter extends BasePresenter, LocalSongBottomSheetPresenter {
 
+    void onPlayFabClick();
+
     void onAddSongsMenuItemClick();
 
     void onClearBillMenuItemClick();
@@ -22,6 +24,8 @@ public interface LocalBillDetailPresenter extends BasePresenter, LocalSongBottom
     void onClearBillConfirmed();
 
     void onDeleteBillMenuItemConfirmed();
+
+    void onBillSongItemClick(View view, int position, LocalSongEntity entity);
 
     void onBillSongItemMoreClick(View view, int position, LocalSongEntity entity);
 
