@@ -140,7 +140,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
             return;
         }
         mBlurCoverImageView.setImageBitmap(bitmap);
-        CirclarRevealUtil.revealIn(mBlurCoverImageView, CirclarRevealUtil.DIRECTION.CENTER_BOTTOM, AnimUtil.DURATION_LONG);
+        CirclarRevealUtil.revealIn(mBlurCoverImageView, CirclarRevealUtil.DIRECTION.CENTER_TOP, AnimUtil.DURATION_LONG);
     }
 
 

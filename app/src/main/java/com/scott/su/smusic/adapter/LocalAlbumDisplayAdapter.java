@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.holder.LocalAlbumViewHolder;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
+import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.util.ViewUtil;
@@ -40,7 +41,7 @@ public class LocalAlbumDisplayAdapter extends BaseDisplayAdapter<LocalAlbumViewH
         ViewUtil.setText(viewHolder.getSongCountTextView(), entity.getAlbumSongs().size() + "首", "");
 
         Glide.with(context)
-                .load(new LocalSongModelImpl().getAlbumCoverPath(context, entity.getAlbumId()))
+                .load(new LocalAlbumModelImpl().getAlbumCoverPath(context, entity.getAlbumId()))
                 .placeholder(R.color.place_holder_loading)
                 .error(R.drawable.ic_cover_default_song_bill)
                 .into(viewHolder.getCoverImageView());

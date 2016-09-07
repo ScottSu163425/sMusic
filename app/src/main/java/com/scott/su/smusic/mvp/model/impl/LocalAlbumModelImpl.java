@@ -2,11 +2,16 @@ package com.scott.su.smusic.mvp.model.impl;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.provider.MediaStore;
 
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
+import com.scott.su.smusic.util.BitmapLruCache;
+import com.su.scott.slibrary.util.BlurUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +55,34 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
         }
 
         return albumEntities;
+    }
+
+    @Override
+    public String getAlbumCoverPath(Context context, long albumId) {
+        String path = null;
+        Cursor cursor = context.getContentResolver().query(
+                Uri.parse("content://media/external/audio/albums/" + albumId),
+                new String[]{"album_art"}, null, null, null);
+        if (cursor != null) {
+            cursor.moveToNext();
+            path = cursor.getString(0);
+            cursor.close();
+        }
+        //Second way to get the path(Uri) of album cover;
+//        path = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"), albumId).toString();
+        return path;
+    }
+
+    @Override
+    public Bitmap getAlbumCoverBitmapBlur(Context context, long albumId) {
+        String path = getAlbumCoverPath(context, albumId);
+        Bitmap bitmap = BitmapLruCache.getInstance().get(path);
+
+        if (bitmap == null) {
+            bitmap = BlurUtil.blur(BitmapFactory.decodeFile(path));
+            BitmapLruCache.getInstance().put(path, bitmap);
+        }
+        return bitmap;
     }
 
     @Override

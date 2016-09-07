@@ -6,9 +6,11 @@ import com.scott.su.smusic.R;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.AppConfigModel;
+import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
 import com.scott.su.smusic.mvp.model.LocalSongModel;
 import com.scott.su.smusic.mvp.model.impl.AppConfigModelImpl;
+import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalBillDetailPresenter;
@@ -24,12 +26,14 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     private LocalSongBillDetailView mBillDetailView;
     private LocalBillModel mBillModel;
     private LocalSongModel mSongModel;
+    private LocalAlbumModel mAlbumModel;
     private AppConfigModel mAppConfigModel;
 
     public LocalBillDetailPresenterImpl(LocalSongBillDetailView mBillDetailView) {
         this.mBillDetailView = mBillDetailView;
         this.mBillModel = new LocalBillModelImpl();
         this.mSongModel = new LocalSongModelImpl();
+        this.mAlbumModel = new LocalAlbumModelImpl();
         this.mAppConfigModel = new AppConfigModelImpl();
     }
 
@@ -196,7 +200,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
 
     private void loadCover(boolean needReveal) {
         String path = mBillDetailView.getBillEntity().isBillEmpty() ? "" :
-                mSongModel.getAlbumCoverPath(mBillDetailView.getViewContext(),
+                mAlbumModel.getAlbumCoverPath(mBillDetailView.getViewContext(),
                         mBillDetailView.getBillEntity().getLatestSong().getAlbumId());
         mBillDetailView.loadCover(path, needReveal);
     }

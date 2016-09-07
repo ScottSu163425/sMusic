@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.holder.LocalBillViewHolder;
 import com.scott.su.smusic.entity.LocalBillEntity;
-import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
+import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.util.ViewUtil;
 
@@ -43,7 +43,7 @@ public class LocalBillDisplayAdapter extends BaseDisplayAdapter<LocalBillViewHol
 
         String billCoverPath = "";
         if (!entity.isBillEmpty()) {
-            billCoverPath = new LocalSongModelImpl().getAlbumCoverPath(context,
+            billCoverPath = new LocalAlbumModelImpl().getAlbumCoverPath(context,
                     entity.getLatestSong().getAlbumId());
         }
 

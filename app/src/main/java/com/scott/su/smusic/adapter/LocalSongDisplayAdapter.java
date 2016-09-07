@@ -9,10 +9,9 @@ import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.holder.LocalSongViewHolder;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
-import com.su.scott.slibrary.util.L;
-import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -80,7 +79,7 @@ public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSo
             ViewUtil.setViewGone(viewHolder.getNumberTextView());
             //展示图片
             Glide.with(context)
-                    .load(localSongModel.getAlbumCoverPath(context, entity.getAlbumId()))
+                    .load(new LocalAlbumModelImpl().getAlbumCoverPath(context, entity.getAlbumId()))
                     .placeholder(R.color.place_holder_loading)
                     .error(R.drawable.ic_cover_default_song_bill)
                     .into(viewHolder.getCoverImageView());

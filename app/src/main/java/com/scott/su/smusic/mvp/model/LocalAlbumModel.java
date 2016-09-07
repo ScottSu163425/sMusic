@@ -1,6 +1,7 @@
 package com.scott.su.smusic.mvp.model;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
@@ -16,4 +17,7 @@ public interface LocalAlbumModel {
 
     List<LocalAlbumEntity> getLocalAlbums(Context context);
 
+    String getAlbumCoverPath(Context context, long albumId);
+
+    Bitmap getAlbumCoverBitmapBlur(Context context, long albumId);
 }
