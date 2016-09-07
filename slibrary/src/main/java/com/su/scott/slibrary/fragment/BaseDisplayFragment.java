@@ -14,6 +14,8 @@ import android.widget.FrameLayout;
 import com.su.scott.slibrary.R;
 import com.su.scott.slibrary.view.BaseDisplayView;
 
+import java.util.List;
+
 /**
  * @类名 BaseDisplayFragment
  * @描述 基于RecyclerView、SwipeRefreshLayout的列表展示封装基类

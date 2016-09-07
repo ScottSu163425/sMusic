@@ -90,6 +90,11 @@ public class LocalSongSlectionDisplayFragment extends BaseDisplayFragment<LocalS
     }
 
     @Override
+    public ArrayList<LocalSongEntity> getDisplayDataList() {
+        return (ArrayList<LocalSongEntity>) mSongSelectionDisplayAdapter.getDataList();
+    }
+
+    @Override
     public void reInitialize() {
 
     }

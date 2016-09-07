@@ -36,6 +36,7 @@ import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.PermissionUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
@@ -151,11 +152,7 @@ public class MainActivity extends BaseActivity implements MainView {
         mSongDisplayFragment.setDisplayCallback(new LocalSongDisplayFragment.LocalSongDisplayCallback() {
             @Override
             public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-                mMainPresenter.onLocalSongItemClick(entity);
-
-                Intent intent = new Intent(MainActivity.this, MusicPlayActivity.class);
-                intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, entity);
-                goToWithSharedElement(intent, sharedElements[0], transitionNames[0]);
+                mMainPresenter.onLocalSongItemClick(itemView, entity, position, sharedElements, transitionNames, data);
             }
 
             @Override
@@ -376,6 +373,14 @@ public class MainActivity extends BaseActivity implements MainView {
         Intent intent = new Intent(MainActivity.this, LocalBillDetailActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_BILL, entity);
         goTo(intent);
+    }
+
+    @Override
+    public void goToMusicWithSharedElement(LocalSongEntity entity, View sharedElement, String transitionName) {
+        Intent intent = new Intent(MainActivity.this, MusicPlayActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, entity);
+        intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
+        goToWithSharedElement(intent, sharedElement, transitionName);
     }
 
     @Override

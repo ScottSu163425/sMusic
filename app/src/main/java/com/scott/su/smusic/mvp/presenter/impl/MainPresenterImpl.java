@@ -32,9 +32,10 @@ public class MainPresenterImpl implements MainPresenter {
         this.mAppConfigModel = new AppConfigModelImpl();
     }
 
+
     @Override
-    public void onLocalSongItemClick(LocalSongEntity songEntity) {
-        mMainView.showToastShort("click " + songEntity.getTitle());
+    public void onLocalSongItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+        mMainView.goToMusicWithSharedElement(entity, sharedElements[0], transitionNames[0]);
     }
 
     @Override

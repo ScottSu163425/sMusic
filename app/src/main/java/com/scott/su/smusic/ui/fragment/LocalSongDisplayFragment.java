@@ -17,6 +17,7 @@ import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -126,6 +127,11 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     @Override
     protected void onErrorClick() {
 
+    }
+
+    @Override
+    public ArrayList<LocalSongEntity> getDisplayDataList() {
+        return (ArrayList<LocalSongEntity>) mSongDisplayAdapter.getDataList();
     }
 
     @Override

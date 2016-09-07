@@ -5,13 +5,47 @@ import android.graphics.Bitmap;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.view.BaseView;
 
+import java.util.List;
+
 /**
  * Created by asus on 2016/9/4.
  */
 public interface MusicPlayView extends BaseView {
-    LocalSongEntity getCurrentPlayingLocalSongEntity();
+
+    void setCurrentPlayingSongPosition(int position);
+
+    void setCurrentPlayingSongList(List<LocalSongEntity> songList);
+
+    LocalSongEntity getCurrentPlayingSong();
+
+    List<LocalSongEntity> getCurrentPlayingSongList();
+
+    void setPlayingMusicTitle(String title);
+
+    void setPlayingMusicArtist(String artist);
+
+    void setTotalPlayTime(String totalPlayTime);
 
     void loadCover(String path);
 
     void loadBlurCover(Bitmap bitmap);
+
+    boolean isPlayRepeatAll();
+
+    boolean isRepeatAll();
+
+    boolean isPlayRepeatOne();
+
+    boolean isRepeatOne();
+
+    boolean isPlayShuffle();
+
+    void setPlayRepeatAll();
+
+    void setPlayRepeatOne();
+
+    void setPlayShuffleFromRepeatAll();
+
+    void setPlayShuffleFromRepeatOne();
+
 }

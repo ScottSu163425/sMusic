@@ -16,6 +16,7 @@ import com.scott.su.smusic.mvp.view.LocalSongBillDisplayView;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -105,6 +106,11 @@ public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntit
 
     }
 
+
+    @Override
+    public ArrayList<LocalBillEntity> getDisplayDataList() {
+        return (ArrayList<LocalBillEntity>) mSongBillDisplayAdapter.getDataList();
+    }
 
     @Override
     public void reInitialize() {

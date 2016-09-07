@@ -105,6 +105,10 @@ public class TimeUtil {
         return h * MINUTE_OF_HOUR;
     }
 
+    public static String millisecondToTimeWithinHour(long ms) {
+        return millisecondToTime(ms).substring(3);
+    }
+
     /**
      * 毫秒转换为HH:MM:SS格式时间字符串
      *
@@ -209,6 +213,7 @@ public class TimeUtil {
 
     /**
      * 获取指定位数时间戳
+     *
      * @param length
      * @return
      */

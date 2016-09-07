@@ -8,12 +8,15 @@ import android.view.View;
 import com.su.scott.slibrary.presenter.BaseDisplayPresenter;
 import com.su.scott.slibrary.presenter.BasePresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/1.
  */
 public interface BaseDisplayView<E> extends BaseView {
+
+    ArrayList<E> getDisplayDataList();
 
     void showLoading();
 

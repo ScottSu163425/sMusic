@@ -33,4 +33,6 @@ public interface MainView extends BaseView {
 
     void goToBillDetail(LocalBillEntity entity);
 
+    void goToMusicWithSharedElement(LocalSongEntity entity, View sharedElement, String transitionName);
+
 }

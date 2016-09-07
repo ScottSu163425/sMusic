@@ -17,6 +17,7 @@ import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 import com.su.scott.slibrary.util.T;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -105,6 +106,11 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
     @Override
     protected void onErrorClick() {
 
+    }
+
+    @Override
+    public ArrayList<LocalAlbumEntity> getDisplayDataList() {
+        return (ArrayList<LocalAlbumEntity>) mLocalAlbumDisplayAdapter.getDataList();
     }
 
     @Override
