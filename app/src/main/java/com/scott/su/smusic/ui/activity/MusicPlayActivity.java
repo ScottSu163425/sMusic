@@ -177,13 +177,25 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public void loadBlurCover(Bitmap bitmap) {
+    public void loadBlurCover(final Bitmap bitmap) {
         if (this.isFinishing()) {
             return;
         }
-        mBlurCoverImageView.setImageBitmap(bitmap);
+
+        AnimUtil.alpha(mBlurCoverImageView, AnimUtil.ACTION.OUT, 1.0f, 0, AnimUtil.DURATION_LONG, null, new AnimUtil.SimpleAnimListener() {
+            @Override
+            public void onAnimStart() {
+
+            }
+
+            @Override
+            public void onAnimEnd() {
+                mBlurCoverImageView.setImageBitmap(bitmap);
+                AnimUtil.alphaIn(mBlurCoverImageView);
+            }
+        });
+
 //        CirclarRevealUtil.revealIn(mBlurCoverImageView, CirclarRevealUtil.DIRECTION.CENTER_TOP, AnimUtil.DURATION_LONG);
-        AnimUtil.alphaIn(mBlurCoverImageView, 3000);
     }
 
     @Override

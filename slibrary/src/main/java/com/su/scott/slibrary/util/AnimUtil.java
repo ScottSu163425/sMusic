@@ -30,7 +30,7 @@ public class AnimUtil {
     }
 
     public static void scaleIn(@NonNull View view) {
-        scale(view, ACTION.IN, 1, 1, DURATION_DEFAULT,null, null);
+        scale(view, ACTION.IN, 1, 1, DURATION_DEFAULT, null, null);
     }
 
     public static void scaleIn(@NonNull View view, long duration) {
@@ -55,19 +55,19 @@ public class AnimUtil {
     }
 
     public static void alphaIn(@NonNull View view) {
-        alpha(view, ACTION.IN, 1, DURATION_DEFAULT, null, null);
+        alpha(view, ACTION.IN, 0,1.0f,  DURATION_DEFAULT, null, null);
     }
 
     public static void alphaIn(@NonNull View view, long duration) {
-        alpha(view, ACTION.IN, 1, duration, null, null);
+        alpha(view, ACTION.IN,  0,1.0f, duration, null, null);
     }
 
     public static void alphaOut(@NonNull View view) {
-        alpha(view, ACTION.OUT, 0, DURATION_DEFAULT, null, null);
+        alpha(view, ACTION.OUT, 1.0f, 0, DURATION_DEFAULT, null, null);
     }
 
     public static void alphaOut(@NonNull View view, long duration) {
-        alpha(view, ACTION.OUT, 0, duration, null, null);
+        alpha(view, ACTION.OUT, 1.0f, 0, duration, null, null);
     }
 
     public static void scale(@NonNull final View view, final ACTION action, float toX, float toY, long duration, @Nullable TimeInterpolator interpolator, @Nullable final SimpleAnimListener listener) {
@@ -102,35 +102,34 @@ public class AnimUtil {
                 .start();
     }
 
-    public static void alpha(@NonNull final View view, final ACTION action, float toAlpha, long duration, @Nullable TimeInterpolator interpolator, @Nullable final SimpleAnimListener listener) {
-        view.animate()
-                .alpha(toAlpha)
-                .setDuration(duration)
-                .setInterpolator(interpolator == null ? new AccelerateDecelerateInterpolator() : interpolator)
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-                        super.onAnimationStart(animation);
-                        if (action == ACTION.IN) {
-                            view.setVisibility(View.VISIBLE);
-                        }
-                        if (listener != null) {
-                            listener.onAnimStart();
-                        }
-                    }
+    public static void alpha(@NonNull final View view, final ACTION action, float fromAlpha, float toAlpha, long duration, @Nullable TimeInterpolator interpolator, @Nullable final SimpleAnimListener listener) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, "alpha", fromAlpha, toAlpha);
+        animator.setDuration(duration);
+        animator.setInterpolator(interpolator == null ? new AccelerateDecelerateInterpolator() : interpolator);
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                ViewUtil.setViewVisiable(view);
+                if (listener != null) {
+                    listener.onAnimStart();
+                }
+            }
 
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        if (action == ACTION.OUT) {
-                            view.setVisibility(View.GONE);
-                        }
-                        if (listener != null) {
-                            listener.onAnimEnd();
-                        }
-                    }
-                })
-                .start();
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                if (action == ACTION.OUT) {
+                    ViewUtil.setViewGone(view);
+                }
+
+                if (listener != null) {
+                    listener.onAnimEnd();
+                }
+
+            }
+        });
+        animator.start();
     }
 
     public static void rotate2DPositive(@NonNull final View view, float to, long duration) {
@@ -142,19 +141,19 @@ public class AnimUtil {
     }
 
     public static void rotateX3DPositive(@NonNull final View view, float to, long duration) {
-        rotate3D(view,true, 0, Math.abs(to), duration, null, null);
+        rotate3D(view, true, 0, Math.abs(to), duration, null, null);
     }
 
     public static void rotateX3DNegative(@NonNull final View view, float to, long duration) {
-        rotate3D(view,true, 0, -Math.abs(to), duration, null, null);
+        rotate3D(view, true, 0, -Math.abs(to), duration, null, null);
     }
 
     public static void rotateY3DPositive(@NonNull final View view, float to, long duration) {
-        rotate3D(view,false, 0, Math.abs(to), duration, null, null);
+        rotate3D(view, false, 0, Math.abs(to), duration, null, null);
     }
 
     public static void rotateY3DNegative(@NonNull final View view, float to, long duration) {
-        rotate3D(view,false, 0, -Math.abs(to), duration, null, null);
+        rotate3D(view, false, 0, -Math.abs(to), duration, null, null);
     }
 
     public static void rotate2D(@NonNull final View view, float from, float to, long duration, @Nullable TimeInterpolator interpolator, @Nullable final SimpleAnimListener listener) {
@@ -183,7 +182,7 @@ public class AnimUtil {
     }
 
     private static void rotate3D(@NonNull final View view, boolean isRotateX, float from, float to, long duration, @Nullable TimeInterpolator interpolator, @Nullable final SimpleAnimListener listener) {
-        ObjectAnimator animator = ObjectAnimator.ofFloat(view,(isRotateX ? "rotationX" : "rotationY"), from, to);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, (isRotateX ? "rotationX" : "rotationY"), from, to);
         animator.setDuration(duration);
         animator.setInterpolator(interpolator == null ? new AccelerateDecelerateInterpolator() : interpolator);
         animator.addListener(new AnimatorListenerAdapter() {
