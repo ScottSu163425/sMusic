@@ -29,6 +29,7 @@ import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.MainPresenterImpl;
 import com.scott.su.smusic.mvp.view.MainView;
 import com.scott.su.smusic.ui.fragment.CreateBillDialogFragment;
+import com.scott.su.smusic.ui.fragment.DrawerMenuFragment;
 import com.scott.su.smusic.ui.fragment.LocalAlbumDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
@@ -38,6 +39,7 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.PermissionUtil;
+import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
@@ -53,6 +55,7 @@ public class MainActivity extends BaseActivity implements MainView {
     private ViewPager mViewPager;   //Content ViewPager;
     private TabLayout mTabLayout;   //Tabs for ViewPager;
     private FloatingActionButton mFloatingActionButton; //FAB;
+    private DrawerMenuFragment mDrawerMenuFragment;
     private LocalSongDisplayFragment mSongDisplayFragment;
     private LocalBillDisplayFragment mBillDisplayFragment;
     private LocalAlbumDisplayFragment mAlbumDisplayFragment;
@@ -128,6 +131,7 @@ public class MainActivity extends BaseActivity implements MainView {
     public void initData() {
         List<Fragment> pageFragments = new ArrayList<>();
 
+        mDrawerMenuFragment = new DrawerMenuFragment();
         mSongDisplayFragment = LocalSongDisplayFragment.newInstance(null,
                 LocalSongDisplayAdapter.DISPLAY_TYPE.CoverDivider);
         mBillDisplayFragment = LocalBillDisplayFragment.newInstance();
@@ -144,11 +148,40 @@ public class MainActivity extends BaseActivity implements MainView {
                 getResources().getStringArray(R.array.titles_tab_main)));
         mViewPager.setOffscreenPageLimit(pageFragments.size());
         mTabLayout.setupWithViewPager(mViewPager);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_container_drawer_menu_main, mDrawerMenuFragment).commit();
         mDataInitFinish = true;
     }
 
     @Override
     public void initListener() {
+        mDrawerMenuFragment.setMenuCallback(new DrawerMenuFragment.DrawerMenuCallback() {
+            @Override
+            public void onStatisticsClick(View v) {
+                T.showShort(getApplicationContext(),"统计");
+            }
+
+            @Override
+            public void onNightModeOn() {
+                T.showShort(getApplicationContext(),"开启夜间模式");
+            }
+
+            @Override
+            public void onNightModeOff() {
+                T.showShort(getApplicationContext(),"关闭夜间模式");
+            }
+
+
+            @Override
+            public void onUpdateClick(View v) {
+                T.showShort(getApplicationContext(),"版本更新");
+            }
+
+            @Override
+            public void onAboutClick(View v) {
+                T.showShort(getApplicationContext(),"关于");
+            }
+        });
+
         mSongDisplayFragment.setDisplayCallback(new LocalSongDisplayFragment.LocalSongDisplayCallback() {
             @Override
             public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {

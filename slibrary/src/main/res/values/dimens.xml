@@ -23,6 +23,7 @@
     <dimen name="margin_xl">72dp</dimen>
 
     <!--height-->
+    <dimen name="height_divider_line">0.5dp</dimen>
     <dimen name="height_item_xs">24dp</dimen>
     <dimen name="height_item_s">48dp</dimen>
     <dimen name="height_item_m">56dp</dimen>

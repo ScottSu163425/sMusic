@@ -26,6 +26,11 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     private static final String TIP_DEFAULT_NETWORK_ERROR = "网络异常，请检查设备的网络连接状况";
 
     @Override
+    public void initToolbar() {
+
+    }
+
+    @Override
     public Activity getViewContext() {
         return getActivity();
     }

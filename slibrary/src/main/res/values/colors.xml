@@ -281,6 +281,7 @@
     <color name="transparent">#00ffffff</color>
     <color name="selecotor_half_dark">#30000000</color>
     <color name="selecotor_half_light">#30ffffff</color>
+    <color name="divider_line">#89000000</color>
 
     <!--text-->
     <color name="text_dark_1">#42000000</color>
