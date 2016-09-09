@@ -24,6 +24,12 @@ public interface MusicPlayView extends BaseView {
 
     void setPlayingMusicArtist(String artist);
 
+    void setSeekBarMax(long max);
+
+    void setSeekBarCurrentPosition(long currentPosition);
+
+    void setCurrentTime(String currentPlayTime);
+
     void setTotalPlayTime(String totalPlayTime);
 
     void loadCover(String path,boolean needReveal);
@@ -48,4 +54,17 @@ public interface MusicPlayView extends BaseView {
 
     void setPlayShuffleFromRepeatOne();
 
+    boolean isMusicPlaying();
+
+    boolean isMusicPause();
+
+    boolean isMusicStop();
+
+    void setPlayButtonPlaying();
+
+    void setPlayButtonPause();
+
+    void play();
+
+    void pause();
 }

@@ -48,7 +48,11 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
 
     @Override
     public void onPlayClick(View view) {
-        mMusicPlayView.showToastShort(mMusicPlayView.getCurrentPlayingSong().getTitle());
+        if (mMusicPlayView.isMusicPlaying()) {
+            mMusicPlayView.pause();
+        } else {
+            mMusicPlayView.play();
+        }
     }
 
     @Override
@@ -99,6 +103,50 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
         }
     }
 
+    @Override
+    public void onServiceConnected() {
+        mMusicPlayView.play();
+    }
+
+    @Override
+    public void onServiceDisconnected() {
+
+    }
+
+    @Override
+    public void onPlayStart() {
+        mMusicPlayView.setPlayButtonPlaying();
+    }
+
+    @Override
+    public void onPlayProgressUpdate(long currentPositionMillSec) {
+        mMusicPlayView.setSeekBarCurrentPosition(currentPositionMillSec);
+        mMusicPlayView.setCurrentTime(TimeUtil.millisecondToTimeWithinHour(currentPositionMillSec));
+    }
+
+    @Override
+    public void onPlayPause(long currentPositionMillSec) {
+        mMusicPlayView.setPlayButtonPause();
+    }
+
+    @Override
+    public void onPlayResume() {
+        mMusicPlayView.setPlayButtonPlaying();
+
+    }
+
+    @Override
+    public void onPlayStop() {
+        mMusicPlayView.setPlayButtonPause();
+
+    }
+
+    @Override
+    public void onPlayComplete() {
+        mMusicPlayView.setPlayButtonPause();
+
+    }
+
     private void updateCurrentPlayingSong(boolean needReveal) {
         String path = mAlbumModel.getAlbumCoverPath(mMusicPlayView.getViewContext(), mMusicPlayView.getCurrentPlayingSong().getAlbumId());
         mMusicPlayView.loadCover(path, needReveal);
@@ -116,8 +164,10 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
             }
         }.execute();
 
+        mMusicPlayView.setSeekBarMax(mMusicPlayView.getCurrentPlayingSong().getDuration());
         mMusicPlayView.setPlayingMusicTitle(mMusicPlayView.getCurrentPlayingSong().getTitle());
         mMusicPlayView.setPlayingMusicArtist(mMusicPlayView.getCurrentPlayingSong().getArtist());
+        mMusicPlayView.setCurrentTime(TimeUtil.millisecondToTimeWithinHour(0));
         mMusicPlayView.setTotalPlayTime(TimeUtil.millisecondToTimeWithinHour(mMusicPlayView.getCurrentPlayingSong().getDuration()));
     }
 }

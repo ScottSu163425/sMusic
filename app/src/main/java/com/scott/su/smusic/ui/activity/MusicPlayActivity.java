@@ -1,7 +1,13 @@
 package com.scott.su.smusic.ui.activity;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
+import android.media.TimedText;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.CardView;
@@ -16,14 +22,17 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.constant.Constants;
+import com.scott.su.smusic.constant.PlayStatus;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.MusicPlayPresenterImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
+import com.scott.su.smusic.service.MusicPlayService;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.SdkUtil;
+import com.su.scott.slibrary.util.T;
 
 import java.util.List;
 
@@ -43,6 +52,10 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     private List<LocalSongEntity> mCurrentPlayingSongList;
     private PlayMode mCurrentPlayMode = PlayMode.RepeatAll;
     private PlayMode mCurrentRepeatMode = PlayMode.RepeatAll;
+
+    private PlayStatus mCurrentPlayStatus;
+    private ServiceConnection mMusicPlayServiceConnection;
+    private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
 
     private enum PlayMode {
         RepeatAll,
@@ -80,6 +93,58 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mCurrentPlayingSong = getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG);
         mInitialPlayingSong = mCurrentPlayingSong;
         mCurrentPlayingSongList = getIntent().getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS);
+        mMusicPlayServiceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                mMusicPlayServiceBinder = (MusicPlayService.MusicPlayServiceBinder) iBinder;
+                mMusicPlayServiceBinder.setPlaySong(mCurrentPlayingSong, mCurrentPlayingSongList);
+                mMusicPlayServiceBinder.registerPlayCallback(new MusicPlayService.MusicPlayCallback() {
+                    @Override
+                    public void onPlayStart() {
+                        mCurrentPlayStatus = PlayStatus.Playing;
+                        mMusicPlayPresenter.onPlayStart();
+                    }
+
+                    @Override
+                    public void onPlayProgressUpdate(long currentPositionMillSec) {
+                        mMusicPlayPresenter.onPlayProgressUpdate(currentPositionMillSec);
+                    }
+
+                    @Override
+                    public void onPlayPause(long currentPositionMillSec) {
+                        mCurrentPlayStatus = PlayStatus.Pause;
+                        mMusicPlayPresenter.onPlayPause(currentPositionMillSec);
+                    }
+
+                    @Override
+                    public void onPlayResume() {
+                        mCurrentPlayStatus = PlayStatus.Playing;
+                        mMusicPlayPresenter.onPlayResume();
+                    }
+
+                    @Override
+                    public void onPlayStop() {
+                        mCurrentPlayStatus = PlayStatus.Stop;
+                        mMusicPlayPresenter.onPlayStop();
+                    }
+
+                    @Override
+                    public void onPlayComplete() {
+                        mMusicPlayPresenter.onPlayComplete();
+                    }
+                });
+                mMusicPlayPresenter.onServiceConnected();
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+                T.showShort(getApplicationContext(), "onServiceDisconnected");
+                mMusicPlayPresenter.onServiceDisconnected();
+            }
+        };
+        Intent intent = new Intent(MusicPlayActivity.this, MusicPlayService.class);
+//        startService(intent);
+        bindService(intent, mMusicPlayServiceConnection, BIND_AUTO_CREATE);
     }
 
     @Override
@@ -104,12 +169,12 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mCoverImageView = (ImageView) findViewById(R.id.iv_cover_music_play);
         mBlurCoverImageView = (ImageView) findViewById(R.id.iv_cover_blur_music_play);
         mPlayButton = (FloatingActionButton) findViewById(R.id.fab_play_music_play);
+        mPlayingSeekBar = (AppCompatSeekBar) findViewById(R.id.seek_bar_progress_music_play);
         mSkipPreviousButton = (ImageButton) findViewById(R.id.imgbtn_skip_previous_music_play);
         mSkipNextButton = (ImageButton) findViewById(R.id.imgbtn_skip_next_music_play);
         mRepeatButton = (ImageButton) findViewById(R.id.imgbtn_repeat_music_play);
         mShuffleButton = (ImageButton) findViewById(R.id.imgbtn_shuffle_music_play);
 
-//        mPlayPauseButton.setColor(Color.WHITE);
     }
 
     @Override
@@ -124,7 +189,6 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mRepeatButton.setOnClickListener(this);
         mShuffleButton.setOnClickListener(this);
     }
-
 
     @Override
     public void onClick(View view) {
@@ -171,6 +235,21 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     public void setPlayingMusicArtist(String artist) {
         mMusicArtistTextView.setText(artist);
+    }
+
+    @Override
+    public void setSeekBarMax(long max) {
+        mPlayingSeekBar.setMax((int) max);
+    }
+
+    @Override
+    public void setSeekBarCurrentPosition(long currentPosition) {
+        mPlayingSeekBar.setProgress((int) currentPosition);
+    }
+
+    @Override
+    public void setCurrentTime(String currentPlayTime) {
+        mCurrentTimeTextView.setText(currentPlayTime);
     }
 
     @Override
@@ -281,6 +360,45 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mShuffleButton.setImageResource(R.drawable.ic_shuffle_black_24dp);
         mRepeatButton.setImageResource(R.drawable.ic_repeat_one_grey600_24dp);
         mCurrentPlayMode = PlayMode.Shuffle;
+    }
+
+    @Override
+    public boolean isMusicPlaying() {
+        return mCurrentPlayStatus == PlayStatus.Playing;
+    }
+
+    @Override
+    public boolean isMusicPause() {
+        return mCurrentPlayStatus == PlayStatus.Pause;
+    }
+
+    @Override
+    public boolean isMusicStop() {
+        return mCurrentPlayStatus == PlayStatus.Stop;
+    }
+
+    @Override
+    public void setPlayButtonPlaying() {
+        mPlayButton.setImageResource(R.drawable.ic_pause_white_24dp);
+    }
+
+    @Override
+    public void setPlayButtonPause() {
+        mPlayButton.setImageResource(R.drawable.ic_play_arrow_white_24dp);
+    }
+
+    @Override
+    public void play() {
+//        if (mMusicPlayServiceBinder != null) {
+        mMusicPlayServiceBinder.play();
+//        }
+    }
+
+    @Override
+    public void pause() {
+//        if (mMusicPlayServiceBinder != null) {
+        mMusicPlayServiceBinder.pause();
+//        }
     }
 
     @Override
