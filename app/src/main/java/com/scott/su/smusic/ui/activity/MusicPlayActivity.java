@@ -23,6 +23,7 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.SdkUtil;
+import com.su.scott.slibrary.util.T;
 
 import java.util.List;
 
@@ -102,6 +103,8 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mSkipNextButton = (ImageButton) findViewById(R.id.imgbtn_skip_next_music_play);
         mRepeatButton = (ImageButton) findViewById(R.id.imgbtn_repeat_music_play);
         mShuffleButton = (ImageButton) findViewById(R.id.imgbtn_shuffle_music_play);
+
+//        mPlayPauseButton.setColor(Color.WHITE);
     }
 
     @Override

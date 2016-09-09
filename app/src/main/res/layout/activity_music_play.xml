@@ -113,11 +113,12 @@
                         android:textSize="@dimen/text_size_caption" />
                 </LinearLayout>
 
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_xs">
+                    android:layout_margin="@dimen/margin_xs"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
 
                     <ImageButton
                         android:id="@+id/imgbtn_repeat_music_play"
@@ -140,19 +141,19 @@
                         android:padding="@dimen/margin_xs"
                         android:src="@drawable/ic_skip_previous_black_36dp" />
 
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/fab_play_music_play"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_margin="@dimen/margin_xs"
-                        android:src="@drawable/ic_play_arrow_white_24dp"
-                        android:transitionName="@string/transition_name_fab"
-                        app:backgroundTint="@color/colorPrimary"
-                        app:elevation="@dimen/elevation_fab_normal"
-                        app:fabSize="normal"
-                        app:pressedTranslationZ="@dimen/elevation_fab_pressed"
-                        app:rippleColor="@color/colorAccent" />
+                        <android.support.design.widget.FloatingActionButton
+                            android:id="@+id/fab_play_music_play"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin_xs"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/ic_play_arrow_white_24dp"
+                            android:transitionName="@string/transition_name_fab"
+                            app:backgroundTint="@color/colorPrimary"
+                            app:elevation="@dimen/elevation_fab_normal"
+                            app:fabSize="normal"
+                            app:pressedTranslationZ="@dimen/elevation_fab_pressed"
+                            app:rippleColor="@color/colorAccent" />
 
                     <ImageButton
                         android:id="@+id/imgbtn_skip_next_music_play"
@@ -179,6 +180,5 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </android.support.percent.PercentRelativeLayout>
-
 
 </android.support.design.widget.CoordinatorLayout>
