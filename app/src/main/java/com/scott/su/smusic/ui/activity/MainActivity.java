@@ -207,6 +207,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
 
             @Override
@@ -222,7 +223,6 @@ public class MainActivity extends BaseActivity implements MainView {
                     } else {
                         hideFab();
                     }
-
                 }
 
             }
