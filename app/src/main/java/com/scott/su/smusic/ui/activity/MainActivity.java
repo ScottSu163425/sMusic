@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,6 +40,7 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.PermissionUtil;
+import com.su.scott.slibrary.util.PopupMenuUtil;
 import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 
@@ -157,28 +159,28 @@ public class MainActivity extends BaseActivity implements MainView {
         mDrawerMenuFragment.setMenuCallback(new DrawerMenuFragment.DrawerMenuCallback() {
             @Override
             public void onStatisticsClick(View v) {
-                T.showShort(getApplicationContext(),"统计");
+                T.showShort(getApplicationContext(), "统计");
             }
 
             @Override
             public void onNightModeOn() {
-                T.showShort(getApplicationContext(),"开启夜间模式");
+                T.showShort(getApplicationContext(), "开启夜间模式");
             }
 
             @Override
             public void onNightModeOff() {
-                T.showShort(getApplicationContext(),"关闭夜间模式");
+                T.showShort(getApplicationContext(), "关闭夜间模式");
             }
 
 
             @Override
             public void onUpdateClick(View v) {
-                T.showShort(getApplicationContext(),"版本更新");
+                T.showShort(getApplicationContext(), "版本更新");
             }
 
             @Override
             public void onAboutClick(View v) {
-                T.showShort(getApplicationContext(),"关于");
+                T.showShort(getApplicationContext(), "关于");
             }
         });
 

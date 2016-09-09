@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -23,7 +24,6 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.SdkUtil;
-import com.su.scott.slibrary.util.T;
 
 import java.util.List;
 
@@ -62,6 +62,11 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         return true;
     }
 
@@ -288,4 +293,5 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
             }
         }
     }
+
 }
