@@ -31,6 +31,7 @@ import com.scott.su.smusic.service.MusicPlayService;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.T;
 
@@ -93,6 +94,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mCurrentPlayingSong = getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG);
         mInitialPlayingSong = mCurrentPlayingSong;
         mCurrentPlayingSongList = getIntent().getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS);
+
         mMusicPlayServiceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -134,16 +136,17 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                     }
                 });
                 mMusicPlayPresenter.onServiceConnected();
+                L.e("===>activity:","onServiceConnected");
             }
 
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
-                T.showShort(getApplicationContext(), "onServiceDisconnected");
                 mMusicPlayPresenter.onServiceDisconnected();
+                L.e("===>activity:","onServiceDisconnected");
             }
         };
         Intent intent = new Intent(MusicPlayActivity.this, MusicPlayService.class);
-//        startService(intent);
+        startService(intent);
         bindService(intent, mMusicPlayServiceConnection, BIND_AUTO_CREATE);
     }
 
@@ -412,4 +415,9 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        unbindService(mMusicPlayServiceConnection);
+        super.onDestroy();
+    }
 }

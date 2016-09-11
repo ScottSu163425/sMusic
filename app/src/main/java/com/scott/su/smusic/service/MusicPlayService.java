@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 
 import com.scott.su.smusic.constant.PlayStatus;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.TimeUtil;
 
 import java.io.IOException;
@@ -20,9 +21,10 @@ import java.util.List;
  * Created by Administrator on 2016/9/9.
  */
 public class MusicPlayService extends Service {
-    //    private MediaPlayer mMediaPlayer;
+    private MediaPlayer mMediaPlayer;
     private MusicPlayCallback mMusicPlayCallback;
     private LocalSongEntity mCurrentPlaySong;
+    private boolean mPlaySameSong;
     private List<LocalSongEntity> mPlaySongs;
 
     private PlayStatus mCurrentPlayStatus = PlayStatus.Stop;
@@ -33,71 +35,110 @@ public class MusicPlayService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        L.e("===>MusicPlayService: ", "onBind");
         return new MusicPlayServiceBinder();
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        L.e("===>MusicPlayService: ", "onUnbind");
+        return super.onUnbind(intent);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-//        mMediaPlayer = new MediaPlayer();
-
+        mMediaPlayer = new MediaPlayer();
+        L.e("===>MusicPlayService: ", "onCreate");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        L.e("===>MusicPlayService: ", "onStartCommand");
+
         return super.onStartCommand(intent, flags, startId);
     }
 
+    @Override
+    public void onDestroy() {
+        L.e("===>MusicPlayService: ", "onDestroy");
+        if (mMediaPlayer != null) {
+            mMediaPlayer.stop();
+            mMediaPlayer.release();
+        }
+        super.onDestroy();
+    }
 
     private void setPlaySong(LocalSongEntity currentPlaySong, List<LocalSongEntity> playSongs) {
+        if (mCurrentPlaySong == null) {
+            mPlaySameSong = false;
+        } else if (mCurrentPlaySong.getSongId() == currentPlaySong.getSongId()) {
+            mPlaySameSong = true;
+        } else {
+            mPlaySameSong = false;
+        }
         this.mCurrentPlaySong = currentPlaySong;
         this.mPlaySongs = playSongs;
     }
 
     private void play() {
-        if (/*mMediaPlayer != null &&*/ mCurrentPlaySong != null) {
-            if (isPlaying()) {
-                return;
+        if (mMediaPlayer != null && mCurrentPlaySong != null) {
+            if (mPlaySameSong) {
+                playResume();
+            } else {
+                //Play different song.
+                playNew();
             }
+        }
+    }
 
-            if (isPause()) {
-                startMediaPlayer();
-                return;
+    private void playResume() {
+        if (isPause()) {
+            startMediaPlayer(true);
+        }
+    }
+
+    private void playNew() {
+        try {
+            if (!mPlaySameSong) {
+                mMediaPlayer.reset();
             }
-
-            //Stopped;
-           /* try {
-                mMediaPlayer.setDataSource(mCurrentPlaySong.getPath());
-                mMediaPlayer.prepare();*/
-            startMediaPlayer();
-           /* } catch (IOException e) {
-                e.printStackTrace();
-            }*/
+            mMediaPlayer.setDataSource(mCurrentPlaySong.getPath());
+            mMediaPlayer.prepare();
+            startMediaPlayer(false);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     private void pause() {
-        if (/*mMediaPlayer != null &&*/ isPlaying()) {
+        if (mMediaPlayer != null && isPlaying()) {
             stopTimer(true);
-          /*  mMediaPlayer.pause();*/
-            mCurrentPlayStatus=PlayStatus.Pause;
+            mMediaPlayer.pause();
+            mCurrentPlayStatus = PlayStatus.Pause;
+            mPlaySameSong = true;
             if (isRegisterCallback()) {
-//                mCurrentPlayPosition = mMediaPlayer.getCurrentPosition();
+                mCurrentPlayPosition = mMediaPlayer.getCurrentPosition();
                 mMusicPlayCallback.onPlayPause(mCurrentPlayPosition);
             }
         }
     }
 
-    private void startMediaPlayer() {
-//        mMediaPlayer.start();
-        startTimer();
-        mCurrentPlayStatus=PlayStatus.Playing;
+    private void startMediaPlayer(boolean isResume) {
+        if (!isResume) {
+            mCurrentPlayPosition = 0;
+        }
+        mMediaPlayer.start();
+        startTimer(isResume);
+        mCurrentPlayStatus = PlayStatus.Playing;
         if (isRegisterCallback()) {
             mMusicPlayCallback.onPlayStart();
         }
     }
 
-    private void startTimer() {
+    private void startTimer(boolean isResume) {
+        stopTimer(isResume);
+
         mPlayTimer = new CountDownTimer(mCurrentPlaySong.getDuration() - mCurrentPlayPosition, TimeUtil.MILLISECONDS_OF_SECOND) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -127,7 +168,6 @@ public class MusicPlayService extends Service {
         }
     }
 
-
     private boolean isRegisterCallback() {
         return mMusicPlayCallback != null;
     }
@@ -144,17 +184,23 @@ public class MusicPlayService extends Service {
         return mCurrentPlayStatus == PlayStatus.Pause;
     }
 
+    private PlayStatus getCurrentPlayStatus() {
+        return mCurrentPlayStatus;
+    }
 
     private void registerPlayCallback(@NonNull MusicPlayCallback callback) {
         this.mMusicPlayCallback = callback;
     }
-
 
     private void unregisterPlayCallback() {
         this.mMusicPlayCallback = null;
     }
 
     public class MusicPlayServiceBinder extends Binder {
+        public PlayStatus getCurrentPlayStatus() {
+            return MusicPlayService.this.getCurrentPlayStatus();
+        }
+
         public void setPlaySong(LocalSongEntity currentPlaySong, List<LocalSongEntity> playSongs) {
             MusicPlayService.this.setPlaySong(currentPlaySong, playSongs);
         }
