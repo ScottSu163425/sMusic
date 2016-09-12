@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/background"
     tools:context="com.scott.su.smusic.ui.activity.LocalSongSelectionActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -35,7 +36,7 @@
         android:background="@drawable/selector_button_primary"
         android:enabled="false"
         android:text="选好了"
-        android:textColor="@color/text_light_3"
+        android:textColor="@color/white"
         android:textSize="@dimen/text_size_button" />
 
 </LinearLayout>

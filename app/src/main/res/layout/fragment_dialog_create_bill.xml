@@ -7,6 +7,7 @@
     android:clipToPadding="false"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:background="@color/backgroundContent"
     android:minWidth="300dp"
     android:orientation="vertical"
     android:padding="@dimen/margin_xs">
@@ -17,8 +18,8 @@
         android:gravity="center"
         android:padding="@dimen/margin_xs"
         android:text="新建歌单"
-        android:textColor="@color/text_dark_3"
-        android:textSize="@dimen/text_size_title" />
+        style="@style/TextAppearanceTitle"
+        />
 
 
     <android.support.design.widget.TextInputLayout
@@ -36,8 +37,8 @@
             android:layout_height="wrap_content"
             android:hint="歌单名称"
             android:maxLines="1"
-            android:textColor="@color/text_dark_3"
-            android:textSize="@dimen/text_size_subhead" />
+            style="@style/TextAppearanceBody2"
+            />
     </android.support.design.widget.TextInputLayout>
 
     <Button
@@ -49,6 +50,6 @@
         android:gravity="center"
         android:padding="@dimen/margin_xs"
         android:text="确定"
-        android:textColor="@color/text_light_3"
+        android:textColor="@color/white"
         android:textSize="@dimen/text_size_button" />
 </LinearLayout>

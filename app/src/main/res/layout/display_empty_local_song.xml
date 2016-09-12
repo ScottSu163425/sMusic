@@ -8,18 +8,18 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/ic_display_empty_local_song"
+        android:layout_above="@+id/tv"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/margin_s"
-        android:layout_above="@+id/tv"/>
+        android:src="@drawable/ic_display_empty_local_song" />
 
     <TextView
         android:id="@+id/tv"
+        style="@style/TextAppearanceSubhead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="没有任何一条数据"
-        android:textSize="@dimen/text_size_title"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:text="没有任何一条数据" />
 
 
 </RelativeLayout>

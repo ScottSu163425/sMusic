@@ -6,6 +6,7 @@
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
     android:gravity="center_vertical"
+    android:background="@color/backgroundContent"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/margin_s"
     android:paddingRight="@dimen/margin_s">
@@ -17,9 +18,8 @@
 
     <TextView
         android:id="@+id/tv_item_name_view_holder_menu_item_base_list_bottom_sheet"
+        style="@style/TextAppearanceMenuSecondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_m"
-        android:textColor="@color/text_dark_2"
-        android:textSize="@dimen/text_size_body" />
+        android:layout_marginLeft="@dimen/margin_m" />
 </LinearLayout>

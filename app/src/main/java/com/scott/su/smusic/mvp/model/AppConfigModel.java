@@ -6,6 +6,8 @@ import android.content.Context;
  * Created by Administrator on 2016/8/30.
  */
 public interface AppConfigModel {
+    boolean isNightModeOn(Context context);
+
     boolean isNeedToRefreshLocalSongDisplay(Context context);
 
     boolean isNeedToRefreshLocalBillDisplay(Context context);
@@ -17,6 +19,8 @@ public interface AppConfigModel {
     void setNeedToRefreshLocalBillDisplay(Context context, boolean isNeedToRefresh);
 
     void setNeedToRefreshLocalAlbumDisplay(Context context, boolean isNeedToRefresh);
+
+    void setNightMode(Context context, boolean isOn);
 
     int getPositionOfBillToRefresh(Context context);
 

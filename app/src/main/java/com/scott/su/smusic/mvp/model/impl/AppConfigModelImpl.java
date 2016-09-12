@@ -9,10 +9,16 @@ import com.scott.su.smusic.mvp.model.AppConfigModel;
  * Created by Administrator on 2016/8/30.
  */
 public class AppConfigModelImpl implements AppConfigModel {
+    private static final String IS_NIGHT_MODE_ON = "IS_NIGHT_MODE_ON";
     private static final String NEED_TO_REFRESH_SONG = "NEED_REFRESH_SONG";
     private static final String NEED_TO_REFRESH_BILL = "NEED_REFRESH_BILL";
     private static final String NEED_TO_REFRESH_ALBUM = "NEED_REFRESH_ALBUM";
     private static final String POSITION_OF_BILL_TO_REFRESH_ = "POSITION_OF_BILL_TO_REFRESH_";
+
+    @Override
+    public boolean isNightModeOn(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(IS_NIGHT_MODE_ON, false);
+    }
 
     @Override
     public boolean isNeedToRefreshLocalSongDisplay(Context context) {
@@ -50,6 +56,14 @@ public class AppConfigModelImpl implements AppConfigModel {
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putBoolean(NEED_TO_REFRESH_ALBUM, isNeedToRefresh)
+                .apply();
+    }
+
+    @Override
+    public void setNightMode(Context context, boolean isOn) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putBoolean(IS_NIGHT_MODE_ON, isOn)
                 .apply();
     }
 

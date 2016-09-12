@@ -27,4 +27,7 @@ public interface MainPresenter extends BasePresenter, LocalSongBottomSheetPresen
 
     void onSelectedLocalSongsResult(LocalBillEntity billToAddSong, List<LocalSongEntity> songsToAdd);
 
+    void onNightModeOn();
+
+    void onNightModeOff();
 }

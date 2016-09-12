@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
+    android:background="@color/background"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -27,8 +28,8 @@
             android:layout_height="wrap_content"
             app:tabIndicatorColor="@color/white"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/text_light_3"
-            app:tabTextColor="@color/text_light_1"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/textColorWhiteSecondary"
             app:theme="@style/AppTheme.AppBarOverlay" />
     </android.support.design.widget.AppBarLayout>
 

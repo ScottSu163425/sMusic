@@ -97,6 +97,18 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
+    public void onNightModeOn() {
+        mAppConfigModel.setNightMode(mMainView.getViewContext(), true);
+        mMainView.turnOnNightMode();
+    }
+
+    @Override
+    public void onNightModeOff() {
+        mAppConfigModel.setNightMode(mMainView.getViewContext(), false);
+        mMainView.turnOffNightMode();
+    }
+
+    @Override
     public void onViewFirstTimeCreated() {
         mMainView.initPreData();
         mMainView.initToolbar();

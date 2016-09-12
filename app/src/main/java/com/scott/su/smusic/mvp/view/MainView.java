@@ -35,4 +35,8 @@ public interface MainView extends BaseView {
 
     void goToMusicWithSharedElement(LocalSongEntity entity, View sharedElement, String transitionName);
 
+    void turnOnNightMode();
+
+    void turnOffNightMode();
+
 }

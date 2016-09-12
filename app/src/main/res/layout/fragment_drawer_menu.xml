@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
+    android:background="@color/backgroundContent"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -41,20 +42,18 @@
                     android:src="@drawable/ic_poll_grey600_24dp" />
 
                 <TextView
+                    style="@style/TextAppearanceMenuSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/margin_xl"
-                    android:text="统计"
-                    android:textColor="@color/text_dark_2"
-                    android:textSize="@dimen/text_size_body" />
+                    android:text="统计" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_item_night_mode_drawer_menu"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_item_s"
-               >
+                android:layout_height="@dimen/height_item_s">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -64,13 +63,12 @@
                     android:src="@drawable/ic_brightness_2_grey600_24dp" />
 
                 <TextView
+                    style="@style/TextAppearanceMenuSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/margin_xl"
-                    android:text="夜间模式"
-                    android:textColor="@color/text_dark_2"
-                    android:textSize="@dimen/text_size_body" />
+                    android:text="夜间模式" />
 
                 <android.support.v7.widget.SwitchCompat
                     android:id="@+id/swtich_night_mode_drawer_menu"
@@ -78,8 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/margin_s"
-                  />
+                    android:layout_marginRight="@dimen/margin_s" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -98,13 +95,12 @@
                     android:src="@drawable/ic_extension_grey600_24dp" />
 
                 <TextView
+                    style="@style/TextAppearanceMenuSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/margin_xl"
-                    android:text="版本更新"
-                    android:textColor="@color/text_dark_2"
-                    android:textSize="@dimen/text_size_body" />
+                    android:text="版本更新" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -123,13 +119,12 @@
                     android:src="@drawable/ic_help_grey600_24dp" />
 
                 <TextView
+                    style="@style/TextAppearanceMenuSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/margin_xl"
-                    android:text="关于"
-                    android:textColor="@color/text_dark_2"
-                    android:textSize="@dimen/text_size_body" />
+                    android:text="关于" />
             </RelativeLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

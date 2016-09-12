@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/backgroundContent"
     android:clickable="true"
     android:clipChildren="false"
     android:clipToPadding="false"
@@ -16,10 +16,10 @@
         android:id="@+id/iv_cover_view_holder_local_song_selection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_xs"
         android:layout_marginLeft="@dimen/margin_xs"
         android:layout_marginRight="@dimen/margin_xs"
         android:layout_marginTop="@dimen/margin_xs"
-        android:layout_marginBottom="@dimen/margin_xs"
         android:src="@drawable/ic_my_library_music_grey600_36dp" />
 
     <RelativeLayout
@@ -32,14 +32,13 @@
 
         <TextView
             android:id="@+id/tv_title_view_holder_local_bill_selection"
+            style="@style/TextAppearanceBody1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="桜色舞"
-            android:textColor="@color/text_dark_2"
-            android:textSize="@dimen/text_size_body" />
+            android:text="桜色舞" />
 
 
         <View
@@ -47,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5px"
             android:layout_alignParentBottom="true"
-            android:background="@color/text_dark_1" />
+            android:background="@color/textColorTertiary" />
     </RelativeLayout>
 
 </LinearLayout>

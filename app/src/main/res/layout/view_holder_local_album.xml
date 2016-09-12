@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@android:style/Widget.DeviceDefault.Button"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,6 +8,7 @@
     android:clickable="true"
     android:clipChildren="false"
     android:clipToPadding="false"
+    android:background="@color/backgroundContent"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
     android:orientation="horizontal">
@@ -31,32 +33,29 @@
 
             <TextView
                 android:id="@+id/tv_title_view_holder_local_album"
+                style="@style/TextAppearanceTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:text="初恋"
-                android:textColor="@color/text_dark_3"
-                android:textSize="@dimen/text_size_title" />
+                android:text="初恋" />
 
             <TextView
                 android:id="@+id/tv_artist_view_holder_local_album"
+                style="@style/TextAppearanceSubhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:paddingBottom="@dimen/margin_xs"
                 android:paddingTop="@dimen/margin_xs"
-                android:text="中岛美嘉"
-                android:textColor="@color/text_dark_2"
-                android:textSize="@dimen/text_size_subhead" />
+                android:text="中岛美嘉" />
 
             <TextView
                 android:id="@+id/tv_count_view_holder_local_album"
+                style="@style/TextAppearanceCaption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:text="24首"
-                android:textColor="@color/text_dark_2"
-                android:textSize="@dimen/text_size_caption" />
+                android:text="24首" />
         </LinearLayout>
 
         <ImageView

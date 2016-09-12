@@ -38,7 +38,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_s"
             android:maxLines="1"
-            android:textColor="@color/text_light_3"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_headline" />
 
         <TextView
@@ -49,7 +49,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_xxs"
             android:maxLines="1"
-            android:textColor="@color/text_light_2"
+            android:textColor="@color/textColorWhiteSecondary"
             android:textSize="@dimen/text_size_subhead" />
 
         <ImageView
@@ -94,8 +94,7 @@
                         android:id="@+id/tv_current_time_music_play"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_dark_3"
-                        android:textSize="@dimen/text_size_caption" />
+                    style="@style/TextAppearanceCaption" />
 
                     <android.support.v7.widget.AppCompatSeekBar
                         android:id="@+id/seek_bar_progress_music_play"
@@ -108,8 +107,7 @@
                         android:id="@+id/tv_total_time_music_play"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_dark_3"
-                        android:textSize="@dimen/text_size_caption" />
+                        style="@style/TextAppearanceCaption" />
                 </LinearLayout>
 
                 <RelativeLayout

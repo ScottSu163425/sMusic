@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -26,6 +27,7 @@ import com.scott.su.smusic.adapter.MainPagerAdapter;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.model.impl.AppConfigModelImpl;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.MainPresenterImpl;
 import com.scott.su.smusic.mvp.view.MainView;
@@ -168,12 +170,12 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onNightModeOn() {
-                T.showShort(getApplicationContext(), "开启夜间模式");
+                mMainPresenter.onNightModeOn();
             }
 
             @Override
             public void onNightModeOff() {
-                T.showShort(getApplicationContext(), "关闭夜间模式");
+                mMainPresenter.onNightModeOff();
             }
 
 
@@ -420,6 +422,18 @@ public class MainActivity extends BaseActivity implements MainView {
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, entity);
         intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
         goToWithSharedElement(intent, sharedElement, transitionName);
+    }
+
+    @Override
+    public void turnOnNightMode() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        recreate();
+    }
+
+    @Override
+    public void turnOffNightMode() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        recreate();
     }
 
     @Override
