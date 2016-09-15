@@ -9,7 +9,6 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatSeekBar;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -163,7 +162,6 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     public void initView() {
         mMusicTitleTextView = (TextView) findViewById(R.id.tv_music_title_music_play);
         mMusicArtistTextView = (TextView) findViewById(R.id.tv_music_artist_music_play);
-        mPlayControlCardView = (CardView) findViewById(R.id.card_view_play_control_music_play);
         mCurrentTimeTextView = (TextView) findViewById(R.id.tv_current_time_music_play);
         mTotalTimeTextView = (TextView) findViewById(R.id.tv_total_time_music_play);
         mCoverImageView = (ImageView) findViewById(R.id.iv_cover_music_play);
