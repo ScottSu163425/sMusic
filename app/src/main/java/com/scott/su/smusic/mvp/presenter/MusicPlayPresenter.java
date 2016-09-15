@@ -34,4 +34,10 @@ public interface MusicPlayPresenter extends BasePresenter {
 
     void onPlayComplete();
 
+    void onSeekStart();
+
+    void onSeekProgressChanged(int progress);
+
+    void onSeekStop(int progress);
+
 }

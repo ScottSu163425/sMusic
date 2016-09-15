@@ -7,4 +7,5 @@ public enum PlayMode {
     RepeatOne,
     RepeatAll,
     Shuffle
+
 }

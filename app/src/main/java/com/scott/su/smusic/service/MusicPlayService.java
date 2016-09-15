@@ -9,9 +9,13 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.scott.su.smusic.callback.MusicPlayCallback;
+import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.view.MusicPlayServiceView;
 import com.su.scott.slibrary.util.L;
+import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.TimeUtil;
 
 import java.io.IOException;
@@ -20,7 +24,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/9/9.
  */
-public class MusicPlayService extends Service {
+public class MusicPlayService extends Service implements MusicPlayServiceView {
     private MediaPlayer mMediaPlayer;
     private MusicPlayCallback mMusicPlayCallback;
     private LocalSongEntity mCurrentPlaySong;
@@ -28,7 +32,7 @@ public class MusicPlayService extends Service {
     private List<LocalSongEntity> mPlaySongs;
 
     private PlayStatus mCurrentPlayStatus = PlayStatus.Stop;
-    private long mCurrentPlayPosition;
+    private PlayMode mCurrentPlayMode = PlayMode.RepeatAll;
     private CountDownTimer mPlayTimer;
 
 
@@ -69,7 +73,8 @@ public class MusicPlayService extends Service {
         super.onDestroy();
     }
 
-    private void setPlaySong(LocalSongEntity currentPlaySong, List<LocalSongEntity> playSongs) {
+    @Override
+    public void setPlaySong(LocalSongEntity currentPlaySong, List<LocalSongEntity> playSongs) {
         if (mCurrentPlaySong == null) {
             mPlaySameSong = false;
         } else if (mCurrentPlaySong.getSongId() == currentPlaySong.getSongId()) {
@@ -81,7 +86,13 @@ public class MusicPlayService extends Service {
         this.mPlaySongs = playSongs;
     }
 
-    private void play() {
+    @Override
+    public void setPlayMode(PlayMode playMode) {
+        this.mCurrentPlayMode = playMode;
+    }
+
+    @Override
+    public void play() {
         if (mMediaPlayer != null && mCurrentPlaySong != null) {
             if (mPlaySameSong) {
                 playResume();
@@ -89,6 +100,7 @@ public class MusicPlayService extends Service {
                 //Play different song.
                 playNew();
             }
+            T.showShort(getApplicationContext(), mCurrentPlayMode + "");
         }
     }
 
@@ -111,23 +123,31 @@ public class MusicPlayService extends Service {
         }
     }
 
-    private void pause() {
+    @Override
+    public void pause() {
         if (mMediaPlayer != null && isPlaying()) {
             stopTimer(true);
             mMediaPlayer.pause();
             mCurrentPlayStatus = PlayStatus.Pause;
             mPlaySameSong = true;
             if (isRegisterCallback()) {
-                mCurrentPlayPosition = mMediaPlayer.getCurrentPosition();
-                mMusicPlayCallback.onPlayPause(mCurrentPlayPosition);
+                mMusicPlayCallback.onPlayPause(mMediaPlayer.getCurrentPosition());
             }
         }
     }
 
-    private void startMediaPlayer(boolean isResume) {
-        if (!isResume) {
-            mCurrentPlayPosition = 0;
+    @Override
+    public void seekTo(int position) {
+        if (isPause()) {
+            mMediaPlayer.seekTo(position);
+        } else {
+            pause();
+            mMediaPlayer.seekTo(position);
         }
+        playResume();
+    }
+
+    private void startMediaPlayer(boolean isResume) {
         mMediaPlayer.start();
         startTimer(isResume);
         mCurrentPlayStatus = PlayStatus.Playing;
@@ -139,12 +159,11 @@ public class MusicPlayService extends Service {
     private void startTimer(boolean isResume) {
         stopTimer(isResume);
 
-        mPlayTimer = new CountDownTimer(mCurrentPlaySong.getDuration() - mCurrentPlayPosition, TimeUtil.MILLISECONDS_OF_SECOND) {
+        mPlayTimer = new CountDownTimer(mCurrentPlaySong.getDuration() - mMediaPlayer.getCurrentPosition(), TimeUtil.MILLISECONDS_OF_SECOND) {
             @Override
             public void onTick(long millisUntilFinished) {
-                mCurrentPlayPosition = mCurrentPlaySong.getDuration() - millisUntilFinished;
                 if (isRegisterCallback()) {
-                    mMusicPlayCallback.onPlayProgressUpdate(mCurrentPlayPosition);
+                    mMusicPlayCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
                 }
             }
 
@@ -161,10 +180,6 @@ public class MusicPlayService extends Service {
         if (mPlayTimer != null) {
             mPlayTimer.cancel();
             mPlayTimer = null;
-        }
-
-        if (!isPause) {
-            mCurrentPlayPosition = 0;
         }
     }
 
@@ -184,57 +199,64 @@ public class MusicPlayService extends Service {
         return mCurrentPlayStatus == PlayStatus.Pause;
     }
 
-    private PlayStatus getCurrentPlayStatus() {
+    @Override
+    public PlayStatus getCurrentPlayStatus() {
         return mCurrentPlayStatus;
     }
 
-    private void registerPlayCallback(@NonNull MusicPlayCallback callback) {
+    @Override
+    public void registerPlayCallback(@NonNull MusicPlayCallback callback) {
         this.mMusicPlayCallback = callback;
     }
 
-    private void unregisterPlayCallback() {
+    @Override
+    public void unregisterPlayCallback() {
         this.mMusicPlayCallback = null;
     }
 
-    public class MusicPlayServiceBinder extends Binder {
+    public class MusicPlayServiceBinder extends Binder implements MusicPlayServiceView {
+
+
+        @Override
         public PlayStatus getCurrentPlayStatus() {
             return MusicPlayService.this.getCurrentPlayStatus();
         }
 
+        @Override
         public void setPlaySong(LocalSongEntity currentPlaySong, List<LocalSongEntity> playSongs) {
             MusicPlayService.this.setPlaySong(currentPlaySong, playSongs);
         }
 
+        @Override
+        public void setPlayMode(PlayMode playMode) {
+            MusicPlayService.this.setPlayMode(playMode);
+        }
+
+        @Override
         public void play() {
             MusicPlayService.this.play();
         }
 
+        @Override
         public void pause() {
             MusicPlayService.this.pause();
         }
 
+        @Override
+        public void seekTo(int position) {
+            MusicPlayService.this.seekTo(position);
+        }
+
+        @Override
         public void registerPlayCallback(@NonNull MusicPlayCallback callback) {
             MusicPlayService.this.registerPlayCallback(callback);
         }
 
+        @Override
         public void unregisterPlayCallback() {
             MusicPlayService.this.unregisterPlayCallback();
         }
-
     }
 
-    public interface MusicPlayCallback {
-        void onPlayStart();
-
-        void onPlayProgressUpdate(long currentPositionMillSec);
-
-        void onPlayPause(long currentPositionMillSec);
-
-        void onPlayResume();
-
-        void onPlayStop();
-
-        void onPlayComplete();
-    }
 
 }

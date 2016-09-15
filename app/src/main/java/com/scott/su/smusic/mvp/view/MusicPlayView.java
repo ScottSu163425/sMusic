@@ -2,6 +2,7 @@ package com.scott.su.smusic.mvp.view;
 
 import android.graphics.Bitmap;
 
+import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.view.BaseView;
 
@@ -10,11 +11,9 @@ import java.util.List;
 /**
  * Created by asus on 2016/9/4.
  */
-public interface MusicPlayView extends BaseView {
+public interface MusicPlayView extends BaseView  ,MusicPlayServiceView{
 
     void setCurrentPlayingSongPosition(int position);
-
-    void setCurrentPlayingSongList(List<LocalSongEntity> songList);
 
     LocalSongEntity getCurrentPlayingSong();
 
@@ -54,6 +53,8 @@ public interface MusicPlayView extends BaseView {
 
     void setPlayShuffleFromRepeatOne();
 
+    PlayMode getCurrentPlayMode();
+
     boolean isMusicPlaying();
 
     boolean isMusicPause();
@@ -64,7 +65,4 @@ public interface MusicPlayView extends BaseView {
 
     void setPlayButtonPause();
 
-    void play();
-
-    void pause();
 }

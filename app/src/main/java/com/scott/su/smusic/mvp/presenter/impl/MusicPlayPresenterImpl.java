@@ -40,13 +40,17 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
         mMusicPlayView.initListener();
         if (mConfigModel.isPlayRepeatOne(mMusicPlayView.getViewContext())) {
             mMusicPlayView.setPlayRepeatOne();
+            mMusicPlayView.setPlayMode(mMusicPlayView.getCurrentPlayMode());
         } else if (mConfigModel.isPlayRepeatAll(mMusicPlayView.getViewContext())) {
             mMusicPlayView.setPlayRepeatAll();
+            mMusicPlayView.setPlayMode(mMusicPlayView.getCurrentPlayMode());
         } else if (mConfigModel.isPlayShuffle(mMusicPlayView.getViewContext())) {
             mMusicPlayView.setPlayShuffleFromRepeatAll();
+            mMusicPlayView.setPlayMode(mMusicPlayView.getCurrentPlayMode());
         } else {
             mMusicPlayView.setPlayRepeatAll();
             mConfigModel.setPlayRepeatAll(mMusicPlayView.getViewContext());
+            mMusicPlayView.setPlayMode(mMusicPlayView.getCurrentPlayMode());
         }
         updateCurrentPlayingSong(false);
     }
@@ -170,6 +174,20 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     public void onPlayComplete() {
         mMusicPlayView.setPlayButtonPause();
 
+    }
+
+    @Override
+    public void onSeekStart() {
+    }
+
+    @Override
+    public void onSeekProgressChanged(int progress) {
+        mMusicPlayView.setCurrentTime(TimeUtil.millisecondToTimeWithinHour(progress));
+    }
+
+    @Override
+    public void onSeekStop(int progress) {
+        mMusicPlayView.seekTo(progress);
     }
 
     private void updateCurrentPlayingSong(boolean needReveal) {
