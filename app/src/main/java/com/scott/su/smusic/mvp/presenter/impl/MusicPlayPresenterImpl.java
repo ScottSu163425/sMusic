@@ -4,8 +4,10 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.view.View;
 
+import com.scott.su.smusic.mvp.model.ConfigModel;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.MusicPlayModel;
+import com.scott.su.smusic.mvp.model.impl.ConfigModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.MusicPlayModelImpl;
 import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
@@ -19,11 +21,14 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     private MusicPlayView mMusicPlayView;
     private LocalAlbumModel mAlbumModel;
     private MusicPlayModel mMusicPlayModel;
+    private ConfigModel mConfigModel;
+
 
     public MusicPlayPresenterImpl(MusicPlayView mMusicPlayView) {
         this.mMusicPlayView = mMusicPlayView;
         this.mAlbumModel = new LocalAlbumModelImpl();
         this.mMusicPlayModel = new MusicPlayModelImpl();
+        this.mConfigModel = new ConfigModelImpl();
     }
 
     @Override
@@ -33,6 +38,16 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
         mMusicPlayView.initView();
         mMusicPlayView.initData();
         mMusicPlayView.initListener();
+        if (mConfigModel.isPlayRepeatOne(mMusicPlayView.getViewContext())) {
+            mMusicPlayView.setPlayRepeatOne();
+        } else if (mConfigModel.isPlayRepeatAll(mMusicPlayView.getViewContext())) {
+            mMusicPlayView.setPlayRepeatAll();
+        } else if (mConfigModel.isPlayShuffle(mMusicPlayView.getViewContext())) {
+            mMusicPlayView.setPlayShuffleFromRepeatAll();
+        } else {
+            mMusicPlayView.setPlayRepeatAll();
+            mConfigModel.setPlayRepeatAll(mMusicPlayView.getViewContext());
+        }
         updateCurrentPlayingSong(false);
     }
 
@@ -83,13 +98,17 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     public void onRepeatClick(View view) {
         if (mMusicPlayView.isPlayRepeatAll()) {
             mMusicPlayView.setPlayRepeatOne();
+            mConfigModel.setPlayRepeatOne(mMusicPlayView.getViewContext());
         } else if (mMusicPlayView.isPlayRepeatOne()) {
             mMusicPlayView.setPlayRepeatAll();
+            mConfigModel.setPlayRepeatAll(mMusicPlayView.getViewContext());
         } else if (mMusicPlayView.isPlayShuffle()) {
             if (mMusicPlayView.isRepeatAll()) {
                 mMusicPlayView.setPlayRepeatAll();
+                mConfigModel.setPlayRepeatAll(mMusicPlayView.getViewContext());
             } else if (mMusicPlayView.isRepeatOne()) {
                 mMusicPlayView.setPlayRepeatOne();
+                mConfigModel.setPlayRepeatOne(mMusicPlayView.getViewContext());
             }
         }
     }
@@ -101,10 +120,16 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
         } else if (mMusicPlayView.isRepeatOne()) {
             mMusicPlayView.setPlayShuffleFromRepeatOne();
         }
+        mConfigModel.setPlayShuffle(mMusicPlayView.getViewContext());
     }
 
     @Override
     public void onServiceConnected() {
+        if (mMusicPlayView.isMusicPlaying()) {
+            mMusicPlayView.setPlayButtonPlaying();
+        } else {
+            mMusicPlayView.setPlayButtonPause();
+        }
         mMusicPlayView.play();
     }
 

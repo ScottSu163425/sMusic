@@ -135,14 +135,15 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                         mMusicPlayPresenter.onPlayComplete();
                     }
                 });
+                mCurrentPlayStatus = mMusicPlayServiceBinder.getCurrentPlayStatus();
                 mMusicPlayPresenter.onServiceConnected();
-                L.e("===>activity:","onServiceConnected");
+                L.e("===>activity:", "onServiceConnected");
             }
 
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
                 mMusicPlayPresenter.onServiceDisconnected();
-                L.e("===>activity:","onServiceDisconnected");
+                L.e("===>activity:", "onServiceDisconnected");
             }
         };
         Intent intent = new Intent(MusicPlayActivity.this, MusicPlayService.class);
