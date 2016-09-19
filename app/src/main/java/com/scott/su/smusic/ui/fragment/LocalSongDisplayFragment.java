@@ -1,6 +1,7 @@
 package com.scott.su.smusic.ui.fragment;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,9 @@ import android.view.View;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
+import com.scott.su.smusic.constant.LocalSongDisplayStyle;
+import com.scott.su.smusic.constant.LocalSongDisplayType;
+import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.LocalSongDisplayPresenter;
@@ -26,25 +30,23 @@ import java.util.List;
 public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity> implements LocalSongDisplayView {
     private LocalSongDisplayPresenter mSongDisplayPresenter;
     private LocalSongDisplayAdapter mSongDisplayAdapter;
-    private LocalSongDisplayAdapter.DISPLAY_TYPE mDisplayType = LocalSongDisplayAdapter.DISPLAY_TYPE.NumberDivider;
+    private LocalSongDisplayStyle mLocalSongDisplayStyle = LocalSongDisplayStyle.NumberDivider;
+    private LocalSongDisplayType mDisplayType = LocalSongDisplayType.Normal;
     private LocalBillEntity mSongsBillEntity;
+    private LocalAlbumEntity mSongsAlbumEntity;
     private LocalSongDisplayCallback mDisplayCallback;
 
-    private static final String KEY_DISPLAY_BILL_ENTITY = "KEY_DISPLAY_BILL_ENTITY";
+    private static final String KEY_DISPLAY_TYPE_ENTITY = "KEY_DISPLAY_TYPE_ENTITY ";
     private static final String KEY_DISPLAY_TYPE = "KEY_DISPLAY_TYPE";
+    private static final String KEY_DISPLAY_STYLE = "KEY_DISPLAY_STYLE";
 
-    /**
-     * Get the instance of LocalSongDisplayFragment.
-     *
-     * @param songsBillEntity The bill that contain all displaying songs;
-     * @param displayType
-     * @return
-     */
-    public static LocalSongDisplayFragment newInstance(@Nullable LocalBillEntity songsBillEntity, LocalSongDisplayAdapter.DISPLAY_TYPE displayType) {
+
+    public static LocalSongDisplayFragment newInstance(LocalSongDisplayType displayType, @Nullable Object entity, LocalSongDisplayStyle localSongDisplayStyle) {
         LocalSongDisplayFragment instance = new LocalSongDisplayFragment();
         Bundle arguments = new Bundle();
         arguments.putSerializable(KEY_DISPLAY_TYPE, displayType);
-        arguments.putParcelable(KEY_DISPLAY_BILL_ENTITY, songsBillEntity);
+        arguments.putParcelable(KEY_DISPLAY_TYPE_ENTITY, (Parcelable) entity);
+        arguments.putSerializable(KEY_DISPLAY_STYLE, localSongDisplayStyle);
         instance.setArguments(arguments);
         return instance;
     }
@@ -52,8 +54,13 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.mSongsBillEntity = (LocalBillEntity) getArguments().get(KEY_DISPLAY_BILL_ENTITY);
-        this.mDisplayType = (LocalSongDisplayAdapter.DISPLAY_TYPE) getArguments().get(KEY_DISPLAY_TYPE);
+        this.mDisplayType = (LocalSongDisplayType) getArguments().get(KEY_DISPLAY_TYPE);
+        this.mLocalSongDisplayStyle = (LocalSongDisplayStyle) getArguments().get(KEY_DISPLAY_STYLE);
+        if (mDisplayType == LocalSongDisplayType.Bill) {
+            this.mSongsBillEntity = (LocalBillEntity) getArguments().get(KEY_DISPLAY_TYPE_ENTITY);
+        } else if (mDisplayType == LocalSongDisplayType.Album) {
+            this.mSongsAlbumEntity = (LocalAlbumEntity) getArguments().get(KEY_DISPLAY_TYPE_ENTITY);
+        }
     }
 
     @Override
@@ -70,7 +77,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 
     @Override
     protected RecyclerView.Adapter getAdapter() {
-        mSongDisplayAdapter = new LocalSongDisplayAdapter(getActivity(), mDisplayType) {
+        mSongDisplayAdapter = new LocalSongDisplayAdapter(getActivity(), mLocalSongDisplayStyle) {
             @Override
             public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
                 if (mDisplayCallback != null) {
@@ -161,12 +168,32 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
         return mSongsBillEntity;
     }
 
+    @Override
+    public LocalAlbumEntity getSongAlbumEntity() {
+        return mSongsAlbumEntity;
+    }
+
+    @Override
+    public boolean isDisplayForNormal() {
+        return mDisplayType == LocalSongDisplayType.Normal;
+    }
+
+    @Override
+    public boolean isDisplayForBill() {
+        return mDisplayType == LocalSongDisplayType.Bill;
+    }
+
+    @Override
+    public boolean isDisplayForAlbum() {
+        return mDisplayType == LocalSongDisplayType.Album;
+    }
+
     public void setSongBillEntity(LocalBillEntity billEntity) {
         this.mSongsBillEntity = billEntity;
     }
 
-    public void setDisplayType(LocalSongDisplayAdapter.DISPLAY_TYPE mDisplayType) {
-        this.mDisplayType = mDisplayType;
+    public void setDisplayStyle(LocalSongDisplayStyle mLocalSongDisplayStyle) {
+        this.mLocalSongDisplayStyle = mLocalSongDisplayStyle;
     }
 
     public void setDisplayCallback(LocalSongDisplayCallback callback) {

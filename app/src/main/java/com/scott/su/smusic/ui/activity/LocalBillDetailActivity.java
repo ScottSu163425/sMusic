@@ -14,8 +14,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
 import com.scott.su.smusic.constant.Constants;
+import com.scott.su.smusic.constant.LocalSongDisplayStyle;
+import com.scott.su.smusic.constant.LocalSongDisplayType;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.LocalBillDetailPresenter;
@@ -89,14 +90,14 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
 
     @Override
     public void initData() {
-        mBillSongDisplayFragment = LocalSongDisplayFragment.newInstance(mBillEntity,
-                LocalSongDisplayAdapter.DISPLAY_TYPE.NumberDivider);
+        mBillSongDisplayFragment = LocalSongDisplayFragment.newInstance(LocalSongDisplayType.Bill,mBillEntity,
+                LocalSongDisplayStyle.NumberDivider);
         mBillSongDisplayFragment.setSwipeRefreshEnable(false);
         mBillSongDisplayFragment.setLoadMoreEnable(false);
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fl_container_display_local_bill_detail, mBillSongDisplayFragment)
+                .replace(R.id.fl_container_display_songs_local_bill_detail, mBillSongDisplayFragment)
                 .commit();
     }
 

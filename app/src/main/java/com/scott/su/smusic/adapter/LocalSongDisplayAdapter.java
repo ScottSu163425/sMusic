@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.holder.LocalSongViewHolder;
+import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
@@ -21,31 +22,23 @@ import java.util.List;
  */
 public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSongViewHolder, LocalSongEntity> {
 
-    private DISPLAY_TYPE displayType = DISPLAY_TYPE.NumberDivider; //RecyclerView item layout type
+    private LocalSongDisplayStyle localSongDisplayStyle = LocalSongDisplayStyle.NumberDivider; //RecyclerView item layout type
 
     private LocalSongModelImpl localSongModel;
 
-    public enum DISPLAY_TYPE {
-        NumberDivider, //Type that item with number text and bottom divider line.
-        CoverDivider, //Type that item with album cover imageview and bottom divider line.
-        OnlyNumber, //Type that item only with number textview.
-        OnlyCover, //Type that item only with album cover imageview.
-        OnlyDivider, //Type that item only with bottom divider line.
-        None //Type that item without all above views.
-    }
 
     public abstract void onItemMoreClick(View view, int position, LocalSongEntity entity);
 
 
-    public LocalSongDisplayAdapter(Activity context, DISPLAY_TYPE displayType) {
+    public LocalSongDisplayAdapter(Activity context, LocalSongDisplayStyle localSongDisplayStyle) {
         super(context);
-        this.displayType = displayType;
+        this.localSongDisplayStyle = localSongDisplayStyle;
         localSongModel = new LocalSongModelImpl();
     }
 
-    public LocalSongDisplayAdapter(Activity context, List<LocalSongEntity> dataList, DISPLAY_TYPE displayType) {
+    public LocalSongDisplayAdapter(Activity context, List<LocalSongEntity> dataList, LocalSongDisplayStyle localSongDisplayStyle) {
         super(context, dataList);
-        this.displayType = displayType;
+        this.localSongDisplayStyle = localSongDisplayStyle;
         localSongModel = new LocalSongModelImpl();
     }
 
@@ -57,8 +50,8 @@ public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSo
 
     @Override
     protected void bindVH(final LocalSongViewHolder viewHolder, final LocalSongEntity entity, final int position) {
-        if (displayType == DISPLAY_TYPE.NumberDivider || displayType == DISPLAY_TYPE.OnlyNumber) {
-            if (displayType == DISPLAY_TYPE.NumberDivider) {
+        if (localSongDisplayStyle == LocalSongDisplayStyle.NumberDivider || localSongDisplayStyle == LocalSongDisplayStyle.OnlyNumber) {
+            if (localSongDisplayStyle == LocalSongDisplayStyle.NumberDivider) {
                 ViewUtil.setViewVisiable(viewHolder.getDividerView());
             } else {
                 //OnlyNumber
@@ -68,8 +61,8 @@ public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSo
             ViewUtil.setViewVisiable(viewHolder.getNumberTextView());
             ViewUtil.setViewGone(viewHolder.getCoverImageView());
             ViewUtil.setText(viewHolder.getNumberTextView(), (position + 1) + "", "");
-        } else if (displayType == DISPLAY_TYPE.CoverDivider || displayType == DISPLAY_TYPE.OnlyCover) {
-            if (displayType == DISPLAY_TYPE.CoverDivider) {
+        } else if (localSongDisplayStyle == LocalSongDisplayStyle.CoverDivider || localSongDisplayStyle == LocalSongDisplayStyle.OnlyCover) {
+            if (localSongDisplayStyle == LocalSongDisplayStyle.CoverDivider) {
                 ViewUtil.setViewVisiable(viewHolder.getDividerView());
             } else {
                 ViewUtil.setViewGone(viewHolder.getDividerView());
@@ -83,10 +76,10 @@ public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSo
                     .placeholder(R.color.place_holder_loading)
                     .error(R.drawable.ic_cover_default_song_bill)
                     .into(viewHolder.getCoverImageView());
-        } else if (displayType == DISPLAY_TYPE.OnlyDivider) {
+        } else if (localSongDisplayStyle == LocalSongDisplayStyle.OnlyDivider) {
             ViewUtil.setViewGone(viewHolder.getCoverAreaLayout());
             ViewUtil.setViewVisiable(viewHolder.getDividerView());
-        } else if (displayType == DISPLAY_TYPE.None) {
+        } else if (localSongDisplayStyle == LocalSongDisplayStyle.None) {
             ViewUtil.setViewGone(viewHolder.getCoverAreaLayout());
             ViewUtil.setViewGone(viewHolder.getDividerView());
         }

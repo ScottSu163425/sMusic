@@ -82,6 +82,20 @@ public class LocalAlbumEntity implements Parcelable {
         }
     };
 
+    public long[] getAlbumSongIdsLongArray() {
+        if (albumSongs == null || albumSongs.size() == 0) {
+            return null;
+        }
+
+        long[] idsLongArr = new long[albumSongs.size()];
+
+        for (int i = 0; i < albumSongs.size(); i++) {
+            //Reverse the array:The latest added song should be set on first position;
+            idsLongArr[i] = Long.valueOf(albumSongs.get(i).getSongId());
+        }
+        return idsLongArr;
+    }
+
     @Override
     public String toString() {
         return "LocalAlbumEntity{" +

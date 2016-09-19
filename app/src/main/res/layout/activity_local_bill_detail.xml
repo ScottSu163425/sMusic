@@ -68,7 +68,7 @@
         app:rippleColor="@color/colorPrimaryDark" />
 
     <FrameLayout
-        android:id="@+id/fl_container_display_local_bill_detail"
+        android:id="@+id/fl_container_display_songs_local_bill_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"

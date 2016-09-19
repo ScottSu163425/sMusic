@@ -30,6 +30,8 @@
             android:theme="@style/AppTheme.FullScreenStatusBar" />
 
         <service android:name=".service.MusicPlayService" />
+
+        <activity android:name=".ui.activity.LocalAlbumDetailActivity"></activity>
     </application>
 
 </manifest>

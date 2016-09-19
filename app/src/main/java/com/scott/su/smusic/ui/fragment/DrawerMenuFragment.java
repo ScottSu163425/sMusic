@@ -56,13 +56,12 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void initData() {
-        new AppConfigModelImpl().isNightModeOn(getActivity());
+        mNightModeSwitch.setChecked(new AppConfigModelImpl().isNightModeOn(getActivity()));
     }
 
     @Override
     public void initListener() {
         mStatisticsMenuItem.setOnClickListener(this);
-//        mNightModeMenuItem.setOnClickListener(this);
         mUpdateMenuItem.setOnClickListener(this);
         mAboutMenuItem.setOnClickListener(this);
 
@@ -88,11 +87,7 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
             if (mMenuCallback != null) {
                 mMenuCallback.onStatisticsClick(view);
             }
-        } /*else if (id == mNightModeMenuItem.getId()) {
-            if (mMenuCallback != null) {
-                mMenuCallback.onNightModeClick(view);
-            }
-        }*/ else if (id == mUpdateMenuItem.getId()) {
+        }  else if (id == mUpdateMenuItem.getId()) {
             if (mMenuCallback != null) {
                 mMenuCallback.onUpdateClick(view);
             }

@@ -13,7 +13,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,12 +21,12 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
 import com.scott.su.smusic.constant.Constants;
+import com.scott.su.smusic.constant.LocalSongDisplayStyle;
+import com.scott.su.smusic.constant.LocalSongDisplayType;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.model.impl.AppConfigModelImpl;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.MainPresenterImpl;
 import com.scott.su.smusic.mvp.view.MainView;
@@ -41,9 +40,7 @@ import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
-import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.PermissionUtil;
-import com.su.scott.slibrary.util.PopupMenuUtil;
 import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 
@@ -140,8 +137,8 @@ public class MainActivity extends BaseActivity implements MainView {
         List<Fragment> pageFragments = new ArrayList<>();
 
         mDrawerMenuFragment = new DrawerMenuFragment();
-        mSongDisplayFragment = LocalSongDisplayFragment.newInstance(null,
-                LocalSongDisplayAdapter.DISPLAY_TYPE.CoverDivider);
+        mSongDisplayFragment = LocalSongDisplayFragment.newInstance(LocalSongDisplayType.Normal,null,
+                LocalSongDisplayStyle.CoverDivider);
         mBillDisplayFragment = LocalBillDisplayFragment.newInstance();
         mAlbumDisplayFragment = LocalAlbumDisplayFragment.newInstance();
         mSongDisplayFragment.setSwipeRefreshEnable(true);
@@ -427,13 +424,17 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void turnOnNightMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        recreate();
+//        recreate();
+        goTo(MainActivity.class);
+        finish();
     }
 
     @Override
     public void turnOffNightMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        recreate();
+//        recreate();
+        goTo(MainActivity.class);
+        finish();
     }
 
     @Override

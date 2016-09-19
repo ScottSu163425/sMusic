@@ -71,13 +71,16 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
         new AsyncTask<Void, Void, List<LocalSongEntity>>() {
             @Override
             protected List<LocalSongEntity> doInBackground(Void... voids) {
-                if (mSongDisplayView.getSongBillEntity() == null) {
+                if (mSongDisplayView.isDisplayForNormal()) {
                     return mSongModel.getLocalSongs(mSongDisplayView.getViewContext());
-                } else {
+                } else if (mSongDisplayView.isDisplayForBill()) {
                     return mSongModel.getLocalSongsBySongIds(mSongDisplayView.getViewContext(),
                             mSongDisplayView.getSongBillEntity().getBillSongIdsLongArray());
+                } else if (mSongDisplayView.isDisplayForAlbum()) {
+                    return mSongModel.getLocalSongsBySongIds(mSongDisplayView.getViewContext(),
+                            mSongDisplayView.getSongAlbumEntity().getAlbumSongIdsLongArray());
                 }
-
+                return null;
             }
 
             @Override
