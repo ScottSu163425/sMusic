@@ -26,7 +26,8 @@
     <string name="success_delete">删除成功</string>
 
 
-    <string name="transition_name_cover">transition_name_bill_cover</string>
+    <string name="transition_name_card">transition_name_card</string>
+    <string name="transition_name_cover">transition_name_cover</string>
     <string name="transition_name_fab">transition_name_fab</string>
 
 

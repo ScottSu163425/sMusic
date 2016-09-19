@@ -3,6 +3,9 @@ package com.scott.su.smusic.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +20,7 @@ import com.scott.su.smusic.mvp.presenter.impl.LocalSongSelectionPresenterImp;
 import com.scott.su.smusic.mvp.view.LocalSongSelectionView;
 import com.scott.su.smusic.ui.fragment.LocalSongSlectionDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.util.SdkUtil;
 
 /**
  * 2016-8-27
@@ -52,7 +56,9 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
 
     @Override
     public void initPreData() {
-
+        if (SdkUtil.isLolipopOrLatter()){
+            getWindow().setEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.slide_right));
+        }
     }
 
     @Override

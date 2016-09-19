@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_xs"
     android:clickable="true"
+    android:transitionName="@string/transition_name_card"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:background="@color/backgroundContent"
@@ -57,16 +58,6 @@
                 android:maxLines="1"
                 android:text="24首" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iv_more_view_holder_local_album"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:clickable="true"
-            android:foreground="?attr/selectableItemBackground"
-            android:padding="@dimen/margin_s"
-            android:src="@drawable/ic_more_vert_grey600_24dp" />
 
     </RelativeLayout>
 

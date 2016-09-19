@@ -15,7 +15,6 @@ import com.scott.su.smusic.mvp.presenter.impl.LocalAlbumDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalAlbumDisplayView;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
-import com.su.scott.slibrary.util.T;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +25,8 @@ import java.util.List;
 public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEntity> implements LocalAlbumDisplayView {
     private LocalAlbumDisplayPresenter mLocalAlbumDisplayPresenter;
     private LocalAlbumDisplayAdapter mLocalAlbumDisplayAdapter;
+    private AlbumItemClickCallback mAlbumItemClickCallback;
 
-    private static final String KEY_DISPLAY_TYPE = "KEY_DISPLAY_TYPE";
 
     public static LocalAlbumDisplayFragment newInstance() {
         LocalAlbumDisplayFragment instance = new LocalAlbumDisplayFragment();
@@ -130,9 +129,17 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
 
     @Override
     public void handleItemClick(View itemView, LocalAlbumEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        T.showShort(getActivity(), entity.getAlbumTitle());
+        if (mAlbumItemClickCallback != null) {
+            mAlbumItemClickCallback.onAlbumItemClick(itemView, entity, position, sharedElements, transitionNames, data);
+        }
     }
 
+    public void setAlbumItemClickCallback(AlbumItemClickCallback mAlbumItemClickCallback) {
+        this.mAlbumItemClickCallback = mAlbumItemClickCallback;
+    }
 
+    public interface AlbumItemClickCallback {
+        void onAlbumItemClick(View itemView, LocalAlbumEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
+    }
 
 }

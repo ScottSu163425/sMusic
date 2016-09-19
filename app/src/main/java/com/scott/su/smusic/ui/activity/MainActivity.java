@@ -25,6 +25,7 @@ import com.scott.su.smusic.adapter.MainPagerAdapter;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.constant.LocalSongDisplayType;
+import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
@@ -203,6 +204,13 @@ public class MainActivity extends BaseActivity implements MainView {
             @Override
             public void onBillItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
                 mMainPresenter.onBillItemClick(itemView, entity, position, sharedElements, transitionNames, data);
+            }
+        });
+
+        mAlbumDisplayFragment.setAlbumItemClickCallback(new LocalAlbumDisplayFragment.AlbumItemClickCallback() {
+            @Override
+            public void onAlbumItemClick(View itemView, LocalAlbumEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+                mMainPresenter.onAlbumItemClick(itemView, entity, position, sharedElements, transitionNames, data);
             }
         });
 
@@ -403,6 +411,13 @@ public class MainActivity extends BaseActivity implements MainView {
     public void goToBillDetailWithSharedElement(LocalBillEntity entity, View sharedElement, String transitionName) {
         Intent intent = new Intent(MainActivity.this, LocalBillDetailActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_BILL, entity);
+        goToWithSharedElement(intent, sharedElement, transitionName);
+    }
+
+    @Override
+    public void goToAlbumDetailWithSharedElement(LocalAlbumEntity entity, View sharedElement, String transitionName) {
+        Intent intent = new Intent(MainActivity.this, LocalAlbumDetailActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_ALBUM, entity);
         goToWithSharedElement(intent, sharedElement, transitionName);
     }
 

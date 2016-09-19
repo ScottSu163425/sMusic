@@ -26,7 +26,8 @@
         android:id="@+id/card_info_local_album_detail"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_image_view_holder_local_album"
-        android:layout_margin="@dimen/margin_s">
+        android:layout_margin="@dimen/margin_xs"
+        android:transitionName="@string/transition_name_card">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -44,8 +45,6 @@
         android:id="@+id/fl_container_display_songs_local_album_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/margin_xs"
-        android:layout_marginLeft="@dimen/margin_s"
-        android:layout_marginRight="@dimen/margin_s"
-        android:layout_marginTop="@dimen/margin_xs" />
+
+        />
 </LinearLayout>

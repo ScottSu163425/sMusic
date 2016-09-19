@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.AppConfigModel;
@@ -67,6 +68,11 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onBillItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
         mMainView.goToBillDetailWithSharedElement(entity, sharedElements[0], transitionNames[0]);
+    }
+
+    @Override
+    public void onAlbumItemClick(View itemView, LocalAlbumEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+        mMainView.goToAlbumDetailWithSharedElement(entity, sharedElements[0], transitionNames[0]);
     }
 
     @Override
