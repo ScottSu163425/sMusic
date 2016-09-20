@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.mvp.model.impl.AppConfigModelImpl;
+import com.scott.su.smusic.config.AppConfig;
 import com.su.scott.slibrary.fragment.BaseFragment;
 
 /**
@@ -56,7 +56,7 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void initData() {
-        mNightModeSwitch.setChecked(new AppConfigModelImpl().isNightModeOn(getActivity()));
+        mNightModeSwitch.setChecked(AppConfig.isNightModeOn(getActivity()));
     }
 
     @Override

@@ -6,12 +6,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.model.AppConfigModel;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
-import com.scott.su.smusic.mvp.model.impl.AppConfigModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.view.MainView;
@@ -24,13 +23,11 @@ import java.util.List;
 public class MainPresenterImpl implements MainPresenter {
     private MainView mMainView;
     private LocalBillModel mBillModel;
-    private AppConfigModel mAppConfigModel;
 
 
     public MainPresenterImpl(MainView mView) {
         this.mMainView = mView;
         this.mBillModel = new LocalBillModelImpl();
-        this.mAppConfigModel = new AppConfigModelImpl();
     }
 
 
@@ -60,7 +57,7 @@ public class MainPresenterImpl implements MainPresenter {
 
         mBillModel.addBill(mMainView.getViewContext(), billEntity);
         mMainView.updateBillDisplay();
-        mAppConfigModel.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), false);
+        AppConfig.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), false);
         mMainView.dismissCreateBillDialog();
         mMainView.showCreateBillSuccessfully(billEntity);
     }
@@ -104,13 +101,13 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onNightModeOn() {
-        mAppConfigModel.setNightMode(mMainView.getViewContext(), true);
+        AppConfig.setNightMode(mMainView.getViewContext(), true);
         mMainView.turnOnNightMode();
     }
 
     @Override
     public void onNightModeOff() {
-        mAppConfigModel.setNightMode(mMainView.getViewContext(), false);
+        AppConfig.setNightMode(mMainView.getViewContext(), false);
         mMainView.turnOffNightMode();
     }
 
@@ -126,19 +123,19 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onViewResume() {
         if (mMainView.isDataInitFinish()) {
-            if (mAppConfigModel.isNeedToRefreshLocalSongDisplay(mMainView.getViewContext())) {
+            if (AppConfig.isNeedToRefreshLocalSongDisplay(mMainView.getViewContext())) {
                 mMainView.updateSongDisplay();
-                mAppConfigModel.setNeedToRefreshLocalSongDisplay(mMainView.getViewContext(), false);
+                AppConfig.setNeedToRefreshLocalSongDisplay(mMainView.getViewContext(), false);
             }
 
-            if (mAppConfigModel.isNeedToRefreshLocalBillDisplay(mMainView.getViewContext())) {
+            if (AppConfig.isNeedToRefreshLocalBillDisplay(mMainView.getViewContext())) {
                 mMainView.updateBillDisplay();
-                mAppConfigModel.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), false);
+                AppConfig.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), false);
             }
 
-            if (mAppConfigModel.isNeedToRefreshLocalAlbumDisplay(mMainView.getViewContext())) {
+            if (AppConfig.isNeedToRefreshLocalAlbumDisplay(mMainView.getViewContext())) {
                 mMainView.updateAlbumDisplay();
-                mAppConfigModel.setNeedToRefreshLocalAlbumDisplay(mMainView.getViewContext(), false);
+                AppConfig.setNeedToRefreshLocalAlbumDisplay(mMainView.getViewContext(), false);
             }
         }
     }
