@@ -42,6 +42,7 @@ import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.PermissionUtil;
+import com.su.scott.slibrary.util.StringUtil;
 import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 
@@ -75,6 +76,7 @@ public class MainActivity extends BaseActivity implements MainView {
         setContentView(R.layout.activity_main);
         mMainPresenter = new MainPresenterImpl(this);
         mMainPresenter.onViewFirstTimeCreated();
+        T.showShort(this, "onCreate");
     }
 
     @Override
@@ -138,7 +140,7 @@ public class MainActivity extends BaseActivity implements MainView {
         List<Fragment> pageFragments = new ArrayList<>();
 
         mDrawerMenuFragment = new DrawerMenuFragment();
-        mSongDisplayFragment = LocalSongDisplayFragment.newInstance(LocalSongDisplayType.Normal,null,
+        mSongDisplayFragment = LocalSongDisplayFragment.newInstance(LocalSongDisplayType.Normal, null,
                 LocalSongDisplayStyle.CoverDivider);
         mBillDisplayFragment = LocalBillDisplayFragment.newInstance();
         mAlbumDisplayFragment = LocalAlbumDisplayFragment.newInstance();
@@ -406,7 +408,6 @@ public class MainActivity extends BaseActivity implements MainView {
                 });
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void goToBillDetailWithSharedElement(LocalBillEntity entity, View sharedElement, String transitionName) {
         Intent intent = new Intent(MainActivity.this, LocalBillDetailActivity.class);
@@ -439,17 +440,19 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void turnOnNightMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//        recreate();
-        goTo(MainActivity.class);
-        finish();
+        getSupportFragmentManager().beginTransaction().remove(mAlbumDisplayFragment).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().remove(mBillDisplayFragment).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().remove(mSongDisplayFragment).commitAllowingStateLoss();
+        recreate();
     }
 
     @Override
     public void turnOffNightMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//        recreate();
-        goTo(MainActivity.class);
-        finish();
+        getSupportFragmentManager().beginTransaction().remove(mAlbumDisplayFragment).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().remove(mBillDisplayFragment).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().remove(mSongDisplayFragment).commitAllowingStateLoss();
+        recreate();
     }
 
     @Override

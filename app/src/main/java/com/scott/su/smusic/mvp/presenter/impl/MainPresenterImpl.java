@@ -103,12 +103,18 @@ public class MainPresenterImpl implements MainPresenter {
     public void onNightModeOn() {
         AppConfig.setNightMode(mMainView.getViewContext(), true);
         mMainView.turnOnNightMode();
+        mMainView.updateAlbumDisplay();
+        mMainView.updateBillDisplay();
+        mMainView.updateSongDisplay();
     }
 
     @Override
     public void onNightModeOff() {
         AppConfig.setNightMode(mMainView.getViewContext(), false);
         mMainView.turnOffNightMode();
+        mMainView.updateAlbumDisplay();
+        mMainView.updateBillDisplay();
+        mMainView.updateSongDisplay();
     }
 
     @Override

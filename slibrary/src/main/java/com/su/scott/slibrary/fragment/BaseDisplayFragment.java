@@ -216,14 +216,14 @@ public abstract class BaseDisplayFragment<E> extends BaseFragment implements Bas
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-//    @Override
-//    public void onDestroy() {
-//        //解决Viewpager切换重复加载
-//        if (null != mRootView) {
-//            ((ViewGroup) mRootView).removeView(mRootView);
-//        }
-//        super.onDestroy();
-//    }
+    @Override
+    public void onDestroy() {
+        //解决Viewpager切换重复加载
+        if (null != mRootView) {
+            ((ViewGroup) mRootView).removeView(mRootView);
+        }
+        super.onDestroy();
+    }
 
 
     @Override

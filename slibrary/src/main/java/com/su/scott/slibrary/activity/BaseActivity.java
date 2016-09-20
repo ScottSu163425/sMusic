@@ -1,15 +1,15 @@
 package com.su.scott.slibrary.activity;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Build;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Pair;
 import android.view.View;
 
@@ -130,31 +130,40 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     protected void goToWithSharedElement(Class destination, @NonNull View shareView, @NonNull String transitionName) {
         Intent intent = new Intent(this, destination);
-        ActivityOptions options = ActivityOptions
-                .makeSceneTransitionAnimation(this, shareView, transitionName);
-        startActivity(intent, options.toBundle());
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    protected void goToWithSharedElement(Intent intent, @NonNull View shareView, @NonNull String transitionName) {
-        ActivityOptions options = ActivityOptions
-                .makeSceneTransitionAnimation(this, shareView, transitionName);
-        startActivity(intent, options.toBundle());
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    protected void goToWithSharedElements(Intent intent, @NonNull View[] shareViews, @NonNull String[] transitionNames) {
-        Pair<View, String>[] pairs = new Pair[shareViews.length];
-        for (int i = 0; i < shareViews.length; i++) {
-            pairs[i] = new Pair<>(shareViews[i], transitionNames[i]);
+        if (SdkUtil.isLolipopOrLatter()) {
+            ActivityOptions options = ActivityOptions
+                    .makeSceneTransitionAnimation(this, shareView, transitionName);
+            startActivity(intent, options.toBundle());
+        }else {
+            startActivity(intent);
         }
+    }
 
-        ActivityOptions options = ActivityOptions
-                .makeSceneTransitionAnimation(this, pairs);
-        startActivity(intent, options.toBundle());
+    protected void goToWithSharedElement(Intent intent, @NonNull View shareView, @NonNull String transitionName) {
+        if (SdkUtil.isLolipopOrLatter()) {
+            ActivityOptions options = ActivityOptions
+                    .makeSceneTransitionAnimation(this, shareView, transitionName);
+            startActivity(intent, options.toBundle());
+        }else {
+            startActivity(intent);
+        }
+    }
+
+    protected void goToWithSharedElements(Intent intent, @NonNull View[] shareViews, @NonNull String[] transitionNames) {
+        if (SdkUtil.isLolipopOrLatter()) {
+            Pair<View, String>[] pairs = new Pair[shareViews.length];
+            for (int i = 0; i < shareViews.length; i++) {
+                pairs[i] = new Pair<>(shareViews[i], transitionNames[i]);
+            }
+
+            ActivityOptions options = ActivityOptions
+                    .makeSceneTransitionAnimation(this, pairs);
+            startActivity(intent, options.toBundle());
+        }else {
+            startActivity(intent);
+        }
     }
 
 }

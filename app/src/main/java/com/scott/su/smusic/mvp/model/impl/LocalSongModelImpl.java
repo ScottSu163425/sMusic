@@ -1,20 +1,11 @@
 package com.scott.su.smusic.mvp.model.impl;
 
-import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.provider.MediaStore;
-import android.text.TextUtils;
-import android.util.LruCache;
 
-import com.scott.su.smusic.R;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalSongModel;
-import com.su.scott.slibrary.util.ImageUtil;
-import com.su.scott.slibrary.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +46,10 @@ public class LocalSongModelImpl implements LocalSongModel {
     @Override
     public List<LocalSongEntity> getLocalSongs(Context context) {
         List<LocalSongEntity> songEntities = new ArrayList<>();
+        if (context == null) {
+            return songEntities;
+        }
+
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
 
         while (cursor.moveToNext()) {
