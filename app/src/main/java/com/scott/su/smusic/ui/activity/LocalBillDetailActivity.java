@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.constant.LocalSongDisplayType;

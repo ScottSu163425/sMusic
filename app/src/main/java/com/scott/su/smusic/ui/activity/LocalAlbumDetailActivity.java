@@ -9,6 +9,7 @@ import android.transition.TransitionInflater;
 import android.view.View;
 
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.constant.LocalSongDisplayType;
@@ -85,4 +86,5 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
     public void initListener() {
 
     }
+
 }

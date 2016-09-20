@@ -146,11 +146,11 @@
                             android:layout_centerHorizontal="true"
                             android:src="@drawable/ic_play_arrow_white_24dp"
                             android:transitionName="@string/transition_name_fab"
-                            app:backgroundTint="@color/colorPrimary"
+                            app:backgroundTint="@color/fab_background_tint"
                             app:elevation="@dimen/elevation_fab_normal"
                             app:fabSize="normal"
                             app:pressedTranslationZ="@dimen/elevation_fab_pressed"
-                            app:rippleColor="@color/colorAccent" />
+                            app:rippleColor="@color/fab_ripple_color" />
 
                     <ImageButton
                         android:id="@+id/imgbtn_skip_next_music_play"

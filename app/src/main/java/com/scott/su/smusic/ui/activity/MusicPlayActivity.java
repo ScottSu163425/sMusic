@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.MusicPlayCallback;
+import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
@@ -469,4 +470,5 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         unbindService(mMusicPlayServiceConnection);
         super.onDestroy();
     }
+
 }

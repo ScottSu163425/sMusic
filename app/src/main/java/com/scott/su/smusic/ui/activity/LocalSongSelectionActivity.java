@@ -3,8 +3,6 @@ package com.scott.su.smusic.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
-import android.transition.Slide;
 import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;

@@ -136,7 +136,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             ActivityOptions options = ActivityOptions
                     .makeSceneTransitionAnimation(this, shareView, transitionName);
             startActivity(intent, options.toBundle());
-        }else {
+        } else {
             startActivity(intent);
         }
     }
@@ -146,7 +146,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             ActivityOptions options = ActivityOptions
                     .makeSceneTransitionAnimation(this, shareView, transitionName);
             startActivity(intent, options.toBundle());
-        }else {
+        } else {
             startActivity(intent);
         }
     }
@@ -161,7 +161,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             ActivityOptions options = ActivityOptions
                     .makeSceneTransitionAnimation(this, pairs);
             startActivity(intent, options.toBundle());
-        }else {
+        } else {
             startActivity(intent);
         }
     }
