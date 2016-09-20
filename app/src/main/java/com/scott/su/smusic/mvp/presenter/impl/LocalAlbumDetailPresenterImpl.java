@@ -1,5 +1,7 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
+import com.scott.su.smusic.mvp.model.LocalAlbumModel;
+import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalAlbumDetailPresenter;
 import com.scott.su.smusic.mvp.view.LocalAlbumDetailView;
 
@@ -8,9 +10,11 @@ import com.scott.su.smusic.mvp.view.LocalAlbumDetailView;
  */
 public class LocalAlbumDetailPresenterImpl implements LocalAlbumDetailPresenter {
     private LocalAlbumDetailView mAlbumDetailView;
+    private LocalAlbumModel mAlbumModel;
 
     public LocalAlbumDetailPresenterImpl(LocalAlbumDetailView mAlbumDetailView) {
         this.mAlbumDetailView = mAlbumDetailView;
+        this.mAlbumModel = new LocalAlbumModelImpl();
     }
 
     @Override
@@ -20,6 +24,9 @@ public class LocalAlbumDetailPresenterImpl implements LocalAlbumDetailPresenter 
         mAlbumDetailView.initView();
         mAlbumDetailView.initData();
         mAlbumDetailView.initListener();
+
+        mAlbumDetailView.loadAlbumCover(mAlbumModel.getAlbumCoverPath(mAlbumDetailView.getViewContext(),
+                mAlbumDetailView.getCurrentAlbumEntity().getAlbumId()));
     }
 
     @Override

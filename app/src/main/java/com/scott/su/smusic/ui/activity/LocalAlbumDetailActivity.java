@@ -1,15 +1,15 @@
 package com.scott.su.smusic.ui.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.transition.Slide;
 import android.transition.TransitionInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.constant.LocalSongDisplayType;
@@ -25,6 +25,8 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
     private LocalAlbumDetailPresenter mPresenter;
     private LocalAlbumEntity mAlbumEntity;
     private CardView mAlbumInfoCard;
+    private ImageView mAlbumCoverImageView;
+    private TextView mAlbumTitleTextView, mAlbumArtistTextView, mAlbumCountTextView;
     private LocalSongDisplayFragment mSongDisplayFragment;
 
 
@@ -33,7 +35,7 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_album_detail);
 
-        mPresenter=new LocalAlbumDetailPresenterImpl(this);
+        mPresenter = new LocalAlbumDetailPresenterImpl(this);
         mPresenter.onViewFirstTimeCreated();
     }
 
@@ -46,7 +48,7 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
     public void initPreData() {
         mAlbumEntity = getIntent().getParcelableExtra(Constants.KEY_EXTRA_ALBUM);
 
-        if (SdkUtil.isLolipopOrLatter()){
+        if (SdkUtil.isLolipopOrLatter()) {
             getWindow().setEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.slide_right));
         }
     }
@@ -67,6 +69,14 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
     @Override
     public void initView() {
         mAlbumInfoCard = (CardView) findViewById(R.id.card_info_local_album_detail);
+        mAlbumCoverImageView = (ImageView) findViewById(R.id.iv_cover_local_album_detail);
+        mAlbumTitleTextView = (TextView) findViewById(R.id.tv_title_local_album_detail);
+        mAlbumArtistTextView = (TextView) findViewById(R.id.tv_artist_local_album_detail);
+        mAlbumCountTextView = (TextView) findViewById(R.id.tv_count_local_album_detail);
+
+        mAlbumTitleTextView.setText(mAlbumEntity.getAlbumTitle());
+        mAlbumArtistTextView.setText(mAlbumEntity.getArtist());
+        mAlbumCountTextView.setText(mAlbumEntity.getAlbumSongs().size() + "首");
     }
 
     @Override
@@ -87,4 +97,15 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
 
     }
 
+    @Override
+    public LocalAlbumEntity getCurrentAlbumEntity() {
+        return mAlbumEntity;
+    }
+
+    @Override
+    public void loadAlbumCover(String path) {
+        Glide.with(this)
+                .load(path)
+                .into(mAlbumCoverImageView);
+    }
 }

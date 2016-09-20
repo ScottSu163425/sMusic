@@ -27,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/iv_more_view_holder_local_album"
             android:layout_toRightOf="@id/iv_cover_view_holder_local_album"
             android:orientation="vertical"
             android:paddingLeft="@dimen/margin_s">

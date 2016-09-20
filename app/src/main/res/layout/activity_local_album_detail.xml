@@ -38,6 +38,40 @@
                 android:layout_width="@dimen/size_image_view_holder_local_album"
                 android:layout_height="@dimen/size_image_view_holder_local_album"
                 android:src="@drawable/ic_cover_default_song_bill" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_cover_local_album_detail"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin_s">
+
+                <TextView
+                    android:id="@+id/tv_title_local_album_detail"
+                    style="@style/TextAppearanceTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="初恋" />
+
+                <TextView
+                    android:id="@+id/tv_artist_local_album_detail"
+                    style="@style/TextAppearanceSubhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:paddingBottom="@dimen/margin_xs"
+                    android:paddingTop="@dimen/margin_xs"
+                    android:text="中岛美嘉" />
+
+                <TextView
+                    android:id="@+id/tv_count_local_album_detail"
+                    style="@style/TextAppearanceCaption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="24首" />
+            </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
