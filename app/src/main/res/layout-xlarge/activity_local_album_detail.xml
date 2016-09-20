@@ -41,14 +41,10 @@
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <FrameLayout
+        android:id="@+id/fl_container_display_songs_local_album_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_xs">
 
-        <FrameLayout
-            android:id="@+id/fl_container_display_songs_local_album_detail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </android.support.v7.widget.CardView>
+        />
 </LinearLayout>
