@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="text_tab_normal">#50ffffff</color>
+    <color name="text_tab_selected">#ffffff</color>
+
     <color name="fab_background_tint">#3F51B5</color>
     <color name="fab_ripple_color">#2a36b1</color>
 
@@ -11,4 +14,5 @@
     <color name="place_holder_error">@color/md_grey_800</color>
 
     <color name="background_music_play">#111111</color>
+
 </resources>

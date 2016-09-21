@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name= "titles_tab_main">
+    <string-array name="titles_tab_main">
         <item>@string/local_music</item>
-        <item>@string/local_music</item>
-        <item>@string/local_music</item>
+        <item>@string/local_bill</item>
+        <item>@string/local_album</item>
     </string-array>
 
 </resources>

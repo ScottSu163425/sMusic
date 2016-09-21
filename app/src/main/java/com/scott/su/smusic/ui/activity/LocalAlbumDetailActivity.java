@@ -76,7 +76,7 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
 
         mAlbumTitleTextView.setText(mAlbumEntity.getAlbumTitle());
         mAlbumArtistTextView.setText(mAlbumEntity.getArtist());
-        mAlbumCountTextView.setText(mAlbumEntity.getAlbumSongs().size() + "首");
+        mAlbumCountTextView.setText(mAlbumEntity.getAlbumSongs().size() + " " + getString(R.string.unit_song));
     }
 
     @Override

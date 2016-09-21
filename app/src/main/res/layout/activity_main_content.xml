@@ -26,10 +26,10 @@
             android:id="@+id/tab_layout_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/white"
+            app:tabIndicatorColor="@color/colorAccent"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextColor="@color/textColorWhiteSecondary"
+            app:tabSelectedTextColor="@color/text_tab_selected"
+            app:tabTextColor="@color/text_tab_normal"
             app:theme="@style/AppTheme.AppBarOverlay" />
     </android.support.design.widget.AppBarLayout>
 
@@ -48,8 +48,8 @@
         android:src="@drawable/ic_add_white_24dp"
         android:visibility="gone"
         app:backgroundTint="@color/fab_background_tint"
-        app:rippleColor="@color/fab_ripple_color"
         app:elevation="@dimen/elevation_fab_normal"
         app:fabSize="normal"
-        app:pressedTranslationZ="@dimen/elevation_fab_pressed" />
+        app:pressedTranslationZ="@dimen/elevation_fab_pressed"
+        app:rippleColor="@color/fab_ripple_color" />
 </android.support.design.widget.CoordinatorLayout>

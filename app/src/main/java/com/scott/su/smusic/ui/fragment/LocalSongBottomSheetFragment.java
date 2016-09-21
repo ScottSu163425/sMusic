@@ -21,7 +21,7 @@ public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragmen
 
     @Override
     protected String getTitle() {
-        return mSongEntity == null ? "" : getString(R.string.song) +":"+ mSongEntity.getTitle();
+        return mSongEntity == null ? "" :   mSongEntity.getTitle();
     }
 
     @NonNull
@@ -36,7 +36,7 @@ public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragmen
     @Override
     protected String[] getMenuItemNames() {
         return new String[]{getString(R.string.add_to_bill),/* "歌手: " + mSongEntity.getArtist(),*/
-                getString(R.string.album) +":"+ mSongEntity.getAlbum(), getString(R.string.share), getString(R.string.delete),};
+                getString(R.string.album) +": "+ mSongEntity.getAlbum(), getString(R.string.share), getString(R.string.delete),};
     }
 
 

@@ -4,8 +4,10 @@
     <color name="colorPrimaryDark">#111111</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="fab_background_tint">#6a1b9a</color>
-    <color name="fab_ripple_color">#8e24aa</color>
+    <color name="text_tab_normal">#30ffffff</color>
+    <color name="text_tab_selected">#ffffff</color>
+    <color name="fab_background_tint">#FF4081</color>
+    <color name="fab_ripple_color">#ad1457</color>
 
     <color name="place_holder_loading">@color/md_grey_400</color>
     <color name="place_holder_error">@color/md_grey_800</color>
