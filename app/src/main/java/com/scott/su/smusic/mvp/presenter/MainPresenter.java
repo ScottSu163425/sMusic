@@ -33,4 +33,8 @@ public interface MainPresenter extends BasePresenter, LocalSongBottomSheetPresen
     void onNightModeOn();
 
     void onNightModeOff();
+
+    void onLanguageModeOn();
+
+    void onLanguageModeOff();
 }

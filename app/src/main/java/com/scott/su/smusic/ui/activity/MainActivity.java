@@ -3,6 +3,8 @@ package com.scott.su.smusic.ui.activity;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,6 +52,7 @@ import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 2016-8-18
@@ -77,7 +81,6 @@ public class MainActivity extends BaseActivity implements MainView {
         setContentView(R.layout.activity_main);
         mMainPresenter = new MainPresenterImpl(this);
         mMainPresenter.onViewFirstTimeCreated();
-        T.showShort(this, "onCreate");
     }
 
     @Override
@@ -177,6 +180,16 @@ public class MainActivity extends BaseActivity implements MainView {
             @Override
             public void onNightModeOff() {
                 mMainPresenter.onNightModeOff();
+            }
+
+            @Override
+            public void onLanguageModeOn() {
+                mMainPresenter.onLanguageModeOn();
+            }
+
+            @Override
+            public void onLanguageModeOff() {
+                mMainPresenter.onLanguageModeOff();
             }
 
 
@@ -450,6 +463,34 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void turnOffNightMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        getSupportFragmentManager().beginTransaction().remove(mAlbumDisplayFragment).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().remove(mBillDisplayFragment).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().remove(mSongDisplayFragment).commitAllowingStateLoss();
+        recreate();
+    }
+
+    @Override
+    public void turnOnLanguageMode() {
+        Resources resources = getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        // 应用用户选择语言
+        config.locale = Locale.ENGLISH;
+        resources.updateConfiguration(config, dm);
+        getSupportFragmentManager().beginTransaction().remove(mAlbumDisplayFragment).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().remove(mBillDisplayFragment).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().remove(mSongDisplayFragment).commitAllowingStateLoss();
+        recreate();
+    }
+
+    @Override
+    public void turnOffLanguageMode() {
+        Resources resources = getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        // 应用用户选择语言
+        config.locale = Locale.CHINESE;
+        resources.updateConfiguration(config, dm);
         getSupportFragmentManager().beginTransaction().remove(mAlbumDisplayFragment).commitAllowingStateLoss();
         getSupportFragmentManager().beginTransaction().remove(mBillDisplayFragment).commitAllowingStateLoss();
         getSupportFragmentManager().beginTransaction().remove(mSongDisplayFragment).commitAllowingStateLoss();

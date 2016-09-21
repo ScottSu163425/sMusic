@@ -38,8 +38,7 @@ public class LocalBillDisplayAdapter extends BaseDisplayAdapter<LocalBillViewHol
     protected void bindVH(final LocalBillViewHolder viewHolder, final LocalBillEntity entity, final int position) {
         ViewUtil.setText(viewHolder.getTitleTextView(), entity.getBillTitle(), "");
         ViewUtil.setText(viewHolder.getCountTextView(),
-                (entity.getBillSongs() == null ? 0 : entity.getBillSongs().size()) + "首",
-                "0首");
+                (entity.getBillSongs() == null ? 0 : entity.getBillSongs().size()) + " "+context.getString(R.string.unit_song), "");
 
         String billCoverPath = "";
         if (!entity.isBillEmpty()) {

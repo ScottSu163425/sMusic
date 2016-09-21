@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="没有任何一条数据" />
+        android:text="@string/no_data" />
 
 
 </RelativeLayout>

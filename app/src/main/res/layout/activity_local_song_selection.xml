@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/selector_button_primary"
         android:enabled="false"
-        android:text="选好了"
+        android:text="@string/select_done"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_button" />
 

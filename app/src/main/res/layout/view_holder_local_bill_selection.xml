@@ -38,7 +38,7 @@
             android:layout_centerVertical="true"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="桜色舞" />
+      />
 
 
         <View

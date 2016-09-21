@@ -3,6 +3,7 @@ package com.scott.su.smusic.mvp.model.impl;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.scott.su.smusic.R;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
@@ -17,7 +18,6 @@ import java.util.List;
  * Created by asus on 2016/8/21.
  */
 public class LocalBillModelImpl implements LocalBillModel {
-    private static final String BILL_NAME_DEFAULT_BILL = "我喜欢";
     private static final long BILL_ID_DEFAULT_BILL = 1111111;
 
 
@@ -128,7 +128,7 @@ public class LocalBillModelImpl implements LocalBillModel {
                 //If it is the first time to open, create one bill automatically;
                 result = new ArrayList<>();
                 LocalBillEntity defaultBill = new LocalBillEntity();
-                defaultBill.setBillTitle(BILL_NAME_DEFAULT_BILL);
+                defaultBill.setBillTitle(context.getString(R.string.my_favourite));
                 defaultBill.setBillId(BILL_ID_DEFAULT_BILL);
                 addBill(context, defaultBill);
                 result.add(defaultBill);

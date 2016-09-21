@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:text="初恋" />
+               />
 
             <TextView
                 android:id="@+id/tv_artist_view_holder_local_album"
@@ -47,7 +47,7 @@
                 android:maxLines="1"
                 android:paddingBottom="@dimen/margin_xs"
                 android:paddingTop="@dimen/margin_xs"
-                android:text="中岛美嘉" />
+              />
 
             <TextView
                 android:id="@+id/tv_count_view_holder_local_album"
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:text="24首" />
+               />
         </LinearLayout>
 
     </RelativeLayout>

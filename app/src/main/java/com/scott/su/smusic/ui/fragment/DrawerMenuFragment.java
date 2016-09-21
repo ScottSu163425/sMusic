@@ -17,8 +17,8 @@ import com.su.scott.slibrary.fragment.BaseFragment;
  */
 public class DrawerMenuFragment extends BaseFragment implements View.OnClickListener {
     private View mRootView;
-    private View mStatisticsMenuItem, mNightModeMenuItem, mUpdateMenuItem, mAboutMenuItem;
-    private SwitchCompat mNightModeSwitch;
+    private View mStatisticsMenuItem, mUpdateMenuItem, mAboutMenuItem;
+    private SwitchCompat mNightModeSwitch, mLanguageModeSwitch;
     private DrawerMenuCallback mMenuCallback;
 
     @Nullable
@@ -48,15 +48,16 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
     @Override
     public void initView() {
         mStatisticsMenuItem = mRootView.findViewById(R.id.rl_item_statistics_drawer_menu);
-        mNightModeMenuItem = mRootView.findViewById(R.id.rl_item_night_mode_drawer_menu);
         mUpdateMenuItem = mRootView.findViewById(R.id.rl_item_update_drawer_menu);
         mAboutMenuItem = mRootView.findViewById(R.id.rl_item_about_drawer_menu);
         mNightModeSwitch = (SwitchCompat) mRootView.findViewById(R.id.swtich_night_mode_drawer_menu);
+        mLanguageModeSwitch = (SwitchCompat) mRootView.findViewById(R.id.swtich_language_mode_drawer_menu);
     }
 
     @Override
     public void initData() {
         mNightModeSwitch.setChecked(AppConfig.isNightModeOn(getActivity()));
+        mLanguageModeSwitch.setChecked(AppConfig.isLanguageModeOn(getActivity()));
     }
 
     @Override
@@ -77,6 +78,19 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
                 }
             }
         });
+
+        mLanguageModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
+                if (mMenuCallback != null) {
+                    if (on) {
+                        mMenuCallback.onLanguageModeOn();
+                    } else {
+                        mMenuCallback.onLanguageModeOff();
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -87,7 +101,7 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
             if (mMenuCallback != null) {
                 mMenuCallback.onStatisticsClick(view);
             }
-        }  else if (id == mUpdateMenuItem.getId()) {
+        } else if (id == mUpdateMenuItem.getId()) {
             if (mMenuCallback != null) {
                 mMenuCallback.onUpdateClick(view);
             }
@@ -108,6 +122,10 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
         void onNightModeOn();
 
         void onNightModeOff();
+
+        void onLanguageModeOn();
+
+        void onLanguageModeOff();
 
         void onUpdateClick(View v);
 

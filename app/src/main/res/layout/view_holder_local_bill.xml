@@ -31,7 +31,7 @@
             android:background="#30000000"
             android:gravity="center"
             android:padding="@dimen/margin_xs"
-            android:text="我喜欢"
+            android:text="@string/my_favourite"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_subhead"
             android:textStyle="bold" />
@@ -43,7 +43,6 @@
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:padding="@dimen/margin_xs"
-            android:text="0首"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_body" />
     </RelativeLayout>

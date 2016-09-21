@@ -4,15 +4,14 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.util.Pair;
 import android.view.View;
 
+import com.su.scott.slibrary.R;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.Snack;
 import com.su.scott.slibrary.util.T;
@@ -23,14 +22,14 @@ import com.su.scott.slibrary.view.BaseView;
  */
 public abstract class BaseActivity extends AppCompatActivity implements BaseView {
     private ProgressDialog mLoadingDialog;
-    private String mNetworkErrorTip = TIP_DEFAULT_NETWORK_ERROR;
+    private String mNetworkErrorTip  ;
 
-    private static final String TIP_DEFAULT_LOADING = "请稍候...";
-    private static final String TIP_DEFAULT_NETWORK_ERROR = "网络异常，请检查设备的网络连接状况";
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+        mNetworkErrorTip=getString(R.string.network_error);
+
         mLoadingDialog = new ProgressDialog(this);
     }
 
@@ -46,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     @Override
     public void showLoadingDialog(Activity activity, boolean cancelable) {
-        showLoadingDialog(activity, TIP_DEFAULT_LOADING, cancelable);
+        showLoadingDialog(activity, getString(R.string.please_waiting), cancelable);
     }
 
     @Override

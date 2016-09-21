@@ -78,7 +78,7 @@ public class MainPresenterImpl implements MainPresenter {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                mMainView.showLoadingDialog(mMainView.getViewContext(), "请稍候..", false);
+                mMainView.showLoadingDialog(mMainView.getViewContext(), mMainView.getViewContext().getString(R.string.please_waiting), false);
             }
 
             @Override
@@ -92,7 +92,7 @@ public class MainPresenterImpl implements MainPresenter {
                 super.onPostExecute(aVoid);
                 mMainView.updateBillDisplay();
                 mMainView.dismissLoadingDialog();
-                mMainView.showToastShort("添加成功");
+                mMainView.showToastShort(mMainView.getViewContext().getString(R.string.add_successfully));
                 mMainView.goToBillDetail(mBillModel.getBill(mMainView.getViewContext(), billToAddSong.getBillId()));
             }
         }.execute();
@@ -103,18 +103,24 @@ public class MainPresenterImpl implements MainPresenter {
     public void onNightModeOn() {
         AppConfig.setNightMode(mMainView.getViewContext(), true);
         mMainView.turnOnNightMode();
-        mMainView.updateAlbumDisplay();
-        mMainView.updateBillDisplay();
-        mMainView.updateSongDisplay();
     }
 
     @Override
     public void onNightModeOff() {
         AppConfig.setNightMode(mMainView.getViewContext(), false);
         mMainView.turnOffNightMode();
-        mMainView.updateAlbumDisplay();
-        mMainView.updateBillDisplay();
-        mMainView.updateSongDisplay();
+    }
+
+    @Override
+    public void onLanguageModeOn() {
+        AppConfig.setLanguageMode(mMainView.getViewContext(), true);
+        mMainView.turnOnLanguageMode();
+    }
+
+    @Override
+    public void onLanguageModeOff() {
+        AppConfig.setLanguageMode(mMainView.getViewContext(), false);
+        mMainView.turnOffLanguageMode();
     }
 
     @Override
@@ -175,14 +181,14 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onBottomSheetAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity) {
         if (mBillModel.isBillContainsSong(billEntity, songEntity)) {
-            mMainView.showSnackbarShort(mMainView.getSnackbarParent(), "歌单中已存在");
+            mMainView.showSnackbarShort(mMainView.getSnackbarParent(), mMainView.getViewContext().getString(R.string.already_exist_in_bill));
             return;
         }
 
         mBillModel.addSongToBill(mMainView.getViewContext(), songEntity, billEntity);
 //        mAppConfigModel.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), true);
         mMainView.updateBillDisplay();
-        mMainView.showSnackbarShort(mMainView.getSnackbarParent(), "添加成功");
+        mMainView.showSnackbarShort(mMainView.getSnackbarParent(), mMainView.getViewContext().getString(R.string.add_successfully));
     }
 
     @Override

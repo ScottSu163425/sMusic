@@ -2,9 +2,9 @@
 <resources>
 
     <string-array name= "titles_tab_main">
-        <item>本地音乐</item>
-        <item>歌单</item>
-        <item>专辑</item>
+        <item>@string/local_music</item>
+        <item>@string/local_music</item>
+        <item>@string/local_music</item>
     </string-array>
 
 </resources>

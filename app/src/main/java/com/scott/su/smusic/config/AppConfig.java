@@ -12,6 +12,7 @@ public class AppConfig {
     private static final String PLAY_MODE_REPEAT_ALL = "PLAY_MODE_REPEAT_ALL";
     private static final String PLAY_MODE_SHUFFLE = "PLAY_MODE_SHUFFLE";
     private static final String IS_NIGHT_MODE_ON = "IS_NIGHT_MODE_ON";
+    private static final String IS_LANGUAGE_MODE_ON = "IS_LANGUAGE_MODE_ON";
     private static final String NEED_TO_REFRESH_SONG = "NEED_REFRESH_SONG";
     private static final String NEED_TO_REFRESH_BILL = "NEED_REFRESH_BILL";
     private static final String NEED_TO_REFRESH_ALBUM = "NEED_REFRESH_ALBUM";
@@ -19,6 +20,10 @@ public class AppConfig {
 
     public static boolean isNightModeOn(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(IS_NIGHT_MODE_ON, false);
+    }
+
+    public static boolean isLanguageModeOn(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(IS_LANGUAGE_MODE_ON, false);
     }
 
     public static boolean isNeedToRefreshLocalSongDisplay(Context context) {
@@ -58,6 +63,13 @@ public class AppConfig {
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putBoolean(IS_NIGHT_MODE_ON, isOn)
+                .apply();
+    }
+
+    public static void setLanguageMode(Context context, boolean isOn) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putBoolean(IS_LANGUAGE_MODE_ON, isOn)
                 .apply();
     }
 

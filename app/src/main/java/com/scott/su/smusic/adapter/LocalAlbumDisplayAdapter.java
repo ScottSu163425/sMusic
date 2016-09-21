@@ -40,7 +40,7 @@ public class LocalAlbumDisplayAdapter extends BaseDisplayAdapter<LocalAlbumViewH
     protected void bindVH(LocalAlbumViewHolder viewHolder, final LocalAlbumEntity entity, final int position) {
         ViewUtil.setText(viewHolder.getTitleTextView(), entity.getAlbumTitle(), "");
         ViewUtil.setText(viewHolder.getArtistTextView(), entity.getArtist(), "");
-        ViewUtil.setText(viewHolder.getSongCountTextView(), entity.getAlbumSongs().size() + "首", "");
+        ViewUtil.setText(viewHolder.getSongCountTextView(), entity.getAlbumSongs().size() + context.getString(R.string.unit_song), "");
 
         Glide.with(context)
                 .load(new LocalAlbumModelImpl().getAlbumCoverPath(context, entity.getAlbumId()))

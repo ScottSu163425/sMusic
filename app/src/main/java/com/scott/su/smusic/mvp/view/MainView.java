@@ -42,4 +42,8 @@ public interface MainView extends BaseView {
 
     void turnOffNightMode();
 
+    void turnOnLanguageMode();
+
+    void turnOffLanguageMode();
+
 }

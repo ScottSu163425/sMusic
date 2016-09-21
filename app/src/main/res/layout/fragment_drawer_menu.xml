@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/margin_xl"
-                    android:text="统计" />
+                    android:text="@string/statistic" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/margin_xl"
-                    android:text="夜间模式" />
+                    android:text="@string/night_mode" />
 
                 <android.support.v7.widget.SwitchCompat
                     android:id="@+id/swtich_night_mode_drawer_menu"
@@ -78,7 +78,34 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/margin_s" />
             </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_item_night_mode_drawer_menu"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_item_s">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_s"
+                    android:src="@drawable/ic_brightness_2_grey600_24dp" />
+
+                <TextView
+                    style="@style/TextAppearanceMenuSecondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_xl"
+                    android:text="@string/language" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/swtich_language_mode_drawer_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/margin_s" />
+            </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/rl_item_update_drawer_menu"
                 android:layout_width="match_parent"
@@ -100,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/margin_xl"
-                    android:text="版本更新" />
+                    android:text="@string/version_update" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -124,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/margin_xl"
-                    android:text="关于" />
+                    android:text="@string/about" />
             </RelativeLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

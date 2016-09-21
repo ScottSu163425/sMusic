@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="@dimen/margin_xs"
-        android:text="选择歌单" />
+        android:text="@string/select_bill" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_fragment_dialog_local_bill_selection"

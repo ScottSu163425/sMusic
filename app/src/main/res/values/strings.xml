@@ -1,5 +1,15 @@
 <resources>
+    <string name="transition_name_card">transition_name_card</string>
+    <string name="transition_name_cover">transition_name_cover</string>
+    <string name="transition_name_fab">transition_name_fab</string>
+
+
+
     <string name="app_name">SMusic</string>
+
+    <string name="local_music">本地音乐</string>
+    <string name="local_bill">歌单</string>
+    <string name="local_album">专辑</string>
 
     <string name="menu_search">搜索</string>
     <string name="menu_done_all">全选</string>
@@ -24,11 +34,31 @@
     <string name="success_create_bill">歌单创建成功，马上去添加歌曲？</string>
     <string name="success_add_songs_to_bill"> 添加成功</string>
     <string name="success_delete">删除成功</string>
-
-
-    <string name="transition_name_card">transition_name_card</string>
-    <string name="transition_name_cover">transition_name_cover</string>
-    <string name="transition_name_fab">transition_name_fab</string>
+    <string name="unit_song">首</string>
+    <string name="bill_cannot_be_deleted">这张歌单不能删除</string>
+    <string name="already_exist_in_bill">歌单中已存在</string>
+    <string name="add_successfully">添加成功</string>
+    <string name="please_waiting">请稍候..</string>
+    <string name="ask_remove_from_bill">是否将它从歌单中移除?</string>
+    <string name="tip">提示</string>
+    <string name="ask_clear_bill">确定移除歌单中的所有歌曲?</string>
+    <string name="ask_delete_bill">确定删除歌单?</string>
+    <string name="add_to_bill">添加到歌单</string>
+    <string name="album">专辑</string>
+    <string name="share">分享</string>
+    <string name="delete">删除</string>
+    <string name="select_done">选好了</string>
+    <string name="no_data">没有任何一条数据</string>
+    <string name="create_bill">新建歌单</string>
+    <string name="bill_name">歌单名称</string>
+    <string name="select_bill">选择歌单</string>
+    <string name="statistic">统计</string>
+    <string name="night_mode">夜间模式</string>
+    <string name="language">语言</string>
+    <string name="version_update">版本更新</string>
+    <string name="about">关于</string>
+    <string name="my_favourite">我喜欢</string>
+    <string name="song">歌曲</string>
 
 
 </resources>

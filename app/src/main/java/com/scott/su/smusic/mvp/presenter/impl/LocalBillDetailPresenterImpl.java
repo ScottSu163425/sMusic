@@ -58,7 +58,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     @Override
     public void onDeleteBillMenuItemClick() {
         if (mBillModel.isDefaultBill(mBillDetailView.getBillEntity())) {
-            mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), "这张歌单不能删除");
+            mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), mBillDetailView.getViewContext().getString(R.string.bill_cannot_be_deleted));
             return;
         }
         mBillDetailView.showDeleteBillConfirmDialog();
@@ -250,13 +250,13 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     @Override
     public void onBottomSheetAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity) {
         if (mBillModel.isBillContainsSong(billEntity, songEntity)) {
-            mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), "歌单中已存在");
+            mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), mBillDetailView.getViewContext().getString(R.string.already_exist_in_bill));
             return;
         }
 
         mBillModel.addSongToBill(mBillDetailView.getViewContext(), songEntity, billEntity);
         AppConfig.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
-        mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), "添加成功");
+        mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), mBillDetailView.getViewContext().getString(R.string.add_successfully));
     }
 
     @Override

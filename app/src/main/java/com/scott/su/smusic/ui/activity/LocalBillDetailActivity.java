@@ -275,7 +275,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     public void showDeleteBillSongConfirmDialog(final LocalSongEntity songEntity) {
         DialogUtil.showDialog(getViewContext(),
                 "《" + songEntity.getTitle() + "》",
-                "是否将它从歌单中移除?",
+                getString(R.string.ask_remove_from_bill),
                 null,
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -289,8 +289,8 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     @Override
     public void showClearBillSongsConfirmDialog() {
         DialogUtil.showDialog(getViewContext(),
-                "提示",
-                "确定移除歌单中的所有歌曲?",
+                getString(R.string.tip),
+                getString(R.string.ask_clear_bill),
                 null,
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -304,8 +304,8 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     @Override
     public void showDeleteBillConfirmDialog() {
         DialogUtil.showDialog(getViewContext(),
-                "提示",
-                "确定删除歌单?",
+                getString(R.string.tip),
+                getString(R.string.ask_delete_bill),
                 null,
                 new DialogInterface.OnClickListener() {
                     @Override
