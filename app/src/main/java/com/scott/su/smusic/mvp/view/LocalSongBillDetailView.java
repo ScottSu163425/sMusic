@@ -7,9 +7,11 @@ import com.su.scott.slibrary.view.BaseView;
 /**
  * Created by asus on 2016/8/29.
  */
-public interface LocalSongBillDetailView extends BaseView {
+public interface LocalSongBillDetailView extends BaseView,LocalSongBottomSheetView {
 
     LocalBillEntity getBillEntity();
+
+    void showEnterBillEmpty();
 
     void setBillEntity(LocalBillEntity billEntity);
 
@@ -27,15 +29,11 @@ public interface LocalSongBillDetailView extends BaseView {
 
     void showBillSongBottomSheet(LocalSongEntity songEntity);
 
-    void showDeleteBillSongConfirmDialog(LocalSongEntity songEntity);
-
     void showClearBillSongsConfirmDialog();
 
     void showDeleteBillConfirmDialog();
 
     void showDeleteBillSuccessfully();
-
-    void showBillSelectionDialog(LocalSongEntity songToBeAdd);
 
     void goToMusicPlayWithCoverSharedElement();
 

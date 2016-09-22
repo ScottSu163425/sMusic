@@ -3,6 +3,7 @@ package com.scott.su.smusic.ui.fragment;
 import android.support.annotation.NonNull;
 
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.fragment.BaseListBottomSheetMenuFragment;
 
@@ -11,7 +12,7 @@ import com.su.scott.slibrary.fragment.BaseListBottomSheetMenuFragment;
  */
 public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragment {
     private LocalSongEntity mSongEntity;
-    private MenuClickCallback mMenuClickCallback;
+    private LocalSongBottomSheetCallback mLocalSongBottomSheetCallback;
 
 
     public static LocalSongBottomSheetFragment newInstance() {
@@ -42,15 +43,15 @@ public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragmen
 
     @Override
     protected void onMenuItemClick(int position, String itemName) {
-        if (mMenuClickCallback != null) {
+        if (mLocalSongBottomSheetCallback != null) {
             if (position == 0) {
-                mMenuClickCallback.onAddToBillClick(mSongEntity);
+                mLocalSongBottomSheetCallback.onAddToBillClick(this,mSongEntity);
             } else if (position == 1) {
-                mMenuClickCallback.onAlbumClick(mSongEntity);
+                mLocalSongBottomSheetCallback.onAlbumClick(this,mSongEntity);
             } else if (position == 2) {
-                mMenuClickCallback.onShareClick(mSongEntity);
+                mLocalSongBottomSheetCallback.onShareClick(this,mSongEntity);
             } else if (position == 3) {
-                mMenuClickCallback.onDeleteClick(mSongEntity);
+                mLocalSongBottomSheetCallback.onDeleteClick(this,mSongEntity);
             }
         }
     }
@@ -60,19 +61,9 @@ public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragmen
         return LocalSongBottomSheetFragment.this;
     }
 
-    public LocalSongBottomSheetFragment setMenuClickCallback(MenuClickCallback mMenuClickCallback) {
-        this.mMenuClickCallback = mMenuClickCallback;
+    public LocalSongBottomSheetFragment setMenuClickCallback(LocalSongBottomSheetCallback mLocalSongBottomSheetCallback) {
+        this.mLocalSongBottomSheetCallback = mLocalSongBottomSheetCallback;
         return LocalSongBottomSheetFragment.this;
-    }
-
-    public interface MenuClickCallback {
-        void onAddToBillClick(LocalSongEntity songEntity);
-
-        void onAlbumClick(LocalSongEntity songEntity);
-
-        void onShareClick(LocalSongEntity songEntity);
-
-        void onDeleteClick(LocalSongEntity songEntity);
     }
 
 }

@@ -38,6 +38,7 @@
                 android:layout_width="@dimen/size_image_view_holder_local_album"
                 android:layout_height="@dimen/size_image_view_holder_local_album"
                 android:src="@drawable/ic_cover_default_song_bill" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,8 +52,7 @@
                     style="@style/TextAppearanceTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                   />
+                    android:maxLines="1" />
 
                 <TextView
                     android:id="@+id/tv_artist_local_album_detail"
@@ -61,28 +61,42 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:paddingBottom="@dimen/margin_xs"
-                    android:paddingTop="@dimen/margin_xs"
-              />
+                    android:paddingTop="@dimen/margin_xs" />
 
                 <TextView
                     android:id="@+id/tv_count_local_album_detail"
                     style="@style/TextAppearanceCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                   />
+                    android:maxLines="1" />
             </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_xs">
+        android:layout_height="match_parent">
 
         <FrameLayout
             android:id="@+id/fl_container_display_songs_local_album_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </android.support.v7.widget.CardView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_local_album_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_s"
+            android:src="@drawable/ic_play_arrow_white_24dp"
+            android:transitionName="@string/transition_name_fab"
+            app:backgroundTint="@color/fab_background_tint"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            app:elevation="@dimen/elevation_fab_normal"
+            app:fabSize="normal"
+
+            app:pressedTranslationZ="@dimen/elevation_fab_pressed"
+            app:rippleColor="@color/fab_ripple_color" />
+
+    </RelativeLayout>
 </LinearLayout>

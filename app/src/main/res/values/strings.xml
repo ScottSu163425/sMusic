@@ -30,6 +30,7 @@
 
     <string name="ask_exit_app">退出应用？</string>
     <string name="confirm_positive">确定</string>
+    <string name="ok">好</string>
 
     <string name="success_create_bill">歌单创建成功，马上去添加歌曲？</string>
     <string name="success_add_songs_to_bill"> 添加成功</string>
@@ -59,6 +60,7 @@
     <string name="about">关于</string>
     <string name="my_favourite">我喜欢</string>
     <string name="song">歌曲</string>
+    <string name="ask_add_song_to_empty_bill">歌单是空的，去添加歌曲？</string>
 
 
 </resources>

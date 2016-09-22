@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public interface MainPresenter extends BasePresenter, LocalSongBottomSheetPresenter {
+public interface MainPresenter extends BasePresenter, LocalSongBottomSheetPresenter,DrawerMenuPresenter {
 
     void onLocalSongItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
 
@@ -30,11 +30,4 @@ public interface MainPresenter extends BasePresenter, LocalSongBottomSheetPresen
 
     void onSelectedLocalSongsResult(LocalBillEntity billToAddSong, List<LocalSongEntity> songsToAdd);
 
-    void onNightModeOn();
-
-    void onNightModeOff();
-
-    void onLanguageModeOn();
-
-    void onLanguageModeOff();
 }

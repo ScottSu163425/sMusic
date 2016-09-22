@@ -1,11 +1,9 @@
 package com.scott.su.smusic.ui.activity;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -25,7 +23,7 @@ import android.view.animation.OvershootInterpolator;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
-import com.scott.su.smusic.config.AppConfig;
+import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.constant.LocalSongDisplayType;
@@ -46,8 +44,6 @@ import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.PermissionUtil;
-import com.su.scott.slibrary.util.StringUtil;
-import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
@@ -169,7 +165,7 @@ public class MainActivity extends BaseActivity implements MainView {
         mDrawerMenuFragment.setMenuCallback(new DrawerMenuFragment.DrawerMenuCallback() {
             @Override
             public void onStatisticsClick(View v) {
-                T.showShort(getApplicationContext(), "统计");
+                mMainPresenter.onDrawerMenuStatisticClick();
             }
 
             @Override
@@ -195,12 +191,12 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onUpdateClick(View v) {
-                T.showShort(getApplicationContext(), "版本更新");
+                mMainPresenter.onDrawerMenuUpdateClick();
             }
 
             @Override
             public void onAboutClick(View v) {
-                T.showShort(getApplicationContext(), "关于");
+                mMainPresenter.onDrawerMenuAboutClick();
             }
         });
 
@@ -271,50 +267,36 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void showLocalSongBottomSheet(LocalSongEntity songEntity) {
-        final LocalSongBottomSheetFragment songBottomSheetFragment = new LocalSongBottomSheetFragment();
-        songBottomSheetFragment.setLocalSongEntity(songEntity);
-        songBottomSheetFragment.setMenuClickCallback(new LocalSongBottomSheetFragment.MenuClickCallback() {
-            @Override
-            public void onAddToBillClick(LocalSongEntity songEntity) {
-                mMainPresenter.onBottomSheetAddToBillClick(songEntity);
-                songBottomSheetFragment.dismissAllowingStateLoss();
-            }
+        LocalSongBottomSheetFragment.newInstance()
+                .setLocalSongEntity(songEntity)
+                .setMenuClickCallback(new LocalSongBottomSheetCallback() {
+                    @Override
+                    public void onAddToBillClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                        mMainPresenter.onBottomSheetAddToBillClick(songEntity);
+                        fragment.dismissAllowingStateLoss();
+                    }
 
-            @Override
-            public void onAlbumClick(LocalSongEntity songEntity) {
-                mMainPresenter.onBottomSheetAlbumClick(songEntity);
-                songBottomSheetFragment.dismissAllowingStateLoss();
-            }
+                    @Override
+                    public void onAlbumClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                        mMainPresenter.onBottomSheetAlbumClick(songEntity);
+                        fragment.dismissAllowingStateLoss();
+                    }
 
-            @Override
-            public void onShareClick(LocalSongEntity songEntity) {
-                mMainPresenter.onBottomSheetShareClick(songEntity);
-                songBottomSheetFragment.dismissAllowingStateLoss();
-            }
+                    @Override
+                    public void onShareClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                        mMainPresenter.onBottomSheetShareClick(songEntity);
+                        fragment.dismissAllowingStateLoss();
+                    }
 
-            @Override
-            public void onDeleteClick(LocalSongEntity songEntity) {
-                mMainPresenter.onBottomSheetDeleteClick(songEntity);
-                songBottomSheetFragment.dismissAllowingStateLoss();
-            }
-        });
+                    @Override
+                    public void onDeleteClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                        mMainPresenter.onBottomSheetDeleteClick(songEntity);
+                        fragment.dismissAllowingStateLoss();
+                    }
 
-        songBottomSheetFragment.show(getSupportFragmentManager(), "");
+                })
+                .show(getSupportFragmentManager(), "");
     }
-
-    @Override
-    public void showBillSelectionDialog(final LocalSongEntity songToBeAdd) {
-        final LocalBillSelectionDialogFragment billSelectionDialogFragment = new LocalBillSelectionDialogFragment();
-        billSelectionDialogFragment.setCallback(new LocalBillSelectionDialogFragment.BillSelectionCallback() {
-            @Override
-            public void onBillSelected(LocalBillEntity billEntity) {
-                mMainPresenter.onBottomSheetAddToBillConfirmed(billEntity, songToBeAdd);
-                billSelectionDialogFragment.dismissAllowingStateLoss();
-            }
-        });
-        billSelectionDialogFragment.show(getSupportFragmentManager(), "");
-    }
-
 
     @Override
     public void updateSongDisplay() {
@@ -430,10 +412,35 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
+    public void goToAlbumDetail(LocalAlbumEntity entity) {
+        Intent intent = new Intent(MainActivity.this, LocalAlbumDetailActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_ALBUM, entity);
+        goTo(intent);
+    }
+
+    @Override
+    public void showSelectBillDialog(final LocalSongEntity songToBeAdd) {
+        final LocalBillSelectionDialogFragment billSelectionDialogFragment = new LocalBillSelectionDialogFragment();
+        billSelectionDialogFragment.setCallback(new LocalBillSelectionDialogFragment.BillSelectionCallback() {
+            @Override
+            public void onBillSelected(LocalBillEntity billEntity) {
+                mMainPresenter.onBottomSheetAddToBillConfirmed(billEntity, songToBeAdd);
+                billSelectionDialogFragment.dismissAllowingStateLoss();
+            }
+        });
+        billSelectionDialogFragment.show(getSupportFragmentManager(), "");
+    }
+
+    @Override
     public void goToAlbumDetailWithSharedElement(LocalAlbumEntity entity, View sharedElement, String transitionName) {
         Intent intent = new Intent(MainActivity.this, LocalAlbumDetailActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_ALBUM, entity);
         goToWithSharedElement(intent, sharedElement, transitionName);
+    }
+
+    @Override
+    public void showDeleteDialog(LocalSongEntity songEntity) {
+
     }
 
     @Override

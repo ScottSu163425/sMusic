@@ -49,7 +49,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_xxs"
             android:maxLines="1"
-            android:textColor="@color/textColorWhiteSecondary"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_subhead" />
 
         <ImageView
@@ -60,6 +60,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_l"
             android:scaleType="fitXY"
+            android:elevation="20dp"
+            android:translationZ="20dp"
             android:transitionName="@string/transition_name_cover"
             app:layout_heightPercent="50%"
             app:layout_widthPercent="80%" />
@@ -134,7 +136,7 @@
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/fab_play_music_play"
                         android:background="@null"
-                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:foreground="?attr/selectableItemBackground"
                         android:padding="@dimen/margin_xs"
                         android:src="@drawable/ic_skip_previous_black_36dp" />
 
@@ -159,7 +161,7 @@
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/fab_play_music_play"
                         android:background="@null"
-                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:foreground="?attr/selectableItemBackground"
                         android:padding="@dimen/margin_xs"
                         android:src="@drawable/ic_skip_next_black_36dp" />
 

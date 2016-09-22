@@ -10,13 +10,12 @@ import com.su.scott.slibrary.view.BaseView;
 /**
  * Created by asus on 2016/8/19.
  */
-public interface MainView extends BaseView {
+public interface MainView extends BaseView ,LocalSongBottomSheetView{
 
     boolean isDataInitFinish();
 
     void showLocalSongBottomSheet(LocalSongEntity songEntity);
 
-    void showBillSelectionDialog(LocalSongEntity songToBeAdd);
 
     void updateSongDisplay();
 
@@ -32,6 +31,7 @@ public interface MainView extends BaseView {
 
     void goToBillDetailWithSharedElement(LocalBillEntity entity, View sharedElement, String transitionName);
 
+    void goToAlbumDetail(LocalAlbumEntity entity);
     void goToAlbumDetailWithSharedElement(LocalAlbumEntity entity, View sharedElement, String transitionName);
 
     void goToBillDetail(LocalBillEntity entity);

@@ -17,6 +17,8 @@ public interface LocalAlbumModel {
 
     List<LocalAlbumEntity> getLocalAlbums(Context context);
 
+    LocalAlbumEntity getLocalAlbum(Context context,long albumId);
+
     String getAlbumCoverPath(Context context, long albumId);
 
     Bitmap getAlbumCoverBitmapBlur(Context context, long albumId);

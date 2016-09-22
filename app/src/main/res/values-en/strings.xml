@@ -25,8 +25,8 @@
     <string name="error_empty_bill">The bill is empty</string>
 
     <string name="ask_exit_app">Exit？</string>
-    <string name="confirm_positive">OK</string>
-
+    <string name="confirm_positive">YES</string>
+    <string name="ok">OK</string>
     <string name="success_create_bill">Bill created!Add song to it right now？</string>
     <string name="success_add_songs_to_bill">Added successfully</string>
     <string name="success_delete">Deleted successfully</string>
@@ -55,5 +55,7 @@
     <string name="about">About</string>
     <string name="my_favourite">My Favourite</string>
     <string name="song">Song</string>
+    <string name="ask_add_song_to_empty_bill">The bill is empty.Add songs to it? </string>
+
 
 </resources>

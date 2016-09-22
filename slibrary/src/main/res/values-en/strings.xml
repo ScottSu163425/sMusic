@@ -3,4 +3,7 @@
     <string name="please_waiting">Please waiting...</string>
     <string name="network_error">Bad connection,check the network of your phone</string>
     <string name="empty_data">No data</string>
+    <string name="confirm">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
 </resources>

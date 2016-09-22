@@ -10,7 +10,9 @@ import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
+import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.view.MainView;
@@ -23,11 +25,12 @@ import java.util.List;
 public class MainPresenterImpl implements MainPresenter {
     private MainView mMainView;
     private LocalBillModel mBillModel;
-
+    private LocalAlbumModel mAlbumModel;
 
     public MainPresenterImpl(MainView mView) {
         this.mMainView = mView;
         this.mBillModel = new LocalBillModelImpl();
+        this.mAlbumModel = new LocalAlbumModelImpl();
     }
 
 
@@ -100,27 +103,46 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
+    public void onDrawerMenuStatisticClick() {
+        mMainView.showToastShort("Statistic");
+    }
+
+    @Override
+    public void onDrawerMenuUpdateClick() {
+        mMainView.showToastShort("Update");
+    }
+
+    @Override
+    public void onDrawerMenuAboutClick() {
+        mMainView.showToastShort("About");
+    }
+
+    @Override
     public void onNightModeOn() {
         AppConfig.setNightMode(mMainView.getViewContext(), true);
         mMainView.turnOnNightMode();
+        mMainView.updateBillDisplay();
     }
 
     @Override
     public void onNightModeOff() {
         AppConfig.setNightMode(mMainView.getViewContext(), false);
         mMainView.turnOffNightMode();
+        mMainView.updateBillDisplay();
     }
 
     @Override
     public void onLanguageModeOn() {
         AppConfig.setLanguageMode(mMainView.getViewContext(), true);
         mMainView.turnOnLanguageMode();
+        mMainView.updateBillDisplay();
     }
 
     @Override
     public void onLanguageModeOff() {
         AppConfig.setLanguageMode(mMainView.getViewContext(), false);
         mMainView.turnOffLanguageMode();
+        mMainView.updateBillDisplay();
     }
 
     @Override
@@ -160,17 +182,17 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onBottomSheetAddToBillClick(LocalSongEntity songEntity) {
-        mMainView.showBillSelectionDialog(songEntity);
+        mMainView.showSelectBillDialog(songEntity);
     }
 
     @Override
     public void onBottomSheetAlbumClick(LocalSongEntity songEntity) {
-
+        mMainView.goToAlbumDetail(mAlbumModel.getLocalAlbum(mMainView.getViewContext(), songEntity.getAlbumId()));
     }
 
     @Override
     public void onBottomSheetShareClick(LocalSongEntity songEntity) {
-
+        mMainView.showToastShort("Share:" + songEntity.getTitle());
     }
 
     @Override
@@ -189,16 +211,6 @@ public class MainPresenterImpl implements MainPresenter {
 //        mAppConfigModel.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), true);
         mMainView.updateBillDisplay();
         mMainView.showSnackbarShort(mMainView.getSnackbarParent(), mMainView.getViewContext().getString(R.string.add_successfully));
-    }
-
-    @Override
-    public void onBottomSheetAlbumConfirmed(LocalSongEntity songEntity) {
-        mMainView.showToastShort("Album:" + songEntity.getAlbum());
-    }
-
-    @Override
-    public void onBottomSheetShareConfirmed(LocalSongEntity songEntity) {
-        mMainView.showToastShort("Share:" + songEntity.getTitle());
     }
 
     @Override

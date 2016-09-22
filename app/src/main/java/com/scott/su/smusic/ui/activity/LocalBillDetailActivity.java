@@ -14,10 +14,11 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.config.AppConfig;
+import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.constant.LocalSongDisplayType;
+import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.LocalBillDetailPresenter;
@@ -164,6 +165,18 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     }
 
     @Override
+    public void showEnterBillEmpty() {
+        showSnackbarShort(getSnackbarParent(), getString(R.string.ask_add_song_to_empty_bill), getString(R.string.ok), new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LocalBillDetailActivity.this, LocalSongSelectionActivity.class);
+                intent.putExtra(Constants.KEY_EXTRA_BILL, mBillEntity);
+                goToForResult(intent, REQUESt_CODE_LOCAL_SONG_SELECTION);
+            }
+        });
+    }
+
+    @Override
     public void setBillEntity(LocalBillEntity billEntity) {
         this.mBillEntity = billEntity;
     }
@@ -246,44 +259,33 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     public void showBillSongBottomSheet(LocalSongEntity songEntity) {
         LocalSongBottomSheetFragment.newInstance()
                 .setLocalSongEntity(songEntity)
-                .setMenuClickCallback(new LocalSongBottomSheetFragment.MenuClickCallback() {
-
+                .setMenuClickCallback(new LocalSongBottomSheetCallback() {
                     @Override
-                    public void onAddToBillClick(LocalSongEntity songEntity) {
+                    public void onAddToBillClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
                         mBillDetailPresenter.onBottomSheetAddToBillClick(songEntity);
+                        fragment.dismissAllowingStateLoss();
                     }
 
                     @Override
-                    public void onAlbumClick(LocalSongEntity songEntity) {
+                    public void onAlbumClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
                         mBillDetailPresenter.onBottomSheetAlbumClick(songEntity);
+                        fragment.dismissAllowingStateLoss();
                     }
 
                     @Override
-                    public void onShareClick(LocalSongEntity songEntity) {
+                    public void onShareClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
                         mBillDetailPresenter.onBottomSheetShareClick(songEntity);
+                        fragment.dismissAllowingStateLoss();
                     }
 
                     @Override
-                    public void onDeleteClick(LocalSongEntity songEntity) {
+                    public void onDeleteClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
                         mBillDetailPresenter.onBottomSheetDeleteClick(songEntity);
+                        fragment.dismissAllowingStateLoss();
                     }
+
                 })
                 .show(getSupportFragmentManager(), "");
-    }
-
-    @Override
-    public void showDeleteBillSongConfirmDialog(final LocalSongEntity songEntity) {
-        DialogUtil.showDialog(getViewContext(),
-                "《" + songEntity.getTitle() + "》",
-                getString(R.string.ask_remove_from_bill),
-                null,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        mBillDetailPresenter.onBottomSheetDeleteConfirmed(songEntity);
-                    }
-                }, null, null
-        );
     }
 
     @Override
@@ -321,19 +323,6 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
         finish();
     }
 
-    @Override
-    public void showBillSelectionDialog(final LocalSongEntity songToBeAdd) {
-        final LocalBillSelectionDialogFragment billSelectionDialogFragment = new LocalBillSelectionDialogFragment();
-        billSelectionDialogFragment.setCallback(new LocalBillSelectionDialogFragment.BillSelectionCallback() {
-            @Override
-            public void onBillSelected(LocalBillEntity billEntity) {
-                mBillDetailPresenter.onBottomSheetAddToBillConfirmed(billEntity, songToBeAdd);
-                billSelectionDialogFragment.dismissAllowingStateLoss();
-            }
-        });
-        billSelectionDialogFragment.show(getSupportFragmentManager(), "");
-
-    }
 
     @Override
     public void goToMusicPlayWithCoverSharedElement() {
@@ -355,4 +344,46 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
         goToWithSharedElement(intent, mPlayFAB, getString(R.string.transition_name_fab));
     }
 
+    @Override
+    public void showSelectBillDialog(final LocalSongEntity songToBeAdd) {
+        final LocalBillSelectionDialogFragment billSelectionDialogFragment = new LocalBillSelectionDialogFragment();
+        billSelectionDialogFragment.setCallback(new LocalBillSelectionDialogFragment.BillSelectionCallback() {
+            @Override
+            public void onBillSelected(LocalBillEntity billEntity) {
+                mBillDetailPresenter.onBottomSheetAddToBillConfirmed(billEntity, songToBeAdd);
+                billSelectionDialogFragment.dismissAllowingStateLoss();
+            }
+        });
+        billSelectionDialogFragment.show(getSupportFragmentManager(), "");
+
+    }
+
+    @Override
+    public void goToAlbumDetail(LocalAlbumEntity entity) {
+        Intent intent = new Intent(LocalBillDetailActivity.this, LocalAlbumDetailActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_ALBUM, entity);
+        goTo(intent);
+    }
+
+    @Override
+    public void goToAlbumDetailWithSharedElement(LocalAlbumEntity entity, View sharedElement, String transitionName) {
+        Intent intent = new Intent(LocalBillDetailActivity.this, LocalAlbumDetailActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_ALBUM, entity);
+        goToWithSharedElement(intent, sharedElement, transitionName);
+    }
+
+    @Override
+    public void showDeleteDialog(final LocalSongEntity songEntity) {
+        DialogUtil.showDialog(getViewContext(),
+                "《" + songEntity.getTitle() + "》",
+                getString(R.string.ask_remove_from_bill),
+                null,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mBillDetailPresenter.onBottomSheetDeleteConfirmed(songEntity);
+                    }
+                }, null, null
+        );
+    }
 }

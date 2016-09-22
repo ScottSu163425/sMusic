@@ -58,6 +58,17 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
     }
 
     @Override
+    public LocalAlbumEntity getLocalAlbum(Context context, long albumId) {
+        List<LocalAlbumEntity> albumEntities=getLocalAlbums(context);
+        for (LocalAlbumEntity albumEntity:albumEntities){
+            if (albumEntity.getAlbumId()==albumId){
+                return albumEntity;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public String getAlbumCoverPath(Context context, long albumId) {
         String path = null;
         Cursor cursor = context.getContentResolver().query(

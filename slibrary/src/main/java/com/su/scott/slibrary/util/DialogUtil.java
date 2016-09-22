@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 
+import com.su.scott.slibrary.R;
+
 /**
  * @类名 DialogUtil
  * @描述 对话框创建工具类
@@ -22,13 +24,13 @@ public class DialogUtil {
             builder.setTitle("");
         }*/
         builder.setMessage((msg == null ? "" : msg));
-        builder.setPositiveButton((textPos == null ? "确定" : textPos), (listenerPos == null ? new DialogInterface.OnClickListener() {
+        builder.setPositiveButton((textPos == null ? activity.getString(R.string.confirm) : textPos), (listenerPos == null ? new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         } : listenerPos));
-        builder.setNegativeButton((textNeg == null ? "取消" : textNeg), (listenerNeg == null ? new DialogInterface.OnClickListener() {
+        builder.setNegativeButton((textNeg == null ?  activity.getString(R.string.cancel) : textNeg), (listenerNeg == null ? new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

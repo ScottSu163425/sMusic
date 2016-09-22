@@ -195,6 +195,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
 
         if (mBillDetailView.getBillEntity().isBillEmpty()) {
             mBillDetailView.hideFab();
+            mBillDetailView.showEnterBillEmpty();
         } else {
             mBillDetailView.showFab();
         }
@@ -229,12 +230,12 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
 
     @Override
     public void onBottomSheetAddToBillClick(LocalSongEntity songEntity) {
-        mBillDetailView.showBillSelectionDialog(songEntity);
+        mBillDetailView.showSelectBillDialog(songEntity);
     }
 
     @Override
     public void onBottomSheetAlbumClick(LocalSongEntity songEntity) {
-        mBillDetailView.showToastShort("Album :" + songEntity.getTitle());
+        mBillDetailView.goToAlbumDetail(mAlbumModel.getLocalAlbum(mBillDetailView.getViewContext(), songEntity.getAlbumId()));
     }
 
     @Override
@@ -244,7 +245,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
 
     @Override
     public void onBottomSheetDeleteClick(LocalSongEntity songEntity) {
-        mBillDetailView.showDeleteBillSongConfirmDialog(songEntity);
+        mBillDetailView.showDeleteDialog(songEntity);
     }
 
     @Override
@@ -257,16 +258,6 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
         mBillModel.addSongToBill(mBillDetailView.getViewContext(), songEntity, billEntity);
         AppConfig.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
         mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), mBillDetailView.getViewContext().getString(R.string.add_successfully));
-    }
-
-    @Override
-    public void onBottomSheetAlbumConfirmed(LocalSongEntity songEntity) {
-
-    }
-
-    @Override
-    public void onBottomSheetShareConfirmed(LocalSongEntity songEntity) {
-
     }
 
     @Override
