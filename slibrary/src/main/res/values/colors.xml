@@ -291,4 +291,6 @@
     <color name="textColorWhite">#ffffffff</color>
     <color name="textColorWhiteSecondary">#8affffff</color>
 
+    <color name="status_bar">#20000000</color>
+
 </resources>

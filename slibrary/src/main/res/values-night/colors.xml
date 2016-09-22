@@ -14,4 +14,6 @@
     <color name="textColorPrimary">#ffffff</color>
     <color name="textColorWhite">#000000</color>
     <color name="textColorWhiteSecondary">#8a000000</color>
+
+    <color name="status_bar">#50000000</color>
 </resources>
