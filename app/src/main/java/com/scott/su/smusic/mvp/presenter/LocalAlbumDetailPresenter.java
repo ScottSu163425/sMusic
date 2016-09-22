@@ -12,4 +12,6 @@ public interface LocalAlbumDetailPresenter extends BasePresenter,LocalSongBottom
     void onAlbumSongItemClick(View view, int position, LocalSongEntity entity);
 
     void onAlbumSongItemMoreClick(View view, int position, LocalSongEntity entity);
+
+    void onPlayFabClick();
 }

@@ -7,12 +7,14 @@ import com.su.scott.slibrary.view.BaseView;
 /**
  * Created by Administrator on 2016/9/19.
  */
-public interface LocalAlbumDetailView extends BaseView {
+public interface LocalAlbumDetailView extends BaseView ,LocalSongBottomSheetView{
     LocalAlbumEntity getCurrentAlbumEntity();
 
     void loadAlbumCover(String path);
 
     void goToMusicPlay(LocalSongEntity songEntity);
+
+    void goToMusicPlayWithCover(LocalSongEntity songEntity);
 
     void showAlbumSongBottomSheet(LocalSongEntity songEntity);
 }

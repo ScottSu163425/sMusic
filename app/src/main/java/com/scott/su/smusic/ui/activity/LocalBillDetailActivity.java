@@ -31,6 +31,7 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.DialogUtil;
+import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -166,6 +167,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
 
     @Override
     public void showEnterBillEmpty() {
+        T.showShort(getApplicationContext(),"showEnterBillEmpty");
         showSnackbarShort(getSnackbarParent(), getString(R.string.ask_add_song_to_empty_bill), getString(R.string.ok), new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -345,7 +347,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     }
 
     @Override
-    public void showSelectBillDialog(final LocalSongEntity songToBeAdd) {
+    public void showBillSelectionDialog(final LocalSongEntity songToBeAdd) {
         final LocalBillSelectionDialogFragment billSelectionDialogFragment = new LocalBillSelectionDialogFragment();
         billSelectionDialogFragment.setCallback(new LocalBillSelectionDialogFragment.BillSelectionCallback() {
             @Override

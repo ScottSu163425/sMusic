@@ -10,7 +10,7 @@ import com.scott.su.smusic.entity.LocalSongEntity;
  */
 
 public interface LocalSongBottomSheetView {
-    void showSelectBillDialog(LocalSongEntity songToBeAdd);
+    void showBillSelectionDialog(LocalSongEntity songToBeAdd);
     void goToAlbumDetail(LocalAlbumEntity entity);
     void goToAlbumDetailWithSharedElement(LocalAlbumEntity entity, View sharedElement, String transitionName);
     void showDeleteDialog(LocalSongEntity songEntity);

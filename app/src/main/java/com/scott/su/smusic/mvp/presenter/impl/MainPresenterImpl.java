@@ -182,7 +182,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onBottomSheetAddToBillClick(LocalSongEntity songEntity) {
-        mMainView.showSelectBillDialog(songEntity);
+        mMainView.showBillSelectionDialog(songEntity);
     }
 
     @Override

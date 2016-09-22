@@ -230,7 +230,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
 
     @Override
     public void onBottomSheetAddToBillClick(LocalSongEntity songEntity) {
-        mBillDetailView.showSelectBillDialog(songEntity);
+        mBillDetailView.showBillSelectionDialog(songEntity);
     }
 
     @Override

@@ -419,7 +419,7 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public void showSelectBillDialog(final LocalSongEntity songToBeAdd) {
+    public void showBillSelectionDialog(final LocalSongEntity songToBeAdd) {
         final LocalBillSelectionDialogFragment billSelectionDialogFragment = new LocalBillSelectionDialogFragment();
         billSelectionDialogFragment.setCallback(new LocalBillSelectionDialogFragment.BillSelectionCallback() {
             @Override

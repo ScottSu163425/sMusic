@@ -18,10 +18,12 @@ import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.constant.LocalSongDisplayType;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
+import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.LocalAlbumDetailPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalAlbumDetailPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalAlbumDetailView;
+import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
@@ -113,6 +115,12 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
                 mPresenter.onAlbumSongItemMoreClick(view, position, entity);
             }
         });
+        mPlayFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPresenter.onPlayFabClick();
+            }
+        });
     }
 
     @Override
@@ -133,6 +141,15 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
         goToWithSharedElement(intent, mPlayFAB, getString(R.string.transition_name_fab));
+    }
+
+    @Override
+    public void goToMusicPlayWithCover(LocalSongEntity songEntity) {
+        Intent intent = new Intent(LocalAlbumDetailActivity.this, MusicPlayActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
+        goToWithSharedElements(intent, new View[]{mAlbumCoverImageView, mPlayFAB},
+        new String[]{getString(R.string.transition_name_cover), getString(R.string.transition_name_fab)});
     }
 
     @Override
@@ -167,5 +184,34 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
                 })
                 .show(getSupportFragmentManager(), "");
     }
+
+    @Override
+    public void showBillSelectionDialog(final LocalSongEntity songToBeAdd) {
+        final LocalBillSelectionDialogFragment billSelectionDialogFragment = new LocalBillSelectionDialogFragment();
+        billSelectionDialogFragment.setCallback(new LocalBillSelectionDialogFragment.BillSelectionCallback() {
+            @Override
+            public void onBillSelected(LocalBillEntity billEntity) {
+                mPresenter.onBottomSheetAddToBillConfirmed(billEntity, songToBeAdd);
+                billSelectionDialogFragment.dismissAllowingStateLoss();
+            }
+        });
+        billSelectionDialogFragment.show(getSupportFragmentManager(), "");
+    }
+
+    @Override
+    public void goToAlbumDetail(LocalAlbumEntity entity) {
+
+    }
+
+    @Override
+    public void goToAlbumDetailWithSharedElement(LocalAlbumEntity entity, View sharedElement, String transitionName) {
+
+    }
+
+    @Override
+    public void showDeleteDialog(LocalSongEntity songEntity) {
+
+    }
+
 
 }

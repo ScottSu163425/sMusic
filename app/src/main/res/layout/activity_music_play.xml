@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_music_play"
@@ -59,10 +58,10 @@
             android:layout_below="@+id/toolbar_music_play"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_l"
-            android:scaleType="fitXY"
             android:elevation="20dp"
-            android:translationZ="20dp"
+            android:scaleType="fitXY"
             android:transitionName="@string/transition_name_cover"
+            android:translationZ="20dp"
             app:layout_heightPercent="50%"
             app:layout_widthPercent="80%" />
 
@@ -94,9 +93,9 @@
 
                     <TextView
                         android:id="@+id/tv_current_time_music_play"
+                        style="@style/TextAppearanceCaption"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                    style="@style/TextAppearanceCaption" />
+                        android:layout_height="wrap_content" />
 
                     <android.support.v7.widget.AppCompatSeekBar
                         android:id="@+id/seek_bar_progress_music_play"
@@ -107,15 +106,16 @@
 
                     <TextView
                         android:id="@+id/tv_total_time_music_play"
+                        style="@style/TextAppearanceCaption"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/TextAppearanceCaption" />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_xs"
+                    android:animateLayoutChanges="true"
                     android:clipChildren="false"
                     android:clipToPadding="false">
 
@@ -140,19 +140,19 @@
                         android:padding="@dimen/margin_xs"
                         android:src="@drawable/ic_skip_previous_black_36dp" />
 
-                        <android.support.design.widget.FloatingActionButton
-                            android:id="@+id/fab_play_music_play"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/margin_xs"
-                            android:layout_centerHorizontal="true"
-                            android:src="@drawable/ic_play_arrow_white_24dp"
-                            android:transitionName="@string/transition_name_fab"
-                            app:backgroundTint="@color/fab_background_tint"
-                            app:elevation="@dimen/elevation_fab_normal"
-                            app:fabSize="normal"
-                            app:pressedTranslationZ="@dimen/elevation_fab_pressed"
-                            app:rippleColor="@color/fab_ripple_color" />
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/fab_play_music_play"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="@dimen/margin_xs"
+                        android:src="@drawable/ic_play_arrow_white_24dp"
+                        android:transitionName="@string/transition_name_fab"
+                        app:backgroundTint="@color/fab_background_tint"
+                        app:elevation="@dimen/elevation_fab_normal"
+                        app:fabSize="normal"
+                        app:pressedTranslationZ="@dimen/elevation_fab_pressed"
+                        app:rippleColor="@color/fab_ripple_color" />
 
                     <ImageButton
                         android:id="@+id/imgbtn_skip_next_music_play"
