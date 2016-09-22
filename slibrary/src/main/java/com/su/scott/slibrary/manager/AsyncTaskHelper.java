@@ -8,13 +8,13 @@ import android.support.annotation.Nullable;
  * Created by asus on 2016/9/2.
  */
 public class AsyncTaskHelper {
-    public interface AsyncTaskCallback {
+    public interface SimpleAsyncTaskCallback {
         void onPreExecute();
 
         void onPostExecute();
     }
 
-    public static void excuteSimpleTask(@NonNull final Runnable runnable, @Nullable final AsyncTaskCallback callback) {
+    public static void excuteSimpleTask(@NonNull final Runnable runnable, @Nullable final SimpleAsyncTaskCallback callback) {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected void onPreExecute() {

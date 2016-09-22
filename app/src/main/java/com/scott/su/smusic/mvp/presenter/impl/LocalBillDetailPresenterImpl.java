@@ -101,7 +101,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
                 public void run() {
                     mBillModel.addSongsToBill(mBillDetailView.getViewContext(), songsToAdd, billToAddSong);
                 }
-            }, new AsyncTaskHelper.AsyncTaskCallback() {
+            }, new AsyncTaskHelper.SimpleAsyncTaskCallback() {
                 @Override
                 public void onPreExecute() {
                     mBillDetailView.showLoadingDialog(mBillDetailView.getViewContext());
@@ -132,7 +132,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
             public void run() {
                 mBillModel.clearBillSongs(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity());
             }
-        }, new AsyncTaskHelper.AsyncTaskCallback() {
+        }, new AsyncTaskHelper.SimpleAsyncTaskCallback() {
             @Override
             public void onPreExecute() {
                 mBillDetailView.showLoadingDialog(mBillDetailView.getViewContext());
@@ -158,7 +158,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
             public void run() {
                 mBillModel.deleteBill(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity());
             }
-        }, new AsyncTaskHelper.AsyncTaskCallback() {
+        }, new AsyncTaskHelper.SimpleAsyncTaskCallback() {
             @Override
             public void onPreExecute() {
 
