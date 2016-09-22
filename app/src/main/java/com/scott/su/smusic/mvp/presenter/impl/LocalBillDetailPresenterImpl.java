@@ -1,5 +1,7 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 
 import com.scott.su.smusic.R;

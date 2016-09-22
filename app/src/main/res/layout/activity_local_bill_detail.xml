@@ -13,9 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        app:theme="@style/AppTheme.AppBarOverlay">
+        app:theme="@style/AppTheme.AppBarOverlay"
+ >
 
         <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar_layout_bill_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
