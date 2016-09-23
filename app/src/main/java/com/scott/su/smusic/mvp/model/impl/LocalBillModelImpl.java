@@ -236,9 +236,10 @@ public class LocalBillModelImpl implements LocalBillModel {
         try {
             DbUtilHelper.getDefaultDbManager().saveOrUpdate(billSongEntity);
             DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
-//            if (!billSongEntity.isBelongingToAnyBill()) {
-//                DbUtilHelper.getDefaultDbManager().delete(billSongEntity);
-//            }
+            //optional
+            if (!billSongEntity.isBelongingToAnyBill()) {
+                DbUtilHelper.getDefaultDbManager().delete(billSongEntity);
+            }
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -246,26 +247,30 @@ public class LocalBillModelImpl implements LocalBillModel {
 
     @Override
     public void clearBillSongs(Context context, LocalBillEntity billEntity) {
-        List<LocalSongEntity> billSongs = getBillSongs(context);
-
-        try {
-            for (LocalSongEntity songEntity : billSongs) {
-                if (isBillContainsSong(billEntity, songEntity)) {
-                    songEntity.removeBillId(billEntity.getBillId());
-                    DbUtilHelper.getDefaultDbManager().saveOrUpdate(songEntity);
-                    //Delete the song if the song doesn`t belong to any bill;
+//        List<LocalSongEntity> billSongs = getBillSongs(context);
+//
+//        try {
+//            for (LocalSongEntity songEntity : billSongs) {
+//                if (isBillContainsSong(billEntity, songEntity)) {
+//                    songEntity.removeBillId(billEntity.getBillId());
+//                    DbUtilHelper.getDefaultDbManager().saveOrUpdate(songEntity);
+//                    //Delete the song if the song doesn`t belong to any bill; optional
 //                    if (!songEntity.isBelongingToAnyBill()) {
 //                        DbUtilHelper.getDefaultDbManager().delete(songEntity);
 //                    }
-
-                }
-            }
-            billEntity.clearSongId();
-            //Update the bill;
-            DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
-        } catch (DbException e) {
-            e.printStackTrace();
+//                }
+//            }
+//            billEntity.clearSongId();
+//            //Update the bill;
+//            DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
+//        } catch (DbException e) {
+//            e.printStackTrace();
+//        }
+        List<LocalSongEntity> billSongs = getBillSongs(context);
+        for (LocalSongEntity songEntity:billSongs){
+            deleteBillSong(context,billEntity,songEntity);
         }
+
     }
 
 

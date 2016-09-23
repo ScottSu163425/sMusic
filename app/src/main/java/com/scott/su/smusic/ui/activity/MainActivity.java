@@ -392,7 +392,7 @@ public class MainActivity extends BaseActivity implements MainView {
     public void showCreateBillSuccessfully(final LocalBillEntity billEntity) {
         showSnackbarLong(mToolbar,
                 getString(R.string.success_create_bill),
-                getString(R.string.confirm_positive),
+                getString(R.string.ok),
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

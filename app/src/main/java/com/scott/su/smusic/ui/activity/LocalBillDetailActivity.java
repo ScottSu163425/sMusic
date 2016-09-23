@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
-import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +32,6 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.DialogUtil;
-import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 
@@ -101,7 +99,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
 
     @Override
     public View getSnackbarParent() {
-        return mCoverImageView;
+        return mPlayFAB;
     }
 
     @Override
@@ -209,14 +207,15 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     @Override
     public void showEnterBillEmpty() {
         T.showShort(getApplicationContext(), "showEnterBillEmpty");
-        showSnackbarShort(getSnackbarParent(), getString(R.string.ask_add_song_to_empty_bill), getString(R.string.ok), new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LocalBillDetailActivity.this, LocalSongSelectionActivity.class);
-                intent.putExtra(Constants.KEY_EXTRA_BILL, mBillEntity);
-                goToForResult(intent, REQUESt_CODE_LOCAL_SONG_SELECTION);
-            }
-        });
+        showSnackbarLong(getSnackbarParent(), getString(R.string.ask_add_song_to_empty_bill), getString(R.string.ok),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(LocalBillDetailActivity.this, LocalSongSelectionActivity.class);
+                        intent.putExtra(Constants.KEY_EXTRA_BILL, mBillEntity);
+                        goToForResult(intent, REQUESt_CODE_LOCAL_SONG_SELECTION);
+                    }
+                });
     }
 
     @Override
