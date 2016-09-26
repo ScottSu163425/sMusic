@@ -3,10 +3,12 @@ package com.scott.su.smusic.ui.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +36,7 @@ import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.DialogUtil;
+import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 
@@ -49,8 +52,8 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
     private ImageView mCoverImageView;
     private LocalSongDisplayFragment mBillSongDisplayFragment;
     private FloatingActionButton mPlayFAB;
-  private   CommonInputDialogFragment mEditDialogFragment;
-            
+    private CommonInputDialogFragment mEditDialogFragment;
+
     private static final int REQUESt_CODE_LOCAL_SONG_SELECTION = 123;
 
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -64,46 +67,41 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
         mBillDetailPresenter.onViewFirstTimeCreated();
 
 //        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout_bill_detail);
-//        if (SdkUtil.isLolipopOrLatter()) {
-//            getWindow().getSharedElementReenterTransition().addListener(new Transition.TransitionListener() {
-//                @Override
-//                public void onTransitionStart(Transition transition) {
-//                    mCollapsingToolbarLayout.setScrimsShown(false);
-//                    mPlayFAB.show();
-//                }
-//
-//                @Override
-//                public void onTransitionEnd(Transition transition) {
-//                    mCollapsingToolbarLayout.setScrimsShown(false);
-//                    mPlayFAB.show();
-//                    mPlayFAB.animate().scaleX(1)
-//                            .scaleY(1)
-//                            .setDuration(100)
-//                            .setStartDelay(1000)
-//                            .start();
-//                }
-//
-//                @Override
-//                public void onTransitionCancel(Transition transition) {
-//
-//                }
-//
-//                @Override
-//                public void onTransitionPause(Transition transition) {
-//
-//                }
-//
-//                @Override
-//                public void onTransitionResume(Transition transition) {
-//
-//                }
-//            });
-//        }
+        if (SdkUtil.isLolipopOrLatter()) {
+            getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionStart(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionEnd(Transition transition) {
+                    mBillDetailPresenter.onTransitionEnd();
+                }
+
+                @Override
+                public void onTransitionCancel(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionPause(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionResume(Transition transition) {
+
+                }
+            });
+        } else {
+            mBillDetailPresenter.onTransitionEnd();
+        }
     }
 
     @Override
     public View getSnackbarParent() {
-        return mPlayFAB;
+        return mToolbar;
     }
 
     @Override
@@ -119,7 +117,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
         } else {
             mToolbar.setTitle(mBillEntity.getBillTitle());
         }
-        setSupportActionBar( mToolbar);
+        setSupportActionBar(mToolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,7 +185,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
             mBillDetailPresenter.onEditBillMenuItemClick();
         } else if (id == R.id.action_add_local_song_bill_detaile) {
             mBillDetailPresenter.onAddSongsMenuItemClick();
-        }else if (id == R.id.action_clear_local_song_bill_detaile) {
+        } else if (id == R.id.action_clear_local_song_bill_detaile) {
             mBillDetailPresenter.onClearBillMenuItemClick();
         } else if (id == R.id.action_delete_local_song_bill_detaile) {
             mBillDetailPresenter.onDeleteBillMenuItemClick();
@@ -215,8 +213,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
 
     @Override
     public void showEnterBillEmpty() {
-        T.showShort(getApplicationContext(), "showEnterBillEmpty");
-        showSnackbarLong(getSnackbarParent(), getString(R.string.ask_add_song_to_empty_bill), getString(R.string.ok),
+        showSnackbarShort(getSnackbarParent(), getString(R.string.ask_add_song_to_empty_bill), getString(R.string.ok),
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -271,7 +268,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
     @Override
     public void showFab() {
         if (!ViewUtil.isViewVisiable(mPlayFAB)) {
-            CirclarRevealUtil.revealIn(mPlayFAB, CirclarRevealUtil.DIRECTION.CENTER);
+            ViewUtil.setViewVisiable(mPlayFAB);
         }
     }
 

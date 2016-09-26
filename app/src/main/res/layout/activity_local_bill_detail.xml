@@ -59,6 +59,7 @@
         android:layout_margin="@dimen/margin_s"
         android:src="@drawable/ic_play_arrow_white_24dp"
         android:transitionName="@string/transition_name_fab"
+        android:visibility="gone"
         app:backgroundTint="@color/fab_background_tint"
         app:elevation="@dimen/elevation_fab_normal"
         app:fabSize="normal"

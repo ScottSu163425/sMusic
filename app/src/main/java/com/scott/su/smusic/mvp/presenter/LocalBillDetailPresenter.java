@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface LocalBillDetailPresenter extends BasePresenter, LocalSongBottomSheetPresenter {
 
+    void onTransitionEnd();
+
     void onPlayFabClick();
 
     void onEditBillMenuItemClick();

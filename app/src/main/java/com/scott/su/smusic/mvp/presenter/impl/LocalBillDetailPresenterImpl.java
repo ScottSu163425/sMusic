@@ -35,6 +35,17 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     }
 
     @Override
+    public void onTransitionEnd() {
+
+        if (mBillDetailView.getBillEntity().isBillEmpty()) {
+            mBillDetailView.hideFab();
+            mBillDetailView.showEnterBillEmpty();
+        } else {
+            mBillDetailView.showFab();
+        }
+    }
+
+    @Override
     public void onPlayFabClick() {
         mBillDetailView.goToMusicPlayWithCoverSharedElement();
     }
@@ -216,13 +227,6 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
         mBillDetailView.initListener();
 
         loadCover(false);
-
-        if (mBillDetailView.getBillEntity().isBillEmpty()) {
-            mBillDetailView.hideFab();
-            mBillDetailView.showEnterBillEmpty();
-        } else {
-            mBillDetailView.showFab();
-        }
 
         AsyncTaskHelper.excuteSimpleTask(new Runnable() {
             @Override
