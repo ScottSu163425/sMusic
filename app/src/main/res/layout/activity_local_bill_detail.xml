@@ -13,8 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        app:theme="@style/AppTheme.AppBarOverlay"
- >
+        app:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout_bill_detail"
@@ -50,7 +49,6 @@
                 app:layout_collapseMode="pin"
                 app:navigationIcon="?attr/homeAsUpIndicator"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
-
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -62,13 +60,12 @@
         android:src="@drawable/ic_play_arrow_white_24dp"
         android:transitionName="@string/transition_name_fab"
         app:backgroundTint="@color/fab_background_tint"
-        app:rippleColor="@color/fab_ripple_color"
         app:elevation="@dimen/elevation_fab_normal"
         app:fabSize="normal"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|right"
         app:pressedTranslationZ="@dimen/elevation_fab_pressed"
-  />
+        app:rippleColor="@color/fab_ripple_color" />
 
     <FrameLayout
         android:id="@+id/fl_container_display_songs_local_bill_detail"

@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_search_menu_main) {
-            stopService(new Intent(this, MusicPlayService.class));
+//            stopService(new Intent(this, MusicPlayService.class));
         }
         return true;
     }

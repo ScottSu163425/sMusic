@@ -14,30 +14,32 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.MainActivity"
-            android:theme="@style/AppTheme.ImmersiveStatusBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.ImmersiveStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.LocalSongSelectionActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.LocalSongSelectionActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.LocalBillDetailActivity"
-            android:theme="@style/AppTheme.ImmersiveStatusBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.ImmersiveStatusBar" />
         <activity
             android:name=".ui.activity.MusicPlayActivity"
-            android:theme="@style/AppTheme.FullScreenStatusBar"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".ui.activity.LocalAlbumDetailActivity"
-        android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreenStatusBar" />
+        <activity
+            android:name=".ui.activity.LocalAlbumDetailActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".service.MusicPlayService" />
+
+        <activity android:name=".ui.activity.SearchActivity"></activity>
     </application>
 
 </manifest>
