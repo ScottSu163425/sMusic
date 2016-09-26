@@ -94,10 +94,15 @@ public class LocalBillEntity implements Parcelable {
         setBillSongIds(getBillSongIds().replace(songId + ID_DIVIDER, ""));
     }
 
-    public void clearSongId( ) {
+    public void clearSongId() {
         setBillSongIds("");
     }
 
+    /**
+     * Get the long array of songs in the bill(Order by add time des).
+     *
+     * @return
+     */
     public long[] getBillSongIdsLongArray() {
         if (TextUtils.isEmpty(getBillSongIds())) {
             return null;
@@ -130,17 +135,20 @@ public class LocalBillEntity implements Parcelable {
         if (isBillEmpty()) {
             return null;
         }
+        // TODO: 2016/9/26 something wrong. 
 
         return getBillSongs().get(getBillSongs().size() - 1);
     }
 
-    /**
-     * Return ture if the bill has one song at least;
-     *
-     * @return
-     */
+    public long getLatestSongId() {
+        if (isBillEmpty()) {
+            return -1;
+        }
+        return getBillSongIdsLongArray()[0];
+    }
+
     public boolean isBillEmpty() {
-        return getBillSongs().size() == 0;
+        return TextUtils.isEmpty(getBillSongIds());
     }
 
     @Override
