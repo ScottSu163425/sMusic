@@ -5,12 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.holder.LocalBillViewHolder;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
+import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
+import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -36,21 +37,26 @@ public class LocalBillDisplayAdapter extends BaseDisplayAdapter<LocalBillViewHol
 
     @Override
     protected void bindVH(final LocalBillViewHolder viewHolder, final LocalBillEntity entity, final int position) {
-        ViewUtil.setText(viewHolder.getTitleTextView(), entity.getBillTitle(), "");
+        if (new LocalBillModelImpl().isDefaultBill(entity)) {
+            ViewUtil.setText(viewHolder.getTitleTextView(), context.getString(R.string.my_favourite), "");
+        } else {
+            ViewUtil.setText(viewHolder.getTitleTextView(), entity.getBillTitle(), "");
+        }
+
         ViewUtil.setText(viewHolder.getCountTextView(),
-                (entity.getBillSongs() == null ? 0 : entity.getBillSongs().size()) + " "+context.getString(R.string.unit_song), "");
+                (entity.getBillSongs() == null ? 0 : entity.getBillSongs().size()) + " " + context.getString(R.string.unit_song), "");
 
         String billCoverPath = "";
         if (!entity.isBillEmpty()) {
             billCoverPath = new LocalAlbumModelImpl().getAlbumCoverPath(context,
                     entity.getLatestSong().getAlbumId());
         }
-
-        Glide.with(context)
-                .load(billCoverPath)
-                .placeholder(R.color.place_holder_loading)
-                .error(R.drawable.ic_cover_default_song_bill)
-                .into(viewHolder.getCoverImageView());
+        ImageLoader.load(context,
+                billCoverPath,
+                viewHolder.getCoverImageView(),
+                R.color.place_holder_loading,
+                R.drawable.ic_cover_default_song_bill
+        );
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

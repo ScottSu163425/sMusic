@@ -6,5 +6,5 @@ import com.su.scott.slibrary.view.BaseDisplayView;
 /**
  * Created by asus on 2016/8/19.
  */
-public interface LocalSongBillDisplayView extends BaseDisplayView<LocalBillEntity> {
+public interface LocalBillDisplayView extends BaseDisplayView<LocalBillEntity> {
 }

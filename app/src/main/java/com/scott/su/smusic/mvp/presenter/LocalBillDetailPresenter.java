@@ -15,6 +15,8 @@ public interface LocalBillDetailPresenter extends BasePresenter, LocalSongBottom
 
     void onPlayFabClick();
 
+    void onEditBillMenuItemClick();
+
     void onAddSongsMenuItemClick();
 
     void onClearBillMenuItemClick();
@@ -31,5 +33,6 @@ public interface LocalBillDetailPresenter extends BasePresenter, LocalSongBottom
 
     void onSelectedLocalSongsResult(LocalBillEntity billToAddSong, List<LocalSongEntity> songsToAdd);
 
+    void onEditBillNameConfiemed(String text);
 
 }

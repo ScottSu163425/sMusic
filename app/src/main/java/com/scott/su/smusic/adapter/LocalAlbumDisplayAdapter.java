@@ -5,14 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.holder.LocalAlbumViewHolder;
-import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
-import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
+import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -42,11 +40,13 @@ public class LocalAlbumDisplayAdapter extends BaseDisplayAdapter<LocalAlbumViewH
         ViewUtil.setText(viewHolder.getArtistTextView(), entity.getArtist(), "");
         ViewUtil.setText(viewHolder.getSongCountTextView(), entity.getAlbumSongs().size() + " " + context.getString(R.string.unit_song), "");
 
-        Glide.with(context)
-                .load(new LocalAlbumModelImpl().getAlbumCoverPath(context, entity.getAlbumId()))
-                .placeholder(R.color.place_holder_loading)
-                .error(R.drawable.ic_cover_default_song_bill)
-                .into(viewHolder.getCoverImageView());
+        ImageLoader.load(context,
+                new LocalAlbumModelImpl().getAlbumCoverPath(context, entity.getAlbumId()),
+                viewHolder.getCoverImageView(),
+                R.color.place_holder_loading,
+                R.drawable.ic_cover_default_song_bill
+        );
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

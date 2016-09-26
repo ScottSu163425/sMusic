@@ -9,18 +9,19 @@
     <string name="local_album">Album</string>
     <string name="menu_search">Search</string>
     <string name="menu_done_all">Check all</string>
+    <string name="menu_edit">Edit</string>
     <string name="menu_add_song">Add song</string>
     <string name="menu_clear_bill">Clear bill</string>
     <string name="menu_delete_bill">Delete bill</string>
 
-    <string name="toolbar_title_local_song_selection">Select song</string>
+    <string name="toolbar_title_local_song_selection">Select Song</string>
 
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
 
     <string name="divider_artist_album_view_holder_local_song">-</string>
     <string name="error_text_length_overflow">Beyong the max characters</string>
-    <string name="error_input_empty_bill_name">The bill name is empty?</string>
+    <string name="error_input_empty">The input is empty?</string>
     <string name="error_already_exist">Already exist</string>
     <string name="error_empty_bill">The bill is empty</string>
 
@@ -30,8 +31,8 @@
     <string name="success_add_songs_to_bill">Added successfully</string>
     <string name="success_delete">Deleted successfully</string>
     <string name="unit_song">songs</string>
-    <string name="bill_cannot_be_deleted">This bill cannot be deleted</string>
-    <string name="already_exist_in_bill">Already exist in this bill</string>
+    <string name="bill_cannot_be_deleted">This bill cannot be deleted.</string>
+    <string name="already_exist_in_bill">Already exist in this bill.</string>
     <string name="add_successfully">Added successfully</string>
     <string name="please_waiting">Please waiting..</string>
     <string name="ask_remove_from_bill">Do you want to remove this song from bill?</string>
@@ -46,15 +47,17 @@
     <string name="no_data">No data</string>
     <string name="create_bill">Create Bill</string>
     <string name="bill_name">Bill name</string>
-    <string name="select_bill">Select bill</string>
+    <string name="select_bill">Select Bill</string>
     <string name="statistic">Statistic</string>
-    <string name="night_mode">Night mode</string>
+    <string name="night_mode">Night Mode</string>
     <string name="language">Language</string>
     <string name="version_update">Update</string>
     <string name="about">About</string>
     <string name="my_favourite">My Favourite</string>
     <string name="song">Song</string>
     <string name="ask_add_song_to_empty_bill">The bill is empty.Add songs to it? </string>
-
+    <string name="cannot_edit_bill">You can not edit this bill.</string>
+    <string name="edit_bill">Edit Bill</string>
+    <string name="edit_successfully">Edit successfully!</string>
 
 </resources>

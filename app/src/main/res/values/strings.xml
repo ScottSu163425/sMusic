@@ -12,6 +12,7 @@
 
     <string name="menu_search">搜索</string>
     <string name="menu_done_all">全选</string>
+    <string name="menu_edit">编辑</string>
     <string name="menu_add_song">添加歌曲</string>
     <string name="menu_clear_bill">清空歌单</string>
     <string name="menu_delete_bill">删除歌单</string>
@@ -23,7 +24,7 @@
 
     <string name="divider_artist_album_view_holder_local_song">-</string>
     <string name="error_text_length_overflow">已超过最大长度限制</string>
-    <string name="error_input_empty_bill_name">你输入的歌单名称是空的?</string>
+    <string name="error_input_empty">你输入的内容是空的?</string>
     <string name="error_already_exist">已经存在</string>
     <string name="error_empty_bill">歌单是空的</string>
 
@@ -34,7 +35,7 @@
     <string name="success_add_songs_to_bill"> 添加成功</string>
     <string name="success_delete">删除成功</string>
     <string name="unit_song">首</string>
-    <string name="bill_cannot_be_deleted">这张歌单不能删除</string>
+    <string name="bill_cannot_be_deleted">这张歌单不能删除.</string>
     <string name="already_exist_in_bill">歌单中已存在</string>
     <string name="add_successfully">添加成功</string>
     <string name="please_waiting">请稍候..</string>
@@ -59,6 +60,9 @@
     <string name="my_favourite">我喜欢</string>
     <string name="song">歌曲</string>
     <string name="ask_add_song_to_empty_bill">歌单是空的，去添加歌曲？</string>
+    <string name="cannot_edit_bill">你不能修改这张歌单的名称.</string>
+    <string name="edit_bill">编辑歌单</string>
+    <string name="edit_successfully">修改成功</string>
 
 
 </resources>

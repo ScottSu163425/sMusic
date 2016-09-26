@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_edit_local_song_bill_detaile"
+        android:icon="@drawable/ic_mode_edit_white_24dp"
+        android:title="@string/menu_edit"
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_add_local_song_bill_detaile"
-        android:icon="@drawable/ic_add_white_24dp"
         android:title="@string/menu_add_song"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_clear_local_song_bill_detaile"
-        android:icon="@drawable/ic_add_white_24dp"
         android:title="@string/menu_clear_bill"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_delete_local_song_bill_detaile"
-        android:icon="@drawable/ic_add_white_24dp"
         android:title="@string/menu_delete_bill"
         app:showAsAction="never" />
 

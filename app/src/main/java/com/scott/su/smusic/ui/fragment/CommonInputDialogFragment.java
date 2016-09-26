@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.scott.su.smusic.R;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
@@ -18,20 +19,26 @@ import com.su.scott.slibrary.util.CirclarRevealUtil;
 /**
  * Created by asus on 2016/8/23.
  */
-public class CreateBillDialogFragment extends DialogFragment {
+public class CommonInputDialogFragment extends DialogFragment {
     private View mRootView;
+    private TextView mTitleTextView;
     private TextInputLayout mInputLayout;
     private Button mConfirmButton;
-    private CreateBillDialogCallback mCallback;
+    private CommonInputDialogCallback mCallback;
+
+    private String mTitle="";
+    private String mHint="";
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
-            mRootView = inflater.inflate(R.layout.fragment_dialog_create_bill, container, false);
-            mInputLayout = (TextInputLayout) mRootView.findViewById(R.id.input_layout_bill_name_fragment_dialog_create_bill);
-            mConfirmButton = (Button) mRootView.findViewById(R.id.btn_confirm_fragment_dialog_create_bill);
-
+            mRootView = inflater.inflate(R.layout.fragment_dialog_common_input, container, false);
+            mTitleTextView= (TextView) mRootView.findViewById(R.id.tv_title_fragment_dialog_common_input);
+            mInputLayout = (TextInputLayout) mRootView.findViewById(R.id.input_layout_fragment_dialog_common_input);
+            mConfirmButton = (Button) mRootView.findViewById(R.id.btn_confirm_fragment_dialog_common_input);
+            mTitleTextView.setText(mTitle);
+            mInputLayout.getEditText().setHint(mHint);
 
             if (mInputLayout.getEditText() != null) {
                 mInputLayout.getEditText().addTextChangedListener(new TextWatcher() {
@@ -73,6 +80,7 @@ public class CreateBillDialogFragment extends DialogFragment {
                 }
             });
         }
+
         return mRootView;
     }
 
@@ -88,11 +96,19 @@ public class CreateBillDialogFragment extends DialogFragment {
 
     }
 
-    public void setCallback(CreateBillDialogCallback mCallback) {
+    public void setHint(String mHint) {
+        this.mHint = mHint;
+    }
+
+    public void setTitle(String mTitle) {
+        this.mTitle = mTitle;
+    }
+
+    public void setCallback(CommonInputDialogCallback mCallback) {
         this.mCallback = mCallback;
     }
 
-    public interface CreateBillDialogCallback {
+    public interface CommonInputDialogCallback {
         void onConfirmClick(String text);
     }
 

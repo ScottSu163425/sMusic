@@ -1,7 +1,5 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 
 import com.scott.su.smusic.R;
@@ -15,7 +13,7 @@ import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalBillDetailPresenter;
-import com.scott.su.smusic.mvp.view.LocalSongBillDetailView;
+import com.scott.su.smusic.mvp.view.LocalBillDetailView;
 import com.su.scott.slibrary.manager.AsyncTaskHelper;
 
 import java.util.List;
@@ -24,12 +22,12 @@ import java.util.List;
  * Created by asus on 2016/8/29.
  */
 public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
-    private LocalSongBillDetailView mBillDetailView;
+    private LocalBillDetailView mBillDetailView;
     private LocalBillModel mBillModel;
     private LocalSongModel mSongModel;
     private LocalAlbumModel mAlbumModel;
 
-    public LocalBillDetailPresenterImpl(LocalSongBillDetailView mBillDetailView) {
+    public LocalBillDetailPresenterImpl(LocalBillDetailView mBillDetailView) {
         this.mBillDetailView = mBillDetailView;
         this.mBillModel = new LocalBillModelImpl();
         this.mSongModel = new LocalSongModelImpl();
@@ -39,6 +37,16 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     @Override
     public void onPlayFabClick() {
         mBillDetailView.goToMusicPlayWithCoverSharedElement();
+    }
+
+    @Override
+    public void onEditBillMenuItemClick() {
+        if (mBillModel.isDefaultBill(mBillDetailView.getBillEntity())) {
+            mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(),
+                    mBillDetailView.getViewContext().getString(R.string.cannot_edit_bill));
+            return;
+        }
+        mBillDetailView.showEditBillNameDialog();
     }
 
     @Override
@@ -125,6 +133,20 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
                 }
             });
         }
+    }
+
+    @Override
+    public void onEditBillNameConfiemed(String text) {
+        LocalBillEntity billEntity = mBillDetailView.getBillEntity();
+        billEntity.setBillTitle(text);
+        mBillModel.addBill(mBillDetailView.getViewContext(), billEntity);
+
+        mBillDetailView.setBillEntity(mBillModel.getBill(mBillDetailView.getViewContext(),
+                billEntity.getBillId()));
+        mBillDetailView.updateBillInfo();
+        mBillDetailView.dismissEditBillNameDialog();
+        mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(),mBillDetailView.getViewContext().getString(R.string.edit_successfully));
+        AppConfig.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
     }
 
     @Override

@@ -18,10 +18,8 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.MusicPlayCallback;
-import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
@@ -31,6 +29,7 @@ import com.scott.su.smusic.mvp.presenter.impl.MusicPlayPresenterImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
 import com.scott.su.smusic.service.MusicPlayService;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.L;
@@ -284,20 +283,22 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
                         @Override
                         public void onAnimEnd() {
-                            Glide.with(MusicPlayActivity.this)
-                                    .load(path)
-                                    .centerCrop()
-                                    .placeholder(R.color.place_holder_loading)
-                                    .into(mCoverImageView);
+                            ImageLoader.load(MusicPlayActivity.this,
+                                    path,
+                                    mCoverImageView,
+                                    R.color.background_music_play,
+                                    R.color.background_music_play
+                            );
                             CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER);
                         }
                     }, false);
         } else {
-            Glide.with(MusicPlayActivity.this)
-                    .load(path)
-                    .centerCrop()
-                    .placeholder(R.color.place_holder_loading)
-                    .into(mCoverImageView);
+            ImageLoader.load(MusicPlayActivity.this,
+                    path,
+                    mCoverImageView,
+                    R.color.background_music_play,
+                    R.color.background_music_play
+            );
         }
     }
 

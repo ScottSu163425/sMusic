@@ -496,7 +496,7 @@ public class MainActivity extends BaseActivity implements MainView {
         DisplayMetrics dm = resources.getDisplayMetrics();
         Configuration config = resources.getConfiguration();
         // 应用用户选择语言
-        config.locale = Locale.CHINESE;
+        config.locale = Locale.getDefault();
         resources.updateConfiguration(config, dm);
         getSupportFragmentManager().beginTransaction().remove(mAlbumDisplayFragment).commitAllowingStateLoss();
         getSupportFragmentManager().beginTransaction().remove(mBillDisplayFragment).commitAllowingStateLoss();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#222222</color>
-    <color name="colorPrimaryDark">#111111</color>
+    <color name="colorPrimary">#151515</color>
+    <color name="colorPrimaryDark">#101010</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="text_tab_normal">#30ffffff</color>

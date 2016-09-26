@@ -12,7 +12,7 @@ import com.scott.su.smusic.adapter.LocalBillDisplayAdapter;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.mvp.presenter.LocalBillDisplayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalBillDisplayPresenterImpl;
-import com.scott.su.smusic.mvp.view.LocalSongBillDisplayView;
+import com.scott.su.smusic.mvp.view.LocalBillDisplayView;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 
@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntity> implements LocalSongBillDisplayView {
+public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntity> implements LocalBillDisplayView {
     private LocalBillDisplayPresenter mSongBillDisplayPresenter;
     private LocalBillDisplayAdapter mSongBillDisplayAdapter;
 

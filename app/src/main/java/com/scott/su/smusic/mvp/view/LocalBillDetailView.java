@@ -7,7 +7,7 @@ import com.su.scott.slibrary.view.BaseView;
 /**
  * Created by asus on 2016/8/29.
  */
-public interface LocalSongBillDetailView extends BaseView,LocalSongBottomSheetView {
+public interface LocalBillDetailView extends BaseView,LocalSongBottomSheetView {
 
     LocalBillEntity getBillEntity();
 
@@ -38,5 +38,9 @@ public interface LocalSongBillDetailView extends BaseView,LocalSongBottomSheetVi
     void goToMusicPlayWithCoverSharedElement();
 
     void goToMusicPlay(LocalSongEntity entity);
+
+    void showEditBillNameDialog();
+    void dismissEditBillNameDialog();
+    void updateBillInfo();
 
 }

@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
 import com.scott.su.smusic.constant.Constants;
@@ -22,13 +21,16 @@ import com.scott.su.smusic.constant.LocalSongDisplayType;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalBillDetailPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalBillDetailPresenterImpl;
-import com.scott.su.smusic.mvp.view.LocalSongBillDetailView;
+import com.scott.su.smusic.mvp.view.LocalBillDetailView;
+import com.scott.su.smusic.ui.fragment.CommonInputDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.DialogUtil;
@@ -40,13 +42,15 @@ import java.util.List;
 /**
  * 2016-8-28
  */
-public class LocalBillDetailActivity extends BaseActivity implements LocalSongBillDetailView {
+public class LocalBillDetailActivity extends BaseActivity implements LocalBillDetailView {
     private LocalBillDetailPresenter mBillDetailPresenter;
     private LocalBillEntity mBillEntity;
+    private Toolbar mToolbar;
     private ImageView mCoverImageView;
     private LocalSongDisplayFragment mBillSongDisplayFragment;
     private FloatingActionButton mPlayFAB;
-
+  private   CommonInputDialogFragment mEditDialogFragment;
+            
     private static final int REQUESt_CODE_LOCAL_SONG_SELECTION = 123;
 
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -109,10 +113,14 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
 
     @Override
     public void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_local_bill_detail);
-        toolbar.setTitle(mBillEntity.getBillTitle());
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_local_bill_detail);
+        if (new LocalBillModelImpl().isDefaultBill(mBillEntity)) {
+            mToolbar.setTitle(getString(R.string.my_favourite));
+        } else {
+            mToolbar.setTitle(mBillEntity.getBillTitle());
+        }
+        setSupportActionBar( mToolbar);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LocalBillDetailActivity.this.onBackPressed();
@@ -175,10 +183,11 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if (id == R.id.action_add_local_song_bill_detaile) {
+        if (id == R.id.action_edit_local_song_bill_detaile) {
+            mBillDetailPresenter.onEditBillMenuItemClick();
+        } else if (id == R.id.action_add_local_song_bill_detaile) {
             mBillDetailPresenter.onAddSongsMenuItemClick();
-        } else if (id == R.id.action_clear_local_song_bill_detaile) {
+        }else if (id == R.id.action_clear_local_song_bill_detaile) {
             mBillDetailPresenter.onClearBillMenuItemClick();
         } else if (id == R.id.action_delete_local_song_bill_detaile) {
             mBillDetailPresenter.onDeleteBillMenuItemClick();
@@ -238,22 +247,23 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
 
                         @Override
                         public void onAnimEnd() {
-
-                            Glide.with(LocalBillDetailActivity.this)
-                                    .load(coverPath)
-                                    .placeholder(R.color.place_holder_loading)
-                                    .error(R.drawable.ic_cover_default_song_bill)
-                                    .into(mCoverImageView);
+                            ImageLoader.load(LocalBillDetailActivity.this,
+                                    coverPath,
+                                    mCoverImageView,
+                                    R.color.place_holder_loading,
+                                    R.drawable.ic_cover_default_song_bill
+                            );
                             CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER);
                         }
                     }, false);
 
         } else {
-            Glide.with(this)
-                    .load(coverPath)
-                    .placeholder(R.color.place_holder_loading)
-                    .error(R.drawable.ic_cover_default_song_bill)
-                    .into(mCoverImageView);
+            ImageLoader.load(LocalBillDetailActivity.this,
+                    coverPath,
+                    mCoverImageView,
+                    R.color.place_holder_loading,
+                    R.drawable.ic_cover_default_song_bill
+            );
         }
 
     }
@@ -385,6 +395,37 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalSongBi
 
         goToWithSharedElement(intent, mPlayFAB, getString(R.string.transition_name_fab));
     }
+
+    @Override
+    public void showEditBillNameDialog() {
+        mEditDialogFragment = new CommonInputDialogFragment();
+        mEditDialogFragment.setTitle(getString(R.string.edit_bill));
+        mEditDialogFragment.setHint(getString(R.string.bill_name));
+        mEditDialogFragment.setCallback(new CommonInputDialogFragment.CommonInputDialogCallback() {
+            @Override
+            public void onConfirmClick(String text) {
+                mBillDetailPresenter.onEditBillNameConfiemed(text);
+            }
+        });
+        if (!mEditDialogFragment.isVisible()) {
+            mEditDialogFragment.show(getSupportFragmentManager(), "");
+        }
+    }
+
+    @Override
+    public void dismissEditBillNameDialog() {
+        if (mEditDialogFragment != null && mEditDialogFragment.isVisible()) {
+            mEditDialogFragment.dismiss();
+        }
+    }
+
+    @Override
+    public void updateBillInfo() {
+//        getSupportActionBar().setTitle(mBillEntity.getBillTitle());
+        // TODO: 2016/9/26 Update the toolbar title
+//        mToolbar.setTitle(mBillEntity.getBillTitle());
+    }
+
 
     @Override
     public void showBillSelectionDialog(final LocalSongEntity songToBeAdd) {

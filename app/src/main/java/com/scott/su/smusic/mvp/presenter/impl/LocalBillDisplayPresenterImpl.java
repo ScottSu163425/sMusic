@@ -8,7 +8,7 @@ import android.view.View;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalBillDisplayPresenter;
-import com.scott.su.smusic.mvp.view.LocalSongBillDisplayView;
+import com.scott.su.smusic.mvp.view.LocalBillDisplayView;
 
 import java.util.List;
 
@@ -17,11 +17,11 @@ import java.util.List;
  * Created by asus on 2016/8/19.
  */
 public class LocalBillDisplayPresenterImpl implements LocalBillDisplayPresenter {
-    private LocalSongBillDisplayView mBillDisplayView;
+    private LocalBillDisplayView mBillDisplayView;
     private LocalBillModelImpl mBillModel;
 
-    public LocalBillDisplayPresenterImpl(LocalSongBillDisplayView localSongBillDisplayView) {
-        this.mBillDisplayView = localSongBillDisplayView;
+    public LocalBillDisplayPresenterImpl(LocalBillDisplayView localBillDisplayView) {
+        this.mBillDisplayView = localBillDisplayView;
         this.mBillModel = new LocalBillModelImpl();
     }
 

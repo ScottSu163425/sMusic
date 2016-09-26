@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
 import com.scott.su.smusic.constant.Constants;
@@ -27,6 +26,7 @@ import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.SdkUtil;
 
 public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbumDetailView {
@@ -130,9 +130,12 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
 
     @Override
     public void loadAlbumCover(String path) {
-        Glide.with(this)
-                .load(path)
-                .into(mAlbumCoverImageView);
+        ImageLoader.load(this,
+                path,
+                mAlbumCoverImageView,
+                R.color.place_holder_loading,
+                R.drawable.ic_cover_default_song_bill
+        );
     }
 
     @Override
@@ -149,7 +152,7 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
         goToWithSharedElements(intent, new View[]{mAlbumCoverImageView, mPlayFAB},
-        new String[]{getString(R.string.transition_name_cover), getString(R.string.transition_name_fab)});
+                new String[]{getString(R.string.transition_name_cover), getString(R.string.transition_name_fab)});
     }
 
     @Override
