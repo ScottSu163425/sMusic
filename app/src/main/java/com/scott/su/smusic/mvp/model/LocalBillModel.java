@@ -1,6 +1,7 @@
 package com.scott.su.smusic.mvp.model;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
@@ -52,5 +53,7 @@ public interface LocalBillModel {
     void deleteBillSong(Context context, LocalBillEntity billEntity, LocalSongEntity songEntity);
 
     void clearBillSongs(Context context, LocalBillEntity billEntity);
+
+    List<LocalBillEntity> searchBill(Context context,@NonNull String keyword);
 
 }

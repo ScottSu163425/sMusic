@@ -1,6 +1,7 @@
 package com.scott.su.smusic.mvp.model.impl;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.scott.su.smusic.R;
@@ -176,7 +177,7 @@ public class LocalBillModelImpl implements LocalBillModel {
         List<LocalSongEntity> result = new ArrayList<>();
         LocalBillEntity billEntity = getBill(context, billId);
 
-        if (billSongs == null || billEntity==null||billEntity.isBillEmpty()) {
+        if (billSongs == null || billEntity == null || billEntity.isBillEmpty()) {
             return null;
         }
 
@@ -281,6 +282,19 @@ public class LocalBillModelImpl implements LocalBillModel {
         for (LocalSongEntity songEntity : billSongs) {
             deleteBillSong(context, billEntity, songEntity);
         }
+    }
+
+    @Override
+    public List<LocalBillEntity> searchBill(Context context, @NonNull String keyword) {
+        List<LocalBillEntity> billEntities = getBills(context);
+        List<LocalBillEntity> result = new ArrayList<>();
+
+        for (LocalBillEntity billEntity : billEntities) {
+            if (billEntity.getBillTitle().contains(keyword)) {
+                result.add(billEntity);
+            }
+        }
+        return result;
     }
 
 

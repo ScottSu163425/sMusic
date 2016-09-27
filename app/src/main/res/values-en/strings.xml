@@ -20,7 +20,7 @@
     <string name="drawer_close">close</string>
 
     <string name="divider_artist_album_view_holder_local_song">-</string>
-    <string name="error_text_length_overflow">Beyong the max characters</string>
+    <string name="error_text_length_overflow">Beyong the max characters.</string>
     <string name="error_input_empty">The input is empty?</string>
     <string name="error_already_exist">Already exist</string>
     <string name="error_empty_bill">The bill is empty</string>

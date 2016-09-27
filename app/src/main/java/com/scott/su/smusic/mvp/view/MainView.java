@@ -16,7 +16,6 @@ public interface MainView extends BaseView ,LocalSongBottomSheetView{
 
     void showLocalSongBottomSheet(LocalSongEntity songEntity);
 
-
     void updateSongDisplay();
 
     void updateBillDisplay();
@@ -32,6 +31,7 @@ public interface MainView extends BaseView ,LocalSongBottomSheetView{
     void goToBillDetailWithSharedElement(LocalBillEntity entity, View sharedElement, String transitionName);
 
     void goToAlbumDetail(LocalAlbumEntity entity);
+
     void goToAlbumDetailWithSharedElement(LocalAlbumEntity entity, View sharedElement, String transitionName);
 
     void goToBillDetail(LocalBillEntity entity);

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
@@ -59,9 +60,9 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
 
     @Override
     public LocalAlbumEntity getLocalAlbum(Context context, long albumId) {
-        List<LocalAlbumEntity> albumEntities=getLocalAlbums(context);
-        for (LocalAlbumEntity albumEntity:albumEntities){
-            if (albumEntity.getAlbumId()==albumId){
+        List<LocalAlbumEntity> albumEntities = getLocalAlbums(context);
+        for (LocalAlbumEntity albumEntity : albumEntities) {
+            if (albumEntity.getAlbumId() == albumId) {
                 return albumEntity;
             }
         }
@@ -94,6 +95,21 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
             BitmapLruCache.getInstance().put(path, bitmap);
         }
         return bitmap;
+    }
+
+    @Override
+    public List<LocalAlbumEntity> searchLocalAlbum(Context context, @NonNull String keyword) {
+        List<LocalAlbumEntity> localAlbumEntities = getLocalAlbums(context);
+        List<LocalAlbumEntity> result = new ArrayList<>();
+
+        for (LocalAlbumEntity albumEntity : localAlbumEntities) {
+            if (albumEntity.getAlbumTitle().contains(keyword)
+                    || albumEntity.getAlbumTitle().contains(keyword)
+                    || albumEntity.getArtist().contains(keyword)) {
+                result.add(albumEntity);
+            }
+        }
+        return result;
     }
 
     @Override

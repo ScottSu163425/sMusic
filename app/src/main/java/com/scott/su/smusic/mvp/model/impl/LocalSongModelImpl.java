@@ -3,6 +3,7 @@ package com.scott.su.smusic.mvp.model.impl;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalSongModel;
@@ -95,6 +96,22 @@ public class LocalSongModelImpl implements LocalSongModel {
                         result.add(songEntity);
                     }
                 }
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<LocalSongEntity> searchLocalSong(Context context, @NonNull String keyword) {
+        List<LocalSongEntity> localSongEntities = getLocalSongs(context);
+        List<LocalSongEntity> result = new ArrayList<>();
+
+        for (LocalSongEntity songEntity : localSongEntities) {
+            if (songEntity.getTitle().contains(keyword)
+                    || songEntity.getTitle().contains(keyword)
+                    || songEntity.getAlbum().contains(keyword)
+                    || songEntity.getArtist().contains(keyword)) {
+                result.add(songEntity);
             }
         }
         return result;

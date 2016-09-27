@@ -95,6 +95,7 @@ public class MainActivity extends BaseActivity implements MainView {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_search_menu_main) {
 //            stopService(new Intent(this, MusicPlayService.class));
+            goTo(SearchActivity.class);
         }
         return true;
     }
