@@ -3,7 +3,6 @@ package com.scott.su.smusic.ui.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -37,7 +36,6 @@ import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.DialogUtil;
 import com.su.scott.slibrary.util.SdkUtil;
-import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -373,9 +371,9 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
 
 
     @Override
-    public void goToMusicPlayWithCoverSharedElement() {
+    public void goToMusicPlayWithCoverSharedElement(LocalSongEntity songEntity) {
         Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
-        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, getBillEntity().getLatestSong());
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mBillSongDisplayFragment.getDisplayDataList());
 
         goToWithSharedElements(intent,

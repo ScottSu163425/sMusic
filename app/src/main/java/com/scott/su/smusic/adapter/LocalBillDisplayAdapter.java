@@ -44,12 +44,12 @@ public class LocalBillDisplayAdapter extends BaseDisplayAdapter<LocalBillViewHol
         }
 
         ViewUtil.setText(viewHolder.getCountTextView(),
-                (entity.getBillSongs() == null ? 0 : entity.getBillSongs().size()) + " " + context.getString(R.string.unit_song), "");
+                (entity.isBillEmpty() ? 0 : entity.getBillSongIdsLongArray().length) + " " + context.getString(R.string.unit_song), "");
 
         String billCoverPath = "";
         if (!entity.isBillEmpty()) {
             billCoverPath = new LocalAlbumModelImpl().getAlbumCoverPath(context,
-                    entity.getLatestSong().getAlbumId());
+                    new LocalBillModelImpl().getBillSong(context, entity.getLatestSongId()).getAlbumId());
         }
         ImageLoader.load(context,
                 billCoverPath,

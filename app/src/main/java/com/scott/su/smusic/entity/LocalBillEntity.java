@@ -30,7 +30,7 @@ public class LocalBillEntity implements Parcelable {
     @Column(name = "billSongIds")
     private String billSongIds;
 
-    private List<LocalSongEntity> billSongs; //Songs in this bill;
+//    private List<LocalSongEntity> billSongs; //Songs in this bill;
 
 
     public LocalBillEntity() {
@@ -119,26 +119,24 @@ public class LocalBillEntity implements Parcelable {
         return idsLongArr;
     }
 
-    public List<LocalSongEntity> getBillSongs() {
-        //Keep billSongs not null;
-        if (billSongs == null) {
-            billSongs = new ArrayList<>();
-        }
-        return billSongs;
-    }
+//    public List<LocalSongEntity> getBillSongs() {
+//        //Keep billSongs not null;
+//        if (billSongs == null) {
+//            billSongs = new ArrayList<>();
+//        }
+//        return billSongs;
+//    }
 
-    public void setBillSongs(List<LocalSongEntity> billSongs) {
-        this.billSongs = billSongs;
-    }
+//    public void setBillSongs(List<LocalSongEntity> billSongs) {
+//        this.billSongs = billSongs;
+//    }
 
-    public LocalSongEntity getLatestSong() {
-        if (isBillEmpty()) {
-            return null;
-        }
-        // TODO: 2016/9/26 something wrong. 
-
-        return getBillSongs().get(getBillSongs().size() - 1);
-    }
+//    public LocalSongEntity getLatestSong() {
+//        if (isBillEmpty()) {
+//            return null;
+//        }
+//        return getBillSongs().get(getBillSongs().size() - 1);
+//    }
 
     public long getLatestSongId() {
         if (isBillEmpty()) {
@@ -162,7 +160,7 @@ public class LocalBillEntity implements Parcelable {
         dest.writeLong(this.billId);
         dest.writeString(this.billTitle);
         dest.writeString(this.billSongIds);
-        dest.writeTypedList(this.billSongs);
+//        dest.writeTypedList(this.billSongs);
     }
 
     protected LocalBillEntity(Parcel in) {
@@ -170,7 +168,7 @@ public class LocalBillEntity implements Parcelable {
         this.billId = in.readLong();
         this.billTitle = in.readString();
         this.billSongIds = in.readString();
-        this.billSongs = in.createTypedArrayList(LocalSongEntity.CREATOR);
+//        this.billSongs = in.createTypedArrayList(LocalSongEntity.CREATOR);
     }
 
     public static final Parcelable.Creator<LocalBillEntity> CREATOR = new Parcelable.Creator<LocalBillEntity>() {
@@ -192,7 +190,7 @@ public class LocalBillEntity implements Parcelable {
                 ", billId=" + billId +
                 ", billTitle='" + billTitle + '\'' +
                 ", billSongIds='" + billSongIds + '\'' +
-                ", billSongs=" + billSongs +
+//                ", billSongs=" + billSongs +
                 '}';
     }
 }

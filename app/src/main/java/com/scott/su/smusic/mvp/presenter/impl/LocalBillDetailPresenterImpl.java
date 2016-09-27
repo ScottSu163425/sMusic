@@ -48,7 +48,10 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
 
     @Override
     public void onPlayFabClick() {
-        mBillDetailView.goToMusicPlayWithCoverSharedElement();
+        mBillDetailView.goToMusicPlayWithCoverSharedElement(
+                mBillModel.getBillSong(mBillDetailView.getViewContext(),
+                        mBillDetailView.getBillEntity().getLatestSongId())
+        );
     }
 
     @Override
@@ -157,7 +160,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
                 billEntity.getBillId()));
         mBillDetailView.updateBillInfo();
         mBillDetailView.dismissEditBillNameDialog();
-        mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(),mBillDetailView.getViewContext().getString(R.string.edit_successfully));
+        mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), mBillDetailView.getViewContext().getString(R.string.edit_successfully));
         AppConfig.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
     }
 
@@ -211,7 +214,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     @Override
     public void onBillSongItemClick(View view, int position, LocalSongEntity entity) {
         if (position == 0) {
-            mBillDetailView.goToMusicPlayWithCoverSharedElement();
+            mBillDetailView.goToMusicPlayWithCoverSharedElement(entity);
         } else {
             mBillDetailView.goToMusicPlay(entity);
         }
@@ -243,7 +246,8 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     private void loadCover(boolean needReveal) {
         String path = mBillDetailView.getBillEntity().isBillEmpty() ? "" :
                 mAlbumModel.getAlbumCoverPath(mBillDetailView.getViewContext(),
-                        mBillDetailView.getBillEntity().getLatestSong().getAlbumId());
+                        mBillModel.getBillSong(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity().getLatestSongId())
+                                .getAlbumId());
         mBillDetailView.loadCover(path, needReveal);
     }
 
@@ -291,13 +295,13 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
 
     @Override
     public void onBottomSheetDeleteConfirmed(LocalSongEntity songEntity) {
-        LocalBillEntity billBeforeDelete = mBillDetailView.getBillEntity();
+       long lastSongIDBeforeDelete = mBillDetailView.getBillEntity().getLatestSongId();
         mBillModel.deleteBillSong(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity(), songEntity);
         LocalBillEntity billAfterDelete = mBillModel.getBill(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity().getBillId());
         mBillDetailView.refreshBillSongDisplay(billAfterDelete);
         mBillDetailView.setBillEntity(billAfterDelete);
         //Only when the deleted song is the latest song of the bill,should the bill cover perform reveal animation;
-        loadCover(billBeforeDelete.getLatestSong().getSongId() == songEntity.getSongId());
+        loadCover(lastSongIDBeforeDelete == songEntity.getSongId());
         AppConfig.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
 
 //        mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(),

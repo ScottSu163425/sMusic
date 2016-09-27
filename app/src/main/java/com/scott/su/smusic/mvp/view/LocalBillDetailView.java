@@ -35,12 +35,14 @@ public interface LocalBillDetailView extends BaseView,LocalSongBottomSheetView {
 
     void showDeleteBillSuccessfully();
 
-    void goToMusicPlayWithCoverSharedElement();
+    void goToMusicPlayWithCoverSharedElement(LocalSongEntity entity);
 
     void goToMusicPlay(LocalSongEntity entity);
 
     void showEditBillNameDialog();
+
     void dismissEditBillNameDialog();
+
     void updateBillInfo();
 
 }
