@@ -1,8 +1,8 @@
 package com.scott.su.smusic.ui.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Explode;
@@ -19,16 +19,19 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
+import com.scott.su.smusic.mvp.presenter.SearchPresenter;
+import com.scott.su.smusic.mvp.presenter.impl.SearchPresenterImpl;
+import com.scott.su.smusic.mvp.view.SearchView;
 import com.su.scott.slibrary.activity.BaseActivity;
-import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.SdkUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends BaseActivity implements SearchView {
+    private SearchPresenter mSearchPresenter;
     private EditText mEditText;
-    private Button mSearchButton;
+    private AppCompatImageButton mSearchButton;
     private RecyclerView mResultRecyclerView;
     private SearchResultAdapter mResultAdapter;
 
@@ -36,10 +39,9 @@ public class SearchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        initPreData();
-        initView();
-        initData();
-        initListener();
+
+        mSearchPresenter = new SearchPresenterImpl(this);
+        mSearchPresenter.onViewFirstTimeCreated();
     }
 
     @Override
@@ -61,8 +63,8 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        mEditText = (EditText) findViewById(R.id.et);
-        mSearchButton = (Button) findViewById(R.id.btn_search);
+        mEditText = (EditText) findViewById(R.id.et_input_search);
+        mSearchButton = (AppCompatImageButton) findViewById(R.id.btn_search_search);
         mResultRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_result_search);
     }
 
@@ -104,27 +106,55 @@ public class SearchActivity extends BaseActivity {
         mResultAdapter.setOnSearchResultClickListener(new SearchResultAdapter.OnSearchResultClickListener() {
             @Override
             public void onLocalSongClick(LocalSongEntity entity, View sharedElement, String transitionName) {
-
+                mSearchPresenter.onLocalSongClick(entity, sharedElement, transitionName);
             }
 
             @Override
             public void onLocalSongMoreClick(LocalSongEntity entity) {
-
+                mSearchPresenter.onLocalSongMoreClick(entity);
             }
 
             @Override
             public void onLocalBillClick(LocalBillEntity entity, View sharedElement, String transitionName) {
-                Intent intent = new Intent(SearchActivity.this, LocalBillDetailActivity.class);
-                intent.putExtra(Constants.KEY_EXTRA_BILL, entity);
-                goToWithSharedElement(intent, sharedElement, transitionName);
+                mSearchPresenter.onLocalBillClick(entity, sharedElement, transitionName);
             }
 
             @Override
             public void onLocalAlbumClick(LocalAlbumEntity entity, View sharedElement, String transitionName) {
-                Intent intent = new Intent(SearchActivity.this, LocalAlbumDetailActivity.class);
-                intent.putExtra(Constants.KEY_EXTRA_ALBUM, entity);
-                goToWithSharedElement(intent, sharedElement, transitionName);
+                mSearchPresenter.onLocalAlbumClick(entity, sharedElement, transitionName);
             }
         });
+    }
+
+    @Override
+    public void goToMusicWithSharedElement(LocalSongEntity entity, View sharedElement, String transitionName) {
+        ArrayList<LocalSongEntity> songEntities = new ArrayList<>();
+        songEntities.add(entity);
+
+        Intent intent = new Intent(SearchActivity.this, MusicPlayActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, entity);
+        intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, songEntities);
+        goToWithSharedElement(intent, sharedElement, transitionName);
+    }
+
+    @Override
+    public void goToBillDetailWithSharedElement(LocalBillEntity entity, View sharedElement, String transitionName) {
+        Intent intent = new Intent(SearchActivity.this, LocalBillDetailActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_BILL, entity);
+        goToWithSharedElement(intent, sharedElement, transitionName);
+    }
+
+    @Override
+    public void goToAlbumDetail(LocalAlbumEntity entity) {
+        Intent intent = new Intent(SearchActivity.this, LocalAlbumDetailActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_ALBUM, entity);
+        goTo(intent);
+    }
+
+    @Override
+    public void goToAlbumDetailWithSharedElement(LocalAlbumEntity entity, View sharedElement, String transitionName) {
+        Intent intent = new Intent(SearchActivity.this, LocalAlbumDetailActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_ALBUM, entity);
+        goToWithSharedElement(intent, sharedElement, transitionName);
     }
 }
