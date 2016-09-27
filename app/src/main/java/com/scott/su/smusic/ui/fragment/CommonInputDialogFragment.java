@@ -74,6 +74,12 @@ public class CommonInputDialogFragment extends DialogFragment {
                         return;
                     }
 
+                    if (input.length()> mInputLayout.getCounterMaxLength()) {
+                        mInputLayout.setErrorEnabled(true);
+                        mInputLayout.setError(getResources().getString(R.string.error_text_length_overflow));
+                        return;
+                    }
+
                     if (mCallback != null) {
                         mCallback.onConfirmClick(input);
                     }

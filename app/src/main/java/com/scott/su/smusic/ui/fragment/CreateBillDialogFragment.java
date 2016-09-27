@@ -66,6 +66,11 @@ public class CreateBillDialogFragment extends DialogFragment {
                         mInputLayout.setError(getResources().getString(R.string.error_input_empty));
                         return;
                     }
+                    if (input.length()> mInputLayout.getCounterMaxLength()) {
+                        mInputLayout.setErrorEnabled(true);
+                        mInputLayout.setError(getResources().getString(R.string.error_text_length_overflow));
+                        return;
+                    }
 
                     if (mCallback != null) {
                         mCallback.onConfirmClick(input);

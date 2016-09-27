@@ -48,7 +48,6 @@ import java.util.List;
 public class LocalBillDetailActivity extends BaseActivity implements LocalBillDetailView {
     private LocalBillDetailPresenter mBillDetailPresenter;
     private LocalBillEntity mBillEntity;
-    private Toolbar mToolbar;
     private ImageView mCoverImageView;
     private LocalSongDisplayFragment mBillSongDisplayFragment;
     private FloatingActionButton mPlayFAB;
@@ -66,7 +65,6 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
         mBillDetailPresenter = new LocalBillDetailPresenterImpl(this);
         mBillDetailPresenter.onViewFirstTimeCreated();
 
-//        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout_bill_detail);
         if (SdkUtil.isLolipopOrLatter()) {
             getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
                 @Override
@@ -101,7 +99,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
 
     @Override
     public View getSnackbarParent() {
-        return mToolbar;
+        return mCollapsingToolbarLayout;
     }
 
     @Override
@@ -111,14 +109,14 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
 
     @Override
     public void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_local_bill_detail);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_local_bill_detail);
         if (new LocalBillModelImpl().isDefaultBill(mBillEntity)) {
-            mToolbar.setTitle(getString(R.string.my_favourite));
+            toolbar.setTitle(getString(R.string.my_favourite));
         } else {
-            mToolbar.setTitle(mBillEntity.getBillTitle());
+            toolbar.setTitle(mBillEntity.getBillTitle());
         }
-        setSupportActionBar(mToolbar);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LocalBillDetailActivity.this.onBackPressed();
@@ -128,6 +126,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
 
     @Override
     public void initView() {
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout_bill_detail);
         mCoverImageView = (ImageView) findViewById(R.id.iv_cover_local_bill_detail);
         mPlayFAB = (FloatingActionButton) findViewById(R.id.fab_local_bill_detail);
 
@@ -418,9 +417,8 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
 
     @Override
     public void updateBillInfo() {
-//        getSupportActionBar().setTitle(mBillEntity.getBillTitle());
         // TODO: 2016/9/26 Update the toolbar title
-//        mToolbar.setTitle(mBillEntity.getBillTitle());
+        mCollapsingToolbarLayout.setTitle(mBillEntity.getBillTitle());
     }
 
 
