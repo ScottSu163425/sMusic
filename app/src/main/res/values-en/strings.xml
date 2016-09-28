@@ -60,5 +60,6 @@
     <string name="edit_bill">Edit Bill</string>
     <string name="edit_successfully">Edit successfully</string>
     <string name="empty_keyword">The keyword is empty?</string>
+    <string name="song_bill_album">song/bill/album</string>
 
 </resources>

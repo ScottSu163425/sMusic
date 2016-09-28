@@ -30,7 +30,7 @@ public class SearchActivity extends BaseActivity implements SearchView {
     private SearchPresenter mSearchPresenter;
     private View mLoadingLayout, mEmptyLayout;
     private EditText mEditText;
-    private AppCompatImageButton mSearchButton;
+    private AppCompatImageButton mSearchButton, mBackButton;
     private RecyclerView mResultRecyclerView;
     private SearchResultAdapter mResultAdapter;
 
@@ -66,6 +66,7 @@ public class SearchActivity extends BaseActivity implements SearchView {
         mEmptyLayout = findViewById(R.id.layout_empty_search);
         mEditText = (EditText) findViewById(R.id.et_input_search);
         mSearchButton = (AppCompatImageButton) findViewById(R.id.btn_search_search);
+        mBackButton = (AppCompatImageButton) findViewById(R.id.btn_back_search);
         mResultRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_result_search);
     }
 
@@ -78,12 +79,21 @@ public class SearchActivity extends BaseActivity implements SearchView {
 
     @Override
     public void initListener() {
+        mBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SearchActivity.this.onBackPressed();
+            }
+        });
+
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mSearchPresenter.onSearchClick(mEditText.getText().toString().trim());
             }
         });
+
+
         mResultAdapter.setOnSearchResultClickListener(new SearchResultAdapter.OnSearchResultClickListener() {
             @Override
             public void onLocalSongClick(LocalSongEntity entity, View sharedElement, String transitionName) {

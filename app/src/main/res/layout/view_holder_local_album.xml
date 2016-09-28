@@ -9,7 +9,6 @@
     android:transitionName="@string/transition_name_card"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:background="@color/backgroundContent"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
     android:orientation="horizontal">

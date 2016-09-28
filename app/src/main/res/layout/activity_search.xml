@@ -39,10 +39,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatImageButton
+                android:id="@+id/btn_back_search"
                 style="@style/TextAppearanceButton"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
@@ -56,11 +58,13 @@
             <EditText
                 android:id="@+id/et_input_search"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
+                android:background="@null"
+                android:hint="@string/song_bill_album"
+                android:singleLine="true"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/text_size_title" />
+                android:textSize="@dimen/text_size_subhead" />
 
             <android.support.v7.widget.AppCompatImageButton
                 android:id="@+id/btn_search_search"
@@ -87,8 +91,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_result_search"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never" />
+            android:layout_height="match_parent" />
 
         <include
             android:id="@+id/layout_loading_search"
