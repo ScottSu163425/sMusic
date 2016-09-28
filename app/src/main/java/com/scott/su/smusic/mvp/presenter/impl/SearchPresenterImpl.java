@@ -1,6 +1,7 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.scott.su.smusic.R;
@@ -59,9 +60,12 @@ public class SearchPresenterImpl implements SearchPresenter {
     }
 
     @Override
-    public void search(final String keyword) {
-        List result = new ArrayList();
-
+    public void onSearchClick(final String keyword) {
+        if(TextUtils.isEmpty(keyword)){
+            mSearchView.showSnackbarShort(mSearchView.getSnackbarParent(),mSearchView.getViewContext().getString(R.string.empty_keyword));
+            return;
+        }
+            
         new AsyncTask<Void, Void, List[]>() {
             @Override
             protected void onPreExecute() {

@@ -13,7 +13,7 @@ import com.su.scott.slibrary.presenter.BasePresenter;
 
 public interface SearchPresenter extends BasePresenter{
 
-    void search(String keyword);
+    void onSearchClick(String keyword);
 
     void onLocalSongClick(LocalSongEntity entity, View sharedElement, String transitionName);
 

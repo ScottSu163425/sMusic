@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Explode;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.scott.su.smusic.R;
@@ -16,14 +15,10 @@ import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
-import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
-import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.SearchPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.SearchPresenterImpl;
 import com.scott.su.smusic.mvp.view.SearchView;
 import com.su.scott.slibrary.activity.BaseActivity;
-import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.ViewUtil;
@@ -86,7 +81,7 @@ public class SearchActivity extends BaseActivity implements SearchView {
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mSearchPresenter.search(mEditText.getText().toString().trim());
+                mSearchPresenter.onSearchClick(mEditText.getText().toString().trim());
             }
         });
         mResultAdapter.setOnSearchResultClickListener(new SearchResultAdapter.OnSearchResultClickListener() {

@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.config.AppConfig;
 import com.su.scott.slibrary.fragment.BaseFragment;
+import com.su.scott.slibrary.util.ScreenUtil;
 
 /**
  * Created by Administrator on 2016/9/8.
@@ -31,6 +33,7 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
         initData();
         initListener();
 
+        mRootView.setLayoutParams(new FrameLayout.LayoutParams((int)(ScreenUtil.getScreenWidth(getActivity()) * 0.85), ViewGroup.LayoutParams.MATCH_PARENT));
         return mRootView;
     }
 
