@@ -7,11 +7,19 @@ import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.view.BaseView;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/9/27.
  */
 
 public interface SearchView extends BaseView {
+    void showLoading();
+
+    void showResult(List result);
+
+    void showEmpty();
+
     void goToMusicWithSharedElement(LocalSongEntity entity, View sharedElement, String transitionName);
 
     void goToBillDetailWithSharedElement(LocalBillEntity entity, View sharedElement, String transitionName);

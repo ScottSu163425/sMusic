@@ -23,13 +23,17 @@ import com.scott.su.smusic.mvp.presenter.SearchPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.SearchPresenterImpl;
 import com.scott.su.smusic.mvp.view.SearchView;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.util.AnimUtil;
+import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.SdkUtil;
+import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchActivity extends BaseActivity implements SearchView {
     private SearchPresenter mSearchPresenter;
+    private View mLoadingLayout, mEmptyLayout;
     private EditText mEditText;
     private AppCompatImageButton mSearchButton;
     private RecyclerView mResultRecyclerView;
@@ -63,6 +67,8 @@ public class SearchActivity extends BaseActivity implements SearchView {
 
     @Override
     public void initView() {
+        mLoadingLayout = findViewById(R.id.layout_loading_search);
+        mEmptyLayout = findViewById(R.id.layout_empty_search);
         mEditText = (EditText) findViewById(R.id.et_input_search);
         mSearchButton = (AppCompatImageButton) findViewById(R.id.btn_search_search);
         mResultRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_result_search);
@@ -80,27 +86,7 @@ public class SearchActivity extends BaseActivity implements SearchView {
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List result = new ArrayList();
-                List<LocalAlbumEntity> localAlbumEntities = new LocalAlbumModelImpl().searchLocalAlbum(SearchActivity.this, mEditText.getText().toString().trim());
-                List<LocalSongEntity> localSongEntities = new LocalSongModelImpl().searchLocalSong(SearchActivity.this, mEditText.getText().toString().trim());
-                List<LocalBillEntity> localBillEntities = new LocalBillModelImpl().searchBill(SearchActivity.this, mEditText.getText().toString().trim());
-
-                if (!localAlbumEntities.isEmpty()) {
-                    result.add(getString(R.string.album));
-                    result.addAll(localAlbumEntities);
-                }
-
-                if (!localSongEntities.isEmpty()) {
-                    result.add(getString(R.string.local_music));
-                    result.addAll(localSongEntities);
-                }
-
-                if (!localBillEntities.isEmpty()) {
-                    result.add(getString(R.string.local_bill));
-                    result.addAll(localBillEntities);
-                }
-                mResultAdapter.setResult(result);
-                mResultAdapter.notifyDataSetChanged();
+                mSearchPresenter.search(mEditText.getText().toString().trim());
             }
         });
         mResultAdapter.setOnSearchResultClickListener(new SearchResultAdapter.OnSearchResultClickListener() {
@@ -124,6 +110,28 @@ public class SearchActivity extends BaseActivity implements SearchView {
                 mSearchPresenter.onLocalAlbumClick(entity, sharedElement, transitionName);
             }
         });
+    }
+
+    @Override
+    public void showLoading() {
+        ViewUtil.setViewVisiable(mLoadingLayout);
+        ViewUtil.setViewGone(mEmptyLayout);
+        ViewUtil.setViewGone(mResultRecyclerView);
+    }
+
+    @Override
+    public void showResult(List result) {
+        mResultAdapter.setResult(result);
+        mResultAdapter.notifyDataSetChanged();
+        ViewUtil.setViewGone(mLoadingLayout);
+        ViewUtil.setViewGone(mEmptyLayout);
+        CirclarRevealUtil.revealIn(mResultRecyclerView, CirclarRevealUtil.DIRECTION.CENTER_TOP);
+    }
+
+    @Override
+    public void showEmpty() {
+        ViewUtil.setViewGone(mLoadingLayout);
+        ViewUtil.setViewVisiable(mEmptyLayout);
     }
 
     @Override

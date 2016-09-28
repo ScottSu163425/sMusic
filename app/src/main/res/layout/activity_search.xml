@@ -10,63 +10,95 @@
     tools:context="com.scott.su.smusic.ui.activity.SearchActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
 
-
         <android.support.v7.widget.Toolbar
-            android:id="@+id/tool_bar_news_detail"
+            android:id="@+id/tool_bar_search"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:navigationIcon="?attr/homeAsUpIndicator"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:theme="@style/AppTheme.AppBarOverlay">
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-
-    <FrameLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_xs"
+        android:layout_marginRight="@dimen/margin_xs"
+        android:translationZ="@dimen/margin_xs"
+        app:cardElevation="@dimen/cardview_default_elevation"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|right">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_result_search"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_xs">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:layout_margin="@dimen/margin_xxs">
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageButton
+                style="@style/TextAppearanceButton"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/selector_transparent_half_light"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="@dimen/margin_xs"
+                android:src="@drawable/ic_arrow_back_grey600_24dp"
+                android:text="search"
+                android:textColor="@color/textColorWhite" />
 
             <EditText
                 android:id="@+id/et_input_search"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/text_size_title" />
 
             <android.support.v7.widget.AppCompatImageButton
                 android:id="@+id/btn_search_search"
                 style="@style/TextAppearanceButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_transparent_half_dark"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/selector_transparent_half_light"
+                android:foreground="?attr/selectableItemBackground"
                 android:padding="@dimen/margin_xs"
                 android:src="@drawable/ic_search_grey600_24dp"
                 android:text="search"
                 android:textColor="@color/textColorWhite" />
         </LinearLayout>
-        </android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingTop="30dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_result_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
+
+        <include
+            android:id="@+id/layout_loading_search"
+            layout="@layout/display_loading_default"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/layout_empty_search"
+            layout="@layout/display_empty_local_song"
+            android:visibility="gone" />
     </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

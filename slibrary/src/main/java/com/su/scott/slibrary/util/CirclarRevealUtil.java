@@ -2,12 +2,14 @@ package com.su.scott.slibrary.util;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.annotation.TargetApi;
 import android.graphics.Rect;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -34,7 +36,7 @@ public class CirclarRevealUtil {
         REVEAL_OUT,
     }
 
-    public static final long DURATION_REVEAL_LONG= 600;
+    public static final long DURATION_REVEAL_LONG = 600;
     public static final long DURATION_REVEAL_DEFAULT = 400;
     public static final long DURATION_REVEAL_SHORT = 250;
 
@@ -42,9 +44,9 @@ public class CirclarRevealUtil {
     public static Animator createReveal(@NonNull View view, DIRECTION direction, ACTION action) {
         return createCirclarReveal(view, direction, action);
     }
-
+    
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void revealIn(@NonNull View view, DIRECTION direction ) {
+    public static void revealIn(@NonNull View view, DIRECTION direction) {
         revealIn(view, direction, DURATION_REVEAL_DEFAULT, null, null);
     }
 
@@ -59,28 +61,33 @@ public class CirclarRevealUtil {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void revealOut(@NonNull View view, DIRECTION direction,boolean autoHide) {
-        revealOut(view, direction, DURATION_REVEAL_DEFAULT, null, null,autoHide);
+    public static void revealOut(@NonNull View view, DIRECTION direction, boolean autoHide) {
+        revealOut(view, direction, DURATION_REVEAL_DEFAULT, null, null, autoHide);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void revealOut(@NonNull View view, DIRECTION direction, long duration,boolean autoHide) {
-        revealOut(view, direction, duration, null, null,autoHide);
+    public static void revealOut(@NonNull View view, DIRECTION direction, long duration, boolean autoHide) {
+        revealOut(view, direction, duration, null, null, autoHide);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void revealOut(@NonNull View view, DIRECTION direction, long duration, @Nullable TimeInterpolator interpolator,boolean autoHide) {
-        revealOut(view, direction, duration, interpolator, null,autoHide);
+    public static void revealOut(@NonNull View view, DIRECTION direction, boolean autoHide, @Nullable final AnimUtil.SimpleAnimListener listener) {
+        revealOut(view, direction, DURATION_REVEAL_DEFAULT, null, listener, autoHide);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void revealIn(@NonNull View view, DIRECTION direction, long duration, @Nullable TimeInterpolator interpolator, @Nullable final AnimUtil.SimpleAnimListener listener ) {
-        reveal(view, direction, ACTION.REVEAL_IN, duration, interpolator, listener,false);
+    public static void revealOut(@NonNull View view, DIRECTION direction, long duration, @Nullable TimeInterpolator interpolator, boolean autoHide) {
+        revealOut(view, direction, duration, interpolator, null, autoHide);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void revealOut(@NonNull View view, DIRECTION direction, long duration, @Nullable TimeInterpolator interpolator, @Nullable final AnimUtil.SimpleAnimListener listener,boolean autoHide) {
-        reveal(view, direction, ACTION.REVEAL_OUT, duration, interpolator, listener,autoHide);
+    public static void revealIn(@NonNull View view, DIRECTION direction, long duration, @Nullable TimeInterpolator interpolator, @Nullable final AnimUtil.SimpleAnimListener listener) {
+        reveal(view, direction, ACTION.REVEAL_IN, duration, interpolator, listener, false);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void revealOut(@NonNull View view, DIRECTION direction, long duration, @Nullable TimeInterpolator interpolator, @Nullable final AnimUtil.SimpleAnimListener listener, boolean autoHide) {
+        reveal(view, direction, ACTION.REVEAL_OUT, duration, interpolator, listener, autoHide);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -120,6 +127,9 @@ public class CirclarRevealUtil {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private static Animator createCirclarReveal(View view, DIRECTION direction, ACTION action) {
+        if (!SdkUtil.isLolipopOrLatter()) {
+            return ObjectAnimator.ofFloat(view, "alpha", 1, 1);
+        }
         int cx = 0;
         int cy = 0;
         float startRadius = 0;

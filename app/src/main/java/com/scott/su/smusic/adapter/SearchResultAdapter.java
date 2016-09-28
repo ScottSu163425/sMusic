@@ -18,6 +18,7 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.su.scott.slibrary.manager.ImageLoader;
+import com.su.scott.slibrary.util.DeviceUtil;
 import com.su.scott.slibrary.util.ScreenUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
@@ -148,7 +149,13 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
                     }
                 }
             });
-            viewHolder.itemView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams((int) context.getResources().getDimension(R.dimen.size_image_view_holder_local_bill),
+                    (int) context.getResources().getDimension(R.dimen.size_image_view_holder_local_bill));
+            layoutParams.setMargins((int) context.getResources().getDimension(R.dimen.margin_xs),
+                    (int) context.getResources().getDimension(R.dimen.margin_xs),
+                    (int) context.getResources().getDimension(R.dimen.margin_xs),
+                    (int) context.getResources().getDimension(R.dimen.margin_xs));
+            viewHolder.itemView.setLayoutParams(layoutParams);
         } else if (viewType == VIEW_TYPE_LOCAL_ALBUM) {
             final LocalAlbumViewHolder viewHolder = (LocalAlbumViewHolder) holder;
             final LocalAlbumEntity entity = (LocalAlbumEntity) result.get(position);
