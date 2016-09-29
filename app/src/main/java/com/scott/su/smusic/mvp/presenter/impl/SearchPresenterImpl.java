@@ -61,11 +61,11 @@ public class SearchPresenterImpl implements SearchPresenter {
 
     @Override
     public void onSearchClick(final String keyword) {
-        if(TextUtils.isEmpty(keyword)){
-            mSearchView.showSnackbarShort(mSearchView.getSnackbarParent(),mSearchView.getViewContext().getString(R.string.empty_keyword));
+        if (TextUtils.isEmpty(keyword)) {
+            mSearchView.showSnackbarShort(mSearchView.getSnackbarParent(), mSearchView.getViewContext().getString(R.string.empty_keyword));
             return;
         }
-            
+
         new AsyncTask<Void, Void, List[]>() {
             @Override
             protected void onPreExecute() {
@@ -75,13 +75,13 @@ public class SearchPresenterImpl implements SearchPresenter {
 
             @Override
             protected List[] doInBackground(Void... voids) {
-                List<LocalAlbumEntity> localAlbumEntities = mLocalAlbumModel.searchLocalAlbum(mSearchView.getViewContext(), keyword);
                 List<LocalSongEntity> localSongEntities = mLocalSongModel.searchLocalSong(mSearchView.getViewContext(), keyword);
                 List<LocalBillEntity> localBillEntities = mLocalBillModel.searchBill(mSearchView.getViewContext(), keyword);
+                List<LocalAlbumEntity> localAlbumEntities = mLocalAlbumModel.searchLocalAlbum(mSearchView.getViewContext(), keyword);
                 List[] result = new List[3];
-                result[0] = localAlbumEntities;
-                result[1] = localSongEntities;
-                result[2] = localBillEntities;
+                result[0] = localSongEntities;
+                result[1] = localBillEntities;
+                result[2] = localAlbumEntities;
 
                 return result;
             }
@@ -90,15 +90,10 @@ public class SearchPresenterImpl implements SearchPresenter {
             protected void onPostExecute(List[] lists) {
                 super.onPostExecute(lists);
 
-                List<LocalAlbumEntity> localAlbumEntities = lists[0];
-                List<LocalSongEntity> localSongEntities = lists[1];
-                List<LocalBillEntity> localBillEntities = lists[2];
+                List<LocalSongEntity> localSongEntities = lists[0];
+                List<LocalBillEntity> localBillEntities = lists[1];
+                List<LocalAlbumEntity> localAlbumEntities = lists[2];
                 List result = new ArrayList();
-
-                if (!localAlbumEntities.isEmpty()) {
-                    result.add(mSearchView.getViewContext().getString(R.string.album));
-                    result.addAll(localAlbumEntities);
-                }
 
                 if (!localSongEntities.isEmpty()) {
                     result.add(mSearchView.getViewContext().getString(R.string.local_music));
@@ -108,6 +103,11 @@ public class SearchPresenterImpl implements SearchPresenter {
                 if (!localBillEntities.isEmpty()) {
                     result.add(mSearchView.getViewContext().getString(R.string.local_bill));
                     result.addAll(localBillEntities);
+                }
+
+                if (!localAlbumEntities.isEmpty()) {
+                    result.add(mSearchView.getViewContext().getString(R.string.album));
+                    result.addAll(localAlbumEntities);
                 }
 
                 if (result.isEmpty()) {

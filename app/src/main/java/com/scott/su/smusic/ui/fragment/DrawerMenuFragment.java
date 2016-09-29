@@ -33,7 +33,7 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
         initData();
         initListener();
 
-        mRootView.setLayoutParams(new FrameLayout.LayoutParams((int)(ScreenUtil.getScreenWidth(getActivity()) * 0.85), ViewGroup.LayoutParams.MATCH_PARENT));
+        mRootView.setLayoutParams(new FrameLayout.LayoutParams((int)(ScreenUtil.getScreenWidth(getActivity()) * 0.8), ViewGroup.LayoutParams.MATCH_PARENT));
         return mRootView;
     }
 

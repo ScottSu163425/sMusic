@@ -64,6 +64,7 @@
     <string name="edit_bill">编辑歌单</string>
     <string name="edit_successfully">修改成功</string>
     <string name="empty_keyword">你输入的关键字是空的?</string>
+    <string name="song_bill_album">歌曲/歌单/专辑</string>
 
 
 </resources>

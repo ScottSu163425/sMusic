@@ -277,7 +277,7 @@
 
     <!--basic-->
     <color name="background">#f8f8f8</color>
-    <color name="backgroundContent">#ffffff</color>
+    <color name="backgroundContent">#deffffff</color>
     <color name="transparent">#00ffffff</color>
     <color name="selecotor_half_dark">#30000000</color>
     <color name="selecotor_half_light">#30ffffff</color>
@@ -288,7 +288,7 @@
     <color name="textColorTertiary">#8a000000</color>
     <color name="textColorSecondary">#8a000000</color>
     <color name="textColorPrimary">#de000000</color>
-    <color name="textColorWhite">#ffffffff</color>
+    <color name="textColorWhite">#deffffff</color>
     <color name="textColorWhiteSecondary">#8affffff</color>
 
     <color name="status_bar">#20000000</color>

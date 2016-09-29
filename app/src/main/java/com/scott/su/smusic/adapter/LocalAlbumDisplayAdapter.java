@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.holder.LocalAlbumViewHolder;
@@ -19,6 +21,7 @@ import java.util.List;
  * Created by asus on 2016/8/20.
  */
 public class LocalAlbumDisplayAdapter extends BaseDisplayAdapter<LocalAlbumViewHolder, LocalAlbumEntity> {
+
 
     public LocalAlbumDisplayAdapter(Activity context) {
         super(context);
