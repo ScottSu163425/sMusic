@@ -276,8 +276,8 @@
     <color name="md_blue_grey_900">#263238</color>
 
     <!--basic-->
-    <color name="background">#f8f8f8</color>
-    <color name="backgroundContent">#deffffff</color>
+    <color name="background">#efefef</color>
+    <color name="backgroundContent">#fefefe</color>
     <color name="transparent">#00ffffff</color>
     <color name="selecotor_half_dark">#30000000</color>
     <color name="selecotor_half_light">#30ffffff</color>
