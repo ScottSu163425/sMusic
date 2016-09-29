@@ -121,12 +121,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
             final LocalBillViewHolder viewHolder = (LocalBillViewHolder) holder;
             final LocalBillEntity entity = (LocalBillEntity) result.get(position);
 
-            if (new LocalBillModelImpl().isDefaultBill(entity)) {
-                ViewUtil.setText(viewHolder.getTitleTextView(), context.getString(R.string.my_favourite), "");
-            } else {
-                ViewUtil.setText(viewHolder.getTitleTextView(), entity.getBillTitle(), "");
-            }
-
+            ViewUtil.setText(viewHolder.getTitleTextView(), entity.getBillTitle(), "");
             ViewUtil.setText(viewHolder.getCountTextView(),
                     (entity.isBillEmpty() ? 0 : entity.getBillSongIdsLongArray().length) + " " + context.getString(R.string.unit_song), "");
 

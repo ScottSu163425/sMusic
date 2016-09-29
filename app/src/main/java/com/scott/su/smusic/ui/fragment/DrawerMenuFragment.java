@@ -23,6 +23,8 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
     private SwitchCompat mNightModeSwitch, mLanguageModeSwitch;
     private DrawerMenuCallback mMenuCallback;
 
+    public static final float PERCENTAGE_OF_SCREEN_WIDTH = 0.8f;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,7 +35,8 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
         initData();
         initListener();
 
-        mRootView.setLayoutParams(new FrameLayout.LayoutParams((int)(ScreenUtil.getScreenWidth(getActivity()) * 0.8), ViewGroup.LayoutParams.MATCH_PARENT));
+        //Make the width of drawer menu is 80% of the screen width.
+        mRootView.setLayoutParams(new FrameLayout.LayoutParams((int) (ScreenUtil.getScreenWidth(getActivity()) * PERCENTAGE_OF_SCREEN_WIDTH), ViewGroup.LayoutParams.MATCH_PARENT));
         return mRootView;
     }
 

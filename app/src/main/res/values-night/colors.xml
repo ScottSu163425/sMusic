@@ -8,8 +8,8 @@
     <color name="text_tab_selected">#ffffff</color>
     <color name="indicator_tab_normal">#FF4081</color>
 
-    <color name="fab_background_tint">#3F51B5</color>
-    <color name="fab_ripple_color">#2a36b1</color>
+    <color name="impacted_color">#3F51B5</color>
+    <color name="impacted_color_dark">#2a36b1</color>
 
     <color name="place_holder_loading">@color/md_grey_400</color>
     <color name="place_holder_error">@color/md_grey_800</color>

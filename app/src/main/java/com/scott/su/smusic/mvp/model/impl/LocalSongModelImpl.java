@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalSongModel;
+import com.su.scott.slibrary.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,12 +108,19 @@ public class LocalSongModelImpl implements LocalSongModel {
         List<LocalSongEntity> result = new ArrayList<>();
 
         for (LocalSongEntity songEntity : localSongEntities) {
-            if (songEntity.getTitle().contains(keyword)
-                    || songEntity.getTitle().contains(keyword)
-                    || songEntity.getAlbum().contains(keyword)
-                    || songEntity.getArtist().contains(keyword)) {
+//            if (songEntity.getTitle().contains(keyword)
+//                    || songEntity.getTitle().contains(keyword)
+//                    || songEntity.getAlbum().contains(keyword)
+//                    || songEntity.getArtist().contains(keyword)) {
+//                result.add(songEntity);
+//            }
+            if (StringUtil.isContainsKeywordIgnoreCase(songEntity.getTitle(), keyword)
+                    || StringUtil.isContainsKeywordIgnoreCase(songEntity.getAlbum(), keyword)
+                    || StringUtil.isContainsKeywordIgnoreCase(songEntity.getArtist(), keyword)
+                    ) {
                 result.add(songEntity);
             }
+
         }
         return result;
     }

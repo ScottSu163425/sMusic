@@ -58,7 +58,7 @@ public class MainPresenterImpl implements MainPresenter {
             return;
         }
 
-        mBillModel.addBill(mMainView.getViewContext(), billEntity);
+        mBillModel.saveOrUpdateBill(mMainView.getViewContext(), billEntity);
         mMainView.updateBillDisplay();
         AppConfig.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), false);
         mMainView.dismissCreateBillDialog();
@@ -135,6 +135,7 @@ public class MainPresenterImpl implements MainPresenter {
     public void onLanguageModeOn() {
         AppConfig.setLanguageMode(mMainView.getViewContext(), true);
         mMainView.turnOnLanguageMode();
+        updateDefaultBillName();
         mMainView.updateBillDisplay();
     }
 
@@ -142,7 +143,14 @@ public class MainPresenterImpl implements MainPresenter {
     public void onLanguageModeOff() {
         AppConfig.setLanguageMode(mMainView.getViewContext(), false);
         mMainView.turnOffLanguageMode();
+        updateDefaultBillName();
         mMainView.updateBillDisplay();
+    }
+
+    private void updateDefaultBillName() {
+        LocalBillEntity defaultBill = mBillModel.getDefaultBill(mMainView.getViewContext());
+        defaultBill.setBillTitle(mMainView.getViewContext().getString(R.string.my_favourite));
+        mBillModel.saveOrUpdateBill(mMainView.getViewContext(), defaultBill);
     }
 
     @Override

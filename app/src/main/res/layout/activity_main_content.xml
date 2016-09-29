@@ -46,9 +46,9 @@
         android:layout_gravity="right|bottom"
         android:layout_margin="@dimen/margin_s"
         android:src="@drawable/ic_add_white_24dp"
-        app:backgroundTint="@color/fab_background_tint"
+        app:backgroundTint="@color/impacted_color"
         app:elevation="@dimen/elevation_fab_normal"
         app:fabSize="normal"
         app:pressedTranslationZ="@dimen/elevation_fab_pressed"
-        app:rippleColor="@color/fab_ripple_color" />
+        app:rippleColor="@color/impacted_color_dark" />
 </android.support.design.widget.CoordinatorLayout>

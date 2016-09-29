@@ -13,6 +13,7 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.util.BitmapLruCache;
 import com.su.scott.slibrary.util.BlurUtil;
+import com.su.scott.slibrary.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,9 +104,12 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
         List<LocalAlbumEntity> result = new ArrayList<>();
 
         for (LocalAlbumEntity albumEntity : localAlbumEntities) {
-            if (albumEntity.getAlbumTitle().contains(keyword)
-                    || albumEntity.getAlbumTitle().contains(keyword)
-                    || albumEntity.getArtist().contains(keyword)) {
+//            if (albumEntity.getAlbumTitle().contains(keyword)
+//                    || albumEntity.getArtist().contains(keyword)) {
+//                result.add(albumEntity);
+//            }
+            if (StringUtil.isContainsKeywordIgnoreCase(albumEntity.getAlbumTitle(), keyword)
+                    || StringUtil.isContainsKeywordIgnoreCase(albumEntity.getArtist(), keyword)) {
                 result.add(albumEntity);
             }
         }

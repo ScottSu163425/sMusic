@@ -16,6 +16,7 @@ public class AppConfig {
     private static final String NEED_TO_REFRESH_SONG = "NEED_REFRESH_SONG";
     private static final String NEED_TO_REFRESH_BILL = "NEED_REFRESH_BILL";
     private static final String NEED_TO_REFRESH_ALBUM = "NEED_REFRESH_ALBUM";
+    private static final String NEED_TO_REFRESH_SEARCH_RESULT = "NEED_TO_REFRESH_SEARCH_RESULT";
     private static final String POSITION_OF_BILL_TO_REFRESH_ = "POSITION_OF_BILL_TO_REFRESH_";
 
     public static boolean isNightModeOn(Context context) {
@@ -38,6 +39,10 @@ public class AppConfig {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(NEED_TO_REFRESH_ALBUM, false);
     }
 
+    public static boolean isNeedToRefreshSearchResult(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(NEED_TO_REFRESH_SEARCH_RESULT, false);
+    }
+
     public static void setNeedToRefreshLocalSongDisplay(Context context, boolean isNeedToRefresh) {
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
@@ -56,6 +61,13 @@ public class AppConfig {
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putBoolean(NEED_TO_REFRESH_ALBUM, isNeedToRefresh)
+                .apply();
+    }
+
+    public static void setNeedToRefreshSearchResult(Context context, boolean isNeedToRefresh) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putBoolean(NEED_TO_REFRESH_SEARCH_RESULT, isNeedToRefresh)
                 .apply();
     }
 

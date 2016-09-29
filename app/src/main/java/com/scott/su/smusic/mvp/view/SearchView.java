@@ -14,9 +14,13 @@ import java.util.List;
  */
 
 public interface SearchView extends BaseView {
+    String getCurrentKeyword();
+
     void showLoading();
 
-    void showResult(List result);
+    void setResult(List result);
+
+    void showResult();
 
     void showEmpty();
 

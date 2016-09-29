@@ -33,7 +33,6 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.MainPresenterImpl;
 import com.scott.su.smusic.mvp.view.MainView;
-import com.scott.su.smusic.service.MusicPlayService;
 import com.scott.su.smusic.ui.fragment.CreateBillDialogFragment;
 import com.scott.su.smusic.ui.fragment.DrawerMenuFragment;
 import com.scott.su.smusic.ui.fragment.LocalAlbumDisplayFragment;

@@ -108,11 +108,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
     @Override
     public void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_local_bill_detail);
-        if (new LocalBillModelImpl().isDefaultBill(mBillEntity)) {
-            toolbar.setTitle(getString(R.string.my_favourite));
-        } else {
-            toolbar.setTitle(mBillEntity.getBillTitle());
-        }
+        toolbar.setTitle(mBillEntity.getBillTitle());
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

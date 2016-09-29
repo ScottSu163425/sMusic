@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
@@ -16,12 +17,10 @@ import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.SearchPresenter;
 import com.scott.su.smusic.mvp.view.SearchView;
-import com.scott.su.smusic.ui.activity.SearchActivity;
-import com.su.scott.slibrary.manager.AsyncTaskHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Administrator on 2016/9/27.
@@ -47,11 +46,22 @@ public class SearchPresenterImpl implements SearchPresenter {
         mSearchView.initView();
         mSearchView.initData();
         mSearchView.initListener();
+
+        if (AppConfig.isNeedToRefreshSearchResult(mSearchView.getViewContext())) {
+            AppConfig.setNeedToRefreshSearchResult(mSearchView.getViewContext(), false);
+        }
     }
 
     @Override
     public void onViewResume() {
-
+        //To update the result,when back to the search activity  after user click result and go to other activity,
+        //and made some changes.
+        if (!TextUtils.isEmpty(mSearchView.getCurrentKeyword())) {
+            if (AppConfig.isNeedToRefreshSearchResult(mSearchView.getViewContext())) {
+                searchAndSetResult(mSearchView.getCurrentKeyword());
+                AppConfig.setNeedToRefreshSearchResult(mSearchView.getViewContext(), false);
+            }
+        }
     }
 
     @Override
@@ -60,9 +70,15 @@ public class SearchPresenterImpl implements SearchPresenter {
     }
 
     @Override
-    public void onSearchClick(final String keyword) {
+    public void onSearchTextChanged(final String keyword) {
+        searchAndSetResult(keyword);
+    }
+
+    private void searchAndSetResult(final String keyword) {
         if (TextUtils.isEmpty(keyword)) {
-            mSearchView.showSnackbarShort(mSearchView.getSnackbarParent(), mSearchView.getViewContext().getString(R.string.empty_keyword));
+//            mSearchView.showSnackbarShort(mSearchView.getSnackbarParent(), mSearchView.getViewContext().getString(R.string.empty_keyword));
+            mSearchView.setResult(Collections.EMPTY_LIST);
+            mSearchView.showEmpty();
             return;
         }
 
@@ -110,15 +126,15 @@ public class SearchPresenterImpl implements SearchPresenter {
                     result.addAll(localAlbumEntities);
                 }
 
+                mSearchView.setResult(result);
+
                 if (result.isEmpty()) {
                     mSearchView.showEmpty();
                 } else {
-                    mSearchView.showResult(result);
+                    mSearchView.showResult();
                 }
             }
         }.execute();
-
-
     }
 
     @Override

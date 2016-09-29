@@ -148,11 +148,11 @@
                         android:layout_margin="@dimen/margin_xs"
                         android:src="@drawable/ic_play_arrow_white_24dp"
                         android:transitionName="@string/transition_name_fab"
-                        app:backgroundTint="@color/fab_background_tint"
+                        app:backgroundTint="@color/impacted_color"
                         app:elevation="@dimen/elevation_fab_normal"
                         app:fabSize="normal"
                         app:pressedTranslationZ="@dimen/elevation_fab_pressed"
-                        app:rippleColor="@color/fab_ripple_color" />
+                        app:rippleColor="@color/impacted_color_dark" />
 
                     <ImageButton
                         android:id="@+id/imgbtn_skip_next_music_play"

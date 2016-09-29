@@ -8,14 +8,11 @@ import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
-import com.scott.su.smusic.mvp.model.LocalSongModel;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
-import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalBillDetailPresenter;
 import com.scott.su.smusic.mvp.view.LocalBillDetailView;
 import com.su.scott.slibrary.manager.AsyncTaskHelper;
-import com.su.scott.slibrary.util.L;
 
 import java.util.List;
 
@@ -25,13 +22,11 @@ import java.util.List;
 public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     private LocalBillDetailView mBillDetailView;
     private LocalBillModel mBillModel;
-    private LocalSongModel mSongModel;
     private LocalAlbumModel mAlbumModel;
 
     public LocalBillDetailPresenterImpl(LocalBillDetailView mBillDetailView) {
         this.mBillDetailView = mBillDetailView;
         this.mBillModel = new LocalBillModelImpl();
-        this.mSongModel = new LocalSongModelImpl();
         this.mAlbumModel = new LocalAlbumModelImpl();
     }
 
@@ -114,6 +109,8 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
             mBillDetailView.showAddSongsToBillSuccessfully();
             //When back to main activity ,the bill display show be updated
             AppConfig.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
+            //When back to search activity ,the bill display show be updated
+            AppConfig.setNeedToRefreshSearchResult(mBillDetailView.getViewContext(), true);
         } else {
             //More than one song was selected to be added into current bill;
             if (mBillModel.isBillContainsSongs(billToAddSong, songsToAdd)) {
@@ -145,6 +142,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
                     mBillDetailView.showAddSongsToBillSuccessfully();
                     //When back to main activity ,the bill display show be updated
                     AppConfig.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
+                    AppConfig.setNeedToRefreshSearchResult(mBillDetailView.getViewContext(), true);
                 }
             });
         }
@@ -154,7 +152,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     public void onEditBillNameConfiemed(String text) {
         LocalBillEntity billEntity = mBillDetailView.getBillEntity();
         billEntity.setBillTitle(text);
-        mBillModel.addBill(mBillDetailView.getViewContext(), billEntity);
+        mBillModel.saveOrUpdateBill(mBillDetailView.getViewContext(), billEntity);
 
         mBillDetailView.setBillEntity(mBillModel.getBill(mBillDetailView.getViewContext(),
                 billEntity.getBillId()));
@@ -162,6 +160,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
         mBillDetailView.dismissEditBillNameDialog();
         mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), mBillDetailView.getViewContext().getString(R.string.edit_successfully));
         AppConfig.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
+        AppConfig.setNeedToRefreshSearchResult(mBillDetailView.getViewContext(), true);
     }
 
     @Override
@@ -185,6 +184,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
                 mBillDetailView.setBillEntity(billAfterClear);
                 loadCover(true);
                 AppConfig.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
+                AppConfig.setNeedToRefreshSearchResult(mBillDetailView.getViewContext(), true);
             }
         });
 
@@ -290,6 +290,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
 
         mBillModel.addSongToBill(mBillDetailView.getViewContext(), songEntity, billEntity);
         AppConfig.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
+        AppConfig.setNeedToRefreshSearchResult(mBillDetailView.getViewContext(), true);
         mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(), mBillDetailView.getViewContext().getString(R.string.add_successfully));
     }
 
@@ -303,7 +304,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
         //Only when the deleted song is the latest song of the bill,should the bill cover perform reveal animation;
         loadCover(lastSongIDBeforeDelete == songEntity.getSongId());
         AppConfig.setNeedToRefreshLocalBillDisplay(mBillDetailView.getViewContext(), true);
-
+        AppConfig.setNeedToRefreshSearchResult(mBillDetailView.getViewContext(), true);
 //        mBillDetailView.showSnackbarShort(mBillDetailView.getSnackbarParent(),
 //                mBillDetailView.getViewContext().getString(R.string.success_delete));
     }

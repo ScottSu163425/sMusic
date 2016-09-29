@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface LocalBillModel {
 
+    LocalBillEntity getDefaultBill(Context context );
+
     boolean isDefaultBill(LocalBillEntity billEntity);
 
     boolean isBillExist(Context context, LocalBillEntity billEntity);
@@ -21,7 +23,7 @@ public interface LocalBillModel {
 
     boolean isBillTitleExist(Context context, LocalBillEntity billEntity);
 
-    void addBill(Context context, LocalBillEntity billEntity);
+    void saveOrUpdateBill(Context context, LocalBillEntity billEntity);
 
     List<LocalSongEntity> getBillSongs(Context context);
 

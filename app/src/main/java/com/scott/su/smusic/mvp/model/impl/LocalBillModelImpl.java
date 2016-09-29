@@ -2,14 +2,13 @@ package com.scott.su.smusic.mvp.model.impl;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
 import com.su.scott.slibrary.manager.DbUtilHelper;
-import com.su.scott.slibrary.util.L;
+import com.su.scott.slibrary.util.StringUtil;
 
 import org.xutils.ex.DbException;
 
@@ -22,6 +21,11 @@ import java.util.List;
 public class LocalBillModelImpl implements LocalBillModel {
     private static final long BILL_ID_DEFAULT_BILL = 1111111;
 
+
+    @Override
+    public LocalBillEntity getDefaultBill(Context context) {
+        return  getBill(context,BILL_ID_DEFAULT_BILL);
+    }
 
     @Override
     public boolean isDefaultBill(LocalBillEntity billEntity) {
@@ -66,7 +70,7 @@ public class LocalBillModelImpl implements LocalBillModel {
     }
 
     @Override
-    public void addBill(Context context, LocalBillEntity billEntity) {
+    public void saveOrUpdateBill(Context context, LocalBillEntity billEntity) {
         try {
             DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
         } catch (DbException e) {
@@ -132,7 +136,7 @@ public class LocalBillModelImpl implements LocalBillModel {
                 LocalBillEntity defaultBill = new LocalBillEntity();
                 defaultBill.setBillTitle(context.getString(R.string.my_favourite));
                 defaultBill.setBillId(BILL_ID_DEFAULT_BILL);
-                addBill(context, defaultBill);
+                saveOrUpdateBill(context, defaultBill);
                 result.add(defaultBill);
             }
 
@@ -290,7 +294,10 @@ public class LocalBillModelImpl implements LocalBillModel {
         List<LocalBillEntity> result = new ArrayList<>();
 
         for (LocalBillEntity billEntity : billEntities) {
-            if (billEntity.getBillTitle().contains(keyword)) {
+//            if (billEntity.getBillTitle().contains(keyword)) {
+//                result.add(billEntity);
+//            }
+            if (StringUtil.isContainsKeywordIgnoreCase(billEntity.getBillTitle(),keyword)){
                 result.add(billEntity);
             }
         }
