@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Administrator on 2016/9/27.
  */
 
-public interface SearchView extends BaseView {
+public interface SearchView extends BaseView ,LocalSongBottomSheetView{
     String getCurrentKeyword();
 
     void showLoading();
@@ -31,4 +31,6 @@ public interface SearchView extends BaseView {
     void goToAlbumDetail(LocalAlbumEntity entity);
 
     void goToAlbumDetailWithSharedElement(LocalAlbumEntity entity, View sharedElement, String transitionName);
+
+    void showLocalSongBottomSheet(LocalSongEntity songEntity);
 }

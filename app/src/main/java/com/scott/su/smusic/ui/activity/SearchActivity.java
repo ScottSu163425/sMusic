@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.SearchResultAdapter;
+import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
@@ -20,6 +21,8 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.SearchPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.SearchPresenterImpl;
 import com.scott.su.smusic.mvp.view.SearchView;
+import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
+import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.ViewUtil;
@@ -193,6 +196,19 @@ public class SearchActivity extends BaseActivity implements SearchView {
     }
 
     @Override
+    public void showBillSelectionDialog(final LocalSongEntity songToBeAdd) {
+        final LocalBillSelectionDialogFragment billSelectionDialogFragment = new LocalBillSelectionDialogFragment();
+        billSelectionDialogFragment.setCallback(new LocalBillSelectionDialogFragment.BillSelectionCallback() {
+            @Override
+            public void onBillSelected(LocalBillEntity billEntity) {
+                mSearchPresenter.onBottomSheetAddToBillConfirmed(billEntity, songToBeAdd);
+                billSelectionDialogFragment.dismissAllowingStateLoss();
+            }
+        });
+        billSelectionDialogFragment.show(getSupportFragmentManager(), "");
+    }
+
+    @Override
     public void goToAlbumDetail(LocalAlbumEntity entity) {
         Intent intent = new Intent(SearchActivity.this, LocalAlbumDetailActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_ALBUM, entity);
@@ -205,4 +221,43 @@ public class SearchActivity extends BaseActivity implements SearchView {
         intent.putExtra(Constants.KEY_EXTRA_ALBUM, entity);
         goToWithSharedElement(intent, sharedElement, transitionName);
     }
+
+    @Override
+    public void showDeleteDialog(LocalSongEntity songEntity) {
+
+    }
+
+    @Override
+    public void showLocalSongBottomSheet(LocalSongEntity songEntity) {
+        LocalSongBottomSheetFragment.newInstance()
+                .setLocalSongEntity(songEntity)
+                .setMenuClickCallback(new LocalSongBottomSheetCallback() {
+                    @Override
+                    public void onAddToBillClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                        mSearchPresenter.onBottomSheetAddToBillClick(songEntity);
+                        fragment.dismissAllowingStateLoss();
+                    }
+
+                    @Override
+                    public void onAlbumClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                        mSearchPresenter.onBottomSheetAlbumClick(songEntity);
+                        fragment.dismissAllowingStateLoss();
+                    }
+
+                    @Override
+                    public void onShareClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                        mSearchPresenter.onBottomSheetShareClick(songEntity);
+                        fragment.dismissAllowingStateLoss();
+                    }
+
+                    @Override
+                    public void onDeleteClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                        mSearchPresenter.onBottomSheetDeleteClick(songEntity);
+                        fragment.dismissAllowingStateLoss();
+                    }
+
+                })
+                .show(getSupportFragmentManager(), "");
+    }
+    
 }

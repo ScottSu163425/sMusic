@@ -28,15 +28,15 @@ import java.util.List;
 
 public class SearchPresenterImpl implements SearchPresenter {
     private SearchView mSearchView;
-    private LocalSongModel mLocalSongModel;
-    private LocalBillModel mLocalBillModel;
-    private LocalAlbumModel mLocalAlbumModel;
+    private LocalSongModel mSongModel;
+    private LocalBillModel mBillModel;
+    private LocalAlbumModel mAlbumModel;
 
     public SearchPresenterImpl(SearchView mSearchView) {
         this.mSearchView = mSearchView;
-        this.mLocalSongModel = new LocalSongModelImpl();
-        this.mLocalBillModel = new LocalBillModelImpl();
-        this.mLocalAlbumModel = new LocalAlbumModelImpl();
+        this.mSongModel = new LocalSongModelImpl();
+        this.mBillModel = new LocalBillModelImpl();
+        this.mAlbumModel = new LocalAlbumModelImpl();
     }
 
     @Override
@@ -91,9 +91,9 @@ public class SearchPresenterImpl implements SearchPresenter {
 
             @Override
             protected List[] doInBackground(Void... voids) {
-                List<LocalSongEntity> localSongEntities = mLocalSongModel.searchLocalSong(mSearchView.getViewContext(), keyword);
-                List<LocalBillEntity> localBillEntities = mLocalBillModel.searchBill(mSearchView.getViewContext(), keyword);
-                List<LocalAlbumEntity> localAlbumEntities = mLocalAlbumModel.searchLocalAlbum(mSearchView.getViewContext(), keyword);
+                List<LocalSongEntity> localSongEntities = mSongModel.searchLocalSong(mSearchView.getViewContext(), keyword);
+                List<LocalBillEntity> localBillEntities = mBillModel.searchBill(mSearchView.getViewContext(), keyword);
+                List<LocalAlbumEntity> localAlbumEntities = mAlbumModel.searchLocalAlbum(mSearchView.getViewContext(), keyword);
                 List[] result = new List[3];
                 result[0] = localSongEntities;
                 result[1] = localBillEntities;
@@ -144,7 +144,7 @@ public class SearchPresenterImpl implements SearchPresenter {
 
     @Override
     public void onLocalSongMoreClick(LocalSongEntity entity) {
-
+        mSearchView.showLocalSongBottomSheet(entity);
     }
 
     @Override
@@ -157,4 +157,40 @@ public class SearchPresenterImpl implements SearchPresenter {
         mSearchView.goToAlbumDetailWithSharedElement(entity, sharedElement, transitionName);
     }
 
+    @Override
+    public void onBottomSheetAddToBillClick(LocalSongEntity songEntity) {
+        mSearchView.showBillSelectionDialog(songEntity);
+    }
+
+    @Override
+    public void onBottomSheetAlbumClick(LocalSongEntity songEntity) {
+        mSearchView.goToAlbumDetail(mAlbumModel.getLocalAlbum(mSearchView.getViewContext(), songEntity.getAlbumId()));
+    }
+
+    @Override
+    public void onBottomSheetShareClick(LocalSongEntity songEntity) {
+
+    }
+
+    @Override
+    public void onBottomSheetDeleteClick(LocalSongEntity songEntity) {
+
+    }
+
+    @Override
+    public void onBottomSheetAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity) {
+        if (mBillModel.isBillContainsSong(billEntity, songEntity)) {
+            mSearchView.showSnackbarShort(mSearchView.getSnackbarParent(), mSearchView.getViewContext().getString(R.string.already_exist_in_bill));
+            return;
+        }
+
+        mBillModel.addSongToBill(mSearchView.getViewContext(), songEntity, billEntity);
+        searchAndSetResult(mSearchView.getCurrentKeyword());
+        mSearchView.showSnackbarShort(mSearchView.getSnackbarParent(), mSearchView.getViewContext().getString(R.string.add_successfully));
+    }
+
+    @Override
+    public void onBottomSheetDeleteConfirmed(LocalSongEntity songEntity) {
+
+    }
 }
