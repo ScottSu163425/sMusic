@@ -5,7 +5,7 @@
     <color name="transparent">#00ffffff</color>
     <color name="selecotor_half_dark">#30ffffff</color>
     <color name="selecotor_half_light">#30000000</color>
-    <color name="divider_line">#89898989</color>
+    <color name="divider_line">#de333333</color>
     <color name="white">#ffffffff</color>
 
     <!--text-->

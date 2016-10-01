@@ -41,7 +41,8 @@
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@color/backgroundContent">
 
             <android.support.v7.widget.AppCompatImageButton
                 android:id="@+id/btn_back_search"
@@ -58,7 +59,7 @@
             <EditText
                 android:id="@+id/et_input_search"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="@string/song_bill_album"

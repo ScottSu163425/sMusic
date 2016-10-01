@@ -118,7 +118,7 @@
         <View
             android:id="@+id/view_divider_view_holder_local_song"
             android:layout_width="match_parent"
-            android:layout_height="0.5px"
+            android:layout_height="@dimen/height_divider_line"
             android:layout_alignParentBottom="true"
             android:background="@color/divider_line" />
     </RelativeLayout>

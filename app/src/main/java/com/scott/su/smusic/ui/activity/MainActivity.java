@@ -71,6 +71,7 @@ public class MainActivity extends BaseActivity implements MainView {
     private static final int INDEX_PAGE_FAB = 1; //Index of page that fab will be shown;
     private static final int REQUEST_CODE_LOCAL_SONG_SELECTION = 1111;
     private static final String NEED_OPEN_DRAWER = "NEED_OPEN_DRAWER";
+    private static final String CURRENT_TAB_POSITION = "CURRENT_TAB_POSITION";
 
 
     @Override
@@ -136,10 +137,6 @@ public class MainActivity extends BaseActivity implements MainView {
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
-
-        if (getIntent().getBooleanExtra(NEED_OPEN_DRAWER,false)){
-            mDrawerLayout.openDrawer(Gravity.LEFT);
-        }
     }
 
     @Override
@@ -164,6 +161,13 @@ public class MainActivity extends BaseActivity implements MainView {
         mViewPager.setOffscreenPageLimit(pageFragments.size());
         mTabLayout.setupWithViewPager(mViewPager);
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_container_drawer_menu_main, mDrawerMenuFragment).commit();
+
+        if (getIntent().getBooleanExtra(NEED_OPEN_DRAWER, false)) {
+            mDrawerLayout.openDrawer(Gravity.LEFT);
+        }
+
+        mViewPager.setCurrentItem(getIntent().getIntExtra(CURRENT_TAB_POSITION, 0), false);
+
         mDataInitFinish = true;
     }
 
@@ -468,24 +472,12 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void turnOnNightMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-//        getSupportFragmentManager().beginTransaction().remove(mAlbumDisplayFragment).commitAllowingStateLoss();
-//        getSupportFragmentManager().beginTransaction().remove(mBillDisplayFragment).commitAllowingStateLoss();
-//        getSupportFragmentManager().beginTransaction().remove(mSongDisplayFragment).commitAllowingStateLoss();
-
-//        recreate();
         recreateActivity(true);
     }
 
     @Override
     public void turnOffNightMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
-//        getSupportFragmentManager().beginTransaction().remove(mAlbumDisplayFragment).commitAllowingStateLoss();
-//        getSupportFragmentManager().beginTransaction().remove(mBillDisplayFragment).commitAllowingStateLoss();
-//        getSupportFragmentManager().beginTransaction().remove(mSongDisplayFragment).commitAllowingStateLoss();
-
-        //        recreate();
         recreateActivity(true);
     }
 
@@ -498,11 +490,6 @@ public class MainActivity extends BaseActivity implements MainView {
         config.locale = Locale.ENGLISH;
         resources.updateConfiguration(config, dm);
 
-//        getSupportFragmentManager().beginTransaction().remove(mAlbumDisplayFragment).commitAllowingStateLoss();
-//        getSupportFragmentManager().beginTransaction().remove(mBillDisplayFragment).commitAllowingStateLoss();
-//        getSupportFragmentManager().beginTransaction().remove(mSongDisplayFragment).commitAllowingStateLoss();
-
-//        recreate();
         recreateActivity(false);
     }
 
@@ -515,17 +502,13 @@ public class MainActivity extends BaseActivity implements MainView {
         config.locale = Locale.getDefault();
         resources.updateConfiguration(config, dm);
 
-//        getSupportFragmentManager().beginTransaction().remove(mAlbumDisplayFragment).commitAllowingStateLoss();
-//        getSupportFragmentManager().beginTransaction().remove(mBillDisplayFragment).commitAllowingStateLoss();
-//        getSupportFragmentManager().beginTransaction().remove(mSongDisplayFragment).commitAllowingStateLoss();
-
-//        recreate();
         recreateActivity(false);
     }
 
     private void recreateActivity(boolean isForNightMode) {
-        Intent intent =new Intent(MainActivity.this, MainActivity.class);
-        intent.putExtra(NEED_OPEN_DRAWER,true);
+        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+        intent.putExtra(NEED_OPEN_DRAWER, true);
+        intent.putExtra(CURRENT_TAB_POSITION, mViewPager.getCurrentItem());
         if (isForNightMode) {
             startActivity(intent);
             if (AppConfig.isNightModeOn(this)) {
