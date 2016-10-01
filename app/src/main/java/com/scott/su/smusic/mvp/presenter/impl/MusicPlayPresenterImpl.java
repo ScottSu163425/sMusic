@@ -5,10 +5,9 @@ import android.os.AsyncTask;
 import android.view.View;
 
 import com.scott.su.smusic.config.AppConfig;
+import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
-import com.scott.su.smusic.mvp.model.MusicPlayModel;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
-import com.scott.su.smusic.mvp.model.impl.MusicPlayModelImpl;
 import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
 import com.su.scott.slibrary.util.TimeUtil;
@@ -19,13 +18,12 @@ import com.su.scott.slibrary.util.TimeUtil;
 public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     private MusicPlayView mMusicPlayView;
     private LocalAlbumModel mAlbumModel;
-    private MusicPlayModel mMusicPlayModel;
+    private boolean isFirstTimePlay = true;
 
 
     public MusicPlayPresenterImpl(MusicPlayView mMusicPlayView) {
         this.mMusicPlayView = mMusicPlayView;
         this.mAlbumModel = new LocalAlbumModelImpl();
-        this.mMusicPlayModel = new MusicPlayModelImpl();
     }
 
     @Override
@@ -49,7 +47,7 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
             AppConfig.setPlayRepeatAll(mMusicPlayView.getViewContext());
             mMusicPlayView.setPlayMode(mMusicPlayView.getCurrentPlayMode());
         }
-        updateCurrentPlayingSong(false);
+        updateCurrentPlayingSongInfo(false);
     }
 
     @Override
@@ -73,26 +71,12 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
 
     @Override
     public void onSkipPreviousClick(View view) {
-        if (mMusicPlayView.isPlayRepeatOne()) {
-            mMusicPlayView.setCurrentPlayingSongPosition(mMusicPlayModel.getSongPosition(mMusicPlayView.getCurrentPlayingSong(), mMusicPlayView.getCurrentPlayingSongList()));
-        } else if (mMusicPlayView.isPlayRepeatAll()) {
-            mMusicPlayView.setCurrentPlayingSongPosition(mMusicPlayModel.skipPreviousInRepeatAll(mMusicPlayView.getCurrentPlayingSong(), mMusicPlayView.getCurrentPlayingSongList()));
-        } else if (mMusicPlayView.isPlayShuffle()) {
-            mMusicPlayView.setCurrentPlayingSongPosition(mMusicPlayModel.shuffle(mMusicPlayView.getCurrentPlayingSong(), mMusicPlayView.getCurrentPlayingSongList()));
-        }
-        updateCurrentPlayingSong(true);
+        mMusicPlayView.playPrevious();
     }
 
     @Override
     public void onSkipNextClick(View view) {
-        if (mMusicPlayView.isPlayRepeatOne()) {
-            mMusicPlayView.setCurrentPlayingSongPosition(mMusicPlayModel.getSongPosition(mMusicPlayView.getCurrentPlayingSong(), mMusicPlayView.getCurrentPlayingSongList()));
-        } else if (mMusicPlayView.isPlayRepeatAll()) {
-            mMusicPlayView.setCurrentPlayingSongPosition(mMusicPlayModel.skipNextInRepeatAll(mMusicPlayView.getCurrentPlayingSong(), mMusicPlayView.getCurrentPlayingSongList()));
-        } else if (mMusicPlayView.isPlayShuffle()) {
-            mMusicPlayView.setCurrentPlayingSongPosition(mMusicPlayModel.shuffle(mMusicPlayView.getCurrentPlayingSong(), mMusicPlayView.getCurrentPlayingSongList()));
-        }
-        updateCurrentPlayingSong(true);
+        mMusicPlayView.playNext();
     }
 
     @Override
@@ -145,6 +129,13 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     }
 
     @Override
+    public void onPlaySongChanged(LocalSongEntity songEntity) {
+        mMusicPlayView.setCurrentPlayingSong(songEntity);
+        updateCurrentPlayingSongInfo(!isFirstTimePlay);
+        isFirstTimePlay = false;
+    }
+
+    @Override
     public void onPlayProgressUpdate(long currentPositionMillSec) {
         mMusicPlayView.setSeekBarCurrentPosition(currentPositionMillSec);
         mMusicPlayView.setCurrentTime(TimeUtil.millisecondToTimeWithinHour(currentPositionMillSec));
@@ -187,7 +178,7 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
         mMusicPlayView.seekTo(progress);
     }
 
-    private void updateCurrentPlayingSong(boolean needReveal) {
+    private void updateCurrentPlayingSongInfo(boolean needReveal) {
         String path = mAlbumModel.getAlbumCoverPath(mMusicPlayView.getViewContext(), mMusicPlayView.getCurrentPlayingSong().getAlbumId());
         mMusicPlayView.loadCover(path, needReveal);
 

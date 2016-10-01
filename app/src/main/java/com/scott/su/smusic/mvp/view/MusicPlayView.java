@@ -11,9 +11,9 @@ import java.util.List;
 /**
  * Created by asus on 2016/9/4.
  */
-public interface MusicPlayView extends BaseView  ,MusicPlayServiceView{
+public interface MusicPlayView extends BaseView, MusicPlayServiceView {
 
-    void setCurrentPlayingSongPosition(int position);
+    void setCurrentPlayingSong(LocalSongEntity songEntity);
 
     LocalSongEntity getCurrentPlayingSong();
 
@@ -31,7 +31,7 @@ public interface MusicPlayView extends BaseView  ,MusicPlayServiceView{
 
     void setTotalPlayTime(String totalPlayTime);
 
-    void loadCover(String path,boolean needReveal);
+    void loadCover(String path, boolean needReveal);
 
     void loadBlurCover(Bitmap bitmap);
 

@@ -102,6 +102,11 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                     }
 
                     @Override
+                    public void onPlaySongChanged(LocalSongEntity songEntity) {
+                        mMusicPlayPresenter.onPlaySongChanged(songEntity);
+                    }
+
+                    @Override
                     public void onPlayProgressUpdate(long currentPositionMillSec) {
                         mMusicPlayPresenter.onPlayProgressUpdate(currentPositionMillSec);
                     }
@@ -225,8 +230,8 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public void setCurrentPlayingSongPosition(int position) {
-        mCurrentPlayingSong = mCurrentPlayingSongList.get(position);
+    public void setCurrentPlayingSong(LocalSongEntity songEntity) {
+        mCurrentPlayingSong = songEntity;
     }
 
     @Override
@@ -355,6 +360,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mShuffleButton.setImageResource(R.drawable.ic_shuffle_grey600_24dp);
         mCurrentPlayMode = PlayMode.RepeatAll;
         mCurrentRepeatMode = PlayMode.RepeatAll;
+//        mMusicPlayServiceBinder.setPlayMode(mCurrentPlayMode);
     }
 
     @Override
@@ -363,6 +369,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mShuffleButton.setImageResource(R.drawable.ic_shuffle_grey600_24dp);
         mCurrentPlayMode = PlayMode.RepeatOne;
         mCurrentRepeatMode = PlayMode.RepeatOne;
+//        mMusicPlayServiceBinder.setPlayMode(mCurrentPlayMode);
     }
 
     @Override
@@ -370,6 +377,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mShuffleButton.setImageResource(R.drawable.ic_shuffle_black_24dp);
         mRepeatButton.setImageResource(R.drawable.ic_repeat_grey600_24dp);
         mCurrentPlayMode = PlayMode.Shuffle;
+//        mMusicPlayServiceBinder.setPlayMode(mCurrentPlayMode);
     }
 
     @Override
@@ -377,6 +385,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mShuffleButton.setImageResource(R.drawable.ic_shuffle_black_24dp);
         mRepeatButton.setImageResource(R.drawable.ic_repeat_one_grey600_24dp);
         mCurrentPlayMode = PlayMode.Shuffle;
+//        mMusicPlayServiceBinder.setPlayMode(mCurrentPlayMode);
     }
 
     @Override
@@ -443,6 +452,16 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     public void seekTo(int position) {
         mMusicPlayServiceBinder.seekTo(position);
+    }
+
+    @Override
+    public void playPrevious() {
+        mMusicPlayServiceBinder.playPrevious();
+    }
+
+    @Override
+    public void playNext() {
+        mMusicPlayServiceBinder.playNext();
     }
 
     @Override

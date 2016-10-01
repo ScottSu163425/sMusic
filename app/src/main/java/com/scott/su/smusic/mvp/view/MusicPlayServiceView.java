@@ -26,6 +26,10 @@ public interface MusicPlayServiceView {
 
     void seekTo(int position);
 
+    void playPrevious();
+
+    void playNext();
+
     void registerPlayCallback(@NonNull MusicPlayCallback callback);
 
     void unregisterPlayCallback();
