@@ -2,6 +2,7 @@ package com.scott.su.smusic.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.Handler;
@@ -165,9 +166,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
     private void playNew() {
         try {
-            if (!mPlaySameSong) {
-                mMediaPlayer.reset();
-            }
+            mMediaPlayer.reset();
+            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setDataSource(mCurrentPlaySong.getPath());
             mMediaPlayer.prepare();
             startMediaPlayer();
@@ -190,23 +190,6 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
     private void startTimer() {
         stopTimer();
-
-//        mPlayTimer = new CountDownTimer(mCurrentPlaySong.getDuration() - mMediaPlayer.getCurrentPosition(), TimeUtil.MILLISECONDS_OF_SECOND / 2) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//                if (isRegisterCallback()) {
-//                    mMusicPlayCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//                if (isRegisterCallback()) {
-//                    mMusicPlayCallback.onPlayComplete();
-//                }
-//            }
-//        }.start();
         mTimerHandler.post(mTimerRunnable);
     }
 

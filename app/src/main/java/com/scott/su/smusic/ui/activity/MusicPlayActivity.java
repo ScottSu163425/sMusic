@@ -34,6 +34,7 @@ import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.SdkUtil;
+import com.su.scott.slibrary.util.TimeUtil;
 
 import java.util.List;
 
@@ -136,7 +137,6 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                 });
                 mCurrentPlayStatus = mMusicPlayServiceBinder.getCurrentPlayStatus();
                 mMusicPlayPresenter.onServiceConnected();
-                L.e("===>activity:", "onServiceConnected");
             }
 
             @Override
@@ -194,8 +194,8 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
         mPlayingSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                mMusicPlayPresenter.onSeekProgressChanged(seekBar.getProgress());
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mCurrentTimeTextView.setText(TimeUtil.millisecondToTimeWithinHour(progress));
             }
 
             @Override
@@ -268,17 +268,13 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public void setCurrentTime(String currentPlayTime) {
-        mCurrentTimeTextView.setText(currentPlayTime);
-    }
-
-    @Override
     public void setTotalPlayTime(String totalPlayTime) {
         mTotalTimeTextView.setText(totalPlayTime);
     }
 
     @Override
     public void loadCover(final String path, boolean needReveal) {
+        // TODO: 2016/10/2  Sometimes may call IlleagalStateException:
         if (needReveal) {
             CirclarRevealUtil.revealOut(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER, CirclarRevealUtil.DURATION_REVEAL_DEFAULT
                     , null, new AnimUtil.SimpleAnimListener() {
@@ -360,7 +356,9 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mShuffleButton.setImageResource(R.drawable.ic_shuffle_grey600_24dp);
         mCurrentPlayMode = PlayMode.RepeatAll;
         mCurrentRepeatMode = PlayMode.RepeatAll;
-//        mMusicPlayServiceBinder.setPlayMode(mCurrentPlayMode);
+        if (mMusicPlayServiceBinder != null) {
+            mMusicPlayServiceBinder.setPlayMode(mCurrentPlayMode);
+        }
     }
 
     @Override
@@ -369,7 +367,9 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mShuffleButton.setImageResource(R.drawable.ic_shuffle_grey600_24dp);
         mCurrentPlayMode = PlayMode.RepeatOne;
         mCurrentRepeatMode = PlayMode.RepeatOne;
-//        mMusicPlayServiceBinder.setPlayMode(mCurrentPlayMode);
+        if (mMusicPlayServiceBinder != null) {
+            mMusicPlayServiceBinder.setPlayMode(mCurrentPlayMode);
+        }
     }
 
     @Override
@@ -377,7 +377,9 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mShuffleButton.setImageResource(R.drawable.ic_shuffle_black_24dp);
         mRepeatButton.setImageResource(R.drawable.ic_repeat_grey600_24dp);
         mCurrentPlayMode = PlayMode.Shuffle;
-//        mMusicPlayServiceBinder.setPlayMode(mCurrentPlayMode);
+        if (mMusicPlayServiceBinder != null) {
+            mMusicPlayServiceBinder.setPlayMode(mCurrentPlayMode);
+        }
     }
 
     @Override
@@ -385,7 +387,9 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mShuffleButton.setImageResource(R.drawable.ic_shuffle_black_24dp);
         mRepeatButton.setImageResource(R.drawable.ic_repeat_one_grey600_24dp);
         mCurrentPlayMode = PlayMode.Shuffle;
-//        mMusicPlayServiceBinder.setPlayMode(mCurrentPlayMode);
+        if (mMusicPlayServiceBinder != null) {
+            mMusicPlayServiceBinder.setPlayMode(mCurrentPlayMode);
+        }
     }
 
     @Override
@@ -478,6 +482,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     public void onBackPressed() {
         if (mInitialPlayingSong.getSongId() != mCurrentPlayingSong.getSongId()) {
             finish();
+            overridePendingTransition(R.anim.in_alpha, R.anim.out_east);
         } else {
             if (SdkUtil.isLolipopOrLatter()) {
                 finishAfterTransition();

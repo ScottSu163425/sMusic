@@ -26,8 +26,6 @@ public interface MusicPlayPresenter extends BasePresenter ,MusicPlayCallback{
 
     void onSeekStart();
 
-    void onSeekProgressChanged(int progress);
-
     void onSeekStop(int progress);
 
 }

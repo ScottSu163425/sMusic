@@ -138,7 +138,6 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     @Override
     public void onPlayProgressUpdate(long currentPositionMillSec) {
         mMusicPlayView.setSeekBarCurrentPosition(currentPositionMillSec);
-        mMusicPlayView.setCurrentTime(TimeUtil.millisecondToTimeWithinHour(currentPositionMillSec));
     }
 
     @Override
@@ -169,11 +168,6 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     }
 
     @Override
-    public void onSeekProgressChanged(int progress) {
-        mMusicPlayView.setCurrentTime(TimeUtil.millisecondToTimeWithinHour(progress));
-    }
-
-    @Override
     public void onSeekStop(int progress) {
         mMusicPlayView.seekTo(progress);
     }
@@ -195,10 +189,10 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
             }
         }.execute();
 
+        mMusicPlayView.setSeekBarCurrentPosition(0);
         mMusicPlayView.setSeekBarMax(mMusicPlayView.getCurrentPlayingSong().getDuration());
         mMusicPlayView.setPlayingMusicTitle(mMusicPlayView.getCurrentPlayingSong().getTitle());
         mMusicPlayView.setPlayingMusicArtist(mMusicPlayView.getCurrentPlayingSong().getArtist());
-        mMusicPlayView.setCurrentTime(TimeUtil.millisecondToTimeWithinHour(0));
         mMusicPlayView.setTotalPlayTime(TimeUtil.millisecondToTimeWithinHour(mMusicPlayView.getCurrentPlayingSong().getDuration()));
     }
 }

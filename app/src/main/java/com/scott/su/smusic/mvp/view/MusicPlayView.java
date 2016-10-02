@@ -27,8 +27,6 @@ public interface MusicPlayView extends BaseView, MusicPlayServiceView {
 
     void setSeekBarCurrentPosition(long currentPosition);
 
-    void setCurrentTime(String currentPlayTime);
-
     void setTotalPlayTime(String totalPlayTime);
 
     void loadCover(String path, boolean needReveal);
