@@ -23,7 +23,7 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
     private SwitchCompat mNightModeSwitch, mLanguageModeSwitch;
     private DrawerMenuCallback mMenuCallback;
 
-    public static final float PERCENTAGE_OF_SCREEN_WIDTH = 0.83f;
+    public static final float PERCENTAGE_OF_SCREEN_WIDTH = 0.82f;
 
     @Nullable
     @Override

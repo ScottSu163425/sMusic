@@ -6,9 +6,8 @@ import com.scott.su.smusic.callback.MusicPlayCallback;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.service.MusicPlayService;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by asus on 2016/9/15.
@@ -16,7 +15,7 @@ import java.util.List;
 public interface MusicPlayServiceView {
     PlayStatus getCurrentPlayStatus();
 
-    void setPlaySong(LocalSongEntity currentPlaySong, List<LocalSongEntity> playSongs);
+    void setPlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs);
 
     void setPlayMode(PlayMode playMode);
 

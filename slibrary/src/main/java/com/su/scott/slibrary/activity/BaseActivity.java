@@ -106,6 +106,14 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     protected void goTo(Class destination) {
+        startActivity(new Intent(this, destination));
+    }
+
+    protected void goTo(Intent intent) {
+        startActivity(intent);
+    }
+
+    protected void goToWithTransition(Class destination) {
         if (SdkUtil.isLolipopOrLatter()) {
             startActivity(new Intent(this, destination), ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         } else {
@@ -113,7 +121,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         }
     }
 
-    protected void goTo(Intent intent) {
+    protected void goToWithTransition(Intent intent) {
         if (SdkUtil.isLolipopOrLatter()) {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         } else {

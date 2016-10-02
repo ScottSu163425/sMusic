@@ -433,7 +433,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
     public void goToAlbumDetail(LocalAlbumEntity entity) {
         Intent intent = new Intent(LocalBillDetailActivity.this, LocalAlbumDetailActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_ALBUM, entity);
-        goTo(intent);
+        goToWithTransition(intent);
     }
 
     @Override

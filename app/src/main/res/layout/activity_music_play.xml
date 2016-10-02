@@ -31,23 +31,36 @@
 
         <TextView
             android:id="@+id/tv_music_title_music_play"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_cover_music_play"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_s"
-            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_headline" />
 
         <TextView
             android:id="@+id/tv_music_artist_music_play"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_music_title_music_play"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_xxs"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
             android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_subhead" />
 

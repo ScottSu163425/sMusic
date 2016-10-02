@@ -36,6 +36,7 @@ import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.TimeUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,7 +51,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     private AppCompatSeekBar mPlayingSeekBar;
     private LocalSongEntity mInitialPlayingSong;
     private LocalSongEntity mCurrentPlayingSong;
-    private List<LocalSongEntity> mCurrentPlayingSongList;
+    private ArrayList<LocalSongEntity> mCurrentPlayingSongList;
     private PlayMode mCurrentPlayMode = PlayMode.RepeatAll;
     private PlayMode mCurrentRepeatMode = PlayMode.RepeatAll;
 
@@ -87,14 +88,16 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     public void initPreData() {
         mCurrentPlayingSong = getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG);
-        mInitialPlayingSong = mCurrentPlayingSong;
         mCurrentPlayingSongList = getIntent().getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS);
+        mInitialPlayingSong = mCurrentPlayingSong;
 
         mMusicPlayServiceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                 mMusicPlayServiceBinder = (MusicPlayService.MusicPlayServiceBinder) iBinder;
-                mMusicPlayServiceBinder.setPlaySong(mCurrentPlayingSong, mCurrentPlayingSongList);
+                if (mCurrentPlayingSong!=null&&mCurrentPlayingSongList!=null){
+                    mMusicPlayServiceBinder.setPlaySong(mCurrentPlayingSong, mCurrentPlayingSongList);
+                }
                 mMusicPlayServiceBinder.registerPlayCallback(new MusicPlayCallback() {
                     @Override
                     public void onPlayStart() {
@@ -431,7 +434,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public void setPlaySong(LocalSongEntity currentPlaySong, List<LocalSongEntity> playSongs) {
+    public void setPlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs) {
 
     }
 

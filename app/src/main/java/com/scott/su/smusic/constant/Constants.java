@@ -8,6 +8,7 @@ public class Constants {
     public static final String KEY_EXTRA_LOCAL_SONG = "KEY_EXTRA_LOCAL_SONG";
     public static final String KEY_EXTRA_BILL = "KEY_EXTRA_BILL";
     public static final String KEY_EXTRA_ALBUM = "KEY_EXTRA_ALBUM";
+    public static final String KEY_NOTIFICATION_TO_MUSIC_PLAY = "KEY_NOTIFICATION_TO_MUSIC_PLAY";
     public static final String KEY_POSITION_OF_BILL = "KEY_POSITION_OF_BILL";
 
 }

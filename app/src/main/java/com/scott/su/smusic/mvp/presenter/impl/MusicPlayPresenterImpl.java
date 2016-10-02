@@ -10,6 +10,7 @@ import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.TimeUtil;
 
 /**
@@ -130,6 +131,7 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     @Override
     public void onPlaySongChanged(LocalSongEntity songEntity) {
         mMusicPlayView.setCurrentPlayingSong(songEntity);
+        L.e("===>", "onPlaySongChanged");
         updateCurrentPlayingSongInfo(!isFirstTimePlay);
         isFirstTimePlay = false;
     }
@@ -158,8 +160,7 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
 
     @Override
     public void onPlayComplete() {
-        mMusicPlayView.setPlayButtonPause();
-
+//        mMusicPlayView.setPlayButtonPause();
     }
 
     @Override

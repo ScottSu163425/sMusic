@@ -1,7 +1,12 @@
 package com.scott.su.smusic.service;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Binder;
@@ -9,28 +14,43 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v7.app.NotificationCompat;
 
+import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.MusicPlayCallback;
 import com.scott.su.smusic.config.AppConfig;
+import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayServiceView;
+import com.scott.su.smusic.ui.activity.MainActivity;
 import com.scott.su.smusic.util.MusicPlayUtil;
 import com.su.scott.slibrary.util.TimeUtil;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2016/9/9.
  */
 public class MusicPlayService extends Service implements MusicPlayServiceView {
+    public static final String EXTRA_OPERATION_NOTIFICATION = "EXTRA_OPERATION_NOTIFICATION";
+    public static final int OPERATION_NOTIFICATION_PLAY_NEXT = 1;
+    public static final int OPERATION_NOTIFICATION_PLAY_PREVIOUS = 2;
+    public static final int OPERATION_NOTIFICATION_PLAY_PAUSE = 3;
+
+    public static final int ID_NOTIFICATION = 123;
+
     private MediaPlayer mMediaPlayer;
+    private NotificationManager mNotificationManager;
+    private Notification mNotification;
     private MusicPlayCallback mMusicPlayCallback;
     private LocalSongEntity mCurrentPlaySong;
     private boolean mPlaySameSong;
-    private List<LocalSongEntity> mPlaySongs;
+    private ArrayList<LocalSongEntity> mPlaySongs;
 
     private PlayStatus mCurrentPlayStatus = PlayStatus.Stop;
     private PlayMode mCurrentPlayMode = PlayMode.RepeatAll;
@@ -60,6 +80,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     @Override
     public void onCreate() {
         super.onCreate();
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         mMediaPlayer = new MediaPlayer();
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -72,12 +93,24 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             }
         });
 
+        mCurrentPlayMode = AppConfig.isPlayRepeatOne(this) ? PlayMode.RepeatOne
+                : (AppConfig.isPlayRepeatAll(this) ? PlayMode.RepeatAll : PlayMode.Shuffle);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        mCurrentPlayMode = AppConfig.isPlayRepeatOne(this) ? PlayMode.RepeatOne
-                : (AppConfig.isPlayRepeatAll(this) ? PlayMode.RepeatAll : PlayMode.Shuffle);
+        if (intent.getIntExtra(EXTRA_OPERATION_NOTIFICATION, -1) == OPERATION_NOTIFICATION_PLAY_NEXT) {
+            playNext();
+        } else if (intent.getIntExtra(EXTRA_OPERATION_NOTIFICATION, -1) == OPERATION_NOTIFICATION_PLAY_PREVIOUS) {
+            playPrevious();
+        } else if (intent.getIntExtra(EXTRA_OPERATION_NOTIFICATION, -1) == OPERATION_NOTIFICATION_PLAY_PAUSE) {
+            if (isPlaying()) {
+                pause();
+            } else {
+                play();
+            }
+            updateNotifycation();
+        }
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -92,7 +125,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     @Override
-    public void setPlaySong(LocalSongEntity currentPlaySong, List<LocalSongEntity> playSongs) {
+    public void setPlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs) {
         if (mCurrentPlaySong == null) {
             mPlaySameSong = false;
         } else if (mCurrentPlaySong.getSongId() == currentPlaySong.getSongId()) {
@@ -174,9 +207,61 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             if (mMusicPlayCallback != null) {
                 mMusicPlayCallback.onPlaySongChanged(mCurrentPlaySong);
             }
+            updateNotifycation();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void updateNotifycation() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setContentTitle(mCurrentPlaySong.getTitle());
+        builder.setContentText(mCurrentPlaySong.getArtist());
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setLargeIcon(BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPath(this, mCurrentPlaySong.getAlbumId())));
+        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
+        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+
+        Intent intentGoToMusicPlay = new Intent(this, MainActivity.class);
+        intentGoToMusicPlay.putExtra(Constants.KEY_NOTIFICATION_TO_MUSIC_PLAY, true);
+        intentGoToMusicPlay.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mCurrentPlaySong);
+        intentGoToMusicPlay.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mPlaySongs);
+        PendingIntent pendingIntentGoToMusicPlay = PendingIntent.getActivity(this, 1, intentGoToMusicPlay, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Intent intentPlayNext = new Intent(this, MusicPlayService.class);
+        intentPlayNext.putExtra(EXTRA_OPERATION_NOTIFICATION, OPERATION_NOTIFICATION_PLAY_NEXT);
+        PendingIntent pendingIntentPlayNext = PendingIntent.getService(this, OPERATION_NOTIFICATION_PLAY_NEXT, intentPlayNext, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Intent intentPlayPrevious = new Intent(this, MusicPlayService.class);
+        intentPlayPrevious.putExtra(EXTRA_OPERATION_NOTIFICATION, OPERATION_NOTIFICATION_PLAY_PREVIOUS);
+        PendingIntent pendingIntentPlayPrevious = PendingIntent.getService(this, OPERATION_NOTIFICATION_PLAY_PREVIOUS, intentPlayPrevious, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Intent intentPlayPause = new Intent(this, MusicPlayService.class);
+        intentPlayPause.putExtra(EXTRA_OPERATION_NOTIFICATION, OPERATION_NOTIFICATION_PLAY_PAUSE);
+        PendingIntent pendingIntentPlayPause = PendingIntent.getService(this, OPERATION_NOTIFICATION_PLAY_PAUSE, intentPlayPause, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        builder.setContentIntent(pendingIntentGoToMusicPlay);
+        //第一个参数是图标资源id 第二个是图标显示的名称，第三个图标点击要启动的PendingIntent
+        builder.addAction(R.drawable.ic_skip_previous_white_36dp, "", pendingIntentPlayPrevious);
+        builder.addAction(isPlaying() ? R.drawable.ic_pause_white_36dp : R.drawable.ic_play_arrow_white_36dp, "",
+                pendingIntentPlayPause);
+        builder.addAction(R.drawable.ic_skip_next_white_36dp, "", pendingIntentPlayNext);
+
+        NotificationCompat.MediaStyle style = new NotificationCompat.MediaStyle();
+        style.setMediaSession(new MediaSessionCompat(this, "MediaSession",
+                new ComponentName(MusicPlayService.this, Intent.ACTION_MEDIA_BUTTON), null).getSessionToken());
+        //CancelButton在5.0以下的机器有效
+        style.setCancelButtonIntent(pendingIntentGoToMusicPlay);
+        style.setShowCancelButton(true);
+        //设置要现实在通知右方的图标 最多三个
+        style.setShowActionsInCompactView(0, 1, 2);
+
+        builder.setStyle(style);
+        builder.setShowWhen(false);
+        mNotification = builder.build();
+        mNotificationManager.notify(ID_NOTIFICATION, mNotification);
+        startForeground(ID_NOTIFICATION, mNotification);
     }
 
     private void startMediaPlayer() {
@@ -236,7 +321,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         }
 
         @Override
-        public void setPlaySong(LocalSongEntity currentPlaySong, List<LocalSongEntity> playSongs) {
+        public void setPlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs) {
             MusicPlayService.this.setPlaySong(currentPlaySong, playSongs);
         }
 

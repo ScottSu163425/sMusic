@@ -98,7 +98,7 @@ public class MainActivity extends BaseActivity implements MainView {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_search_menu_main) {
 //            stopService(new Intent(this, MusicPlayService.class));
-            goTo(SearchActivity.class);
+            goToWithTransition(SearchActivity.class);
         }
         return true;
     }
@@ -110,6 +110,13 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void initPreData() {
+        if (getIntent().getBooleanExtra(Constants.KEY_NOTIFICATION_TO_MUSIC_PLAY, false)) {
+            Intent intent = new Intent(this, MusicPlayActivity.class);
+            intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG));
+            intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, getIntent().getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS));
+            goTo(intent);
+        }
+
         PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
         PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
@@ -426,7 +433,7 @@ public class MainActivity extends BaseActivity implements MainView {
     public void goToAlbumDetail(LocalAlbumEntity entity) {
         Intent intent = new Intent(MainActivity.this, LocalAlbumDetailActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_ALBUM, entity);
-        goTo(intent);
+        goToWithTransition(intent);
     }
 
     @Override
@@ -458,7 +465,7 @@ public class MainActivity extends BaseActivity implements MainView {
     public void goToBillDetail(LocalBillEntity entity) {
         Intent intent = new Intent(MainActivity.this, LocalBillDetailActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_BILL, entity);
-        goTo(intent);
+        goToWithTransition(intent);
     }
 
     @Override
