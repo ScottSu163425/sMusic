@@ -411,7 +411,6 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
 
     @Override
     public void updateBillInfo() {
-        // TODO: 2016/9/26 Update the toolbar title
         mCollapsingToolbarLayout.setTitle(mBillEntity.getBillTitle());
     }
 

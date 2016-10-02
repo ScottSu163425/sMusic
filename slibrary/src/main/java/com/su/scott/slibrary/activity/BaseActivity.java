@@ -22,13 +22,13 @@ import com.su.scott.slibrary.view.BaseView;
  */
 public abstract class BaseActivity extends AppCompatActivity implements BaseView {
     private ProgressDialog mLoadingDialog;
-    private String mNetworkErrorTip  ;
-
+    private String mNetworkErrorTip;
+    private boolean mDestroyed;
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-        mNetworkErrorTip=getString(R.string.network_error);
+        mNetworkErrorTip = getString(R.string.network_error);
 
         mLoadingDialog = new ProgressDialog(this);
     }
@@ -165,4 +165,13 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         }
     }
 
+    protected boolean isActivityDestroyed() {
+        return mDestroyed;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mDestroyed = true;
+    }
 }

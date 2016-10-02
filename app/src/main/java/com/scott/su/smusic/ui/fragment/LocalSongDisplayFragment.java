@@ -65,7 +65,6 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 
     @Override
     public void onDestroy() {
-        mSongDisplayPresenter.onViewWillDestroy();
         super.onDestroy();
     }
 

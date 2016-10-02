@@ -125,7 +125,6 @@ public class FileScanner {
                 }
             }
         } catch (Exception e) {
-            // TODO: handle exception
         }
     }
 

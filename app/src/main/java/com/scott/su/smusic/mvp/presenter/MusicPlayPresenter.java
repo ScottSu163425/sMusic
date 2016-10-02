@@ -3,7 +3,6 @@ package com.scott.su.smusic.mvp.presenter;
 import android.view.View;
 
 import com.scott.su.smusic.callback.MusicPlayCallback;
-import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.presenter.BasePresenter;
 
 /**

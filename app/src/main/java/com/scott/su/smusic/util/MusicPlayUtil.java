@@ -66,6 +66,10 @@ public class MusicPlayUtil {
     }
 
     private static int getRandomPosition(int currentPosition, int size) {
+        if (size == 1) {
+            return 0;
+        }
+
         Random random = new Random();
         int randomPosition = random.nextInt(size);
 

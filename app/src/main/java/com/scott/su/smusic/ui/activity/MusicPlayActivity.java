@@ -274,7 +274,10 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public void loadCover(final String path, boolean needReveal) {
-        // TODO: 2016/10/2  Sometimes may call IlleagalStateException:
+        if (isActivityDestroyed()) {
+            return;
+        }
+
         if (needReveal) {
             CirclarRevealUtil.revealOut(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER, CirclarRevealUtil.DURATION_REVEAL_DEFAULT
                     , null, new AnimUtil.SimpleAnimListener() {
@@ -493,6 +496,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     protected void onDestroy() {
         unbindService(mMusicPlayServiceConnection);
+        mMusicPlayPresenter.onViewWillDestroy();
         super.onDestroy();
     }
 

@@ -57,7 +57,6 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
 
     @Override
     public void onViewWillDestroy() {
-
     }
 
     @Override
