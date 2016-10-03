@@ -10,17 +10,25 @@ import com.su.scott.slibrary.view.BaseView;
 /**
  * Created by asus on 2016/8/19.
  */
-public interface MainView extends BaseView ,LocalSongBottomSheetView{
+public interface MainView extends BaseView, LocalSongBottomSheetView {
 
     boolean isDataInitFinish();
 
     void showLocalSongBottomSheet(LocalSongEntity songEntity);
+
+    boolean isCurrentTabSong();
+
+    boolean isCurrentTabBill();
+
+    boolean isCurrentTabAlbum();
 
     void updateSongDisplay();
 
     void updateBillDisplay();
 
     void updateAlbumDisplay();
+
+    void playRandomSong();
 
     void showCreateBillDialog();
 

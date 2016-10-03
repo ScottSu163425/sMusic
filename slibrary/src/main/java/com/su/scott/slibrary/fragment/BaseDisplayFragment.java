@@ -22,7 +22,7 @@ import java.util.List;
  * @作者 Su
  * @时间 2016年7月
  */
-public abstract class BaseDisplayFragment<E> extends BaseFragment implements BaseDisplayView<E> {
+public abstract class BaseDisplayFragment<E,VH> extends BaseFragment implements BaseDisplayView<E> {
     private View mRootView;
     private RecyclerView mDisplayRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -259,4 +259,27 @@ public abstract class BaseDisplayFragment<E> extends BaseFragment implements Bas
     protected RecyclerView getDisplayRecyclerView() {
         return mDisplayRecyclerView;
     }
+
+    public int getFirstVisibleItemPosition() {
+        return ((LinearLayoutManager) (getDisplayRecyclerView().getLayoutManager())).findFirstVisibleItemPosition();
+    }
+
+    public int getLastVisibleItemPosition() {
+        return ((LinearLayoutManager) (getDisplayRecyclerView().getLayoutManager())).findLastVisibleItemPosition();
+    }
+
+    public VH getSongViewHolder(int position) {
+        int firstItemPosition = getFirstVisibleItemPosition();
+        if (position - firstItemPosition >= 0) {
+            //得到要更新的item的view
+            View view = getDisplayRecyclerView().getChildAt(position - firstItemPosition /*+ 1*/);
+            if (null != getDisplayRecyclerView().getChildViewHolder(view)) {
+                VH viewHolder = (VH) getDisplayRecyclerView().getChildViewHolder(view);
+                return viewHolder;
+                //do something
+            }
+        }
+        return null;
+    }
+
 }

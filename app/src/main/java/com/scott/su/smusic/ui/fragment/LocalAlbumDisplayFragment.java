@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalAlbumDisplayAdapter;
+import com.scott.su.smusic.adapter.holder.LocalAlbumViewHolder;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.mvp.presenter.LocalAlbumDisplayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalAlbumDisplayPresenterImpl;
@@ -22,7 +23,7 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEntity> implements LocalAlbumDisplayView {
+public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEntity, LocalAlbumViewHolder> implements LocalAlbumDisplayView {
     private LocalAlbumDisplayPresenter mLocalAlbumDisplayPresenter;
     private LocalAlbumDisplayAdapter mLocalAlbumDisplayAdapter;
     private AlbumItemClickCallback mAlbumItemClickCallback;

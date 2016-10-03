@@ -1,6 +1,7 @@
 package com.scott.su.smusic.ui.activity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -12,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -44,11 +46,13 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.PermissionUtil;
+import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 /**
  * 2016-8-18
@@ -65,13 +69,16 @@ public class MainActivity extends BaseActivity implements MainView {
     private LocalBillDisplayFragment mBillDisplayFragment;
     private LocalAlbumDisplayFragment mAlbumDisplayFragment;
     private CreateBillDialogFragment mCreateBillDialogFragment;
+    private int mCurrentTabPosition = 0;
     private boolean mDataInitFinish = false;
 
-    private static final int INDEX_PAGE_FAB = 1; //Index of page that fab will be shown;
     private static final int REQUEST_CODE_LOCAL_SONG_SELECTION = 1111;
+    //    private static final int INDEX_PAGE_FAB = 1; //Index of page that fab will be shown;
     //    private static final String NEED_OPEN_DRAWER = "NEED_OPEN_DRAWER";
-    private static final String CURRENT_TAB_POSITION = "CURRENT_TAB_POSITION";
-
+    //    private static final String CURRENT_TAB_POSITION = "CURRENT_TAB_POSITION";
+    private static final int TAB_POSITION_SONG = 0;
+    private static final int TAB_POSITION_BILL = 1;
+    private static final int TAB_POSITION_ALBUM = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,7 +194,7 @@ public class MainActivity extends BaseActivity implements MainView {
 //            mDrawerLayout.openDrawer(Gravity.LEFT);
 //        }
 
-        mViewPager.setCurrentItem(getIntent().getIntExtra(CURRENT_TAB_POSITION, 0), false);
+//        mViewPager.setCurrentItem(getIntent().getIntExtra(CURRENT_TAB_POSITION, 0), false);
 
         mDataInitFinish = true;
     }
@@ -267,29 +274,36 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onPageSelected(int position) {
-
+                mCurrentTabPosition = position;
+                if (position == TAB_POSITION_SONG) {
+                    mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_white_36dp);
+                } else if (position == TAB_POSITION_BILL) {
+                    mFloatingActionButton.setImageResource(R.drawable.ic_add_white_24dp);
+                } else if (position == TAB_POSITION_ALBUM) {
+                    mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_white_36dp);
+                }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                if (ViewPager.SCROLL_STATE_IDLE == state) {
-                    if (mViewPager.getCurrentItem() == INDEX_PAGE_FAB) {
-                        showFab();
-                    } else {
-                        hideFab();
-                    }
-                }
+//                if (ViewPager.SCROLL_STATE_IDLE == state) {
+//                    if (mViewPager.getCurrentItem() == INDEX_PAGE_FAB) {
+//                        showFab();
+//                    } else {
+//                        hideFab();
+//                    }
+//                }
 
             }
-
         });
 
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 mMainPresenter.onFabClick();
             }
         });
+
     }
 
     @Override
@@ -331,6 +345,21 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
+    public boolean isCurrentTabSong() {
+        return mCurrentTabPosition == TAB_POSITION_SONG;
+    }
+
+    @Override
+    public boolean isCurrentTabBill() {
+        return mCurrentTabPosition == TAB_POSITION_BILL;
+    }
+
+    @Override
+    public boolean isCurrentTabAlbum() {
+        return mCurrentTabPosition == TAB_POSITION_ALBUM;
+    }
+
+    @Override
     public void updateSongDisplay() {
         if (mSongDisplayFragment.isVisible()) {
             mSongDisplayFragment.reInitialize();
@@ -349,6 +378,17 @@ public class MainActivity extends BaseActivity implements MainView {
         if (mAlbumDisplayFragment.isVisible()) {
             mAlbumDisplayFragment.reInitialize();
         }
+    }
+
+    @Override
+    public void playRandomSong() {
+        int randomPositon = new Random().nextInt(mSongDisplayFragment.getLastVisibleItemPosition() - mSongDisplayFragment.getFirstVisibleItemPosition())
+                + mSongDisplayFragment.getFirstVisibleItemPosition();
+
+        Intent intent = new Intent(MainActivity.this, MusicPlayActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mSongDisplayFragment.getDisplayDataList().get(randomPositon));
+        intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
+        goToWithSharedElement(intent, mSongDisplayFragment.getSongViewHolder(randomPositon).getCoverImageView(), getString(R.string.transition_name_cover));
     }
 
     /**

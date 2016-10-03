@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
+import com.scott.su.smusic.adapter.holder.LocalSongViewHolder;
 import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.constant.LocalSongDisplayType;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
@@ -27,7 +28,7 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity> implements LocalSongDisplayView {
+public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity,LocalSongViewHolder> implements LocalSongDisplayView {
     private LocalSongDisplayPresenter mSongDisplayPresenter;
     private LocalSongDisplayAdapter mSongDisplayAdapter;
     private LocalSongDisplayStyle mLocalSongDisplayStyle = LocalSongDisplayStyle.NumberDivider;

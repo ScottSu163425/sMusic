@@ -46,7 +46,13 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onFabClick() {
-        mMainView.showCreateBillDialog();
+        if (mMainView.isCurrentTabSong()) {
+            mMainView.playRandomSong();
+        } else if (mMainView.isCurrentTabBill()) {
+            mMainView.showCreateBillDialog();
+        }
+
+
     }
 
     @Override
