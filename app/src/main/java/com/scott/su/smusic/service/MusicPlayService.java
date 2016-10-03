@@ -214,6 +214,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         }
     }
 
+    int mCurrentRequestCode = 0;
+
     private void updateNotifycation() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setContentTitle(mCurrentPlaySong.getTitle());
@@ -224,10 +226,13 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         builder.setPriority(NotificationCompat.PRIORITY_MAX);
 
         Intent intentGoToMusicPlay = new Intent(this, MainActivity.class);
-        intentGoToMusicPlay.putExtra(Constants.KEY_NOTIFICATION_TO_MUSIC_PLAY, true);
+        intentGoToMusicPlay.putExtra(Constants.KEY_IS_FROM_NOTIFICATION, true);
         intentGoToMusicPlay.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mCurrentPlaySong);
         intentGoToMusicPlay.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mPlaySongs);
-        PendingIntent pendingIntentGoToMusicPlay = PendingIntent.getActivity(this, 1, intentGoToMusicPlay, PendingIntent.FLAG_UPDATE_CURRENT);
+        intentGoToMusicPlay.addFlags(/*Intent.FLAG_ACTIVITY_CLEAR_TASK
+                | Intent.FLAG_ACTIVITY_NEW_TASK
+                |*/Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+        PendingIntent pendingIntentGoToMusicPlay = PendingIntent.getActivity(this, mCurrentRequestCode, intentGoToMusicPlay, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent intentPlayNext = new Intent(this, MusicPlayService.class);
         intentPlayNext.putExtra(EXTRA_OPERATION_NOTIFICATION, OPERATION_NOTIFICATION_PLAY_NEXT);
@@ -263,6 +268,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         mNotification = builder.build();
         mNotificationManager.notify(ID_NOTIFICATION, mNotification);
         startForeground(ID_NOTIFICATION, mNotification);
+        mCurrentRequestCode++;
     }
 
     private void startMediaPlayer() {

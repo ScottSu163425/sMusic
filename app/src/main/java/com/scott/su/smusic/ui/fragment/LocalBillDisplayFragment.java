@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalBillDisplayAdapter;
+import com.scott.su.smusic.adapter.holder.LocalBillViewHolder;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.mvp.presenter.LocalBillDisplayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalBillDisplayPresenterImpl;
@@ -141,5 +142,6 @@ public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntit
     public interface BillItemClickCallback {
         void onBillItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
     }
+
 
 }

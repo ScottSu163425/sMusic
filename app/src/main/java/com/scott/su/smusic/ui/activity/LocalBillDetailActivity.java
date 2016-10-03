@@ -64,32 +64,36 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
         mBillDetailPresenter.onViewFirstTimeCreated();
 
         if (SdkUtil.isLolipopOrLatter()) {
-            getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
-                @Override
-                public void onTransitionStart(Transition transition) {
+            if (getWindow().getSharedElementEnterTransition() != null) {
+                getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
+                    @Override
+                    public void onTransitionStart(Transition transition) {
 
-                }
+                    }
 
-                @Override
-                public void onTransitionEnd(Transition transition) {
-                    mBillDetailPresenter.onTransitionEnd();
-                }
+                    @Override
+                    public void onTransitionEnd(Transition transition) {
+                        mBillDetailPresenter.onTransitionEnd();
+                    }
 
-                @Override
-                public void onTransitionCancel(Transition transition) {
+                    @Override
+                    public void onTransitionCancel(Transition transition) {
 
-                }
+                    }
 
-                @Override
-                public void onTransitionPause(Transition transition) {
+                    @Override
+                    public void onTransitionPause(Transition transition) {
 
-                }
+                    }
 
-                @Override
-                public void onTransitionResume(Transition transition) {
+                    @Override
+                    public void onTransitionResume(Transition transition) {
 
-                }
-            });
+                    }
+                });
+            } else {
+                mBillDetailPresenter.onTransitionEnd();
+            }
         } else {
             mBillDetailPresenter.onTransitionEnd();
         }

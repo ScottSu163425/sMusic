@@ -15,7 +15,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +24,6 @@ import android.view.animation.OvershootInterpolator;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
-import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.constant.LocalSongDisplayType;
@@ -44,6 +42,7 @@ import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.PermissionUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
@@ -70,7 +69,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
     private static final int INDEX_PAGE_FAB = 1; //Index of page that fab will be shown;
     private static final int REQUEST_CODE_LOCAL_SONG_SELECTION = 1111;
-//    private static final String NEED_OPEN_DRAWER = "NEED_OPEN_DRAWER";
+    //    private static final String NEED_OPEN_DRAWER = "NEED_OPEN_DRAWER";
     private static final String CURRENT_TAB_POSITION = "CURRENT_TAB_POSITION";
 
 
@@ -111,12 +110,14 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-
+        L.e("===>onNewIntent", getIntent().getBooleanExtra(Constants.KEY_IS_FROM_NOTIFICATION, false) + "");
     }
 
     @Override
     public void initPreData() {
-        if (getIntent().getBooleanExtra(Constants.KEY_NOTIFICATION_TO_MUSIC_PLAY, false)) {
+        L.e("===>initPreData", getIntent().getBooleanExtra(Constants.KEY_IS_FROM_NOTIFICATION, false) + "");
+
+        if (getIntent().getBooleanExtra(Constants.KEY_IS_FROM_NOTIFICATION, false)) {
             Intent intent = new Intent(this, MusicPlayActivity.class);
             intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG,
                     getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG));
@@ -126,7 +127,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
             //Set the enterance value false, to avoid to excute duplicated logic.
             Intent getIntent = getIntent();
-            getIntent.putExtra(Constants.KEY_NOTIFICATION_TO_MUSIC_PLAY, false);
+            getIntent.putExtra(Constants.KEY_IS_FROM_NOTIFICATION, false);
             setIntent(getIntent);
         }
 
