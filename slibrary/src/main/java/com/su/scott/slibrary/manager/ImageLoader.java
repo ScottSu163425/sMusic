@@ -15,7 +15,6 @@ public class ImageLoader {
     public static void load(Context context, String path, ImageView imageView) {
         Glide.with(context)
                 .load(path)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
     }
 
@@ -24,7 +23,6 @@ public class ImageLoader {
                 .load(path)
                 .placeholder(placeholder)
                 .error(errorholder)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
     }
 

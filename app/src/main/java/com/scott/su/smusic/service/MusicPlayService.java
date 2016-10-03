@@ -43,6 +43,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     public static final int OPERATION_NOTIFICATION_PLAY_PAUSE = 3;
 
     public static final int ID_NOTIFICATION = 123;
+    public static final long DURATION_TIMER_DELAY = TimeUtil.MILLISECONDS_OF_SECOND / 10;
 
     private MediaPlayer mMediaPlayer;
     private NotificationManager mNotificationManager;
@@ -61,7 +62,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             if (mMusicPlayCallback != null) {
                 mMusicPlayCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
             }
-            mTimerHandler.postDelayed(this, TimeUtil.MILLISECONDS_OF_SECOND / 10);
+            mTimerHandler.postDelayed(this, DURATION_TIMER_DELAY);
         }
     };
 

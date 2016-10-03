@@ -70,7 +70,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
     private static final int INDEX_PAGE_FAB = 1; //Index of page that fab will be shown;
     private static final int REQUEST_CODE_LOCAL_SONG_SELECTION = 1111;
-    private static final String NEED_OPEN_DRAWER = "NEED_OPEN_DRAWER";
+//    private static final String NEED_OPEN_DRAWER = "NEED_OPEN_DRAWER";
     private static final String CURRENT_TAB_POSITION = "CURRENT_TAB_POSITION";
 
 
@@ -109,12 +109,25 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+    }
+
+    @Override
     public void initPreData() {
         if (getIntent().getBooleanExtra(Constants.KEY_NOTIFICATION_TO_MUSIC_PLAY, false)) {
             Intent intent = new Intent(this, MusicPlayActivity.class);
-            intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG));
-            intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, getIntent().getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS));
+            intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG,
+                    getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG));
+            intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS,
+                    getIntent().getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS));
             goTo(intent);
+
+            //Set the enterance value false, to avoid to excute duplicated logic.
+            Intent getIntent = getIntent();
+            getIntent.putExtra(Constants.KEY_NOTIFICATION_TO_MUSIC_PLAY, false);
+            setIntent(getIntent);
         }
 
         PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -169,9 +182,9 @@ public class MainActivity extends BaseActivity implements MainView {
         mTabLayout.setupWithViewPager(mViewPager);
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_container_drawer_menu_main, mDrawerMenuFragment).commit();
 
-        if (getIntent().getBooleanExtra(NEED_OPEN_DRAWER, false)) {
-            mDrawerLayout.openDrawer(Gravity.LEFT);
-        }
+//        if (getIntent().getBooleanExtra(NEED_OPEN_DRAWER, false)) {
+//            mDrawerLayout.openDrawer(Gravity.LEFT);
+//        }
 
         mViewPager.setCurrentItem(getIntent().getIntExtra(CURRENT_TAB_POSITION, 0), false);
 
@@ -513,26 +526,31 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     private void recreateActivity(boolean isForNightMode) {
-        Intent intent = new Intent(MainActivity.this, MainActivity.class);
-        intent.putExtra(NEED_OPEN_DRAWER, true);
-        intent.putExtra(CURRENT_TAB_POSITION, mViewPager.getCurrentItem());
-        if (isForNightMode) {
-            startActivity(intent);
-            if (AppConfig.isNightModeOn(this)) {
-                overridePendingTransition(R.anim.in_north, R.anim.out_south);
-            } else {
-                overridePendingTransition(R.anim.in_south, R.anim.out_north);
-            }
-            finish();
-        } else {
-            startActivity(intent);
-            if (AppConfig.isLanguageModeOn(this)) {
-                overridePendingTransition(R.anim.in_east, R.anim.out_west);
-            } else {
-                overridePendingTransition(R.anim.in_west, R.anim.out_east);
-            }
-            finish();
-        }
+//        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+//        intent.putExtra(NEED_OPEN_DRAWER, true);
+//        intent.putExtra(CURRENT_TAB_POSITION, mViewPager.getCurrentItem());
+//        if (isForNightMode) {
+//            startActivity(intent);
+//            if (AppConfig.isNightModeOn(this)) {
+//                overridePendingTransition(R.anim.in_north, R.anim.out_south);
+//            } else {
+//                overridePendingTransition(R.anim.in_south, R.anim.out_north);
+//            }
+//            finish();
+//        } else {
+//            startActivity(intent);
+//            if (AppConfig.isLanguageModeOn(this)) {
+//                overridePendingTransition(R.anim.in_east, R.anim.out_west);
+//            } else {
+//                overridePendingTransition(R.anim.in_west, R.anim.out_east);
+//            }
+//            finish();
+//        }
+        getSupportFragmentManager().beginTransaction().remove(mAlbumDisplayFragment).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().remove(mSongDisplayFragment).commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().remove(mBillDisplayFragment).commitAllowingStateLoss();
+
+        recreate();
     }
 
     @Override
