@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_edit_local_song_bill_detaile"
-        android:icon="@drawable/ic_mode_edit_24dp"
+        android:icon="@drawable/ic_menu_item_edit_24dp"
         android:title="@string/menu_edit"
         app:showAsAction="always" />
     <item

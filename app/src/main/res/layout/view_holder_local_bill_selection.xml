@@ -20,7 +20,7 @@
         android:layout_marginLeft="@dimen/margin_xs"
         android:layout_marginRight="@dimen/margin_xs"
         android:layout_marginTop="@dimen/margin_xs"
-        android:src="@drawable/ic_my_library_music_grey600_36dp" />
+        android:src="@drawable/ic_menu_item_bill_selection__36dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"

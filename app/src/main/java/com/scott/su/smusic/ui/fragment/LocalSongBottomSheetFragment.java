@@ -28,7 +28,7 @@ public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragmen
     @NonNull
     @Override
     protected int[] getMenuItemIcons() {
-        return new int[]{R.drawable.ic_my_library_music_grey600_24dp,/* R.drawable.ic_supervisor_account_grey600_24dp,*/
+        return new int[]{R.drawable.ic_menu_item_bill_24dp,/* R.drawable.ic_supervisor_account_grey600_24dp,*/
                 R.drawable.ic_menu_item_album_24dp, R.drawable.ic_menu_item_share_24dp,
                 R.drawable.ic_menu_item_delete_24dp};
     }
