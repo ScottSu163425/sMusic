@@ -37,7 +37,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_s"
             android:ellipsize="marquee"
-
             android:gravity="center"
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
