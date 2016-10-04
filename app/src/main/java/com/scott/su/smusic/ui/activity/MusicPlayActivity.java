@@ -359,7 +359,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public void setPlayRepeatAll() {
-        mRepeatButton.setImageResource(R.drawable.ic_repeat_selected_24dp);
+        mRepeatButton.setImageResource(R.drawable.ic_repeat_all_selected_24dp);
         mShuffleButton.setImageResource(R.drawable.ic_shuffle_normal_24dp);
         mCurrentPlayMode = PlayMode.RepeatAll;
         mCurrentRepeatMode = PlayMode.RepeatAll;

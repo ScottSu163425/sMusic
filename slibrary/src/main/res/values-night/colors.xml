@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background">#2a2a2a</color>
-    <color name="backgroundContent">#232323</color>
+    <color name="background">#282828</color>
+    <color name="backgroundContent">#222222</color>
     <color name="transparent">#00ffffff</color>
     <color name="selecotor_half_dark">#30ffffff</color>
     <color name="selecotor_half_light">#30000000</color>

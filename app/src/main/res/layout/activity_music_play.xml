@@ -67,6 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            app:cardBackgroundColor="@color/background_card_music_play"
             android:layout_marginBottom="@dimen/margin_s"
             android:layout_marginLeft="@dimen/margin_s"
             android:layout_marginRight="@dimen/margin_s"
@@ -124,7 +125,7 @@
                         android:background="@null"
                         android:foreground="?attr/selectableItemBackground"
                         android:padding="@dimen/margin_xs"
-                        android:src="@drawable/ic_repeat_selected_24dp" />
+                        android:src="@drawable/ic_repeat_all_selected_24dp" />
 
                     <ImageButton
                         android:id="@+id/imgbtn_skip_previous_music_play"
@@ -185,8 +186,8 @@
             android:scaleType="fitXY"
             android:transitionName="@string/transition_name_cover"
             android:translationZ="20dp"
-            app:layout_heightPercent="50%"
-            app:layout_widthPercent="80%"
+            app:layout_heightPercent="45%"
+            app:layout_widthPercent="70%"
             android:layout_below="@+id/toolbar_music_play"
             android:layout_centerHorizontal="true" />
     </android.support.percent.PercentRelativeLayout>
