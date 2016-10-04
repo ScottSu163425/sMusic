@@ -37,8 +37,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_s"
             android:ellipsize="marquee"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
+
             android:gravity="center"
             android:marqueeRepeatLimit="marquee_forever"
             android:scrollHorizontally="true"
@@ -62,21 +61,7 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_subhead" />
-
-        <ImageView
-            android:id="@+id/iv_cover_music_play"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_below="@+id/toolbar_music_play"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_l"
-            android:elevation="20dp"
-            android:scaleType="fitXY"
-            android:transitionName="@string/transition_name_cover"
-            android:translationZ="20dp"
-            app:layout_heightPercent="50%"
-            app:layout_widthPercent="80%" />
+            android:textSize="@dimen/text_size_body" />
 
         <android.support.v7.widget.CardView
             android:id="@+id/card_view_play_control_music_play"
@@ -191,6 +176,20 @@
                 </RelativeLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
+
+        <ImageView
+            android:id="@+id/iv_cover_music_play"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="54dp"
+            android:elevation="20dp"
+            android:scaleType="fitXY"
+            android:transitionName="@string/transition_name_cover"
+            android:translationZ="20dp"
+            app:layout_heightPercent="50%"
+            app:layout_widthPercent="80%"
+            android:layout_below="@+id/toolbar_music_play"
+            android:layout_centerHorizontal="true" />
     </android.support.percent.PercentRelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

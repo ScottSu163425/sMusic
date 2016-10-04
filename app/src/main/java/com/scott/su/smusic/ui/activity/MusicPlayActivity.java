@@ -48,7 +48,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     private ImageView mCoverImageView, mBlurCoverImageView;
     private FloatingActionButton mPlayButton;
     private ImageButton mRepeatButton, mSkipPreviousButton, mSkipNextButton, mShuffleButton;
-    private AppCompatSeekBar mPlayingSeekBar;
+    private AppCompatSeekBar mPlayProgressSeekBar;
     private LocalSongEntity mInitialPlayingSong;
     private LocalSongEntity mCurrentPlayingSong;
     private ArrayList<LocalSongEntity> mCurrentPlayingSongList;
@@ -95,7 +95,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                 mMusicPlayServiceBinder = (MusicPlayService.MusicPlayServiceBinder) iBinder;
-                if (mCurrentPlayingSong!=null&&mCurrentPlayingSongList!=null){
+                if (mCurrentPlayingSong != null && mCurrentPlayingSongList != null) {
                     mMusicPlayServiceBinder.setPlaySong(mCurrentPlayingSong, mCurrentPlayingSongList);
                 }
                 mMusicPlayServiceBinder.registerPlayCallback(new MusicPlayCallback() {
@@ -175,7 +175,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mCoverImageView = (ImageView) findViewById(R.id.iv_cover_music_play);
         mBlurCoverImageView = (ImageView) findViewById(R.id.iv_cover_blur_music_play);
         mPlayButton = (FloatingActionButton) findViewById(R.id.fab_play_music_play);
-        mPlayingSeekBar = (AppCompatSeekBar) findViewById(R.id.seek_bar_progress_music_play);
+        mPlayProgressSeekBar = (AppCompatSeekBar) findViewById(R.id.seek_bar_progress_music_play);
         mSkipPreviousButton = (ImageButton) findViewById(R.id.imgbtn_skip_previous_music_play);
         mSkipNextButton = (ImageButton) findViewById(R.id.imgbtn_skip_next_music_play);
         mRepeatButton = (ImageButton) findViewById(R.id.imgbtn_repeat_music_play);
@@ -195,10 +195,11 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mRepeatButton.setOnClickListener(this);
         mShuffleButton.setOnClickListener(this);
 
-        mPlayingSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        mPlayProgressSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mCurrentTimeTextView.setText(TimeUtil.millisecondToTimeWithinHour(progress));
+                mMusicTitleTextView.requestFocus();
             }
 
             @Override
@@ -259,7 +260,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public void setSeekBarMax(long max) {
-        mPlayingSeekBar.setMax((int) max);
+        mPlayProgressSeekBar.setMax((int) max);
     }
 
     @Override
@@ -267,7 +268,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         if (mSeeking) {
             return;
         }
-        mPlayingSeekBar.setProgress((int) currentPosition);
+        mPlayProgressSeekBar.setProgress((int) currentPosition);
     }
 
     @Override

@@ -39,7 +39,7 @@ public class LocalAlbumDisplayAdapter extends BaseDisplayAdapter<LocalAlbumViewH
 
     @Override
     protected void bindVH(LocalAlbumViewHolder viewHolder, final LocalAlbumEntity entity, final int position) {
-        ViewUtil.setText(viewHolder.getTitleTextView(), entity.getAlbumTitle(), "");
+        ViewUtil.setText(viewHolder.getTitleTextView(),  "《"+entity.getAlbumTitle()+"》", "");
         ViewUtil.setText(viewHolder.getArtistTextView(), entity.getArtist(), "");
         ViewUtil.setText(viewHolder.getSongCountTextView(), entity.getAlbumSongs().size() + " " + context.getString(R.string.unit_song), "");
 

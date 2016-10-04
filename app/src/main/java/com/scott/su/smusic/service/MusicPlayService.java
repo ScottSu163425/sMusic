@@ -174,7 +174,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         if (isPause()) {
             mMediaPlayer.seekTo(position);
         } else {
-            pause();
+//            pause();
             mMediaPlayer.seekTo(position);
         }
         mMusicPlayCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
