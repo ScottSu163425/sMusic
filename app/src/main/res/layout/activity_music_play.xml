@@ -124,7 +124,7 @@
                         android:background="@null"
                         android:foreground="?attr/selectableItemBackground"
                         android:padding="@dimen/margin_xs"
-                        android:src="@drawable/ic_repeat_black_24dp" />
+                        android:src="@drawable/ic_repeat_selected_24dp" />
 
                     <ImageButton
                         android:id="@+id/imgbtn_skip_previous_music_play"
@@ -135,7 +135,7 @@
                         android:background="@null"
                         android:foreground="?attr/selectableItemBackground"
                         android:padding="@dimen/margin_xs"
-                        android:src="@drawable/ic_skip_previous_black_36dp" />
+                        android:src="@drawable/ic_skip_previous_36dp" />
 
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/fab_play_music_play"
@@ -143,7 +143,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_margin="@dimen/margin_xs"
-                        android:src="@drawable/ic_play_arrow_white_24dp"
+                        android:src="@drawable/ic_play_arrow_24dp"
                         android:transitionName="@string/transition_name_fab"
                         app:backgroundTint="@color/colorImpact"
                         app:elevation="@dimen/elevation_fab_normal"
@@ -160,7 +160,7 @@
                         android:background="@null"
                         android:foreground="?attr/selectableItemBackground"
                         android:padding="@dimen/margin_xs"
-                        android:src="@drawable/ic_skip_next_black_36dp" />
+                        android:src="@drawable/ic_skip_next_36dp" />
 
                     <ImageButton
                         android:id="@+id/imgbtn_shuffle_music_play"
@@ -171,7 +171,7 @@
                         android:background="@null"
                         android:foreground="?attr/selectableItemBackground"
                         android:padding="@dimen/margin_xs"
-                        android:src="@drawable/ic_shuffle_grey600_24dp" />
+                        android:src="@drawable/ic_shuffle_normal_24dp" />
                 </RelativeLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>

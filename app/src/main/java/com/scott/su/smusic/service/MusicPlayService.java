@@ -251,10 +251,10 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
         builder.setContentIntent(pendingIntentGoToMusicPlay);
         //第一个参数是图标资源id 第二个是图标显示的名称，第三个图标点击要启动的PendingIntent
-        builder.addAction(R.drawable.ic_skip_previous_white_36dp, "", pendingIntentPlayPrevious);
-        builder.addAction(isPlaying() ? R.drawable.ic_pause_white_36dp : R.drawable.ic_play_arrow_white_36dp, "",
+        builder.addAction(R.drawable.ic_skip_previous_notification_36dp, "", pendingIntentPlayPrevious);
+        builder.addAction(isPlaying() ? R.drawable.ic_pause_36dp : R.drawable.ic_play_arrow_notification_36dp, "",
                 pendingIntentPlayPause);
-        builder.addAction(R.drawable.ic_skip_next_white_36dp, "", pendingIntentPlayNext);
+        builder.addAction(R.drawable.ic_skip_next_notification_36dp, "", pendingIntentPlayNext);
 
         NotificationCompat.MediaStyle style = new NotificationCompat.MediaStyle();
         style.setMediaSession(new MediaSessionCompat(this, "MediaSession",

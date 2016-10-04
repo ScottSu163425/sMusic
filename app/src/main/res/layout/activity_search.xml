@@ -52,7 +52,7 @@
                 android:background="@drawable/selector_transparent_half_light"
                 android:foreground="?attr/selectableItemBackground"
                 android:padding="@dimen/margin_xs"
-                android:src="@drawable/ic_arrow_back_grey600_24dp"
+                android:src="@drawable/ic_arrow_back_24dp"
                 android:text="search"
                 android:textColor="@color/textColorWhite" />
 
@@ -76,7 +76,7 @@
                 android:background="@drawable/selector_transparent_half_light"
                 android:foreground="?attr/selectableItemBackground"
                 android:padding="@dimen/margin_xs"
-                android:src="@drawable/ic_mic_grey600_24dp"
+                android:src="@drawable/ic_mic_24dp"
                 android:text="search"
                 android:textColor="@color/textColorWhite" />
         </LinearLayout>

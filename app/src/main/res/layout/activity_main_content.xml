@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
         android:layout_margin="@dimen/margin_s"
-        android:src="@drawable/ic_play_arrow_white_36dp"
+        android:src="@drawable/ic_play_arrow_notification_36dp"
         app:backgroundTint="@color/colorImpact"
         app:elevation="@dimen/elevation_fab_normal"
         app:fabSize="normal"

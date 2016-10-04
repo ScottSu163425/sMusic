@@ -1,7 +1,6 @@
 package com.scott.su.smusic.ui.activity;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -13,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -46,7 +44,6 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.PermissionUtil;
-import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
@@ -276,11 +273,11 @@ public class MainActivity extends BaseActivity implements MainView {
             public void onPageSelected(int position) {
                 mCurrentTabPosition = position;
                 if (position == TAB_POSITION_SONG) {
-                    mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_white_36dp);
+                    mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_notification_36dp);
                 } else if (position == TAB_POSITION_BILL) {
-                    mFloatingActionButton.setImageResource(R.drawable.ic_add_white_24dp);
+                    mFloatingActionButton.setImageResource(R.drawable.ic_add_fab_24dp);
                 } else if (position == TAB_POSITION_ALBUM) {
-                    mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_white_36dp);
+                    mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_notification_36dp);
                 }
             }
 
