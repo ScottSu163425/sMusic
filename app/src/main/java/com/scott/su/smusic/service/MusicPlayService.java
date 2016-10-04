@@ -165,6 +165,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             if (isRegisterCallback()) {
                 mMusicPlayCallback.onPlayPause(mMediaPlayer.getCurrentPosition());
             }
+            updateNotifycation();
         }
     }
 
@@ -195,6 +196,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     private void playResume() {
         if (isPause()) {
             startMediaPlayer();
+            updateNotifycation();
         }
     }
 

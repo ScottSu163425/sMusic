@@ -50,7 +50,7 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
                 }
             }
             albumEntity.setAlbumSongs(albumSongEntities);
-            albumEntity.setAlbumTitle(albumSongEntities.get(0).getTitle());
+            albumEntity.setAlbumTitle(albumSongEntities.get(0).getAlbum());
             albumEntity.setArtist(albumSongEntities.get(0).getArtist());
 
             albumEntities.add(albumEntity);
