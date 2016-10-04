@@ -382,7 +382,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     public void setPlayShuffleFromRepeatAll() {
         mShuffleButton.setImageResource(R.drawable.ic_shuffle_selected_24dp);
-        mRepeatButton.setImageResource(R.drawable.ic_repeat_normal_24dp);
+        mRepeatButton.setImageResource(R.drawable.ic_repeat_all_normal_24dp);
         mCurrentPlayMode = PlayMode.Shuffle;
         if (mMusicPlayServiceBinder != null) {
             mMusicPlayServiceBinder.setPlayMode(mCurrentPlayMode);
