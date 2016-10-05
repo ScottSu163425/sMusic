@@ -6,6 +6,7 @@ import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.view.BaseView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,10 +15,6 @@ import java.util.List;
 public interface MusicPlayView extends BaseView, MusicPlayServiceView {
 
     void setCurrentPlayingSong(LocalSongEntity songEntity);
-
-    LocalSongEntity getCurrentPlayingSong();
-
-    List<LocalSongEntity> getCurrentPlayingSongList();
 
     void setPlayingMusicTitle(String title);
 

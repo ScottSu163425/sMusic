@@ -96,6 +96,7 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
                 AppConfig.setPlayRepeatOne(mMusicPlayView.getViewContext());
             }
         }
+        mMusicPlayView.setPlayMode(mMusicPlayView.getCurrentPlayMode());
     }
 
     @Override
@@ -105,6 +106,7 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
         } else if (mMusicPlayView.isRepeatOne()) {
             mMusicPlayView.setPlayShuffleFromRepeatOne();
         }
+        mMusicPlayView.setPlayMode(mMusicPlayView.getCurrentPlayMode());
         AppConfig.setPlayShuffle(mMusicPlayView.getViewContext());
     }
 

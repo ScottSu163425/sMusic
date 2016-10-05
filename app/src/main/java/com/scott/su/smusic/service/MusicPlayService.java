@@ -49,9 +49,9 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     private NotificationManager mNotificationManager;
     private Notification mNotification;
     private MusicPlayCallback mMusicPlayCallback;
-    private LocalSongEntity mCurrentPlaySong;
+    private LocalSongEntity mCurrentPlayingSong;
+    private ArrayList<LocalSongEntity> mCurrentPlayingSongs;
     private boolean mPlaySameSong;
-    private ArrayList<LocalSongEntity> mPlaySongs;
 
     private PlayStatus mCurrentPlayStatus = PlayStatus.Stop;
     private PlayMode mCurrentPlayMode = PlayMode.RepeatAll;
@@ -127,15 +127,15 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
     @Override
     public void setPlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs) {
-        if (mCurrentPlaySong == null) {
+        if (mCurrentPlayingSong == null) {
             mPlaySameSong = false;
-        } else if (mCurrentPlaySong.getSongId() == currentPlaySong.getSongId()) {
+        } else if (mCurrentPlayingSong.getSongId() == currentPlaySong.getSongId()) {
             mPlaySameSong = true;
         } else {
             mPlaySameSong = false;
         }
-        this.mCurrentPlaySong = currentPlaySong;
-        this.mPlaySongs = playSongs;
+        this.mCurrentPlayingSong = currentPlaySong;
+        this.mCurrentPlayingSongs = playSongs;
     }
 
     @Override
@@ -145,7 +145,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
     @Override
     public void play() {
-        if (mMediaPlayer != null && mCurrentPlaySong != null) {
+        if (mMediaPlayer != null && mCurrentPlayingSong != null) {
             if (mPlaySameSong) {
                 playResume();
             } else {
@@ -183,13 +183,13 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
     @Override
     public void playPrevious() {
-        mCurrentPlaySong = MusicPlayUtil.getPreviousSong(mCurrentPlaySong, mPlaySongs, mCurrentPlayMode);
+        mCurrentPlayingSong = MusicPlayUtil.getPreviousSong(mCurrentPlayingSong, mCurrentPlayingSongs, mCurrentPlayMode);
         playNew();
     }
 
     @Override
     public void playNext() {
-        mCurrentPlaySong = MusicPlayUtil.getNextSong(mCurrentPlaySong, mPlaySongs, mCurrentPlayMode);
+        mCurrentPlayingSong = MusicPlayUtil.getNextSong(mCurrentPlayingSong, mCurrentPlayingSongs, mCurrentPlayMode);
         playNew();
     }
 
@@ -204,11 +204,11 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         try {
             mMediaPlayer.reset();
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mMediaPlayer.setDataSource(mCurrentPlaySong.getPath());
+            mMediaPlayer.setDataSource(mCurrentPlayingSong.getPath());
             mMediaPlayer.prepare();
             startMediaPlayer();
             if (mMusicPlayCallback != null) {
-                mMusicPlayCallback.onPlaySongChanged(mCurrentPlaySong);
+                mMusicPlayCallback.onPlaySongChanged(mCurrentPlayingSong);
             }
             updateNotifycation();
         } catch (IOException e) {
@@ -220,17 +220,17 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
     private void updateNotifycation() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setContentTitle(mCurrentPlaySong.getTitle());
-        builder.setContentText(mCurrentPlaySong.getArtist());
+        builder.setContentTitle(mCurrentPlayingSong.getTitle());
+        builder.setContentText(mCurrentPlayingSong.getArtist());
         builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setLargeIcon(BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlaySong.getAlbumId())));
+        builder.setLargeIcon(BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlayingSong.getAlbumId())));
         builder.setDefaults(NotificationCompat.DEFAULT_ALL);
         builder.setPriority(NotificationCompat.PRIORITY_MAX);
 
         Intent intentGoToMusicPlay = new Intent(this, MainActivity.class);
         intentGoToMusicPlay.putExtra(Constants.KEY_IS_FROM_NOTIFICATION, true);
-        intentGoToMusicPlay.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mCurrentPlaySong);
-        intentGoToMusicPlay.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mPlaySongs);
+        intentGoToMusicPlay.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mCurrentPlayingSong);
+        intentGoToMusicPlay.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mCurrentPlayingSongs);
         intentGoToMusicPlay.addFlags(/*Intent.FLAG_ACTIVITY_CLEAR_TASK
                 | Intent.FLAG_ACTIVITY_NEW_TASK
                 |*/Intent.FLAG_ACTIVITY_TASK_ON_HOME);
@@ -313,6 +313,16 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     @Override
+    public LocalSongEntity getCurrentPlayingSong() {
+        return mCurrentPlayingSong;
+    }
+
+    @Override
+    public ArrayList<LocalSongEntity> getCurrentPlayingSongs() {
+        return mCurrentPlayingSongs;
+    }
+
+    @Override
     public void registerPlayCallback(@NonNull MusicPlayCallback callback) {
         this.mMusicPlayCallback = callback;
     }
@@ -327,6 +337,16 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         @Override
         public PlayStatus getCurrentPlayStatus() {
             return MusicPlayService.this.getCurrentPlayStatus();
+        }
+
+        @Override
+        public LocalSongEntity getCurrentPlayingSong() {
+            return MusicPlayService.this.getCurrentPlayingSong();
+        }
+
+        @Override
+        public ArrayList<LocalSongEntity> getCurrentPlayingSongs() {
+            return MusicPlayService.this.getCurrentPlayingSongs();
         }
 
         @Override

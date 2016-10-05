@@ -15,6 +15,10 @@ import java.util.ArrayList;
 public interface MusicPlayServiceView {
     PlayStatus getCurrentPlayStatus();
 
+    LocalSongEntity getCurrentPlayingSong();
+
+    ArrayList<LocalSongEntity> getCurrentPlayingSongs();
+
     void setPlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs);
 
     void setPlayMode(PlayMode playMode);
