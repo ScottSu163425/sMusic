@@ -29,167 +29,180 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:theme="@style/AppTheme.AppBarOverlay" />
 
-        <TextView
-            android:id="@+id/tv_music_title_music_play"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_cover_music_play"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_s"
-            android:ellipsize="marquee"
-            android:gravity="center"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_headline" />
-
-        <TextView
-            android:id="@+id/tv_music_artist_music_play"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_music_title_music_play"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_xxs"
-            android:ellipsize="marquee"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:maxLines="1"
-            android:scrollHorizontally="true"
-            android:singleLine="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_body" />
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_view_play_control_music_play"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            app:cardBackgroundColor="@color/background_card_music_play"
-            android:layout_marginBottom="@dimen/margin_s"
-            android:layout_marginLeft="@dimen/margin_s"
-            android:layout_marginRight="@dimen/margin_s"
-            app:cardElevation="@dimen/cardview_default_elevation">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar_music_play"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <LinearLayout
+
+            <ImageView
+                android:id="@+id/iv_cover_music_play"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:orientation="vertical">
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/margin_l"
+                android:layout_marginRight="@dimen/margin_l"
+                android:layout_marginTop="@dimen/margin_l"
+                android:layout_weight="1"
+                android:elevation="20dp"
+                android:scaleType="fitXY"
+                android:transitionName="@string/transition_name_cover"
+                android:translationZ="20dp" />
+
+            <TextView
+                android:id="@+id/tv_music_title_music_play"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_l"
+                android:layout_marginRight="@dimen/margin_l"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingTop="@dimen/margin_s"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_headline" />
+
+            <TextView
+                android:id="@+id/tv_music_artist_music_play"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_xl"
+                android:layout_marginRight="@dimen/margin_xl"
+                android:layout_below="@+id/tv_music_title_music_play"
+                android:layout_centerHorizontal="true"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/margin_m"
+                android:paddingTop="@dimen/margin_xxs"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_body" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view_play_control_music_play"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/margin_s"
+                android:layout_marginLeft="@dimen/margin_s"
+                android:layout_marginRight="@dimen/margin_s"
+                app:cardBackgroundColor="@color/background_card_music_play"
+                app:cardElevation="@dimen/cardview_default_elevation">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_xs"
-                    android:layout_marginRight="@dimen/margin_xs"
-                    android:layout_marginTop="@dimen/margin_xs"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_current_time_music_play"
-                        style="@style/TextAppearanceCaption"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <android.support.v7.widget.AppCompatSeekBar
-                        android:id="@+id/seek_bar_progress_music_play"
-                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_marginLeft="@dimen/margin_xs"
+                        android:layout_marginRight="@dimen/margin_xs"
+                        android:layout_marginTop="@dimen/margin_xs"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_total_time_music_play"
-                        style="@style/TextAppearanceCaption"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_current_time_music_play"
+                            style="@style/TextAppearanceCaption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_xs"
-                    android:animateLayoutChanges="true"
-                    android:clipChildren="false"
-                    android:clipToPadding="false">
+                        <android.support.v7.widget.AppCompatSeekBar
+                            android:id="@+id/seek_bar_progress_music_play"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
 
-                    <ImageButton
-                        android:id="@+id/imgbtn_repeat_music_play"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/tv_total_time_music_play"
+                            style="@style/TextAppearanceCaption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:background="@null"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:padding="@dimen/margin_xs"
-                        android:src="@drawable/ic_repeat_all_selected_24dp" />
-
-                    <ImageButton
-                        android:id="@+id/imgbtn_skip_previous_music_play"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/fab_play_music_play"
-                        android:background="@null"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:padding="@dimen/margin_xs"
-                        android:src="@drawable/ic_skip_previous_36dp" />
-
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/fab_play_music_play"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
                         android:layout_margin="@dimen/margin_xs"
-                        android:src="@drawable/ic_play_arrow_24dp"
-                        android:transitionName="@string/transition_name_fab"
-                        app:backgroundTint="@color/colorImpact"
-                        app:elevation="@dimen/elevation_fab_normal"
-                        app:fabSize="normal"
-                        app:pressedTranslationZ="@dimen/elevation_fab_pressed"
-                        app:rippleColor="@color/colorImpactDark" />
+                        android:animateLayoutChanges="true"
+                        android:clipChildren="false"
+                        android:clipToPadding="false">
 
-                    <ImageButton
-                        android:id="@+id/imgbtn_skip_next_music_play"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/fab_play_music_play"
-                        android:background="@null"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:padding="@dimen/margin_xs"
-                        android:src="@drawable/ic_skip_next_36dp" />
+                        <ImageButton
+                            android:id="@+id/imgbtn_repeat_music_play"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:background="@null"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:padding="@dimen/margin_xs"
+                            android:src="@drawable/ic_repeat_all_selected_24dp" />
 
-                    <ImageButton
-                        android:id="@+id/imgbtn_shuffle_music_play"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@null"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:padding="@dimen/margin_xs"
-                        android:src="@drawable/ic_shuffle_normal_24dp" />
-                </RelativeLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+                        <ImageButton
+                            android:id="@+id/imgbtn_skip_previous_music_play"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/fab_play_music_play"
+                            android:background="@null"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:padding="@dimen/margin_xs"
+                            android:src="@drawable/ic_skip_previous_36dp" />
 
-        <ImageView
-            android:id="@+id/iv_cover_music_play"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="54dp"
-            android:elevation="20dp"
-            android:scaleType="fitXY"
-            android:transitionName="@string/transition_name_cover"
-            android:translationZ="20dp"
-            app:layout_heightPercent="47%"
-            app:layout_widthPercent="75%"
-            android:layout_below="@+id/toolbar_music_play"
-            android:layout_centerHorizontal="true" />
+                        <android.support.design.widget.FloatingActionButton
+                            android:id="@+id/fab_play_music_play"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_margin="@dimen/margin_xs"
+                            android:src="@drawable/ic_play_arrow_24dp"
+                            android:transitionName="@string/transition_name_fab"
+                            app:backgroundTint="@color/colorImpact"
+                            app:elevation="@dimen/elevation_fab_normal"
+                            app:fabSize="normal"
+                            app:pressedTranslationZ="@dimen/elevation_fab_pressed"
+                            app:rippleColor="@color/colorImpactDark" />
+
+                        <ImageButton
+                            android:id="@+id/imgbtn_skip_next_music_play"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/fab_play_music_play"
+                            android:background="@null"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:padding="@dimen/margin_xs"
+                            android:src="@drawable/ic_skip_next_36dp" />
+
+                        <ImageButton
+                            android:id="@+id/imgbtn_shuffle_music_play"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@null"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:padding="@dimen/margin_xs"
+                            android:src="@drawable/ic_shuffle_normal_24dp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
     </android.support.percent.PercentRelativeLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>
