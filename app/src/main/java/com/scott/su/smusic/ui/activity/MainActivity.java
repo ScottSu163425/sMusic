@@ -7,6 +7,7 @@ import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -27,11 +29,9 @@ import android.view.animation.OvershootInterpolator;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
-import com.scott.su.smusic.callback.MusicPlayCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.constant.LocalSongDisplayType;
-import com.scott.su.smusic.constant.PlayStatus;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
@@ -47,8 +47,8 @@ import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.callback.SimpleCallback;
 import com.su.scott.slibrary.util.AnimUtil;
-import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.PermissionUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
@@ -76,6 +76,7 @@ public class MainActivity extends BaseActivity implements MainView {
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
     private int mCurrentTabPosition = 0;
     private boolean mDataInitFinish = false;
+//    private RecyclerView.OnScrollListener mSongScrollListener;
 
 
     private static final int REQUEST_CODE_LOCAL_SONG_SELECTION = 1111;
@@ -123,13 +124,10 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        L.e("===>onNewIntent", getIntent().getBooleanExtra(Constants.KEY_IS_FROM_NOTIFICATION, false) + "");
     }
 
     @Override
     public void initPreData() {
-        L.e("===>initPreData", getIntent().getBooleanExtra(Constants.KEY_IS_FROM_NOTIFICATION, false) + "");
-
         if (getIntent().getBooleanExtra(Constants.KEY_IS_FROM_NOTIFICATION, false)) {
             Intent intent = new Intent(this, MusicPlayActivity.class);
             intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG,
@@ -147,68 +145,15 @@ public class MainActivity extends BaseActivity implements MainView {
         PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
         PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-//        mCurrentPlayingSong = getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG);
-//        mCurrentPlayingSongList = getIntent().getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS);
-//        mInitialPlayingSong = mCurrentPlayingSong;
-
         //Bind music play service
         mMusicPlayServiceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                 mMusicPlayServiceBinder = (MusicPlayService.MusicPlayServiceBinder) iBinder;
-
-
-//                if (mCurrentPlayingSong != null && mCurrentPlayingSongList != null) {
-//                    mMusicPlayServiceBinder.setPlaySong(mCurrentPlayingSong, mCurrentPlayingSongList);
-//                }
-//                mMusicPlayServiceBinder.registerPlayCallback(new MusicPlayCallback() {
-//                    @Override
-//                    public void onPlayStart() {
-//                        mCurrentPlayStatus = PlayStatus.Playing;
-//                        mMusicPlayPresenter.onPlayStart();
-//                    }
-//
-//                    @Override
-//                    public void onPlaySongChanged(LocalSongEntity songEntity) {
-//                        mMusicPlayPresenter.onPlaySongChanged(songEntity);
-//                    }
-//
-//                    @Override
-//                    public void onPlayProgressUpdate(long currentPositionMillSec) {
-//                        mMusicPlayPresenter.onPlayProgressUpdate(currentPositionMillSec);
-//                    }
-//
-//                    @Override
-//                    public void onPlayPause(long currentPositionMillSec) {
-//                        mCurrentPlayStatus = PlayStatus.Pause;
-//                        mMusicPlayPresenter.onPlayPause(currentPositionMillSec);
-//                    }
-//
-//                    @Override
-//                    public void onPlayResume() {
-//                        mCurrentPlayStatus = PlayStatus.Playing;
-//                        mMusicPlayPresenter.onPlayResume();
-//                    }
-//
-//                    @Override
-//                    public void onPlayStop() {
-//                        mCurrentPlayStatus = PlayStatus.Stop;
-//                        mMusicPlayPresenter.onPlayStop();
-//                    }
-//
-//                    @Override
-//                    public void onPlayComplete() {
-//                        mMusicPlayPresenter.onPlayComplete();
-//                    }
-//                });
-//                mCurrentPlayStatus = mMusicPlayServiceBinder.getCurrentPlayStatus();
-//                mMusicPlayPresenter.onServiceConnected();
             }
 
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
-//                mMusicPlayPresenter.onServiceDisconnected();
-                L.e("===>activity:", "onServiceDisconnected");
                 mMusicPlayServiceBinder = null;
             }
         };
@@ -440,6 +385,27 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
+    public LocalSongEntity getCurrentPlayingSong() {
+        return mMusicPlayServiceBinder.getCurrentPlayingSong();
+    }
+
+    @Override
+    public ArrayList<LocalSongEntity> getCurrentPlayingSongs() {
+        return mMusicPlayServiceBinder.getCurrentPlayingSongs();
+    }
+
+    @Override
+    public void scrollSongPositionTo(int position, final SimpleCallback scrollCompleteCallback) {
+        mSongDisplayFragment.scrollToPosition(position);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                scrollCompleteCallback.onCallback();
+            }
+        }, 100);
+    }
+
+    @Override
     public void updateSongDisplay() {
         if (mSongDisplayFragment.isVisible()) {
             mSongDisplayFragment.reInitialize();
@@ -461,14 +427,23 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public void playRandomSong() {
-        int randomPositon = new Random().nextInt(mSongDisplayFragment.getLastVisibleItemPosition() - mSongDisplayFragment.getFirstVisibleItemPosition())
-                + mSongDisplayFragment.getFirstVisibleItemPosition();
-
+    public void playSongInPosition(int position) {
         Intent intent = new Intent(MainActivity.this, MusicPlayActivity.class);
-        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mSongDisplayFragment.getDisplayDataList().get(randomPositon));
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mSongDisplayFragment.getDisplayDataList().get(position));
         intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
-        goToWithSharedElement(intent, mSongDisplayFragment.getSongViewHolder(randomPositon).getCoverImageView(), getString(R.string.transition_name_cover));
+        goToWithSharedElement(intent, mSongDisplayFragment.getSongViewHolder(position).getCoverImageView(), getString(R.string.transition_name_cover));
+
+    }
+
+    @Override
+    public void playRandomSong() {
+        final int randomPositon = new Random().nextInt(mSongDisplayFragment.getDisplayDataList().size());
+        scrollSongPositionTo(randomPositon, new SimpleCallback() {
+            @Override
+            public void onCallback() {
+                playSongInPosition(randomPositon);
+            }
+        });
     }
 
     /**
@@ -608,6 +583,11 @@ public class MainActivity extends BaseActivity implements MainView {
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, entity);
         intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
         goToWithSharedElement(intent, sharedElement, transitionName);
+    }
+
+    @Override
+    public void goToMusicWithSharedElementFromFAB() {
+
     }
 
     @Override

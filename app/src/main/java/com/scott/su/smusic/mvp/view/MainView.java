@@ -5,7 +5,10 @@ import android.view.View;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.su.scott.slibrary.callback.SimpleCallback;
 import com.su.scott.slibrary.view.BaseView;
+
+import java.util.ArrayList;
 
 /**
  * Created by asus on 2016/8/19.
@@ -22,11 +25,19 @@ public interface MainView extends BaseView, LocalSongBottomSheetView {
 
     boolean isCurrentTabAlbum();
 
+    LocalSongEntity getCurrentPlayingSong();
+
+    ArrayList<LocalSongEntity> getCurrentPlayingSongs();
+
+    void scrollSongPositionTo(int position, SimpleCallback scrollCompleteCallback);
+
     void updateSongDisplay();
 
     void updateBillDisplay();
 
     void updateAlbumDisplay();
+
+    void playSongInPosition(int position);
 
     void playRandomSong();
 
@@ -45,6 +56,8 @@ public interface MainView extends BaseView, LocalSongBottomSheetView {
     void goToBillDetail(LocalBillEntity entity);
 
     void goToMusicWithSharedElement(LocalSongEntity entity, View sharedElement, String transitionName);
+
+    void goToMusicWithSharedElementFromFAB();
 
     void turnOnNightMode();
 

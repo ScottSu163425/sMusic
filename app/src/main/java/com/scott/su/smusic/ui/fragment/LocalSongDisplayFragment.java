@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity,LocalSongViewHolder> implements LocalSongDisplayView {
+public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity, LocalSongViewHolder> implements LocalSongDisplayView {
     private LocalSongDisplayPresenter mSongDisplayPresenter;
     private LocalSongDisplayAdapter mSongDisplayAdapter;
     private LocalSongDisplayStyle mLocalSongDisplayStyle = LocalSongDisplayStyle.NumberDivider;

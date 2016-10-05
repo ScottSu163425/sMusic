@@ -16,6 +16,8 @@ import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.view.MainView;
+import com.scott.su.smusic.util.MusicPlayUtil;
+import com.su.scott.slibrary.callback.SimpleCallback;
 
 import java.util.List;
 
@@ -47,11 +49,23 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onFabClick() {
         if (mMainView.isCurrentTabSong()) {
-            mMainView.playRandomSong();
+            if (mMainView.getCurrentPlayingSong() == null) {
+                //Has not played any song,play random;
+                mMainView.playRandomSong();
+            } else {
+                //A song is playing or paused;
+                final int currentPlayingSongPositon = MusicPlayUtil.getSongPosition(mMainView.getCurrentPlayingSong(), mMainView.getCurrentPlayingSongs());
+                mMainView.scrollSongPositionTo(currentPlayingSongPositon, new SimpleCallback() {
+                    @Override
+                    public void onCallback() {
+                        mMainView.playSongInPosition(currentPlayingSongPositon);
+                    }
+                });
+            }
+
         } else if (mMainView.isCurrentTabBill()) {
             mMainView.showCreateBillDialog();
         }
-
 
     }
 
@@ -72,17 +86,20 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void onBillItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+    public void onBillItemClick(View itemView, LocalBillEntity entity, int position,
+                                @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
         mMainView.goToBillDetailWithSharedElement(entity, sharedElements[0], transitionNames[0]);
     }
 
     @Override
-    public void onAlbumItemClick(View itemView, LocalAlbumEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+    public void onAlbumItemClick(View itemView, LocalAlbumEntity entity, int position,
+                                 @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
         mMainView.goToAlbumDetailWithSharedElement(entity, sharedElements[0], transitionNames[0]);
     }
 
     @Override
-    public void onSelectedLocalSongsResult(final LocalBillEntity billToAddSong, final List<LocalSongEntity> songsToAdd) {
+    public void onSelectedLocalSongsResult(final LocalBillEntity billToAddSong,
+                                           final List<LocalSongEntity> songsToAdd) {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected void onPreExecute() {

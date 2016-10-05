@@ -22,7 +22,7 @@ import java.util.List;
  * @作者 Su
  * @时间 2016年7月
  */
-public abstract class BaseDisplayFragment<E,VH> extends BaseFragment implements BaseDisplayView<E> {
+public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements BaseDisplayView<E> {
     private View mRootView;
     private RecyclerView mDisplayRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -260,11 +260,11 @@ public abstract class BaseDisplayFragment<E,VH> extends BaseFragment implements 
         return mDisplayRecyclerView;
     }
 
-    public int getFirstVisibleItemPosition() {
+    private int getFirstVisibleItemPosition() {
         return ((LinearLayoutManager) (getDisplayRecyclerView().getLayoutManager())).findFirstVisibleItemPosition();
     }
 
-    public int getLastVisibleItemPosition() {
+    private int getLastVisibleItemPosition() {
         return ((LinearLayoutManager) (getDisplayRecyclerView().getLayoutManager())).findLastVisibleItemPosition();
     }
 
@@ -281,5 +281,18 @@ public abstract class BaseDisplayFragment<E,VH> extends BaseFragment implements 
         }
         return null;
     }
+
+    public void scrollToPosition(int positon) {
+        getDisplayRecyclerView().scrollToPosition(positon);
+    }
+
+    public void smoothScrollToPosition(int positon) {
+        getDisplayRecyclerView().smoothScrollToPosition(positon);
+    }
+
+    public RecyclerView getRecyclerView() {
+        return getDisplayRecyclerView();
+    }
+
 
 }

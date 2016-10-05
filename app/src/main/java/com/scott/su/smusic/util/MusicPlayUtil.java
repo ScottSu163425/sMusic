@@ -53,7 +53,7 @@ public class MusicPlayUtil {
         return null;
     }
 
-    private static int getSongPosition(LocalSongEntity currentSong, List<LocalSongEntity> songList) {
+    public static int getSongPosition(LocalSongEntity currentSong, List<LocalSongEntity> songList) {
         int size = songList.size();
         for (int i = 0; i < size; i++) {
             LocalSongEntity songEntity = songList.get(i);
@@ -65,7 +65,7 @@ public class MusicPlayUtil {
         return -1;
     }
 
-    private static int getRandomPosition(int currentPosition, int size) {
+    public static int getRandomPosition(int currentPosition, int size) {
         if (size == 1) {
             return 0;
         }
