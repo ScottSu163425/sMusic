@@ -173,8 +173,13 @@ public class MainActivity extends BaseActivity implements MainView {
                 LocalSongDisplayStyle.CoverDivider);
         mBillDisplayFragment = LocalBillDisplayFragment.newInstance();
         mAlbumDisplayFragment = LocalAlbumDisplayFragment.newInstance();
+
         mSongDisplayFragment.setSwipeRefreshEnable(true);
         mSongDisplayFragment.setLoadMoreEnable(false);
+        mBillDisplayFragment.setSwipeRefreshEnable(false);
+        mBillDisplayFragment.setLoadMoreEnable(false);
+        mAlbumDisplayFragment.setLoadMoreEnable(false);
+
 
         pageFragments.add(mSongDisplayFragment);
         pageFragments.add(mBillDisplayFragment);

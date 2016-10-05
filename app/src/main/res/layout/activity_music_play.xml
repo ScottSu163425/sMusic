@@ -186,8 +186,8 @@
             android:scaleType="fitXY"
             android:transitionName="@string/transition_name_cover"
             android:translationZ="20dp"
-            app:layout_heightPercent="45%"
-            app:layout_widthPercent="70%"
+            app:layout_heightPercent="47%"
+            app:layout_widthPercent="75%"
             android:layout_below="@+id/toolbar_music_play"
             android:layout_centerHorizontal="true" />
     </android.support.percent.PercentRelativeLayout>

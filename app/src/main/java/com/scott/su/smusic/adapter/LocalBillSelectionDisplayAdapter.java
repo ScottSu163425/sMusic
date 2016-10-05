@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.holder.LocalBillSelectionViewHolder;
 import com.scott.su.smusic.entity.LocalBillEntity;
+import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
+import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -28,12 +30,19 @@ public class LocalBillSelectionDisplayAdapter extends BaseDisplayAdapter<LocalBi
 
     @Override
     protected LocalBillSelectionViewHolder createVH(ViewGroup parent, int viewType) {
-        return new LocalBillSelectionViewHolder(LayoutInflater.from(context).inflate(R.layout.view_holder_local_bill_selection, parent, false));
+        return new LocalBillSelectionViewHolder(LayoutInflater.from(context)
+                .inflate(R.layout.view_holder_local_bill_selection, parent, false));
     }
 
     @Override
     protected void bindVH(LocalBillSelectionViewHolder viewHolder, final LocalBillEntity entity, final int position) {
         ViewUtil.setText(viewHolder.getTitleTextView(), entity.getBillTitle(), "");
+
+        ImageLoader.load(context,
+                new LocalAlbumModelImpl().getAlbumCoverPathBySongId(context, entity.getLatestSongId()),
+                viewHolder.getCoverImageView(),
+                R.color.place_holder_loading,
+                R.drawable.ic_menu_item_bill_selection_36dp);
 
         if (getItemClickCallback() != null) {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

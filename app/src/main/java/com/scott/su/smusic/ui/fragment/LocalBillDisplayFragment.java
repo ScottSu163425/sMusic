@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntity,LocalBillViewHolder> implements LocalBillDisplayView {
+public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntity, LocalBillViewHolder> implements LocalBillDisplayView {
     private LocalBillDisplayPresenter mSongBillDisplayPresenter;
     private LocalBillDisplayAdapter mSongBillDisplayAdapter;
 

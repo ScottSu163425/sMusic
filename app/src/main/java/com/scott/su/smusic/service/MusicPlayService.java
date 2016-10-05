@@ -223,7 +223,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         builder.setContentTitle(mCurrentPlaySong.getTitle());
         builder.setContentText(mCurrentPlaySong.getArtist());
         builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setLargeIcon(BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPath(this, mCurrentPlaySong.getAlbumId())));
+        builder.setLargeIcon(BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlaySong.getAlbumId())));
         builder.setDefaults(NotificationCompat.DEFAULT_ALL);
         builder.setPriority(NotificationCompat.PRIORITY_MAX);
 

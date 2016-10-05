@@ -16,13 +16,17 @@ public interface LocalAlbumModel {
 
     List<LocalSongEntity> getLocalSongs(Context context);
 
+    LocalSongEntity getLocalSong(Context context, long songId);
+
     List<LocalAlbumEntity> getLocalAlbums(Context context);
 
-    LocalAlbumEntity getLocalAlbum(Context context,long albumId);
+    LocalAlbumEntity getLocalAlbum(Context context, long albumId);
 
-    String getAlbumCoverPath(Context context, long albumId);
+    String getAlbumCoverPathByAlbumId(Context context, long albumId);
+
+    String getAlbumCoverPathBySongId(Context context, long songId);
 
     Bitmap getAlbumCoverBitmapBlur(Context context, long albumId);
 
-    List<LocalAlbumEntity> searchLocalAlbum(Context context,@NonNull String keyword);
+    List<LocalAlbumEntity> searchLocalAlbum(Context context, @NonNull String keyword);
 }

@@ -15,5 +15,5 @@
     <color name="place_holder_error">@color/md_grey_800</color>
 
     <color name="background_music_play">#222222</color>
-    <color name="background_card_music_play">#303030</color>
+    <color name="background_card_music_play">#272727</color>
 </resources>

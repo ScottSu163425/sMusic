@@ -2,9 +2,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="size_image_view_holder_local_song">52dp</dimen>
+    <dimen name="size_image_view_holder_local_song_selection">46dp</dimen>
     <dimen name="size_image_view_holder_local_album">150dp</dimen>
     <dimen name="size_image_view_holder_local_bill">200dp</dimen>
-    <dimen name="size_image_view_holder_local_bill_selection">36dp</dimen>
+    <dimen name="size_image_view_holder_local_bill_selection">42dp</dimen>
     <dimen name="width_indicator_selection_local_song">5dp</dimen>
     <dimen name="size_check_box">46dp</dimen>
     <dimen name="height_top_area">380dp</dimen>

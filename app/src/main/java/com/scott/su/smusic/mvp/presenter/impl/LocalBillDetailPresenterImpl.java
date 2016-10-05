@@ -245,9 +245,8 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
 
     private void loadCover(boolean needReveal) {
         String path = mBillDetailView.getBillEntity().isBillEmpty() ? "" :
-                mAlbumModel.getAlbumCoverPath(mBillDetailView.getViewContext(),
-                        mBillModel.getBillSong(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity().getLatestSongId())
-                                .getAlbumId());
+                mAlbumModel.getAlbumCoverPathBySongId(mBillDetailView.getViewContext(),
+                        mBillDetailView.getBillEntity().getLatestSongId());
         mBillDetailView.loadCover(path, needReveal);
     }
 
@@ -296,7 +295,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
 
     @Override
     public void onBottomSheetDeleteConfirmed(LocalSongEntity songEntity) {
-       long lastSongIDBeforeDelete = mBillDetailView.getBillEntity().getLatestSongId();
+        long lastSongIDBeforeDelete = mBillDetailView.getBillEntity().getLatestSongId();
         mBillModel.deleteBillSong(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity(), songEntity);
         LocalBillEntity billAfterDelete = mBillModel.getBill(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity().getBillId());
         mBillDetailView.refreshBillSongDisplay(billAfterDelete);

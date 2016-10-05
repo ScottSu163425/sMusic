@@ -71,7 +71,7 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
     }
 
     @Override
-    public String getAlbumCoverPath(Context context, long albumId) {
+    public String getAlbumCoverPathByAlbumId(Context context, long albumId) {
         String path = null;
         Cursor cursor = context.getContentResolver().query(
                 Uri.parse("content://media/external/audio/albums/" + albumId),
@@ -87,8 +87,17 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
     }
 
     @Override
+    public String getAlbumCoverPathBySongId(Context context, long songId) {
+        LocalSongEntity songEntity = getLocalSong(context, songId);
+        if (songEntity == null) {
+            return null;
+        }
+        return getAlbumCoverPathByAlbumId(context, songEntity.getAlbumId());
+    }
+
+    @Override
     public Bitmap getAlbumCoverBitmapBlur(Context context, long albumId) {
-        String path = getAlbumCoverPath(context, albumId);
+        String path = getAlbumCoverPathByAlbumId(context, albumId);
         Bitmap bitmap = BitmapLruCache.getInstance().get(path);
 
         if (bitmap == null) {
@@ -149,6 +158,22 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
         }
         cursor.close();
         return songEntities;
+    }
+
+    @Override
+    public LocalSongEntity getLocalSong(Context context, long songId) {
+        List<LocalSongEntity> songs = getLocalSongs(context);
+
+        if (songs.isEmpty()) {
+            return null;
+        }
+
+        for (LocalSongEntity songEntity : songs) {
+            if (songEntity.getSongId() == songId) {
+                return songEntity;
+            }
+        }
+        return null;
     }
 
 }

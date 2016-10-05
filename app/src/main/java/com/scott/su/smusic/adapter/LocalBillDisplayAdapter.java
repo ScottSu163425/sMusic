@@ -44,8 +44,7 @@ public class LocalBillDisplayAdapter extends BaseDisplayAdapter<LocalBillViewHol
 
         String billCoverPath = "";
         if (!entity.isBillEmpty()) {
-            billCoverPath = new LocalAlbumModelImpl().getAlbumCoverPath(context,
-                    new LocalBillModelImpl().getBillSong(context, entity.getLatestSongId()).getAlbumId());
+            billCoverPath = new LocalAlbumModelImpl().getAlbumCoverPathBySongId(context, entity.getLatestSongId());
         }
         ImageLoader.load(context,
                 billCoverPath,

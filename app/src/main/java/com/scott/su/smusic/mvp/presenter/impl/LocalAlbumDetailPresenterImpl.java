@@ -12,7 +12,6 @@ import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalAlbumDetailPresenter;
 import com.scott.su.smusic.mvp.view.LocalAlbumDetailView;
-import com.su.scott.slibrary.manager.AsyncTaskHelper;
 
 /**
  * Created by Administrator on 2016/9/19.
@@ -36,7 +35,7 @@ public class LocalAlbumDetailPresenterImpl implements LocalAlbumDetailPresenter 
         mAlbumDetailView.initData();
         mAlbumDetailView.initListener();
 
-        mAlbumDetailView.loadAlbumCover(mAlbumModel.getAlbumCoverPath(mAlbumDetailView.getViewContext(),
+        mAlbumDetailView.loadAlbumCover(mAlbumModel.getAlbumCoverPathByAlbumId(mAlbumDetailView.getViewContext(),
                 mAlbumDetailView.getCurrentAlbumEntity().getAlbumId()));
     }
 

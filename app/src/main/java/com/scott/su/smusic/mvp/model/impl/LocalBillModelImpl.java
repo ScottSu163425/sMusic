@@ -39,7 +39,6 @@ public class LocalBillModelImpl implements LocalBillModel {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -55,7 +54,6 @@ public class LocalBillModelImpl implements LocalBillModel {
                 return i;
             }
         }
-
         return -1;
     }
 
@@ -107,7 +105,6 @@ public class LocalBillModelImpl implements LocalBillModel {
                 break;
             }
         }
-
         return bill;
     }
 
@@ -199,7 +196,6 @@ public class LocalBillModelImpl implements LocalBillModel {
                 }
             }
         }
-
         return result;
     }
 
@@ -208,7 +204,6 @@ public class LocalBillModelImpl implements LocalBillModel {
         if (billEntity.isBillEmpty()) {
             return false;
         }
-
         return billEntity.getBillSongIds().contains(songEntity.getSongId() + "");
     }
 

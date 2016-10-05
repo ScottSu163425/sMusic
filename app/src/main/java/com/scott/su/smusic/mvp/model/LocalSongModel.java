@@ -15,6 +15,8 @@ public interface LocalSongModel {
 
     List<LocalSongEntity> getLocalSongs(Context context);
 
+    LocalSongEntity getLocalSong(Context context, long songId);
+
     List<LocalSongEntity> getLocalSongsBySongIds(Context context, long... songIds);
 
     List<LocalSongEntity> searchLocalSong(Context context,@NonNull String keyword);

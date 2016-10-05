@@ -29,12 +29,10 @@
         <TextView
             android:id="@+id/tv_number_view_holder_local_song_selection"
             style="@style/TextAppearanceSubhead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_width="@dimen/size_image_view_holder_local_song_selection"
+            android:layout_height="@dimen/size_image_view_holder_local_song_selection"
             android:layout_margin="@dimen/margin_xs"
-            android:padding="@dimen/margin_xs"
-            android:text="1" />
+            android:gravity="center" />
 
         <!--<ImageView-->
         <!--android:id="@+id/iv_cover_view_holder_local_song_selection"-->
@@ -51,15 +49,13 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/margin_s">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/checkbox_view_holder_local_song_selection"
-
             android:orientation="vertical">
 
             <TextView
@@ -68,8 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="1"
-              />
+                android:maxLines="1" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -82,8 +77,7 @@
                     style="@style/TextAppearanceCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-               />
+                    android:maxLines="1" />
 
                 <TextView
                     style="@style/TextAppearanceCaption"
@@ -100,8 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:maxLines="1"
-                 />
+                    android:maxLines="1" />
             </LinearLayout>
         </LinearLayout>
 

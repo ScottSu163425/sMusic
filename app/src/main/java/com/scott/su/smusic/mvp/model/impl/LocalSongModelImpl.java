@@ -84,6 +84,23 @@ public class LocalSongModelImpl implements LocalSongModel {
         return songEntities;
     }
 
+
+    @Override
+    public LocalSongEntity getLocalSong(Context context, long songId) {
+        List<LocalSongEntity> songs = getLocalSongs(context);
+
+        if (songs.isEmpty()){
+            return null;
+        }
+
+        for (LocalSongEntity songEntity : songs) {
+            if (songEntity.getSongId() == songId) {
+                return songEntity;
+            }
+        }
+        return null;
+    }
+
     @Override
     public List<LocalSongEntity> getLocalSongsBySongIds(Context context, long... songIds) {
         List<LocalSongEntity> result = new ArrayList<>();
@@ -134,7 +151,7 @@ public class LocalSongModelImpl implements LocalSongModel {
 //            return coverBitmap;
 //        }
 //
-//        String path =  getAlbumCoverPath(context, albumId);
+//        String path =  getAlbumCoverPathByAlbumId(context, albumId);
 //
 //        if (TextUtils.isEmpty(path)) {
 //            coverBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_album_cover_default);

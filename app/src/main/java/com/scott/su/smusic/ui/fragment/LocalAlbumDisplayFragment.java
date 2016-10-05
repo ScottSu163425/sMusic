@@ -31,7 +31,6 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
 
     public static LocalAlbumDisplayFragment newInstance() {
         LocalAlbumDisplayFragment instance = new LocalAlbumDisplayFragment();
-
         return instance;
     }
 

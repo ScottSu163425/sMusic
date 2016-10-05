@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.holder.LocalAlbumViewHolder;
@@ -39,12 +37,12 @@ public class LocalAlbumDisplayAdapter extends BaseDisplayAdapter<LocalAlbumViewH
 
     @Override
     protected void bindVH(LocalAlbumViewHolder viewHolder, final LocalAlbumEntity entity, final int position) {
-        ViewUtil.setText(viewHolder.getTitleTextView(),  "《"+entity.getAlbumTitle()+"》", "");
+        ViewUtil.setText(viewHolder.getTitleTextView(), entity.getAlbumTitle(), "");
         ViewUtil.setText(viewHolder.getArtistTextView(), entity.getArtist(), "");
         ViewUtil.setText(viewHolder.getSongCountTextView(), entity.getAlbumSongs().size() + " " + context.getString(R.string.unit_song), "");
 
         ImageLoader.load(context,
-                new LocalAlbumModelImpl().getAlbumCoverPath(context, entity.getAlbumId()),
+                new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(context, entity.getAlbumId()),
                 viewHolder.getCoverImageView(),
                 R.color.place_holder_loading,
                 R.drawable.ic_cover_default_song_bill

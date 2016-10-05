@@ -18,8 +18,6 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.su.scott.slibrary.manager.ImageLoader;
-import com.su.scott.slibrary.util.DeviceUtil;
-import com.su.scott.slibrary.util.ScreenUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
@@ -92,7 +90,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
             viewHolder.getAlbumTextView().setText(entity.getAlbum());
 
             ImageLoader.load(context,
-                    new LocalAlbumModelImpl().getAlbumCoverPath(context, entity.getAlbumId()),
+                    new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(context, entity.getAlbumId()),
                     viewHolder.getCoverImageView(),
                     R.color.place_holder_loading,
                     R.drawable.ic_cover_default_song_bill
@@ -127,7 +125,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
 
             String billCoverPath = "";
             if (!entity.isBillEmpty()) {
-                billCoverPath = new LocalAlbumModelImpl().getAlbumCoverPath(context,
+                billCoverPath = new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(context,
                         new LocalBillModelImpl().getBillSong(context, entity.getLatestSongId()).getAlbumId());
             }
             ImageLoader.load(context,
@@ -160,7 +158,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
             ViewUtil.setText(viewHolder.getSongCountTextView(), entity.getAlbumSongs().size() + " " + context.getString(R.string.unit_song), "");
 
             ImageLoader.load(context,
-                    new LocalAlbumModelImpl().getAlbumCoverPath(context, entity.getAlbumId()),
+                    new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(context, entity.getAlbumId()),
                     viewHolder.getCoverImageView(),
                     R.color.place_holder_loading,
                     R.drawable.ic_cover_default_song_bill
