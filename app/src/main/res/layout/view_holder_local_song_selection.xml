@@ -11,14 +11,6 @@
     android:foreground="?attr/selectableItemBackground"
     android:orientation="horizontal">
 
-    <!--<View-->
-    <!--android:id="@+id/view_indicator_view_holder_local_song_selection"-->
-    <!--android:layout_width="@dimen/width_indicator_selection_local_song"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_marginBottom="@dimen/margin_xs"-->
-    <!--android:layout_marginTop="@dimen/margin_xs"-->
-    <!--android:background="@drawable/shape_indicator_selected_view_holder_local_song_selection"-->
-    <!--android:visibility="gone" />-->
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -34,14 +26,6 @@
             android:layout_margin="@dimen/margin_xs"
             android:gravity="center" />
 
-        <!--<ImageView-->
-        <!--android:id="@+id/iv_cover_view_holder_local_song_selection"-->
-        <!--android:layout_width="@dimen/size_image_view_holder_local_song_selection"-->
-        <!--android:layout_height="@dimen/size_image_view_holder_local_song_selection"-->
-        <!--android:layout_marginLeft="@dimen/margin_xs"-->
-        <!--android:layout_marginRight="@dimen/margin_xs"-->
-        <!--android:layout_marginTop="@dimen/margin_xs"-->
-        <!--android:visibility="gone" />-->
     </FrameLayout>
 
     <RelativeLayout
@@ -58,13 +42,16 @@
             android:layout_toLeftOf="@+id/checkbox_view_holder_local_song_selection"
             android:orientation="vertical">
 
-            <TextView
+            <com.scott.su.smusic.widget.MarqueeTextView
                 android:id="@+id/tv_title_view_holder_local_song_selection"
                 style="@style/TextAppearanceSubhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1" />
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -72,12 +59,16 @@
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/margin_xxs">
 
-                <TextView
+                <com.scott.su.smusic.widget.MarqueeTextView
                     android:id="@+id/tv_artist_view_holder_local_song_selection"
                     style="@style/TextAppearanceCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1" />
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true" />
 
                 <TextView
                     style="@style/TextAppearanceCaption"
