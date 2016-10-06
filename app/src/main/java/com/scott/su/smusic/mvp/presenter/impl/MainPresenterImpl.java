@@ -17,7 +17,6 @@ import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.view.MainView;
 import com.scott.su.smusic.util.MusicPlayUtil;
-import com.su.scott.slibrary.callback.SimpleCallback;
 
 import java.util.List;
 
@@ -49,7 +48,14 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onFabClick() {
         if (mMainView.isCurrentTabSong()) {
-            mMainView.playRandomSong();
+            if (mMainView.getCurrentPlayingSong() == null) {
+                //Has not played any song,play random;
+                mMainView.playRandomSong();
+            } else {
+                //A song is playing or paused;
+                final int currentPlayingSongPositon = MusicPlayUtil.getSongPosition(mMainView.getCurrentPlayingSong(), mMainView.getCurrentPlayingSongs());
+                mMainView.playSongInPosition(currentPlayingSongPositon);
+            }
         } else if (mMainView.isCurrentTabBill()) {
             mMainView.showCreateBillDialog();
         }
@@ -59,14 +65,7 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onFabLongClick() {
         if (mMainView.isCurrentTabSong()) {
-            if (mMainView.getCurrentPlayingSong() == null) {
-                //Has not played any song,play random;
-                mMainView.playRandomSong();
-            } else {
-                //A song is playing or paused;
-                final int currentPlayingSongPositon = MusicPlayUtil.getSongPosition(mMainView.getCurrentPlayingSong(), mMainView.getCurrentPlayingSongs());
-                mMainView.playSongInPosition(currentPlayingSongPositon);
-            }
+            mMainView.playRandomSong();
         }
     }
 
@@ -125,7 +124,6 @@ public class MainPresenterImpl implements MainPresenter {
         }.execute();
 
     }
-
     @Override
     public void onDrawerMenuStatisticClick() {
         mMainView.showToastShort("Statistic");

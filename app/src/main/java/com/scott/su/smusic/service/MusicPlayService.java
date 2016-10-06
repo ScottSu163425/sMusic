@@ -9,6 +9,9 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.session.MediaController;
+import android.media.session.MediaSession;
+import android.media.session.MediaSessionManager;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
@@ -37,17 +40,18 @@ import java.util.ArrayList;
  * Created by Administrator on 2016/9/9.
  */
 public class MusicPlayService extends Service implements MusicPlayServiceView {
-    public static final String EXTRA_OPERATION_NOTIFICATION = "EXTRA_OPERATION_NOTIFICATION";
-    public static final int OPERATION_NOTIFICATION_PLAY_NEXT = 1;
-    public static final int OPERATION_NOTIFICATION_PLAY_PREVIOUS = 2;
-    public static final int OPERATION_NOTIFICATION_PLAY_PAUSE = 3;
+    public static final String ACTION_PLAY_NEXT = "com.scott.su.smusic.service.play_next";
+    public static final String ACTION_PLAY_PREVIOUS = "com.scott.su.smusic.service.play_previous";
+    public static final String ACTION_PLAY_PAUSE = "com.scott.su.smusic.service.play_pause";
+    public static final int REQUEST_CODE_PLAY_NEXT = 1;
+    public static final int REQUEST_CODE_PLAY_PREVIOUS = 2;
+    public static final int REQUEST_CODE_PLAY_PAUSE = 3;
 
     public static final int ID_NOTIFICATION = 123;
     public static final long DURATION_TIMER_DELAY = TimeUtil.MILLISECONDS_OF_SECOND / 10;
 
     private MediaPlayer mMediaPlayer;
     private NotificationManager mNotificationManager;
-    private Notification mNotification;
     private MusicPlayCallback mMusicPlayCallback;
     private LocalSongEntity mCurrentPlayingSong;
     private ArrayList<LocalSongEntity> mCurrentPlayingSongs;
@@ -100,17 +104,19 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent.getIntExtra(EXTRA_OPERATION_NOTIFICATION, -1) == OPERATION_NOTIFICATION_PLAY_NEXT) {
-            playNext();
-        } else if (intent.getIntExtra(EXTRA_OPERATION_NOTIFICATION, -1) == OPERATION_NOTIFICATION_PLAY_PREVIOUS) {
-            playPrevious();
-        } else if (intent.getIntExtra(EXTRA_OPERATION_NOTIFICATION, -1) == OPERATION_NOTIFICATION_PLAY_PAUSE) {
-            if (isPlaying()) {
-                pause();
-            } else {
-                play();
+        if (intent != null && intent.getAction() != null) {
+            if (intent.getAction().equals(ACTION_PLAY_NEXT)) {
+                playNext();
+            } else if (intent.getAction().equals(ACTION_PLAY_PREVIOUS)) {
+                playPrevious();
+            } else if (intent.getAction().equals(ACTION_PLAY_PAUSE)) {
+                if (isPlaying()) {
+                    pause();
+                } else {
+                    play();
+                }
+                updateNotifycation();
             }
-            updateNotifycation();
         }
 
         return super.onStartCommand(intent, flags, startId);
@@ -225,36 +231,21 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setLargeIcon(BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlayingSong.getAlbumId())));
         builder.setDefaults(NotificationCompat.DEFAULT_ALL);
-        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+//        builder.setPriority(NotificationCompat.PRIORITY_MAX);
 
         Intent intentGoToMusicPlay = new Intent(this, MainActivity.class);
         intentGoToMusicPlay.putExtra(Constants.KEY_IS_FROM_NOTIFICATION, true);
         intentGoToMusicPlay.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mCurrentPlayingSong);
         intentGoToMusicPlay.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mCurrentPlayingSongs);
-        intentGoToMusicPlay.addFlags(/*Intent.FLAG_ACTIVITY_CLEAR_TASK
-                | Intent.FLAG_ACTIVITY_NEW_TASK
-                |*/Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+        intentGoToMusicPlay.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntentGoToMusicPlay = PendingIntent.getActivity(this, mCurrentRequestCode, intentGoToMusicPlay, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Intent intentPlayNext = new Intent(this, MusicPlayService.class);
-        intentPlayNext.putExtra(EXTRA_OPERATION_NOTIFICATION, OPERATION_NOTIFICATION_PLAY_NEXT);
-        PendingIntent pendingIntentPlayNext = PendingIntent.getService(this, OPERATION_NOTIFICATION_PLAY_NEXT, intentPlayNext, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Intent intentPlayPrevious = new Intent(this, MusicPlayService.class);
-        intentPlayPrevious.putExtra(EXTRA_OPERATION_NOTIFICATION, OPERATION_NOTIFICATION_PLAY_PREVIOUS);
-        PendingIntent pendingIntentPlayPrevious = PendingIntent.getService(this, OPERATION_NOTIFICATION_PLAY_PREVIOUS, intentPlayPrevious, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Intent intentPlayPause = new Intent(this, MusicPlayService.class);
-        intentPlayPause.putExtra(EXTRA_OPERATION_NOTIFICATION, OPERATION_NOTIFICATION_PLAY_PAUSE);
-        PendingIntent pendingIntentPlayPause = PendingIntent.getService(this, OPERATION_NOTIFICATION_PLAY_PAUSE, intentPlayPause, PendingIntent.FLAG_UPDATE_CURRENT);
-
 
         builder.setContentIntent(pendingIntentGoToMusicPlay);
         //第一个参数是图标资源id 第二个是图标显示的名称，第三个图标点击要启动的PendingIntent
-        builder.addAction(R.drawable.ic_skip_previous_notification_36dp, "", pendingIntentPlayPrevious);
+        builder.addAction(R.drawable.ic_skip_previous_notification_36dp, "", generateOperateIntent(REQUEST_CODE_PLAY_PREVIOUS, ACTION_PLAY_PREVIOUS));
         builder.addAction(isPlaying() ? R.drawable.ic_pause_36dp : R.drawable.ic_play_arrow_notification_36dp, "",
-                pendingIntentPlayPause);
-        builder.addAction(R.drawable.ic_skip_next_notification_36dp, "", pendingIntentPlayNext);
+                generateOperateIntent(REQUEST_CODE_PLAY_PAUSE, ACTION_PLAY_PAUSE));
+        builder.addAction(R.drawable.ic_skip_next_notification_36dp, "", generateOperateIntent(REQUEST_CODE_PLAY_NEXT, ACTION_PLAY_NEXT));
 
         NotificationCompat.MediaStyle style = new NotificationCompat.MediaStyle();
         style.setMediaSession(new MediaSessionCompat(this, "MediaSession",
@@ -267,10 +258,15 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
         builder.setStyle(style);
         builder.setShowWhen(false);
-        mNotification = builder.build();
-        mNotificationManager.notify(ID_NOTIFICATION, mNotification);
-        startForeground(ID_NOTIFICATION, mNotification);
+        mNotificationManager.notify(ID_NOTIFICATION, builder.build());
+        startForeground(ID_NOTIFICATION, builder.build());
         mCurrentRequestCode++;
+    }
+
+    private PendingIntent generateOperateIntent(int requestCode, String action) {
+        Intent intentPlayNext = new Intent(this, MusicPlayService.class);
+        intentPlayNext.setAction(action);
+        return PendingIntent.getService(this, requestCode, intentPlayNext, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private void startMediaPlayer() {

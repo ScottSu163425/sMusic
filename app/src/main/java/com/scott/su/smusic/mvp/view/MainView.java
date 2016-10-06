@@ -37,8 +37,6 @@ public interface MainView extends BaseView, LocalSongBottomSheetView {
 
     void updateAlbumDisplay();
 
-    void goToMusicWithSharedElementInPosition(int position);
-
     void playSongInPosition(int position);
 
     void playRandomSong();

@@ -45,6 +45,7 @@ import com.scott.su.smusic.ui.fragment.LocalBillDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
+import com.scott.su.smusic.util.MusicPlayUtil;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.callback.SimpleCallback;
 import com.su.scott.slibrary.util.AnimUtil;
@@ -135,7 +136,7 @@ public class MainActivity extends BaseActivity implements MainView {
                     getIntent().getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS));
             goTo(intent);
 
-            //Set the enterance value false, to avoid to excute duplicated logic.
+            //Set the enterance value false, to avoid to excute duplicated logic when switch day-night mode.
             Intent getIntent = getIntent();
             getIntent.putExtra(Constants.KEY_IS_FROM_NOTIFICATION, false);
             setIntent(getIntent);
@@ -433,15 +434,6 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public void goToMusicWithSharedElementInPosition(int position) {
-        Intent intent = new Intent(MainActivity.this, MusicPlayActivity.class);
-        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mSongDisplayFragment.getDisplayDataList().get(position));
-        intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
-        goToWithSharedElement(intent, mSongDisplayFragment.getSongViewHolder(position).getCoverImageView(), getString(R.string.transition_name_cover));
-
-    }
-
-    @Override
     public void playSongInPosition(final int position) {
         scrollSongPositionTo(position, new SimpleCallback() {
             @Override
@@ -455,6 +447,14 @@ public class MainActivity extends BaseActivity implements MainView {
     public void playRandomSong() {
         final int randomPositon = new Random().nextInt(mSongDisplayFragment.getDisplayDataList().size());
         playSongInPosition(randomPositon);
+    }
+
+    private void goToMusicWithSharedElementInPosition(int position) {
+        Intent intent = new Intent(MainActivity.this, MusicPlayActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mSongDisplayFragment.getDisplayDataList().get(position));
+        intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
+        goToWithSharedElement(intent, mSongDisplayFragment.getSongViewHolder(position).getCoverImageView(), getString(R.string.transition_name_cover));
+
     }
 
     /**
