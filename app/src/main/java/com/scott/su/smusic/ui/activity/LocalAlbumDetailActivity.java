@@ -3,7 +3,6 @@ package com.scott.su.smusic.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.transition.TransitionInflater;
@@ -35,7 +34,6 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
     private CardView mAlbumInfoCard;
     private ImageView mAlbumCoverImageView;
     private TextView mAlbumTitleTextView, mAlbumArtistTextView, mAlbumCountTextView;
-    private FloatingActionButton mPlayFAB;
     private LocalSongDisplayFragment mSongDisplayFragment;
 
 
@@ -82,7 +80,6 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
         mAlbumTitleTextView = (TextView) findViewById(R.id.tv_title_local_album_detail);
         mAlbumArtistTextView = (TextView) findViewById(R.id.tv_artist_local_album_detail);
         mAlbumCountTextView = (TextView) findViewById(R.id.tv_count_local_album_detail);
-        mPlayFAB = (FloatingActionButton) findViewById(R.id.fab_local_album_detail);
 
         mAlbumTitleTextView.setText(mAlbumEntity.getAlbumTitle());
         mAlbumArtistTextView.setText(mAlbumEntity.getArtist());
@@ -115,12 +112,6 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
                 mPresenter.onAlbumSongItemMoreClick(view, position, entity);
             }
         });
-        mPlayFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.onPlayFabClick();
-            }
-        });
     }
 
     @Override
@@ -143,7 +134,6 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
         Intent intent = new Intent(LocalAlbumDetailActivity.this, MusicPlayActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
-        goToWithSharedElement(intent, mPlayFAB, getString(R.string.transition_name_fab));
     }
 
     @Override
@@ -151,8 +141,7 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
         Intent intent = new Intent(LocalAlbumDetailActivity.this, MusicPlayActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
-        goToWithSharedElements(intent, new View[]{mAlbumCoverImageView, mPlayFAB},
-                new String[]{getString(R.string.transition_name_cover), getString(R.string.transition_name_fab)});
+        goToWithSharedElement(intent, mAlbumCoverImageView, getString(R.string.transition_name_cover));
     }
 
     @Override

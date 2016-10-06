@@ -456,8 +456,9 @@ public class MainActivity extends BaseActivity implements MainView {
         Intent intent = new Intent(MainActivity.this, MusicPlayActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mSongDisplayFragment.getDisplayDataList().get(position));
         intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
-        goToWithSharedElement(intent, mSongDisplayFragment.getSongViewHolder(position).getCoverImageView(), getString(R.string.transition_name_cover));
-
+        goToWithSharedElements(intent,
+                new View[]{mSongDisplayFragment.getSongViewHolder(position).getCoverImageView(), mFloatingActionButton},
+                new String[]{getString(R.string.transition_name_cover), getString(R.string.transition_name_fab)});
     }
 
     /**
@@ -573,6 +574,9 @@ public class MainActivity extends BaseActivity implements MainView {
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, entity);
         intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
         goToWithSharedElement(intent, sharedElement, transitionName);
+//        goToWithSharedElements(intent,
+//                new View[]{sharedElement, mFloatingActionButton},
+//                new String[]{transitionName, getString(R.string.transition_name_fab)});
     }
 
     @Override

@@ -33,12 +33,6 @@
             app:theme="@style/AppTheme.AppBarOverlay" />
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_main"
         android:layout_width="wrap_content"
@@ -46,9 +40,16 @@
         android:layout_gravity="right|bottom"
         android:layout_margin="@dimen/margin_s"
         android:src="@drawable/ic_play_arrow_notification_36dp"
+        android:transitionName="@string/transition_name_fab"
         app:backgroundTint="@color/colorImpact"
         app:elevation="@dimen/elevation_fab_normal"
         app:fabSize="normal"
         app:pressedTranslationZ="@dimen/elevation_fab_pressed"
         app:rippleColor="@color/colorImpactDark" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </android.support.design.widget.CoordinatorLayout>

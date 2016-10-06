@@ -10,20 +10,11 @@
 
     <include layout="@layout/activity_main_content" />
 
-    <!--<android.support.design.widget.NavigationView-->
-    <!--android:id="@+id/navigation_view_main"-->
-    <!--android:layout_width="@dimen/width_menu_main"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_gravity="start"-->
-    <!--android:fitsSystemWindows="true"-->
-    <!--app:headerLayout="@layout/header_navigation_main"-->
-    <!--app:menu="@menu/navigation_main" />-->
     <FrameLayout
         android:id="@+id/fl_container_drawer_menu_main"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/background"
-       />
+        android:background="@color/background" />
 
 </android.support.v4.widget.DrawerLayout>
