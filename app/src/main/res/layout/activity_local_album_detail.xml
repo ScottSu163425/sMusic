@@ -53,20 +53,26 @@
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/margin_s">
 
-                    <TextView
+                    <com.scott.su.smusic.widget.MarqueeTextView
                         android:id="@+id/tv_title_local_album_detail"
                         style="@style/TextAppearanceTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
+                        android:ellipsize="marquee"
+                        android:scrollHorizontally="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:singleLine="true"
                         android:maxLines="1" />
 
-                    <TextView
+                    <com.scott.su.smusic.widget.MarqueeTextView
                         android:id="@+id/tv_artist_local_album_detail"
                         style="@style/TextAppearanceBody1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
+                        android:ellipsize="marquee"
+                        android:scrollHorizontally="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:singleLine="true"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/margin_xs"
                         android:paddingTop="@dimen/margin_xs" />
