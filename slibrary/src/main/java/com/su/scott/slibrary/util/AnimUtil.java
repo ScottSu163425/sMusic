@@ -2,12 +2,15 @@ package com.su.scott.slibrary.util;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.BounceInterpolator;
 
 /**
  * Created by Administrator on 2016/8/12.
@@ -37,9 +40,12 @@ public class AnimUtil {
         scale(view, ACTION.IN, 1, 1, duration, null, null);
     }
 
-
     public static void scaleIn(@NonNull View view, long duration, @Nullable TimeInterpolator interpolator, @Nullable final SimpleAnimListener listener) {
         scale(view, ACTION.IN, 1, 1, duration, interpolator, listener);
+    }
+
+    public static void scaleIn(@NonNull View view, long duration, @Nullable TimeInterpolator interpolator) {
+        scale(view, ACTION.IN, 1, 1, duration, interpolator, null);
     }
 
     public static void scaleOut(@NonNull View view) {
@@ -55,11 +61,11 @@ public class AnimUtil {
     }
 
     public static void alphaIn(@NonNull View view) {
-        alpha(view, ACTION.IN, 0,1.0f,  DURATION_DEFAULT, null, null);
+        alpha(view, ACTION.IN, 0, 1.0f, DURATION_DEFAULT, null, null);
     }
 
     public static void alphaIn(@NonNull View view, long duration) {
-        alpha(view, ACTION.IN,  0,1.0f, duration, null, null);
+        alpha(view, ACTION.IN, 0, 1.0f, duration, null, null);
     }
 
     public static void alphaOut(@NonNull View view) {
@@ -203,6 +209,66 @@ public class AnimUtil {
                 }
             }
         });
+        animator.start();
+    }
+
+    /**
+     * 橡皮筋
+     *
+     * @param target
+     */
+    public static void rubberBand(View target) {
+        AnimatorSet set = new AnimatorSet();
+        ObjectAnimator oa1 = ObjectAnimator.ofFloat(target, "scaleX", 1, 1.25f, 0.75f, 1.15f, 1);
+        ObjectAnimator oa2 = ObjectAnimator.ofFloat(target, "scaleY", 1, 0.75f, 1.25f, 0.85f, 1);
+        set.playTogether(oa1, oa2);
+        set.setDuration(DURATION_DEFAULT);
+        set.start();
+    }
+
+    /**
+     * 嗒哒！
+     *
+     * @param target
+     */
+    public static void tada(View target) {
+        AnimatorSet set = new AnimatorSet();
+        ObjectAnimator oa1 = ObjectAnimator.ofFloat(target, "scaleX", 1, 0.9f, 0.9f, 1.1f, 1.1f, 1.1f, 1.1f, 1.1f, 1.1f, 1);
+        ObjectAnimator oa2 = ObjectAnimator.ofFloat(target, "scaleY", 1, 0.9f, 0.9f, 1.1f, 1.1f, 1.1f, 1.1f, 1.1f, 1.1f, 1);
+        ObjectAnimator oa3 = ObjectAnimator.ofFloat(target, "rotation", 0, -3, -3, 3, -3, 3, -3, 3, -3, 0);
+        set.playTogether(oa1, oa2, oa3);
+        set.setDuration(1000);
+        set.start();
+    }
+
+    /**
+     * 心跳
+     *
+     * @param target
+     */
+    public static void pulseBounce(View target) {
+        AnimatorSet set = new AnimatorSet();
+        ObjectAnimator oa1 = ObjectAnimator.ofFloat(target, "scaleY", 1, 1.05f, 1);
+        ObjectAnimator oa2 = ObjectAnimator.ofFloat(target, "scaleX", 1, 1.05f, 1);
+        set.playTogether(oa1, oa2);
+        set.setDuration(1000);
+        set.setInterpolator(new BounceInterpolator());
+        set.start();
+    }
+
+    /**
+     * 将View的背景颜色更改，使背景颜色转换更和谐的过渡动画
+     *
+     * @param view       要改变背景颜色的View
+     * @param startColor 上个颜色值
+     * @param endColor   当前颜色值
+     * @param duration   动画持续时间
+     */
+    public static void transformColor(View view, int startColor, int endColor, int duration) {
+        ObjectAnimator animator = ObjectAnimator.ofInt(view, "backgroundColor", new int[]{startColor, endColor});
+        animator.setDuration(duration);
+        animator.setEvaluator(new ArgbEvaluator());
+        animator.setInterpolator(new BounceInterpolator());
         animator.start();
     }
 

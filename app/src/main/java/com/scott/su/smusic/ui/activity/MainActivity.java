@@ -301,13 +301,14 @@ public class MainActivity extends BaseActivity implements MainView {
                 mCurrentTabPosition = position;
                 if (position == TAB_POSITION_SONG) {
                     showFab();
+                    AnimUtil.rotate2DPositive(mFloatingActionButton, 360, AnimUtil.DURATION_DEFAULT);
                     mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_notification_36dp);
                 } else if (position == TAB_POSITION_BILL) {
                     showFab();
+                    AnimUtil.rotate2DPositive(mFloatingActionButton, 360, AnimUtil.DURATION_DEFAULT);
                     mFloatingActionButton.setImageResource(R.drawable.ic_add_fab_24dp);
                 } else if (position == TAB_POSITION_ALBUM) {
                     hideFab();
-                    mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_notification_36dp);
                 }
             }
 
@@ -465,20 +466,7 @@ public class MainActivity extends BaseActivity implements MainView {
 //    @Override
     public void showFab() {
         if (!ViewUtil.isViewVisiable(mFloatingActionButton)) {
-            AnimUtil.scaleIn(mFloatingActionButton, AnimUtil.DURATION_SHORT,
-                    new OvershootInterpolator(),
-                    new AnimUtil.SimpleAnimListener() {
-                        @Override
-                        public void onAnimStart() {
-                            ViewUtil.setViewVisiable(mFloatingActionButton);
-                        }
-
-                        @Override
-                        public void onAnimEnd() {
-
-                        }
-                    }
-            );
+            AnimUtil.scaleIn(mFloatingActionButton, AnimUtil.DURATION_SHORT);
         }
     }
 
@@ -488,19 +476,8 @@ public class MainActivity extends BaseActivity implements MainView {
 //    @Override
     public void hideFab() {
         if (ViewUtil.isViewVisiable(mFloatingActionButton)) {
-            AnimUtil.scaleOut(mFloatingActionButton, AnimUtil.DURATION_SHORT,
-                    new AccelerateDecelerateInterpolator(),
-                    new AnimUtil.SimpleAnimListener() {
-                        @Override
-                        public void onAnimStart() {
-                        }
-
-                        @Override
-                        public void onAnimEnd() {
-                            ViewUtil.setViewGone(mFloatingActionButton);
-                        }
-                    }
-            );
+            AnimUtil.scaleOut(mFloatingActionButton, AnimUtil.DURATION_SHORT);
+            AnimUtil.rotate2DNegative(mFloatingActionButton, 360, AnimUtil.DURATION_SHORT);
         }
     }
 
