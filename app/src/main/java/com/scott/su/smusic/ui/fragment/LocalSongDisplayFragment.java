@@ -65,11 +65,6 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     protected void onFirstTimeCreateView() {
         mSongDisplayPresenter = new LocalSongDisplayPresenterImpl(this);
         mSongDisplayPresenter.onViewFirstTimeCreated();

@@ -40,12 +40,6 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
     }
 
     @Override
-    public void onDestroy() {
-        mLocalAlbumDisplayPresenter.onViewWillDestroy();
-        super.onDestroy();
-    }
-
-    @Override
     protected void onFirstTimeCreateView() {
         mLocalAlbumDisplayPresenter = new LocalAlbumDisplayPresenterImpl(this);
         mLocalAlbumDisplayPresenter.onViewFirstTimeCreated();

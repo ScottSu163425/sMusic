@@ -40,12 +40,6 @@ public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntit
     }
 
     @Override
-    public void onDestroy() {
-        mSongBillDisplayPresenter.onViewWillDestroy();
-        super.onDestroy();
-    }
-
-    @Override
     protected void onFirstTimeCreateView() {
         mSongBillDisplayPresenter = new LocalBillDisplayPresenterImpl(this);
         mSongBillDisplayPresenter.onViewFirstTimeCreated();
