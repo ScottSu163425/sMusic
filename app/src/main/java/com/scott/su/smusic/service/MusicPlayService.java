@@ -180,7 +180,6 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         if (isPause()) {
             mMediaPlayer.seekTo(position);
         } else {
-//            pause();
             mMediaPlayer.seekTo(position);
         }
         mMusicPlayCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
@@ -231,7 +230,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setLargeIcon(BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlayingSong.getAlbumId())));
         builder.setDefaults(NotificationCompat.DEFAULT_ALL);
-//        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+        builder.setPriority(NotificationCompat.PRIORITY_MAX);
 
         Intent intentGoToMusicPlay = new Intent(this, MainActivity.class);
         intentGoToMusicPlay.putExtra(Constants.KEY_IS_FROM_NOTIFICATION, true);
@@ -241,6 +240,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         PendingIntent pendingIntentGoToMusicPlay = PendingIntent.getActivity(this, mCurrentRequestCode, intentGoToMusicPlay, PendingIntent.FLAG_UPDATE_CURRENT);
 
         builder.setContentIntent(pendingIntentGoToMusicPlay);
+        builder.setFullScreenIntent(pendingIntentGoToMusicPlay, false);
         //第一个参数是图标资源id 第二个是图标显示的名称，第三个图标点击要启动的PendingIntent
         builder.addAction(R.drawable.ic_skip_previous_notification_36dp, "", generateOperateIntent(REQUEST_CODE_PLAY_PREVIOUS, ACTION_PLAY_PREVIOUS));
         builder.addAction(isPlaying() ? R.drawable.ic_pause_36dp : R.drawable.ic_play_arrow_notification_36dp, "",
