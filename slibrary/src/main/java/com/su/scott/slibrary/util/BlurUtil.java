@@ -8,7 +8,7 @@ import android.graphics.Bitmap;
  * Created by jameson on 9/2/16.
  */
 public class BlurUtil {
-    public static final int BLUR_RADIUS = 60;
+    public static final int BLUR_RADIUS = 40;
 
     public static Bitmap blur(Bitmap sentBitmap) {
        return blur(sentBitmap, BLUR_RADIUS);

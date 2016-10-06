@@ -145,6 +145,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             startActivity(intent, options.toBundle());
         } else {
             startActivity(intent);
+            overridePendingTransition(R.anim.in_alpha, R.anim.out_alpha);
         }
     }
 
@@ -155,6 +156,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             startActivity(intent, options.toBundle());
         } else {
             startActivity(intent);
+            overridePendingTransition(R.anim.in_alpha, R.anim.out_alpha);
         }
     }
 
@@ -170,6 +172,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             startActivity(intent, options.toBundle());
         } else {
             startActivity(intent);
+            overridePendingTransition(R.anim.in_alpha, R.anim.out_alpha);
         }
     }
 
