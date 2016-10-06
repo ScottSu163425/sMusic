@@ -22,6 +22,8 @@ public interface MainPresenter extends BasePresenter, LocalSongBottomSheetPresen
 
     void onFabClick();
 
+    void onFabLongClick();
+
     void onCreateBillConfirm(String text);
 
     void onBillItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);

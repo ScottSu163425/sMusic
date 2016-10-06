@@ -49,24 +49,25 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onFabClick() {
         if (mMainView.isCurrentTabSong()) {
+            mMainView.playRandomSong();
+        } else if (mMainView.isCurrentTabBill()) {
+            mMainView.showCreateBillDialog();
+        }
+
+    }
+
+    @Override
+    public void onFabLongClick() {
+        if (mMainView.isCurrentTabSong()) {
             if (mMainView.getCurrentPlayingSong() == null) {
                 //Has not played any song,play random;
                 mMainView.playRandomSong();
             } else {
                 //A song is playing or paused;
                 final int currentPlayingSongPositon = MusicPlayUtil.getSongPosition(mMainView.getCurrentPlayingSong(), mMainView.getCurrentPlayingSongs());
-                mMainView.scrollSongPositionTo(currentPlayingSongPositon, new SimpleCallback() {
-                    @Override
-                    public void onCallback() {
-                        mMainView.playSongInPosition(currentPlayingSongPositon);
-                    }
-                });
+                mMainView.playSongInPosition(currentPlayingSongPositon);
             }
-
-        } else if (mMainView.isCurrentTabBill()) {
-            mMainView.showCreateBillDialog();
         }
-
     }
 
     @Override

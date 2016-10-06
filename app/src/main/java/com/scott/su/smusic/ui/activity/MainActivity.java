@@ -17,7 +17,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -328,6 +327,13 @@ public class MainActivity extends BaseActivity implements MainView {
                 mMainPresenter.onFabClick();
             }
         });
+        mFloatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mMainPresenter.onFabLongClick();
+                return true;
+            }
+        });
 
     }
 
@@ -427,7 +433,7 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public void playSongInPosition(int position) {
+    public void goToMusicWithSharedElementInPosition(int position) {
         Intent intent = new Intent(MainActivity.this, MusicPlayActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mSongDisplayFragment.getDisplayDataList().get(position));
         intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
@@ -436,14 +442,19 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public void playRandomSong() {
-        final int randomPositon = new Random().nextInt(mSongDisplayFragment.getDisplayDataList().size());
-        scrollSongPositionTo(randomPositon, new SimpleCallback() {
+    public void playSongInPosition(final int position) {
+        scrollSongPositionTo(position, new SimpleCallback() {
             @Override
             public void onCallback() {
-                playSongInPosition(randomPositon);
+                goToMusicWithSharedElementInPosition(position);
             }
         });
+    }
+
+    @Override
+    public void playRandomSong() {
+        final int randomPositon = new Random().nextInt(mSongDisplayFragment.getDisplayDataList().size());
+        playSongInPosition(randomPositon);
     }
 
     /**

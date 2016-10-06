@@ -6,17 +6,17 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_xs"
     android:clickable="true"
-    android:transitionName="@string/transition_name_card"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:transitionName="@string/transition_name_card">
 
     <RelativeLayout
-        android:background="@color/backgroundContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/backgroundContent">
 
         <ImageView
             android:id="@+id/iv_cover_view_holder_local_album"
@@ -36,26 +36,25 @@
                 style="@style/TextAppearanceTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-               />
+                android:ellipsize="end"
+                android:maxLines="1" />
 
             <TextView
                 android:id="@+id/tv_artist_view_holder_local_album"
                 style="@style/TextAppearanceBody1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:maxLines="1"
                 android:paddingBottom="@dimen/margin_xs"
-                android:paddingTop="@dimen/margin_xs"
-              />
+                android:paddingTop="@dimen/margin_xs" />
 
             <TextView
                 android:id="@+id/tv_count_view_holder_local_album"
                 style="@style/TextAppearanceCaption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-               />
+                android:maxLines="1" />
         </LinearLayout>
 
     </RelativeLayout>

@@ -3,6 +3,7 @@ package com.scott.su.smusic.mvp.presenter.impl;
 import android.view.View;
 
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.app.App;
 import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
@@ -77,6 +78,7 @@ public class LocalAlbumDetailPresenterImpl implements LocalAlbumDetailPresenter 
 
         mBillModel.addSongToBill(mAlbumDetailView.getViewContext(), songEntity, billEntity);
         AppConfig.setNeedToRefreshLocalBillDisplay(mAlbumDetailView.getViewContext(), true);
+        AppConfig.setNeedToRefreshSearchResult(mAlbumDetailView.getViewContext(), true);
         mAlbumDetailView.showSnackbarShort(mAlbumDetailView.getSnackbarParent(), mAlbumDetailView.getViewContext().getString(R.string.add_successfully));
     }
 

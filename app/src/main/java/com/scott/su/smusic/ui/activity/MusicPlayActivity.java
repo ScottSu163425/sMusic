@@ -155,6 +155,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     public void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_music_play);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

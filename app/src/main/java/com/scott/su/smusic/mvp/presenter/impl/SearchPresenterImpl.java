@@ -185,6 +185,7 @@ public class SearchPresenterImpl implements SearchPresenter {
         }
 
         mBillModel.addSongToBill(mSearchView.getViewContext(), songEntity, billEntity);
+        AppConfig.setNeedToRefreshLocalBillDisplay(mSearchView.getViewContext(), true);
         searchAndSetResult(mSearchView.getCurrentKeyword());
         mSearchView.showSnackbarShort(mSearchView.getSnackbarParent(), mSearchView.getViewContext().getString(R.string.add_successfully));
     }
