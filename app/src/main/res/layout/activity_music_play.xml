@@ -57,12 +57,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_l"
                 android:layout_marginRight="@dimen/margin_l"
-                android:ellipsize="marquee"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:gravity="center"
-                android:marqueeRepeatLimit="marquee_forever"
                 android:paddingTop="@dimen/margin_s"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_headline" />
 
@@ -74,16 +72,10 @@
                 android:layout_marginRight="@dimen/margin_xl"
                 android:layout_below="@+id/tv_music_title_music_play"
                 android:layout_centerHorizontal="true"
-                android:ellipsize="marquee"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
                 android:gravity="center"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:paddingBottom="@dimen/margin_m"
                 android:paddingTop="@dimen/margin_xxs"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_body" />
 

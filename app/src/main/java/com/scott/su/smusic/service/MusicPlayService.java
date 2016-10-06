@@ -231,6 +231,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         builder.setLargeIcon(BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlayingSong.getAlbumId())));
         builder.setDefaults(NotificationCompat.DEFAULT_ALL);
         builder.setPriority(NotificationCompat.PRIORITY_MAX);
+        builder.setOngoing(true);
 
         Intent intentGoToMusicPlay = new Intent(this, MainActivity.class);
         intentGoToMusicPlay.putExtra(Constants.KEY_IS_FROM_NOTIFICATION, true);

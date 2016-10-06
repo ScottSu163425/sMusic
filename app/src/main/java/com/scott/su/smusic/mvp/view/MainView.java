@@ -27,7 +27,7 @@ public interface MainView extends BaseView, LocalSongBottomSheetView {
 
     LocalSongEntity getCurrentPlayingSong();
 
-    ArrayList<LocalSongEntity> getCurrentPlayingSongs();
+    ArrayList<LocalSongEntity> getDisplaySongs();
 
     void scrollSongPositionTo(int position, SimpleCallback scrollCompleteCallback);
 

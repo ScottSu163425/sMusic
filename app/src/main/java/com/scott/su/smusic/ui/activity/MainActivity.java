@@ -45,7 +45,6 @@ import com.scott.su.smusic.ui.fragment.LocalBillDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
-import com.scott.su.smusic.util.MusicPlayUtil;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.callback.SimpleCallback;
 import com.su.scott.slibrary.util.AnimUtil;
@@ -301,10 +300,13 @@ public class MainActivity extends BaseActivity implements MainView {
             public void onPageSelected(int position) {
                 mCurrentTabPosition = position;
                 if (position == TAB_POSITION_SONG) {
+                    showFab();
                     mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_notification_36dp);
                 } else if (position == TAB_POSITION_BILL) {
+                    showFab();
                     mFloatingActionButton.setImageResource(R.drawable.ic_add_fab_24dp);
                 } else if (position == TAB_POSITION_ALBUM) {
+                    hideFab();
                     mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_notification_36dp);
                 }
             }
@@ -397,8 +399,8 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public ArrayList<LocalSongEntity> getCurrentPlayingSongs() {
-        return mMusicPlayServiceBinder.getCurrentPlayingSongs();
+    public ArrayList<LocalSongEntity> getDisplaySongs() {
+        return mSongDisplayFragment.getDisplayDataList();
     }
 
     @Override
@@ -638,6 +640,8 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     private void recreateActivity(boolean isForNightMode) {
+        /*Forbidden because of the SingleTask mode of this activiy.*/
+
 //        Intent intent = new Intent(MainActivity.this, MainActivity.class);
 //        intent.putExtra(NEED_OPEN_DRAWER, true);
 //        intent.putExtra(CURRENT_TAB_POSITION, mViewPager.getCurrentItem());

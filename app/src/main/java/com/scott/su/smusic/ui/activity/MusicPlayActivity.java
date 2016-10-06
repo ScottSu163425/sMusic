@@ -36,7 +36,6 @@ import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.TimeUtil;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 2016-09-07 22:01:51
@@ -107,6 +106,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                     @Override
                     public void onPlaySongChanged(LocalSongEntity songEntity) {
                         mMusicPlayPresenter.onPlaySongChanged(songEntity);
+                        mCurrentPlayingSong = songEntity;
                     }
 
                     @Override

@@ -53,7 +53,7 @@ public class MainPresenterImpl implements MainPresenter {
                 mMainView.playRandomSong();
             } else {
                 //A song is playing or paused;
-                final int currentPlayingSongPositon = MusicPlayUtil.getSongPosition(mMainView.getCurrentPlayingSong(), mMainView.getCurrentPlayingSongs());
+                final int currentPlayingSongPositon = MusicPlayUtil.getSongPosition(mMainView.getCurrentPlayingSong(), mMainView.getDisplaySongs());
                 mMainView.playSongInPosition(currentPlayingSongPositon);
             }
         } else if (mMainView.isCurrentTabBill()) {
@@ -124,6 +124,7 @@ public class MainPresenterImpl implements MainPresenter {
         }.execute();
 
     }
+
     @Override
     public void onDrawerMenuStatisticClick() {
         mMainView.showToastShort("Statistic");
