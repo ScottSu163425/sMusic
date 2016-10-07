@@ -462,7 +462,6 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
                     public void onClick(DialogInterface dialogInterface, int i) {
                         mBillDetailPresenter.onBottomSheetDeleteConfirmed(songEntity);
                     }
-                }, null, null
-        );
+                }, null, null);
     }
 }

@@ -35,10 +35,11 @@
     <string name="already_exist_in_bill">Already exist in this bill.</string>
     <string name="add_successfully">Added successfully</string>
     <string name="please_waiting">Please waiting..</string>
-    <string name="ask_remove_from_bill">Do you want to remove this song from bill?</string>
+    <string name="ask_remove_from_bill">Remove this song from bill?</string>
+    <string name="ask_remove_from_device">Delete this song from your phone?</string>
     <string name="tip">Tip</string>
-    <string name="ask_clear_bill">Do you want to clear the bill?</string>
-    <string name="ask_delete_bill">Do you want to delete the bill?</string>
+    <string name="ask_clear_bill">Clear the bill?</string>
+    <string name="ask_delete_bill">Delete the bill?</string>
     <string name="add_to_bill">Add to bill</string>
     <string name="album">Album</string>
     <string name="share">Share</string>

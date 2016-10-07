@@ -2,6 +2,7 @@ package com.scott.su.smusic.ui.activity;
 
 import android.Manifest;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
@@ -46,6 +47,7 @@ import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.callback.SimpleCallback;
 import com.su.scott.slibrary.util.AnimUtil;
+import com.su.scott.slibrary.util.DialogUtil;
 import com.su.scott.slibrary.util.PermissionUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
@@ -555,8 +557,17 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public void showDeleteDialog(LocalSongEntity songEntity) {
-
+    public void showDeleteDialog(final LocalSongEntity songEntity) {
+        DialogUtil.showDialog(getViewContext(),
+                "《" + songEntity.getTitle() + "》",
+                getString(R.string.ask_remove_from_device),
+                null,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mMainPresenter.onBottomSheetDeleteConfirmed(songEntity);
+                    }
+                }, null, null);
     }
 
     @Override

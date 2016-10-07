@@ -76,7 +76,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.music_play, menu);
         return true;
     }
 

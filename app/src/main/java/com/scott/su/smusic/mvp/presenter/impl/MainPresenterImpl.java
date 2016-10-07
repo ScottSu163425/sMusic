@@ -18,6 +18,7 @@ import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.view.MainView;
 import com.scott.su.smusic.util.MusicPlayUtil;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -228,7 +229,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onBottomSheetDeleteClick(LocalSongEntity songEntity) {
-
+        mMainView.showDeleteDialog(songEntity);
     }
 
     @Override
@@ -246,6 +247,12 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onBottomSheetDeleteConfirmed(LocalSongEntity songEntity) {
-        mMainView.showToastShort("Delete:" + songEntity.getTitle());
+        File file = new File(songEntity.getPath());
+        if (file.exists()) {
+            if (file.delete()) {
+                mMainView.updateSongDisplay();
+                mMainView.showToastShort("删除成功");
+            }
+        }
     }
 }
