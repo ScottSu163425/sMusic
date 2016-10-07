@@ -12,6 +12,7 @@ import com.scott.su.smusic.mvp.presenter.LocalAlbumDisplayPresenter;
 import com.scott.su.smusic.mvp.view.LocalAlbumDisplayView;
 import com.su.scott.slibrary.manager.AsyncTaskHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -83,12 +84,20 @@ public class LocalAlbumDisplayPresenterImpl implements LocalAlbumDisplayPresente
             @Override
             protected void onPostExecute(List<LocalAlbumEntity> localAlbumEntities) {
                 super.onPostExecute(localAlbumEntities);
-                if (localAlbumEntities == null || localAlbumEntities.size() == 0) {
-                    mLocalAlbumDisplayView.showEmpty();
-                    return;
+
+                List<LocalAlbumEntity> result = localAlbumEntities;
+
+                if (result == null) {
+                    result = new ArrayList<LocalAlbumEntity>();
                 }
-                mLocalAlbumDisplayView.setDisplayData(localAlbumEntities);
-                mLocalAlbumDisplayView.display();
+
+                mLocalAlbumDisplayView.setDisplayData(result);
+
+                if (result.size() == 0) {
+                    mLocalAlbumDisplayView.showEmpty();
+                } else {
+                    mLocalAlbumDisplayView.display();
+                }
             }
         }.execute();
     }

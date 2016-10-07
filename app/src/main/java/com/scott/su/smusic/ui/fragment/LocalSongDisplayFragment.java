@@ -145,6 +145,9 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     public void setDisplayData(@NonNull List<LocalSongEntity> dataList) {
         mSongDisplayAdapter.setDataList(dataList);
         mSongDisplayAdapter.notifyDataSetChanged();
+        if (mDisplayCallback != null) {
+            mDisplayCallback.onDisplayDataChanged(mSongDisplayAdapter.getDataList());
+        }
     }
 
     @Override
@@ -183,6 +186,13 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
         return mDisplayType == LocalSongDisplayType.Album;
     }
 
+    @Override
+    public void setLoading() {
+        if (mDisplayCallback != null) {
+            mDisplayCallback.onDataLoading();
+        }
+    }
+
     public void setSongBillEntity(LocalBillEntity billEntity) {
         this.mSongsBillEntity = billEntity;
     }
@@ -199,6 +209,10 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
         void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
 
         void onItemMoreClick(View view, int position, LocalSongEntity entity);
+
+        void onDataLoading();
+
+        void onDisplayDataChanged(List<LocalSongEntity> dataList);
     }
 
 }

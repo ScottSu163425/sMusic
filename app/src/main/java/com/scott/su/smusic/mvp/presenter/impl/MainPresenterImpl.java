@@ -51,6 +51,11 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onFabClick() {
         if (mMainView.isCurrentTabSong()) {
+            if (mMainView.getDisplaySongs()==null||mMainView.getDisplaySongs().isEmpty()){
+                mMainView.showSnackbarShort(mMainView.getSnackbarParent(),"没有任何本地音乐");
+                return;
+            }
+            
             if (mMainView.getServiceCurrentPlayingSong() == null) {
                 //Has not played any song,play random;
                 mMainView.playRandomSong();

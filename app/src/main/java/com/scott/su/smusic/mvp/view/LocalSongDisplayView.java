@@ -12,9 +12,15 @@ import java.util.List;
  */
 public interface LocalSongDisplayView extends BaseDisplayView<LocalSongEntity> {
     LocalBillEntity getSongBillEntity();
+
     LocalAlbumEntity getSongAlbumEntity();
+
     boolean isDisplayForNormal();
+
     boolean isDisplayForBill();
+
     boolean isDisplayForAlbum();
+
+    void setLoading();
 
 }

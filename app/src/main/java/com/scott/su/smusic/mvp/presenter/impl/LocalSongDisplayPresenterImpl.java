@@ -11,6 +11,7 @@ import com.scott.su.smusic.mvp.presenter.LocalSongDisplayPresenter;
 import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
 import com.su.scott.slibrary.util.L;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -54,6 +55,7 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
     @Override
     public void onViewFirstTimeCreated() {
         mSongDisplayView.showLoading();
+        mSongDisplayView.setLoading();
         getAndDisplayLocalSongs();
     }
 
@@ -85,12 +87,20 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
             @Override
             protected void onPostExecute(List<LocalSongEntity> localSongEntities) {
                 super.onPostExecute(localSongEntities);
-                if (localSongEntities == null || localSongEntities.size() == 0) {
-                    mSongDisplayView.showEmpty();
-                    return;
+
+                List<LocalSongEntity> result = localSongEntities;
+
+                if (result == null) {
+                    result = new ArrayList<LocalSongEntity>();
                 }
-                mSongDisplayView.setDisplayData(localSongEntities);
-                mSongDisplayView.display();
+
+                mSongDisplayView.setDisplayData(result);
+
+                if (result.size() == 0) {
+                    mSongDisplayView.showEmpty();
+                } else {
+                    mSongDisplayView.display();
+                }
             }
         }.execute();
     }

@@ -158,6 +158,16 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
             public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
                 mBillDetailPresenter.onBillSongItemMoreClick(view, position, entity);
             }
+
+            @Override
+            public void onDataLoading() {
+
+            }
+
+            @Override
+            public void onDisplayDataChanged(List<LocalSongEntity> dataList) {
+
+            }
         });
 
         mPlayFAB.setOnClickListener(new View.OnClickListener() {

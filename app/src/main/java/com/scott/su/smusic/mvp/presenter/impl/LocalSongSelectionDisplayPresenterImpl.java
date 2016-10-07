@@ -11,6 +11,7 @@ import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalSongSelectionDisplayPresenter;
 import com.scott.su.smusic.mvp.view.LocalSongSelectionDisplayView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,12 +77,20 @@ public class LocalSongSelectionDisplayPresenterImpl implements LocalSongSelectio
             @Override
             protected void onPostExecute(List<LocalSongEntity> localSongEntities) {
                 super.onPostExecute(localSongEntities);
-                if (localSongEntities == null || localSongEntities.size() == 0) {
-                    mDisplayView.showEmpty();
-                    return;
+
+                List<LocalSongEntity> result = localSongEntities;
+
+                if (result == null) {
+                    result = new ArrayList<LocalSongEntity>();
                 }
-                mDisplayView.setDisplayData(localSongEntities);
-                mDisplayView.display();
+
+                mDisplayView.setDisplayData(result);
+
+                if (result.size() == 0) {
+                    mDisplayView.showEmpty();
+                } else {
+                    mDisplayView.display();
+                }
             }
         }.execute();
     }

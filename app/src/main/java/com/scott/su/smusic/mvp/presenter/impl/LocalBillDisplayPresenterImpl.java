@@ -6,10 +6,12 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.scott.su.smusic.entity.LocalBillEntity;
+import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalBillDisplayPresenter;
 import com.scott.su.smusic.mvp.view.LocalBillDisplayView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -76,12 +78,20 @@ public class LocalBillDisplayPresenterImpl implements LocalBillDisplayPresenter 
             @Override
             protected void onPostExecute(List<LocalBillEntity> localSongBillEntities) {
                 super.onPostExecute(localSongBillEntities);
-                if (localSongBillEntities == null || localSongBillEntities.size() == 0) {
-                    mBillDisplayView.showEmpty();
-                    return;
+
+                List<LocalBillEntity> result = localSongBillEntities;
+
+                if (result == null) {
+                    result = new ArrayList<LocalBillEntity>();
                 }
-                mBillDisplayView.setDisplayData(localSongBillEntities);
-                mBillDisplayView.display();
+
+                mBillDisplayView.setDisplayData(result);
+
+                if (result.size() == 0) {
+                    mBillDisplayView.showEmpty();
+                } else {
+                    mBillDisplayView.display();
+                }
             }
         }.execute();
     }

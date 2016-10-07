@@ -28,6 +28,8 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.SdkUtil;
 
+import java.util.List;
+
 public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbumDetailView {
     private LocalAlbumDetailPresenter mPresenter;
     private LocalAlbumEntity mAlbumEntity;
@@ -110,6 +112,16 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
             @Override
             public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
                 mPresenter.onAlbumSongItemMoreClick(view, position, entity);
+            }
+
+            @Override
+            public void onDataLoading() {
+
+            }
+
+            @Override
+            public void onDisplayDataChanged(List<LocalSongEntity> dataList) {
+
             }
         });
     }

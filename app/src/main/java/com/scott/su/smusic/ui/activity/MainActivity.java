@@ -276,6 +276,20 @@ public class MainActivity extends BaseActivity implements MainView {
             public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
                 mMainPresenter.onLocalSongItemMoreClick(entity);
             }
+
+            @Override
+            public void onDataLoading() {
+                hideFab();
+            }
+
+            @Override
+            public void onDisplayDataChanged(List<LocalSongEntity> dataList) {
+                if (dataList == null || dataList.isEmpty()) {
+                    hideFab();
+                } else {
+                    showFab();
+                }
+            }
         });
 
         // TODO: 2016/10/7  To listener when init complete;
