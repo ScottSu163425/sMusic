@@ -27,6 +27,7 @@ import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayServiceView;
 import com.scott.su.smusic.ui.activity.MainActivity;
 import com.scott.su.smusic.util.MusicPlayUtil;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.TimeUtil;
 
 import java.io.IOException;
@@ -207,18 +208,19 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             }
         }
 
+        if (mCurrentPlayingSongs.size() == 0) {
+            stopMediaPlayer();
+            return;
+        }
+
         if (mCurrentPlayingSong.getSongId() == songEntity.getSongId()) {
-            if (mCurrentPlayingSongs.size() > 0) {
-                playNext();
-            } else {
-                stopMediaPlayer();
-            }
+            playNext();
         }
     }
 
     private void stopMediaPlayer() {
         mMediaPlayer.stop();
-        mNotificationManager.cancel(ID_NOTIFICATION);
+        mNotificationManager.cancelAll( );
     }
 
     private void playResume() {

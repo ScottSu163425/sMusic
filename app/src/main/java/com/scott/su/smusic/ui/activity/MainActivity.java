@@ -279,7 +279,6 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onDataLoading() {
-                hideFab();
             }
 
             @Override
@@ -291,8 +290,6 @@ public class MainActivity extends BaseActivity implements MainView {
                 }
             }
         });
-
-        // TODO: 2016/10/7  To listener when init complete;
 
         mBillDisplayFragment.setBillItemClickCallback(new LocalBillDisplayFragment.BillItemClickCallback() {
             @Override
@@ -541,7 +538,7 @@ public class MainActivity extends BaseActivity implements MainView {
     /**
      * Show fab with animation.
      */
-//    @Override
+    @Override
     public void showFab() {
         if (!ViewUtil.isViewVisiable(mFloatingActionButton)) {
             AnimUtil.scaleIn(mFloatingActionButton, AnimUtil.DURATION_SHORT);
@@ -551,7 +548,7 @@ public class MainActivity extends BaseActivity implements MainView {
     /**
      * Hide fab with animation.
      */
-//    @Override
+    @Override
     public void hideFab() {
         if (ViewUtil.isViewVisiable(mFloatingActionButton)) {
             AnimUtil.scaleOut(mFloatingActionButton, AnimUtil.DURATION_SHORT);

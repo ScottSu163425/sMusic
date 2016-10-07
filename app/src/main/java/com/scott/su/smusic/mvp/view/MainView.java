@@ -29,6 +29,10 @@ public interface MainView extends BaseView, LocalSongBottomSheetView,MusicPlaySe
 
     void scrollSongPositionTo(int position, SimpleCallback scrollCompleteCallback);
 
+    void showFab();
+
+    void hideFab();
+
     void updateSongDisplay();
 
     void updateBillDisplay();

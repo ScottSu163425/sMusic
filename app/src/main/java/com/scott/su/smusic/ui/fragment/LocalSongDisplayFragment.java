@@ -21,6 +21,7 @@ import com.scott.su.smusic.mvp.presenter.impl.LocalSongDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
+import com.su.scott.slibrary.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
