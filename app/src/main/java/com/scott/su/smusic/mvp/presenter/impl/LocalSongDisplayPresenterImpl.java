@@ -55,7 +55,6 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
     @Override
     public void onViewFirstTimeCreated() {
         mSongDisplayView.showLoading();
-        mSongDisplayView.setLoading();
         getAndDisplayLocalSongs();
     }
 
@@ -70,6 +69,12 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
 
     private void getAndDisplayLocalSongs() {
         new AsyncTask<Void, Void, List<LocalSongEntity>>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mSongDisplayView.setLoading();
+            }
+
             @Override
             protected List<LocalSongEntity> doInBackground(Void... voids) {
                 if (mSongDisplayView.isDisplayForNormal()) {

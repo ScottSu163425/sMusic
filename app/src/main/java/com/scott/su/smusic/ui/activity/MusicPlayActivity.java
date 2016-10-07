@@ -56,7 +56,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     private LocalSongEntity mCurrentPlayingSong;
     private ArrayList<LocalSongEntity> mCurrentPlayingSongList;
     private PlayMode mCurrentPlayMode = PlayMode.RepeatAll;
-    private PlayMode mCurrentRepeatMode = PlayMode.RepeatAll;
+    private PlayMode mPlayModeTag = PlayMode.RepeatAll;
     private PlayStatus mCurrentPlayStatus;
     private ServiceConnection mMusicPlayServiceConnection;
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
@@ -103,6 +103,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                 if (mCurrentPlayingSong != null && mCurrentPlayingSongList != null) {
                     mMusicPlayServiceBinder.setServicePlaySong(mCurrentPlayingSong, mCurrentPlayingSongList);
                 }
+                mMusicPlayServiceBinder.setServicePlayMode(mCurrentPlayMode);
                 mMusicPlayServiceBinder.registerServicePlayCallback(new MusicPlayCallback() {
                     @Override
                     public void onPlayStart() {
@@ -395,18 +396,8 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public boolean isRepeatAll() {
-        return mCurrentRepeatMode == PlayMode.RepeatAll;
-    }
-
-    @Override
     public boolean isPlayRepeatOne() {
         return mCurrentPlayMode == PlayMode.RepeatOne;
-    }
-
-    @Override
-    public boolean isRepeatOne() {
-        return mCurrentRepeatMode == PlayMode.RepeatOne;
     }
 
     @Override
@@ -415,11 +406,21 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
+    public boolean isPlayModeTagRepeatAll() {
+        return mPlayModeTag == PlayMode.RepeatAll;
+    }
+
+    @Override
+    public boolean isPlayModeTagRepeatOne() {
+        return mMusicPlayServiceBinder.getServicePlayMode() == PlayMode.RepeatOne;
+    }
+
+    @Override
     public void setPlayRepeatAll() {
         mRepeatButton.setImageResource(R.drawable.ic_repeat_all_selected_24dp);
         mShuffleButton.setImageResource(R.drawable.ic_shuffle_normal_24dp);
         mCurrentPlayMode = PlayMode.RepeatAll;
-        mCurrentRepeatMode = PlayMode.RepeatAll;
+        mPlayModeTag = PlayMode.RepeatAll;
     }
 
     @Override
@@ -427,7 +428,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mRepeatButton.setImageResource(R.drawable.ic_repeat_one_selected_24dp);
         mShuffleButton.setImageResource(R.drawable.ic_shuffle_normal_24dp);
         mCurrentPlayMode = PlayMode.RepeatOne;
-        mCurrentRepeatMode = PlayMode.RepeatOne;
+        mPlayModeTag = PlayMode.RepeatOne;
     }
 
     @Override
@@ -489,6 +490,11 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         if (mMusicPlayServiceBinder != null) {
             mMusicPlayServiceBinder.setServicePlayMode(playMode);
         }
+    }
+
+    @Override
+    public PlayMode getServicePlayMode() {
+        return mMusicPlayServiceBinder.getServicePlayMode();
     }
 
     @Override

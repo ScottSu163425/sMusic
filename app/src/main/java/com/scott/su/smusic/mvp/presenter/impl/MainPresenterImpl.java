@@ -259,7 +259,6 @@ public class MainPresenterImpl implements MainPresenter {
             mMainView.removeServiceSong(songEntity);
             // TODO: 2016/10/7  To update info of bill;
 
-            mMainView.hideFab();
             mMainView.updateSongDisplay();
             mMainView.updateBillDisplay();
             mMainView.updateAlbumDisplay();

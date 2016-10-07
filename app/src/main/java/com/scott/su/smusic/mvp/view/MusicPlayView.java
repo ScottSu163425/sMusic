@@ -32,13 +32,13 @@ public interface MusicPlayView extends BaseView, MusicPlayServiceView {
 
     boolean isPlayRepeatAll();
 
-    boolean isRepeatAll();
-
     boolean isPlayRepeatOne();
 
-    boolean isRepeatOne();
-
     boolean isPlayShuffle();
+
+    boolean isPlayModeTagRepeatAll();
+
+    boolean isPlayModeTagRepeatOne();
 
     void setPlayRepeatAll();
 

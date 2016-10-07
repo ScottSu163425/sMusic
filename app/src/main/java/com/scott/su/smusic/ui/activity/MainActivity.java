@@ -279,6 +279,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onDataLoading() {
+                hideFab();
             }
 
             @Override
@@ -431,6 +432,11 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void setServicePlayMode(PlayMode playMode) {
+    }
+
+    @Override
+    public PlayMode getServicePlayMode() {
+        return mMusicPlayServiceBinder.getServicePlayMode();
     }
 
     @Override

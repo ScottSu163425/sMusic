@@ -23,6 +23,8 @@ public interface MusicPlayServiceView {
 
     void setServicePlayMode(PlayMode playMode);
 
+    PlayMode getServicePlayMode();
+
     void play();
 
     void pause();

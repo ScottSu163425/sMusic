@@ -18,7 +18,6 @@ import android.support.v7.app.NotificationCompat;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.MusicPlayCallback;
-import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
@@ -27,7 +26,6 @@ import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayServiceView;
 import com.scott.su.smusic.ui.activity.MainActivity;
 import com.scott.su.smusic.util.MusicPlayUtil;
-import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.TimeUtil;
 
 import java.io.IOException;
@@ -53,6 +51,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     private LocalSongEntity mCurrentPlayingSong;
     private ArrayList<LocalSongEntity> mCurrentPlayingSongs;
     private boolean mPlaySameSong;
+    private boolean mPlayNextByDeleteing;
 
     private PlayStatus mCurrentPlayStatus = PlayStatus.Stop;
     private PlayMode mCurrentPlayMode = PlayMode.RepeatAll;
@@ -82,8 +81,11 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     @Override
     public void onCreate() {
         super.onCreate();
-        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
+        initMediaPlayer();
+    }
+
+    private void initMediaPlayer() {
         mMediaPlayer = new MediaPlayer();
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -95,12 +97,15 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             }
         });
 
-        mCurrentPlayMode = AppConfig.isPlayRepeatOne(this) ? PlayMode.RepeatOne
-                : (AppConfig.isPlayRepeatAll(this) ? PlayMode.RepeatAll : PlayMode.Shuffle);
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (mMediaPlayer == null) {
+            initMediaPlayer();
+        }
+
         if (intent != null && intent.getAction() != null) {
             if (intent.getAction().equals(ACTION_PLAY_NEXT)) {
                 playNext();
@@ -144,6 +149,11 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     @Override
     public void setServicePlayMode(PlayMode playMode) {
         this.mCurrentPlayMode = playMode;
+    }
+
+    @Override
+    public PlayMode getServicePlayMode() {
+        return this.mCurrentPlayMode;
     }
 
     @Override
@@ -191,7 +201,13 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
     @Override
     public void playNext() {
-        mCurrentPlayingSong = MusicPlayUtil.getNextSong(mCurrentPlayingSong, mCurrentPlayingSongs, mCurrentPlayMode);
+        if (mPlayNextByDeleteing && mCurrentPlayMode == PlayMode.RepeatOne) {
+            //When deleting a playing song,which is playing with repeate-one,We need to change the position of next playing song.
+            mCurrentPlayingSong = MusicPlayUtil.getNextSong(mCurrentPlayingSong, mCurrentPlayingSongs, PlayMode.RepeatAll);
+            mPlayNextByDeleteing = false;
+        } else {
+            mCurrentPlayingSong = MusicPlayUtil.getNextSong(mCurrentPlayingSong, mCurrentPlayingSongs, mCurrentPlayMode);
+        }
         playNew();
     }
 
@@ -214,13 +230,19 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         }
 
         if (mCurrentPlayingSong.getSongId() == songEntity.getSongId()) {
+            mPlayNextByDeleteing = true;
             playNext();
         }
     }
 
     private void stopMediaPlayer() {
+        stopTimer();
         mMediaPlayer.stop();
-        mNotificationManager.cancelAll( );
+        mMediaPlayer.release();
+        mMediaPlayer = null;
+        stopForeground(true);
+        mNotificationManager.cancelAll();
+        stopSelf();
     }
 
     private void playResume() {
@@ -379,6 +401,11 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         @Override
         public void setServicePlayMode(PlayMode playMode) {
             MusicPlayService.this.setServicePlayMode(playMode);
+        }
+
+        @Override
+        public PlayMode getServicePlayMode() {
+            return MusicPlayService.this.getServicePlayMode();
         }
 
         @Override
