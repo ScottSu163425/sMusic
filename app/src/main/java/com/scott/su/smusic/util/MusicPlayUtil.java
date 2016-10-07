@@ -18,6 +18,14 @@ public class MusicPlayUtil {
             return currentSong;
         }
 
+        if (songList.size() == 0) {
+            return null;
+        }
+
+        if (songList.size() == 1) {
+            return songList.get(0);
+        }
+
         if (playMode == PlayMode.RepeatAll) {
             int nextSongPosition = getSongPosition(currentSong, songList) - 1;
             if (nextSongPosition < 0) {
@@ -36,6 +44,14 @@ public class MusicPlayUtil {
     public static LocalSongEntity getNextSong(LocalSongEntity currentSong, List<LocalSongEntity> songList, PlayMode playMode) {
         if (playMode == PlayMode.RepeatOne) {
             return currentSong;
+        }
+
+        if (songList.size() == 0) {
+            return null;
+        }
+
+        if (songList.size() == 1) {
+            return songList.get(0);
         }
 
         if (playMode == PlayMode.RepeatAll) {

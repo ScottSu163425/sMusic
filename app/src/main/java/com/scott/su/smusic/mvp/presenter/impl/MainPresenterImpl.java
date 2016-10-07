@@ -12,13 +12,14 @@ import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
+import com.scott.su.smusic.mvp.model.LocalSongModel;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
+import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.view.MainView;
 import com.scott.su.smusic.util.MusicPlayUtil;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -26,15 +27,16 @@ import java.util.List;
  */
 public class MainPresenterImpl implements MainPresenter {
     private MainView mMainView;
+    private LocalSongModel mSongModel;
     private LocalBillModel mBillModel;
     private LocalAlbumModel mAlbumModel;
 
     public MainPresenterImpl(MainView mView) {
         this.mMainView = mView;
+        this.mSongModel = new LocalSongModelImpl();
         this.mBillModel = new LocalBillModelImpl();
         this.mAlbumModel = new LocalAlbumModelImpl();
     }
-
 
     @Override
     public void onLocalSongItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
@@ -49,12 +51,12 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onFabClick() {
         if (mMainView.isCurrentTabSong()) {
-            if (mMainView.getCurrentPlayingSong() == null) {
+            if (mMainView.getServiceCurrentPlayingSong() == null) {
                 //Has not played any song,play random;
                 mMainView.playRandomSong();
             } else {
                 //A song is playing or paused;
-                final int currentPlayingSongPositon = MusicPlayUtil.getSongPosition(mMainView.getCurrentPlayingSong(), mMainView.getDisplaySongs());
+                final int currentPlayingSongPositon = MusicPlayUtil.getSongPosition(mMainView.getServiceCurrentPlayingSong(), mMainView.getDisplaySongs());
                 mMainView.playSongInPosition(currentPlayingSongPositon);
             }
         } else if (mMainView.isCurrentTabBill()) {
@@ -247,12 +249,17 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onBottomSheetDeleteConfirmed(LocalSongEntity songEntity) {
-        File file = new File(songEntity.getPath());
-        if (file.exists()) {
-            if (file.delete()) {
-                mMainView.updateSongDisplay();
-                mMainView.showToastShort("删除成功");
-            }
+        if (mSongModel.deleteLocalSong(mMainView.getViewContext(), songEntity.getSongId())) {
+            //To update info of music play service;
+            mMainView.removeServiceSong(songEntity);
+            // TODO: 2016/10/7  To update info of bill;
+            
+            mMainView.updateSongDisplay();
+            mMainView.updateBillDisplay();
+            mMainView.updateAlbumDisplay();
+            mMainView.showToastShort("删除成功");
+        } else {
+            mMainView.showToastShort("删除失败");
         }
     }
 }

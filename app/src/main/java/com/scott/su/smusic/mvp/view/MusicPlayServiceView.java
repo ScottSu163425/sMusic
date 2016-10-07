@@ -13,15 +13,15 @@ import java.util.ArrayList;
  * Created by asus on 2016/9/15.
  */
 public interface MusicPlayServiceView {
-    PlayStatus getCurrentPlayStatus();
+    PlayStatus getServiceCurrentPlayStatus();
 
-    LocalSongEntity getCurrentPlayingSong();
+    LocalSongEntity getServiceCurrentPlayingSong();
 
-    ArrayList<LocalSongEntity> getCurrentPlayingSongs();
+    ArrayList<LocalSongEntity> getServiceCurrentPlayingSongs();
 
-    void setPlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs);
+    void setServicePlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs);
 
-    void setPlayMode(PlayMode playMode);
+    void setServicePlayMode(PlayMode playMode);
 
     void play();
 
@@ -33,7 +33,9 @@ public interface MusicPlayServiceView {
 
     void playNext();
 
-    void registerPlayCallback(@NonNull MusicPlayCallback callback);
+    void removeServiceSong(LocalSongEntity songEntity);
 
-    void unregisterPlayCallback();
+    void registerServicePlayCallback(@NonNull MusicPlayCallback callback);
+
+    void unregisterServicePlayCallback();
 }

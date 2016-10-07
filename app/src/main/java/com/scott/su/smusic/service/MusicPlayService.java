@@ -1,6 +1,5 @@
 package com.scott.su.smusic.service;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -9,9 +8,6 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.session.MediaController;
-import android.media.session.MediaSession;
-import android.media.session.MediaSessionManager;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
@@ -132,7 +128,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     @Override
-    public void setPlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs) {
+    public void setServicePlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs) {
         if (mCurrentPlayingSong == null) {
             mPlaySameSong = false;
         } else if (mCurrentPlayingSong.getSongId() == currentPlaySong.getSongId()) {
@@ -145,7 +141,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     @Override
-    public void setPlayMode(PlayMode playMode) {
+    public void setServicePlayMode(PlayMode playMode) {
         this.mCurrentPlayMode = playMode;
     }
 
@@ -196,6 +192,33 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     public void playNext() {
         mCurrentPlayingSong = MusicPlayUtil.getNextSong(mCurrentPlayingSong, mCurrentPlayingSongs, mCurrentPlayMode);
         playNew();
+    }
+
+    @Override
+    public void removeServiceSong(LocalSongEntity songEntity) {
+        if (mCurrentPlayingSongs == null || mCurrentPlayingSongs.isEmpty()) {
+            return;
+        }
+
+        for (LocalSongEntity entity : mCurrentPlayingSongs) {
+            if (entity.getSongId() == songEntity.getSongId()) {
+                mCurrentPlayingSongs.remove(entity);
+                break;
+            }
+        }
+
+        if (mCurrentPlayingSong.getSongId() == songEntity.getSongId()) {
+            if (mCurrentPlayingSongs.size() > 0) {
+                playNext();
+            } else {
+                stopMediaPlayer();
+            }
+        }
+    }
+
+    private void stopMediaPlayer() {
+        mMediaPlayer.stop();
+        mNotificationManager.cancel(ID_NOTIFICATION);
     }
 
     private void playResume() {
@@ -305,55 +328,55 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     @Override
-    public PlayStatus getCurrentPlayStatus() {
+    public PlayStatus getServiceCurrentPlayStatus() {
         return mCurrentPlayStatus;
     }
 
     @Override
-    public LocalSongEntity getCurrentPlayingSong() {
+    public LocalSongEntity getServiceCurrentPlayingSong() {
         return mCurrentPlayingSong;
     }
 
     @Override
-    public ArrayList<LocalSongEntity> getCurrentPlayingSongs() {
+    public ArrayList<LocalSongEntity> getServiceCurrentPlayingSongs() {
         return mCurrentPlayingSongs;
     }
 
     @Override
-    public void registerPlayCallback(@NonNull MusicPlayCallback callback) {
+    public void registerServicePlayCallback(@NonNull MusicPlayCallback callback) {
         this.mMusicPlayCallback = callback;
     }
 
     @Override
-    public void unregisterPlayCallback() {
+    public void unregisterServicePlayCallback() {
         this.mMusicPlayCallback = null;
     }
 
     public class MusicPlayServiceBinder extends Binder implements MusicPlayServiceView {
 
         @Override
-        public PlayStatus getCurrentPlayStatus() {
-            return MusicPlayService.this.getCurrentPlayStatus();
+        public PlayStatus getServiceCurrentPlayStatus() {
+            return MusicPlayService.this.getServiceCurrentPlayStatus();
         }
 
         @Override
-        public LocalSongEntity getCurrentPlayingSong() {
-            return MusicPlayService.this.getCurrentPlayingSong();
+        public LocalSongEntity getServiceCurrentPlayingSong() {
+            return MusicPlayService.this.getServiceCurrentPlayingSong();
         }
 
         @Override
-        public ArrayList<LocalSongEntity> getCurrentPlayingSongs() {
-            return MusicPlayService.this.getCurrentPlayingSongs();
+        public ArrayList<LocalSongEntity> getServiceCurrentPlayingSongs() {
+            return MusicPlayService.this.getServiceCurrentPlayingSongs();
         }
 
         @Override
-        public void setPlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs) {
-            MusicPlayService.this.setPlaySong(currentPlaySong, playSongs);
+        public void setServicePlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs) {
+            MusicPlayService.this.setServicePlaySong(currentPlaySong, playSongs);
         }
 
         @Override
-        public void setPlayMode(PlayMode playMode) {
-            MusicPlayService.this.setPlayMode(playMode);
+        public void setServicePlayMode(PlayMode playMode) {
+            MusicPlayService.this.setServicePlayMode(playMode);
         }
 
         @Override
@@ -382,13 +405,18 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         }
 
         @Override
-        public void registerPlayCallback(@NonNull MusicPlayCallback callback) {
-            MusicPlayService.this.registerPlayCallback(callback);
+        public void removeServiceSong(LocalSongEntity songEntity) {
+            MusicPlayService.this.removeServiceSong(songEntity);
         }
 
         @Override
-        public void unregisterPlayCallback() {
-            MusicPlayService.this.unregisterPlayCallback();
+        public void registerServicePlayCallback(@NonNull MusicPlayCallback callback) {
+            MusicPlayService.this.registerServicePlayCallback(callback);
+        }
+
+        @Override
+        public void unregisterServicePlayCallback() {
+            MusicPlayService.this.unregisterServicePlayCallback();
         }
     }
 

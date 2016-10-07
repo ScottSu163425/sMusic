@@ -76,7 +76,7 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
         Cursor cursor = context.getContentResolver().query(
                 Uri.parse("content://media/external/audio/albums/" + albumId),
                 new String[]{"album_art"}, null, null, null);
-        if (cursor != null) {
+        if (cursor != null && cursor.getCount() != 0) {
             cursor.moveToNext();
             path = cursor.getString(0);
             cursor.close();
@@ -128,6 +128,10 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
     @Override
     public List<LocalSongEntity> getLocalSongs(Context context) {
         List<LocalSongEntity> songEntities = new ArrayList<>();
+        if (context == null) {
+            return songEntities;
+        }
+
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
 
         while (cursor.moveToNext()) {

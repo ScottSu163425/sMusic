@@ -15,9 +15,7 @@ import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -103,9 +101,9 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                 mMusicPlayServiceBinder = (MusicPlayService.MusicPlayServiceBinder) iBinder;
                 if (mCurrentPlayingSong != null && mCurrentPlayingSongList != null) {
-                    mMusicPlayServiceBinder.setPlaySong(mCurrentPlayingSong, mCurrentPlayingSongList);
+                    mMusicPlayServiceBinder.setServicePlaySong(mCurrentPlayingSong, mCurrentPlayingSongList);
                 }
-                mMusicPlayServiceBinder.registerPlayCallback(new MusicPlayCallback() {
+                mMusicPlayServiceBinder.registerServicePlayCallback(new MusicPlayCallback() {
                     @Override
                     public void onPlayStart() {
                         mCurrentPlayStatus = PlayStatus.Playing;
@@ -146,7 +144,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                         mMusicPlayPresenter.onPlayComplete();
                     }
                 });
-                mCurrentPlayStatus = mMusicPlayServiceBinder.getCurrentPlayStatus();
+                mCurrentPlayStatus = mMusicPlayServiceBinder.getServiceCurrentPlayStatus();
                 mMusicPlayPresenter.onServiceConnected();
             }
 
@@ -298,12 +296,12 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public LocalSongEntity getCurrentPlayingSong() {
+    public LocalSongEntity getServiceCurrentPlayingSong() {
         return mCurrentPlayingSong;
     }
 
     @Override
-    public ArrayList<LocalSongEntity> getCurrentPlayingSongs() {
+    public ArrayList<LocalSongEntity> getServiceCurrentPlayingSongs() {
         return mCurrentPlayingSongList;
     }
 
@@ -477,19 +475,19 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public PlayStatus getCurrentPlayStatus() {
+    public PlayStatus getServiceCurrentPlayStatus() {
         return null;
     }
 
     @Override
-    public void setPlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs) {
+    public void setServicePlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs) {
 
     }
 
     @Override
-    public void setPlayMode(PlayMode playMode) {
+    public void setServicePlayMode(PlayMode playMode) {
         if (mMusicPlayServiceBinder != null) {
-            mMusicPlayServiceBinder.setPlayMode(playMode);
+            mMusicPlayServiceBinder.setServicePlayMode(playMode);
         }
     }
 
@@ -519,12 +517,17 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public void registerPlayCallback(@NonNull MusicPlayCallback callback) {
+    public void removeServiceSong(LocalSongEntity songEntity) {
+        mMusicPlayServiceBinder.removeServiceSong(songEntity);
+    }
+
+    @Override
+    public void registerServicePlayCallback(@NonNull MusicPlayCallback callback) {
 
     }
 
     @Override
-    public void unregisterPlayCallback() {
+    public void unregisterServicePlayCallback() {
 
     }
 

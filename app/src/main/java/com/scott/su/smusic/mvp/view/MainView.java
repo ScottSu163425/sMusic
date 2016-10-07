@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by asus on 2016/8/19.
  */
-public interface MainView extends BaseView, LocalSongBottomSheetView {
+public interface MainView extends BaseView, LocalSongBottomSheetView,MusicPlayServiceView {
 
     boolean isDataInitFinish();
 
@@ -24,8 +24,6 @@ public interface MainView extends BaseView, LocalSongBottomSheetView {
     boolean isCurrentTabBill();
 
     boolean isCurrentTabAlbum();
-
-    LocalSongEntity getCurrentPlayingSong();
 
     ArrayList<LocalSongEntity> getDisplaySongs();
 

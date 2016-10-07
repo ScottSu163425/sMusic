@@ -19,5 +19,7 @@ public interface LocalSongModel {
 
     List<LocalSongEntity> getLocalSongsBySongIds(Context context, long... songIds);
 
-    List<LocalSongEntity> searchLocalSong(Context context,@NonNull String keyword);
+    List<LocalSongEntity> searchLocalSong(Context context, @NonNull String keyword);
+
+    boolean deleteLocalSong(Context context, long songId);
 }

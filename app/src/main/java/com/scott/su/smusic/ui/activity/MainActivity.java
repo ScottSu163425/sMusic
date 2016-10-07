@@ -10,6 +10,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -27,9 +28,12 @@ import android.view.View;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
+import com.scott.su.smusic.callback.MusicPlayCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.constant.LocalSongDisplayType;
+import com.scott.su.smusic.constant.PlayMode;
+import com.scott.su.smusic.constant.PlayStatus;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
@@ -75,7 +79,6 @@ public class MainActivity extends BaseActivity implements MainView {
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
     private int mCurrentTabPosition = 0;
     private boolean mDataInitFinish = false;
-//    private RecyclerView.OnScrollListener mSongScrollListener;
 
 
     private static final int REQUEST_CODE_LOCAL_SONG_SELECTION = 1111;
@@ -275,6 +278,8 @@ public class MainActivity extends BaseActivity implements MainView {
             }
         });
 
+        // TODO: 2016/10/7  To listener when init complete;
+
         mBillDisplayFragment.setBillItemClickCallback(new LocalBillDisplayFragment.BillItemClickCallback() {
             @Override
             public void onBillItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
@@ -395,8 +400,66 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public LocalSongEntity getCurrentPlayingSong() {
-        return mMusicPlayServiceBinder.getCurrentPlayingSong();
+    public PlayStatus getServiceCurrentPlayStatus() {
+        return mMusicPlayServiceBinder.getServiceCurrentPlayStatus();
+    }
+
+    @Override
+    public LocalSongEntity getServiceCurrentPlayingSong() {
+        return mMusicPlayServiceBinder.getServiceCurrentPlayingSong();
+    }
+
+    @Override
+    public ArrayList<LocalSongEntity> getServiceCurrentPlayingSongs() {
+        return mMusicPlayServiceBinder.getServiceCurrentPlayingSongs();
+    }
+
+    @Override
+    public void setServicePlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs) {
+    }
+
+    @Override
+    public void setServicePlayMode(PlayMode playMode) {
+    }
+
+    @Override
+    public void play() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void seekTo(int position) {
+
+    }
+
+    @Override
+    public void playPrevious() {
+
+    }
+
+    @Override
+    public void playNext() {
+
+    }
+
+    @Override
+    public void removeServiceSong(LocalSongEntity songEntity) {
+        mMusicPlayServiceBinder.removeServiceSong(songEntity);
+    }
+
+    @Override
+    public void registerServicePlayCallback(@NonNull MusicPlayCallback callback) {
+
+    }
+
+    @Override
+    public void unregisterServicePlayCallback() {
+
     }
 
     @Override
@@ -630,28 +693,6 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     private void recreateActivity(boolean isForNightMode) {
-        /*Forbidden because of the SingleTask mode of this activiy.*/
-
-//        Intent intent = new Intent(MainActivity.this, MainActivity.class);
-//        intent.putExtra(NEED_OPEN_DRAWER, true);
-//        intent.putExtra(CURRENT_TAB_POSITION, mViewPager.getCurrentItem());
-//        if (isForNightMode) {
-//            startActivity(intent);
-//            if (AppConfig.isNightModeOn(this)) {
-//                overridePendingTransition(R.anim.in_north, R.anim.out_south);
-//            } else {
-//                overridePendingTransition(R.anim.in_south, R.anim.out_north);
-//            }
-//            finish();
-//        } else {
-//            startActivity(intent);
-//            if (AppConfig.isLanguageModeOn(this)) {
-//                overridePendingTransition(R.anim.in_east, R.anim.out_west);
-//            } else {
-//                overridePendingTransition(R.anim.in_west, R.anim.out_east);
-//            }
-//            finish();
-//        }
         getSupportFragmentManager().beginTransaction().remove(mAlbumDisplayFragment).commitAllowingStateLoss();
         getSupportFragmentManager().beginTransaction().remove(mSongDisplayFragment).commitAllowingStateLoss();
         getSupportFragmentManager().beginTransaction().remove(mBillDisplayFragment).commitAllowingStateLoss();

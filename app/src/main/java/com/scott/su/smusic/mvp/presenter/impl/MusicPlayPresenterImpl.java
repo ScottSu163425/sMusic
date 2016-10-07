@@ -36,17 +36,17 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
         mMusicPlayView.initListener();
         if (AppConfig.isPlayRepeatOne(mMusicPlayView.getViewContext())) {
             mMusicPlayView.setPlayRepeatOne();
-            mMusicPlayView.setPlayMode(mMusicPlayView.getCurrentPlayMode());
+            mMusicPlayView.setServicePlayMode(mMusicPlayView.getCurrentPlayMode());
         } else if (AppConfig.isPlayRepeatAll(mMusicPlayView.getViewContext())) {
             mMusicPlayView.setPlayRepeatAll();
-            mMusicPlayView.setPlayMode(mMusicPlayView.getCurrentPlayMode());
+            mMusicPlayView.setServicePlayMode(mMusicPlayView.getCurrentPlayMode());
         } else if (AppConfig.isPlayShuffle(mMusicPlayView.getViewContext())) {
             mMusicPlayView.setPlayShuffleFromRepeatAll();
-            mMusicPlayView.setPlayMode(mMusicPlayView.getCurrentPlayMode());
+            mMusicPlayView.setServicePlayMode(mMusicPlayView.getCurrentPlayMode());
         } else {
             mMusicPlayView.setPlayRepeatAll();
             AppConfig.setPlayRepeatAll(mMusicPlayView.getViewContext());
-            mMusicPlayView.setPlayMode(mMusicPlayView.getCurrentPlayMode());
+            mMusicPlayView.setServicePlayMode(mMusicPlayView.getCurrentPlayMode());
         }
         updateCurrentPlayingSongInfo(false);
     }
@@ -96,7 +96,7 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
                 AppConfig.setPlayRepeatOne(mMusicPlayView.getViewContext());
             }
         }
-        mMusicPlayView.setPlayMode(mMusicPlayView.getCurrentPlayMode());
+        mMusicPlayView.setServicePlayMode(mMusicPlayView.getCurrentPlayMode());
     }
 
     @Override
@@ -106,7 +106,7 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
         } else if (mMusicPlayView.isRepeatOne()) {
             mMusicPlayView.setPlayShuffleFromRepeatOne();
         }
-        mMusicPlayView.setPlayMode(mMusicPlayView.getCurrentPlayMode());
+        mMusicPlayView.setServicePlayMode(mMusicPlayView.getCurrentPlayMode());
         AppConfig.setPlayShuffle(mMusicPlayView.getViewContext());
     }
 
@@ -175,14 +175,14 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     }
 
     private void updateCurrentPlayingSongInfo(boolean needReveal) {
-        String path = mAlbumModel.getAlbumCoverPathByAlbumId(mMusicPlayView.getViewContext(), mMusicPlayView.getCurrentPlayingSong().getAlbumId());
+        String path = mAlbumModel.getAlbumCoverPathByAlbumId(mMusicPlayView.getViewContext(), mMusicPlayView.getServiceCurrentPlayingSong().getAlbumId());
         mMusicPlayView.loadCover(path, needReveal);
 
         if (!AppConfig.isNightModeOn(mMusicPlayView.getViewContext())){
             new AsyncTask<Void, Void, Bitmap>() {
                 @Override
                 protected Bitmap doInBackground(Void... voids) {
-                    return mAlbumModel.getAlbumCoverBitmapBlur(mMusicPlayView.getViewContext(), mMusicPlayView.getCurrentPlayingSong().getAlbumId());
+                    return mAlbumModel.getAlbumCoverBitmapBlur(mMusicPlayView.getViewContext(), mMusicPlayView.getServiceCurrentPlayingSong().getAlbumId());
                 }
 
                 @Override
@@ -193,9 +193,9 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
             }.execute();
         }
         mMusicPlayView.setSeekBarCurrentPosition(0);
-        mMusicPlayView.setSeekBarMax(mMusicPlayView.getCurrentPlayingSong().getDuration());
-        mMusicPlayView.setPlayingMusicTitle(mMusicPlayView.getCurrentPlayingSong().getTitle());
-        mMusicPlayView.setPlayingMusicArtist(mMusicPlayView.getCurrentPlayingSong().getArtist());
-        mMusicPlayView.setTotalPlayTime(TimeUtil.millisecondToTimeWithinHour(mMusicPlayView.getCurrentPlayingSong().getDuration()));
+        mMusicPlayView.setSeekBarMax(mMusicPlayView.getServiceCurrentPlayingSong().getDuration());
+        mMusicPlayView.setPlayingMusicTitle(mMusicPlayView.getServiceCurrentPlayingSong().getTitle());
+        mMusicPlayView.setPlayingMusicArtist(mMusicPlayView.getServiceCurrentPlayingSong().getArtist());
+        mMusicPlayView.setTotalPlayTime(TimeUtil.millisecondToTimeWithinHour(mMusicPlayView.getServiceCurrentPlayingSong().getDuration()));
     }
 }
