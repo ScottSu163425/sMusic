@@ -84,12 +84,6 @@ public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSo
             ViewUtil.setViewGone(viewHolder.getDividerView());
         }
 
-//        if (getSelectedPosition() == position) {
-//            ViewUtil.setViewVisiable(viewHolder.getSelectionIndicatorView());
-//        } else {
-//            ViewUtil.setViewGone(viewHolder.getSelectionIndicatorView());
-//        }
-
         ViewUtil.setText(viewHolder.getTitleTextView(), entity.getTitle(), "");
         ViewUtil.setText(viewHolder.getArtistTextView(), entity.getArtist(), "");
         ViewUtil.setText(viewHolder.getAlbumTextView(), entity.getAlbum(), "");
@@ -97,8 +91,6 @@ public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSo
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                setSelectedPosition(position);
-
                 if (getItemClickCallback() != null) {
                     getItemClickCallback().onItemClick(v, entity, position,
                             new View[]{viewHolder.getCoverImageView()},

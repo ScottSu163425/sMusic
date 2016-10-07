@@ -62,16 +62,13 @@
             android:layout_toLeftOf="@+id/iv_more_view_holder_local_song"
             android:orientation="vertical">
 
-            <com.scott.su.smusic.widget.MarqueeTextView
+            <TextView
                 android:id="@+id/tv_title_view_holder_local_song"
                 style="@style/TextAppearanceSubhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:ellipsize="marquee"
-                android:scrollHorizontally="true"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:singleLine="true" />
+                android:ellipsize="end"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -79,16 +76,14 @@
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/margin_xxs">
 
-                <com.scott.su.smusic.widget.MarqueeTextView
+                <TextView
                     android:id="@+id/tv_artist_view_holder_local_song"
                     style="@style/TextAppearanceCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:ellipsize="marquee"
-                    android:scrollHorizontally="true"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:singleLine="true" />
+                    android:ellipsize="end"
+             />
 
                 <TextView
                     style="@style/TextAppearanceCaption"
@@ -104,8 +99,8 @@
                     style="@style/TextAppearanceCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:ellipsize="end" />
             </LinearLayout>
         </LinearLayout>
 

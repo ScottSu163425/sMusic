@@ -28,7 +28,13 @@ public class MarqueeTextView extends TextView {
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasWindowFocus) {
+    public boolean isSelected() {
+        return true;
+    }
+
+    @Override
+    protected void onSelectionChanged(int selStart, int selEnd) {
+
     }
 
     @Override
