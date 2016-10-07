@@ -18,8 +18,8 @@ import android.view.animation.BounceInterpolator;
 public class AnimUtil {
 
     public static final long DURATION_SHORT = 300;
-    public static final long DURATION_DEFAULT = 400;
-    public static final long DURATION_LONG = 600;
+    public static final long DURATION_NORMAL = 500;
+    public static final long DURATION_LONG = 800;
 
     public interface SimpleAnimListener {
         void onAnimStart();
@@ -33,7 +33,7 @@ public class AnimUtil {
     }
 
     public static void scaleIn(@NonNull View view) {
-        scale(view, ACTION.IN, 1, 1, DURATION_DEFAULT, null, null);
+        scale(view, ACTION.IN, 1, 1, DURATION_NORMAL, null, null);
     }
 
     public static void scaleIn(@NonNull View view, long duration) {
@@ -49,7 +49,7 @@ public class AnimUtil {
     }
 
     public static void scaleOut(@NonNull View view) {
-        scale(view, ACTION.OUT, 0, 0, DURATION_DEFAULT, null, null);
+        scale(view, ACTION.OUT, 0, 0, DURATION_NORMAL, null, null);
     }
 
     public static void scaleOut(@NonNull View view, long duration) {
@@ -61,7 +61,7 @@ public class AnimUtil {
     }
 
     public static void alphaIn(@NonNull View view) {
-        alpha(view, ACTION.IN, 0, 1.0f, DURATION_DEFAULT, null, null);
+        alpha(view, ACTION.IN, 0, 1.0f, DURATION_NORMAL, null, null);
     }
 
     public static void alphaIn(@NonNull View view, long duration) {
@@ -69,7 +69,7 @@ public class AnimUtil {
     }
 
     public static void alphaOut(@NonNull View view) {
-        alpha(view, ACTION.OUT, 1.0f, 0, DURATION_DEFAULT, null, null);
+        alpha(view, ACTION.OUT, 1.0f, 0, DURATION_NORMAL, null, null);
     }
 
     public static void alphaOut(@NonNull View view, long duration) {
@@ -222,7 +222,7 @@ public class AnimUtil {
         ObjectAnimator oa1 = ObjectAnimator.ofFloat(target, "scaleX", 1, 1.25f, 0.75f, 1.15f, 1);
         ObjectAnimator oa2 = ObjectAnimator.ofFloat(target, "scaleY", 1, 0.75f, 1.25f, 0.85f, 1);
         set.playTogether(oa1, oa2);
-        set.setDuration(DURATION_DEFAULT);
+        set.setDuration(DURATION_NORMAL);
         set.start();
     }
 

@@ -22,8 +22,6 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.OvershootInterpolator;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
@@ -301,11 +299,11 @@ public class MainActivity extends BaseActivity implements MainView {
                 mCurrentTabPosition = position;
                 if (position == TAB_POSITION_SONG) {
                     showFab();
-                    AnimUtil.rotate2DPositive(mFloatingActionButton, 360, AnimUtil.DURATION_DEFAULT);
+                    AnimUtil.rotate2DPositive(mFloatingActionButton, 360, AnimUtil.DURATION_NORMAL);
                     mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_notification_36dp);
                 } else if (position == TAB_POSITION_BILL) {
                     showFab();
-                    AnimUtil.rotate2DPositive(mFloatingActionButton, 360, AnimUtil.DURATION_DEFAULT);
+                    AnimUtil.rotate2DPositive(mFloatingActionButton, 360, AnimUtil.DURATION_NORMAL);
                     mFloatingActionButton.setImageResource(R.drawable.ic_add_fab_24dp);
                 } else if (position == TAB_POSITION_ALBUM) {
                     hideFab();

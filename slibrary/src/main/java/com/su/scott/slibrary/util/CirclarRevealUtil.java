@@ -35,9 +35,9 @@ public class CirclarRevealUtil {
         REVEAL_OUT,
     }
 
-    public static final long DURATION_REVEAL_LONG = 600;
-    public static final long DURATION_REVEAL_NORMAL = 400;
-    public static final long DURATION_REVEAL_SHORT = 250;
+    public static final long DURATION_REVEAL_LONG = AnimUtil.DURATION_LONG;
+    public static final long DURATION_REVEAL_NORMAL = AnimUtil.DURATION_NORMAL;
+    public static final long DURATION_REVEAL_SHORT = AnimUtil.DURATION_SHORT;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static Animator createReveal(@NonNull View view, DIRECTION direction, ACTION action) {

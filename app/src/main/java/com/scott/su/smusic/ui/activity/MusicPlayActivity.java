@@ -15,6 +15,9 @@ import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -22,6 +25,7 @@ import android.widget.TextView;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.MusicPlayCallback;
+import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
@@ -165,13 +169,21 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                     public void onTransitionStart(Transition transition) {
                         if (mExisting) {
 //                            CirclarRevealUtil.revealOut(mPlayControlCard,
-//                                    CirclarRevealUtil.DIRECTION.CENTER,
-//                                    CirclarRevealUtil.DURATION_REVEAL_NORMAL,
+//                                    CirclarRevealUtil.DIRECTION.RIGHT_CENTER,
+//                                    CirclarRevealUtil.DURATION_REVEAL_SHORT,
 //                                    false);
                         } else {
-                            CirclarRevealUtil.revealIn(mPlayControlCard,
-                                    CirclarRevealUtil.DIRECTION.CENTER,
-                                    CirclarRevealUtil.DURATION_REVEAL_LONG);
+
+                            if (AppConfig.isNightModeOn(MusicPlayActivity.this)) {
+                                CirclarRevealUtil.revealIn(mPlayControlCard,
+                                        CirclarRevealUtil.DIRECTION.CENTER,
+                                        CirclarRevealUtil.DURATION_REVEAL_NORMAL,
+                                        new AccelerateInterpolator());
+                            } else {
+                                CirclarRevealUtil.revealIn(mPlayControlCard,
+                                        CirclarRevealUtil.DIRECTION.CENTER,
+                                        CirclarRevealUtil.DURATION_REVEAL_NORMAL);
+                            }
                         }
                     }
 
