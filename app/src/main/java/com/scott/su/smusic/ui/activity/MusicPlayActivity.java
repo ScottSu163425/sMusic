@@ -9,9 +9,9 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatSeekBar;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,6 +46,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     private MusicPlayPresenter mMusicPlayPresenter;
     private TextView mMusicTitleTextView, mMusicArtistTextView, mCurrentTimeTextView, mTotalTimeTextView;
     private ImageView mCoverImageView, mBlurCoverImageView;
+    private CardView mPlayControlCard;
     private FloatingActionButton mPlayButton;
     private ImageButton mRepeatButton, mSkipPreviousButton, mSkipNextButton, mShuffleButton;
     private AppCompatSeekBar mPlayProgressSeekBar;
@@ -54,11 +55,11 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     private ArrayList<LocalSongEntity> mCurrentPlayingSongList;
     private PlayMode mCurrentPlayMode = PlayMode.RepeatAll;
     private PlayMode mCurrentRepeatMode = PlayMode.RepeatAll;
-
     private PlayStatus mCurrentPlayStatus;
     private ServiceConnection mMusicPlayServiceConnection;
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
-    private boolean mSeeking;
+    private boolean mSeeking;  //Is Seekbar seeking.
+    boolean mExisting = false; //Is activity existing.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,8 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public void initPreData() {
+        initTransition();
+
         mCurrentPlayingSong = getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG);
         mCurrentPlayingSongList = getIntent().getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS);
         mInitialPlayingSong = mCurrentPlayingSong;
@@ -154,6 +157,48 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         bindService(intent, mMusicPlayServiceConnection, BIND_AUTO_CREATE);
     }
 
+    private void initTransition() {
+        if (SdkUtil.isLolipopOrLatter()) {
+            if (getWindow().getSharedElementEnterTransition() != null) {
+                getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
+                    @Override
+                    public void onTransitionStart(Transition transition) {
+                        if (mExisting) {
+//                            CirclarRevealUtil.revealOut(mPlayControlCard,
+//                                    CirclarRevealUtil.DIRECTION.CENTER,
+//                                    CirclarRevealUtil.DURATION_REVEAL_NORMAL,
+//                                    false);
+                        } else {
+                            CirclarRevealUtil.revealIn(mPlayControlCard,
+                                    CirclarRevealUtil.DIRECTION.CENTER,
+                                    CirclarRevealUtil.DURATION_REVEAL_LONG);
+                        }
+                    }
+
+                    @Override
+                    public void onTransitionEnd(Transition transition) {
+
+                    }
+
+                    @Override
+                    public void onTransitionCancel(Transition transition) {
+
+                    }
+
+                    @Override
+                    public void onTransitionPause(Transition transition) {
+
+                    }
+
+                    @Override
+                    public void onTransitionResume(Transition transition) {
+
+                    }
+                });
+            }
+        }
+    }
+
     @Override
     public void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_music_play);
@@ -175,6 +220,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mTotalTimeTextView = (TextView) findViewById(R.id.tv_total_time_music_play);
         mCoverImageView = (ImageView) findViewById(R.id.iv_cover_music_play);
         mBlurCoverImageView = (ImageView) findViewById(R.id.iv_cover_blur_music_play);
+        mPlayControlCard = (CardView) findViewById(R.id.card_view_play_control_music_play);
         mPlayButton = (FloatingActionButton) findViewById(R.id.fab_play_music_play);
         mPlayProgressSeekBar = (AppCompatSeekBar) findViewById(R.id.seek_bar_progress_music_play);
         mSkipPreviousButton = (ImageButton) findViewById(R.id.imgbtn_skip_previous_music_play);
@@ -284,7 +330,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         }
 
         if (needReveal) {
-            CirclarRevealUtil.revealOut(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER, CirclarRevealUtil.DURATION_REVEAL_DEFAULT
+            CirclarRevealUtil.revealOut(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER, CirclarRevealUtil.DURATION_REVEAL_NORMAL
                     , null, new AnimUtil.SimpleAnimListener() {
                         @Override
                         public void onAnimStart() {
@@ -472,12 +518,16 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public void onBackPressed() {
+        mExisting = true;
         if (mInitialPlayingSong.getSongId() != mCurrentPlayingSong.getSongId()) {
             finish();
             overridePendingTransition(R.anim.in_alpha, R.anim.out_east);
         } else {
             if (SdkUtil.isLolipopOrLatter()) {
                 finishAfterTransition();
+            } else {
+                finish();
+                overridePendingTransition(R.anim.in_alpha, R.anim.out_east);
             }
         }
     }

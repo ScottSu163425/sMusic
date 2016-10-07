@@ -9,7 +9,6 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -37,7 +36,7 @@ public class CirclarRevealUtil {
     }
 
     public static final long DURATION_REVEAL_LONG = 600;
-    public static final long DURATION_REVEAL_DEFAULT = 400;
+    public static final long DURATION_REVEAL_NORMAL = 400;
     public static final long DURATION_REVEAL_SHORT = 250;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -47,7 +46,7 @@ public class CirclarRevealUtil {
     
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealIn(@NonNull View view, DIRECTION direction) {
-        revealIn(view, direction, DURATION_REVEAL_DEFAULT, null, null);
+        revealIn(view, direction, DURATION_REVEAL_NORMAL, null, null);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -62,7 +61,7 @@ public class CirclarRevealUtil {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealOut(@NonNull View view, DIRECTION direction, boolean autoHide) {
-        revealOut(view, direction, DURATION_REVEAL_DEFAULT, null, null, autoHide);
+        revealOut(view, direction, DURATION_REVEAL_NORMAL, null, null, autoHide);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -72,7 +71,7 @@ public class CirclarRevealUtil {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealOut(@NonNull View view, DIRECTION direction, boolean autoHide, @Nullable final AnimUtil.SimpleAnimListener listener) {
-        revealOut(view, direction, DURATION_REVEAL_DEFAULT, null, listener, autoHide);
+        revealOut(view, direction, DURATION_REVEAL_NORMAL, null, listener, autoHide);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

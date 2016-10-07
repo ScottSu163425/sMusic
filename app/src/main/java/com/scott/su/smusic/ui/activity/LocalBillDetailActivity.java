@@ -22,7 +22,6 @@ import com.scott.su.smusic.constant.LocalSongDisplayType;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalBillDetailPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalBillDetailPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalBillDetailView;
@@ -209,6 +208,11 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
     }
 
     @Override
+    public ImageView getCoverImageView() {
+        return mCoverImageView;
+    }
+
+    @Override
     public void showEnterBillEmpty() {
         showSnackbarShort(getSnackbarParent(), getString(R.string.ask_add_song_to_empty_bill), getString(R.string.ok),
                 new View.OnClickListener() {
@@ -231,7 +235,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
         if (needReveal) {
             CirclarRevealUtil.revealOut(mCoverImageView,
                     CirclarRevealUtil.DIRECTION.CENTER,
-                    CirclarRevealUtil.DURATION_REVEAL_DEFAULT,
+                    CirclarRevealUtil.DURATION_REVEAL_NORMAL,
                     new DecelerateInterpolator(),
                     new AnimUtil.SimpleAnimListener() {
                         @Override

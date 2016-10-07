@@ -267,7 +267,13 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
 
     @Override
     public void onBottomSheetAlbumClick(LocalSongEntity songEntity) {
-        mBillDetailView.goToAlbumDetail(mAlbumModel.getLocalAlbum(mBillDetailView.getViewContext(), songEntity.getAlbumId()));
+        if (songEntity.getSongId() == mBillDetailView.getBillEntity().getLatestSongId()) {
+            mBillDetailView.goToAlbumDetailWithSharedElement(mAlbumModel.getLocalAlbum(mBillDetailView.getViewContext(), songEntity.getAlbumId()),
+                    mBillDetailView.getCoverImageView(),
+                    mBillDetailView.getViewContext().getString(R.string.transition_name_cover));
+        } else {
+            mBillDetailView.goToAlbumDetail(mAlbumModel.getLocalAlbum(mBillDetailView.getViewContext(), songEntity.getAlbumId()));
+        }
     }
 
     @Override
