@@ -62,5 +62,7 @@
     <string name="edit_successfully">Edit successfully</string>
     <string name="empty_keyword">The keyword is empty?</string>
     <string name="song_bill_album">song/bill/album</string>
-
+    <string name="delete_local_song_successfully">Delete successfully</string>
+    <string name="delete_local_song_unsuccessfully">Delete unsuccessfully</string>
+    <string name="empty_local_song">Empty local music</string>
 </resources>

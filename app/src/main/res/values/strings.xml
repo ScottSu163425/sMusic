@@ -66,6 +66,9 @@
     <string name="edit_successfully">修改成功</string>
     <string name="empty_keyword">你输入的关键字是空的?</string>
     <string name="song_bill_album">歌曲/歌单/专辑</string>
+    <string name="delete_local_song_successfully">删除成功</string>
+    <string name="delete_local_song_unsuccessfully">删除失败</string>
+    <string name="empty_local_song">没有任何本地音乐</string>
 
 
 </resources>

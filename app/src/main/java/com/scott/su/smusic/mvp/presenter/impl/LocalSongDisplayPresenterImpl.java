@@ -54,7 +54,6 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
 
     @Override
     public void onViewFirstTimeCreated() {
-        mSongDisplayView.showLoading();
         getAndDisplayLocalSongs();
     }
 

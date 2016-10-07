@@ -52,7 +52,7 @@ public class MainPresenterImpl implements MainPresenter {
     public void onFabClick() {
         if (mMainView.isCurrentTabSong()) {
             if (mMainView.getDisplaySongs()==null||mMainView.getDisplaySongs().isEmpty()){
-                mMainView.showSnackbarShort(mMainView.getSnackbarParent(),"没有任何本地音乐");
+                mMainView.showSnackbarShort(mMainView.getSnackbarParent(),mMainView.getViewContext().getString(R.string.empty_local_song));
                 return;
             }
             
@@ -262,9 +262,9 @@ public class MainPresenterImpl implements MainPresenter {
             mMainView.updateSongDisplay();
             mMainView.updateBillDisplay();
             mMainView.updateAlbumDisplay();
-            mMainView.showToastShort("删除成功");
+            mMainView.showToastShort(mMainView.getViewContext().getString(R.string.delete_local_song_successfully));
         } else {
-            mMainView.showToastShort("删除失败");
+            mMainView.showToastShort(mMainView.getViewContext().getString(R.string.delete_local_song_unsuccessfully));
         }
     }
 }

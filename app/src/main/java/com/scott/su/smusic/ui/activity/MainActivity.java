@@ -52,7 +52,9 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.callback.SimpleCallback;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.DialogUtil;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.PermissionUtil;
+import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
@@ -82,9 +84,6 @@ public class MainActivity extends BaseActivity implements MainView {
 
 
     private static final int REQUEST_CODE_LOCAL_SONG_SELECTION = 1111;
-    //    private static final int INDEX_PAGE_FAB = 1; //Index of page that fab will be shown;
-    //    private static final String NEED_OPEN_DRAWER = "NEED_OPEN_DRAWER";
-    //    private static final String CURRENT_TAB_POSITION = "CURRENT_TAB_POSITION";
     private static final int TAB_POSITION_SONG = 0;
     private static final int TAB_POSITION_BILL = 1;
     private static final int TAB_POSITION_ALBUM = 2;
@@ -331,13 +330,6 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-//                if (ViewPager.SCROLL_STATE_IDLE == state) {
-//                    if (mViewPager.getCurrentItem() == INDEX_PAGE_FAB) {
-//                        showFab();
-//                    } else {
-//                        hideFab();
-//                    }
-//                }
 
             }
         });
@@ -547,7 +539,9 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void showFab() {
         if (!ViewUtil.isViewVisiable(mFloatingActionButton)) {
-            AnimUtil.scaleIn(mFloatingActionButton, AnimUtil.DURATION_SHORT);
+            // TODO: 2016/10/7 something wrong about time delay when deleting song.
+//            AnimUtil.scaleIn(mFloatingActionButton, AnimUtil.DURATION_SHORT);
+            ViewUtil.setViewVisiable(mFloatingActionButton);
         }
     }
 
@@ -557,8 +551,10 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void hideFab() {
         if (ViewUtil.isViewVisiable(mFloatingActionButton)) {
-            AnimUtil.scaleOut(mFloatingActionButton, AnimUtil.DURATION_SHORT);
-            AnimUtil.rotate2DNegative(mFloatingActionButton, 360, AnimUtil.DURATION_SHORT);
+            // TODO: 2016/10/7 something wrong about time delay when deleting song.
+//            AnimUtil.scaleOut(mFloatingActionButton, AnimUtil.DURATION_SHORT);
+//            AnimUtil.rotate2DNegative(mFloatingActionButton, 360, AnimUtil.DURATION_SHORT);
+            ViewUtil.setViewGone(mFloatingActionButton);
         }
     }
 
