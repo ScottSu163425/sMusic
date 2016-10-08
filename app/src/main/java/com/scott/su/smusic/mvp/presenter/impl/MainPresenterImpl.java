@@ -51,11 +51,11 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onFabClick() {
         if (mMainView.isCurrentTabSong()) {
-            if (mMainView.getDisplaySongs()==null||mMainView.getDisplaySongs().isEmpty()){
-                mMainView.showSnackbarShort(mMainView.getSnackbarParent(),mMainView.getViewContext().getString(R.string.empty_local_song));
+            if (mMainView.getDisplaySongs() == null || mMainView.getDisplaySongs().isEmpty()) {
+                mMainView.showSnackbarShort(mMainView.getSnackbarParent(), mMainView.getViewContext().getString(R.string.empty_local_song));
                 return;
             }
-            
+
             if (mMainView.getServiceCurrentPlayingSong() == null) {
                 //Has not played any song,play random;
                 mMainView.playRandomSong();
@@ -254,17 +254,21 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onBottomSheetDeleteConfirmed(LocalSongEntity songEntity) {
+        mMainView.showLoadingDialog(mMainView.getViewContext(), false);
+
         if (mSongModel.deleteLocalSong(mMainView.getViewContext(), songEntity.getSongId())) {
             //To update info of music play service;
             mMainView.removeServiceSong(songEntity);
-            // TODO: 2016/10/7  To update info of bill;
-
+            //To update info of bill;
+            mBillModel.deleteSong(mMainView.getViewContext(), songEntity);
+            mMainView.dismissLoadingDialog();
+            mMainView.showToastShort(mMainView.getViewContext().getString(R.string.delete_local_song_successfully));
             mMainView.updateSongDisplay();
             mMainView.updateBillDisplay();
             mMainView.updateAlbumDisplay();
-            mMainView.showToastShort(mMainView.getViewContext().getString(R.string.delete_local_song_successfully));
         } else {
             mMainView.showToastShort(mMainView.getViewContext().getString(R.string.delete_local_song_unsuccessfully));
+            mMainView.dismissLoadingDialog();
         }
     }
 }

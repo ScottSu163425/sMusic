@@ -302,7 +302,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     @Override
     public void onBottomSheetDeleteConfirmed(LocalSongEntity songEntity) {
         long lastSongIDBeforeDelete = mBillDetailView.getBillEntity().getLatestSongId();
-        mBillModel.deleteBillSong(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity(), songEntity);
+        mBillModel.removeBillSong(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity(), songEntity);
         LocalBillEntity billAfterDelete = mBillModel.getBill(mBillDetailView.getViewContext(), mBillDetailView.getBillEntity().getBillId());
         mBillDetailView.refreshBillSongDisplay(billAfterDelete);
         mBillDetailView.setBillEntity(billAfterDelete);

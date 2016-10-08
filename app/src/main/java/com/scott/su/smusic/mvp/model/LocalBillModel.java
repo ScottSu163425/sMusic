@@ -52,10 +52,12 @@ public interface LocalBillModel {
 
     void deleteBill(Context context, LocalBillEntity billEntity);
 
-    void deleteBillSong(Context context, LocalBillEntity billEntity, LocalSongEntity songEntity);
+    void removeBillSong(Context context, LocalBillEntity billEntity, LocalSongEntity songEntity);
 
     void clearBillSongs(Context context, LocalBillEntity billEntity);
 
     List<LocalBillEntity> searchBill(Context context,@NonNull String keyword);
+
+    void deleteSong(Context context,LocalSongEntity songEntity);
 
 }
