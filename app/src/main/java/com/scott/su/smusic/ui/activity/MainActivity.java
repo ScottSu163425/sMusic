@@ -143,8 +143,8 @@ public class MainActivity extends BaseActivity implements MainView {
             setIntent(getIntent);
         }
 
-        PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE,123);
+        PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE,321);
 
         //Bind music play service
         mMusicPlayServiceConnection = new ServiceConnection() {

@@ -18,11 +18,11 @@ public class PermissionUtil {
      * @param context
      * @param permission eg.Manifest.permission.READ_EXTERNAL_STORAGE
      */
-    public static void checkPermission(Context context,String  permission){
+    public static void checkPermission(Context context,String  permission,int requestCode){
         if (Build.VERSION.SDK_INT >= 23) {
             int checkCallPhonePermission = ContextCompat.checkSelfPermission(context, permission);
             if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 111);
+                ActivityCompat.requestPermissions((Activity) context, new String[]{permission}, requestCode);
                 return;
             }
         }
