@@ -6,6 +6,7 @@ import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.fragment.BaseListBottomSheetMenuFragment;
+import com.su.scott.slibrary.util.FileUtil;
 import com.su.scott.slibrary.util.TimeUtil;
 
 /**
@@ -39,10 +40,11 @@ public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragmen
     @NonNull
     @Override
     protected String[] getMenuItemNames() {
-        return new String[]{getString(R.string.add_to_bill),
+        return new String[]{
+                getString(R.string.add_to_bill),
                 getString(R.string.album) + ": " + mSongEntity.getAlbum(),
                 getString(R.string.time) + ": " + TimeUtil.millisecondToTimeWithinHour(mSongEntity.getDuration()),
-                getString(R.string.file) + ": ",
+                getString(R.string.file) + ": " + FileUtil.getFileOrFilesSize(mSongEntity.getPath(), FileUtil.SIZETYPE_MB) + "M",
                 getString(R.string.delete),};
     }
 

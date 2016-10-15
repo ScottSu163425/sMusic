@@ -26,29 +26,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:id="@+id/rl_item_statistics_drawer_menu"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_item_s"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/margin_s"
-                    android:src="@drawable/ic_menu_item_drawer_statistic" />
-
-                <TextView
-                    style="@style/TextAppearanceMenuSecondary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/margin_xl"
-                    android:text="@string/statistic" />
-            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -81,6 +58,7 @@
                     android:src="@drawable/ic_menu_item_drawer_night_mode" />
             </RelativeLayout>
 
+
             <RelativeLayout
                 android:id="@+id/rl_item_language_drawer_menu"
                 android:layout_width="match_parent"
@@ -103,6 +81,30 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/margin_xl"
                     android:text="@string/language" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_item_statistics_drawer_menu"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_item_s"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_s"
+                    android:src="@drawable/ic_menu_item_timer_24dp" />
+
+                <TextView
+                    style="@style/TextAppearanceMenuSecondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/margin_xl"
+                    android:text="@string/timer" />
             </RelativeLayout>
 
             <RelativeLayout

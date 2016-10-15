@@ -557,7 +557,6 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     protected void onDestroy() {
         unbindService(mMusicPlayServiceConnection);
         mMusicPlayPresenter.onViewWillDestroy();
-        mPlayButton.setImageResource(R.drawable.ic_play_arrow_24dp);
         super.onDestroy();
     }
 
