@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
     android:background="@color/backgroundContent"
+    android:clickable="true"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -73,17 +73,21 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:src="@drawable/ic_menu_item_drawer_night_mode"
                     android:layout_alignBottom="@+id/swtich_night_mode_drawer_menu"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"
-                 />
+                    android:src="@drawable/ic_menu_item_drawer_night_mode" />
             </RelativeLayout>
+
             <RelativeLayout
+                android:id="@+id/rl_item_language_drawer_menu"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_item_s">
+                android:layout_height="@dimen/height_item_s"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -99,15 +103,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/margin_xl"
                     android:text="@string/language" />
-
-                <android.support.v7.widget.SwitchCompat
-                    android:id="@+id/swtich_language_mode_drawer_menu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/margin_s" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/rl_item_update_drawer_menu"
                 android:layout_width="match_parent"

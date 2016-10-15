@@ -277,11 +277,6 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     }
 
     @Override
-    public void onBottomSheetShareClick(LocalSongEntity songEntity) {
-        mBillDetailView.showToastShort("Share :" + songEntity.getTitle());
-    }
-
-    @Override
     public void onBottomSheetDeleteClick(LocalSongEntity songEntity) {
         mBillDetailView.showDeleteDialog(songEntity);
     }

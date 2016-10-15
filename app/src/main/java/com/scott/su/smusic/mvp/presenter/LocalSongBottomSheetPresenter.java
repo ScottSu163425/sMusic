@@ -11,8 +11,6 @@ public interface LocalSongBottomSheetPresenter {
 
     void onBottomSheetAlbumClick(LocalSongEntity songEntity);
 
-    void onBottomSheetShareClick(LocalSongEntity songEntity);
-
     void onBottomSheetDeleteClick(LocalSongEntity songEntity);
 
     void onBottomSheetAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity);

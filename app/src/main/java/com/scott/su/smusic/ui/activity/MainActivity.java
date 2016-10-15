@@ -373,12 +373,6 @@ public class MainActivity extends BaseActivity implements MainView {
                     }
 
                     @Override
-                    public void onShareClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
-                        mMainPresenter.onBottomSheetShareClick(songEntity);
-                        fragment.dismissAllowingStateLoss();
-                    }
-
-                    @Override
                     public void onDeleteClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
                         mMainPresenter.onBottomSheetDeleteClick(songEntity);
                         fragment.dismissAllowingStateLoss();

@@ -12,7 +12,5 @@ public interface LocalSongBottomSheetCallback {
 
     void onAlbumClick(LocalSongBottomSheetFragment fragment,LocalSongEntity songEntity);
 
-    void onShareClick(LocalSongBottomSheetFragment fragment,LocalSongEntity songEntity);
-
     void onDeleteClick(LocalSongBottomSheetFragment fragment,LocalSongEntity songEntity);
 }

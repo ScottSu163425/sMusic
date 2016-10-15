@@ -230,11 +230,6 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void onBottomSheetShareClick(LocalSongEntity songEntity) {
-        mMainView.showToastShort("Share:" + songEntity.getTitle());
-    }
-
-    @Override
     public void onBottomSheetDeleteClick(LocalSongEntity songEntity) {
         mMainView.showDeleteDialog(songEntity);
     }

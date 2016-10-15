@@ -245,12 +245,6 @@ public class SearchActivity extends BaseActivity implements SearchView {
                     }
 
                     @Override
-                    public void onShareClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
-                        mSearchPresenter.onBottomSheetShareClick(songEntity);
-                        fragment.dismissAllowingStateLoss();
-                    }
-
-                    @Override
                     public void onDeleteClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
                         mSearchPresenter.onBottomSheetDeleteClick(songEntity);
                         fragment.dismissAllowingStateLoss();

@@ -42,7 +42,8 @@
     <string name="ask_delete_bill">Delete the bill?</string>
     <string name="add_to_bill">Add to bill</string>
     <string name="album">Album</string>
-    <string name="share">Share</string>
+    <string name="file">Size</string>
+    <string name="time">Duration</string>
     <string name="delete">Delete</string>
     <string name="select_done">Select done</string>
     <string name="no_data">No data</string>
@@ -66,4 +67,6 @@
     <string name="delete_local_song_successfully">Delete successfully</string>
     <string name="delete_local_song_unsuccessfully">Delete unsuccessfully</string>
     <string name="empty_local_song">Empty local music</string>
+    <string name="chinese_language">Chinese</string>
+    <string name="english_language">English</string>
 </resources>

@@ -333,12 +333,6 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
                     }
 
                     @Override
-                    public void onShareClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
-                        mBillDetailPresenter.onBottomSheetShareClick(songEntity);
-                        fragment.dismissAllowingStateLoss();
-                    }
-
-                    @Override
                     public void onDeleteClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
                         mBillDetailPresenter.onBottomSheetDeleteClick(songEntity);
                         fragment.dismissAllowingStateLoss();

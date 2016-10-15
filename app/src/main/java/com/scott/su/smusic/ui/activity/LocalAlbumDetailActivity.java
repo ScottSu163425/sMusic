@@ -174,12 +174,6 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
                     }
 
                     @Override
-                    public void onShareClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
-                        mPresenter.onBottomSheetShareClick(songEntity);
-                        fragment.dismissAllowingStateLoss();
-                    }
-
-                    @Override
                     public void onDeleteClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
                         mPresenter.onBottomSheetDeleteClick(songEntity);
                         fragment.dismissAllowingStateLoss();

@@ -60,7 +60,6 @@ public abstract class BaseListBottomSheetMenuFragment extends BottomSheetDialogF
             @Override
             public void onItemClick(View itemView, BottomSheetMenuItemEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
                 onMenuItemClick(position, entity.getItemName());
-                BaseListBottomSheetMenuFragment.this.dismissAllowingStateLoss();
             }
         });
 

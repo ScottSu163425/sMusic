@@ -12,9 +12,16 @@
         style="@style/TextAppearanceSubhead"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginLeft="@dimen/margin_s"
+        android:layout_marginLeft="@dimen/margin_xs"
+        android:layout_marginRight="@dimen/margin_xs"
+        android:ellipsize="marquee"
+        android:focusableInTouchMode="true"
         android:gravity="center_vertical"
-        android:text="滚动" />
+        android:marqueeRepeatLimit="marquee_forever"
+        android:focusable="true"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        android:singleLine="true" />
 
     <View
         android:layout_width="match_parent"

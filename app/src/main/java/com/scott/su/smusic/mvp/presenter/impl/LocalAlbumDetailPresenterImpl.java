@@ -59,11 +59,6 @@ public class LocalAlbumDetailPresenterImpl implements LocalAlbumDetailPresenter 
     }
 
     @Override
-    public void onBottomSheetShareClick(LocalSongEntity songEntity) {
-
-    }
-
-    @Override
     public void onBottomSheetDeleteClick(LocalSongEntity songEntity) {
 
     }

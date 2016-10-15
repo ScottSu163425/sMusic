@@ -6,6 +6,7 @@ import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.fragment.BaseListBottomSheetMenuFragment;
+import com.su.scott.slibrary.util.TimeUtil;
 
 /**
  * Created by Administrator on 2016/8/30.
@@ -22,22 +23,27 @@ public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragmen
 
     @Override
     protected String getTitle() {
-        return mSongEntity == null ? "" :   mSongEntity.getTitle();
+        return mSongEntity == null ? "" : mSongEntity.getTitle();
     }
 
     @NonNull
     @Override
     protected int[] getMenuItemIcons() {
-        return new int[]{R.drawable.ic_menu_item_bill_24dp,/* R.drawable.ic_supervisor_account_grey600_24dp,*/
-                R.drawable.ic_menu_item_album_24dp, R.drawable.ic_menu_item_share_24dp,
+        return new int[]{R.drawable.ic_menu_item_bill_24dp,
+                R.drawable.ic_menu_item_album_24dp,
+                R.drawable.ic_menu_item_time_24dp,
+                R.drawable.ic_menu_item_file_24dp,
                 R.drawable.ic_menu_item_delete_24dp};
     }
 
     @NonNull
     @Override
     protected String[] getMenuItemNames() {
-        return new String[]{getString(R.string.add_to_bill),/* "歌手: " + mSongEntity.getArtist(),*/
-                getString(R.string.album) +": "+ mSongEntity.getAlbum(), getString(R.string.share), getString(R.string.delete),};
+        return new String[]{getString(R.string.add_to_bill),
+                getString(R.string.album) + ": " + mSongEntity.getAlbum(),
+                getString(R.string.time) + ": " + TimeUtil.millisecondToTimeWithinHour(mSongEntity.getDuration()),
+                getString(R.string.file) + ": ",
+                getString(R.string.delete),};
     }
 
 
@@ -45,13 +51,14 @@ public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragmen
     protected void onMenuItemClick(int position, String itemName) {
         if (mLocalSongBottomSheetCallback != null) {
             if (position == 0) {
-                mLocalSongBottomSheetCallback.onAddToBillClick(this,mSongEntity);
+                mLocalSongBottomSheetCallback.onAddToBillClick(this, mSongEntity);
+                dismissAllowingStateLoss();
             } else if (position == 1) {
-                mLocalSongBottomSheetCallback.onAlbumClick(this,mSongEntity);
-            } else if (position == 2) {
-                mLocalSongBottomSheetCallback.onShareClick(this,mSongEntity);
-            } else if (position == 3) {
-                mLocalSongBottomSheetCallback.onDeleteClick(this,mSongEntity);
+                mLocalSongBottomSheetCallback.onAlbumClick(this, mSongEntity);
+                dismissAllowingStateLoss();
+            } else if (position == 4) {
+                mLocalSongBottomSheetCallback.onDeleteClick(this, mSongEntity);
+                dismissAllowingStateLoss();
             }
         }
     }

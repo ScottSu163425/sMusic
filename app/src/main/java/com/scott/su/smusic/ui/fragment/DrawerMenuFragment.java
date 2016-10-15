@@ -2,8 +2,10 @@ package com.scott.su.smusic.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -12,6 +14,7 @@ import android.widget.FrameLayout;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.config.AppConfig;
 import com.su.scott.slibrary.fragment.BaseFragment;
+import com.su.scott.slibrary.util.PopupMenuUtil;
 import com.su.scott.slibrary.util.ScreenUtil;
 
 /**
@@ -19,8 +22,8 @@ import com.su.scott.slibrary.util.ScreenUtil;
  */
 public class DrawerMenuFragment extends BaseFragment implements View.OnClickListener {
     private View mRootView;
-    private View mStatisticsMenuItem, mUpdateMenuItem, mAboutMenuItem;
-    private SwitchCompat mNightModeSwitch, mLanguageModeSwitch;
+    private View mStatisticsMenuItem, mLanguageMenuItem, mUpdateMenuItem, mAboutMenuItem;
+    private SwitchCompat mNightModeSwitch;
     private DrawerMenuCallback mMenuCallback;
 
     public static final float PERCENTAGE_OF_SCREEN_WIDTH = 0.82f;
@@ -57,21 +60,20 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
         mUpdateMenuItem = mRootView.findViewById(R.id.rl_item_update_drawer_menu);
         mAboutMenuItem = mRootView.findViewById(R.id.rl_item_about_drawer_menu);
         mNightModeSwitch = (SwitchCompat) mRootView.findViewById(R.id.swtich_night_mode_drawer_menu);
-        mLanguageModeSwitch = (SwitchCompat) mRootView.findViewById(R.id.swtich_language_mode_drawer_menu);
+        mLanguageMenuItem = mRootView.findViewById(R.id.rl_item_language_drawer_menu);
     }
 
     @Override
     public void initData() {
         mNightModeSwitch.setChecked(AppConfig.isNightModeOn(getActivity()));
-        mLanguageModeSwitch.setChecked(AppConfig.isLanguageModeOn(getActivity()));
     }
 
     @Override
     public void initListener() {
         mStatisticsMenuItem.setOnClickListener(this);
+        mLanguageMenuItem.setOnClickListener(this);
         mUpdateMenuItem.setOnClickListener(this);
         mAboutMenuItem.setOnClickListener(this);
-
         mNightModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
@@ -85,18 +87,6 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
             }
         });
 
-        mLanguageModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
-                if (mMenuCallback != null) {
-                    if (on) {
-                        mMenuCallback.onLanguageModeOn();
-                    } else {
-                        mMenuCallback.onLanguageModeOff();
-                    }
-                }
-            }
-        });
     }
 
     @Override
@@ -107,6 +97,8 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
             if (mMenuCallback != null) {
                 mMenuCallback.onStatisticsClick(view);
             }
+        } else if (id == mLanguageMenuItem.getId()) {
+            popLanguageMenu();
         } else if (id == mUpdateMenuItem.getId()) {
             if (mMenuCallback != null) {
                 mMenuCallback.onUpdateClick(view);
@@ -116,6 +108,25 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
                 mMenuCallback.onAboutClick(view);
             }
         }
+    }
+
+    private void popLanguageMenu() {
+        PopupMenuUtil.popMenu(getActivity(), R.menu.popup_language_drawer, mLanguageMenuItem,
+                new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        if (item.getItemId() == R.id.menu_item_chinese_language_popup_drawer) {
+                            if (mMenuCallback != null) {
+                                mMenuCallback.onLanguageModeOff();
+                            }
+                        } else if (item.getItemId() == R.id.menu_item_english_language_popup_drawer) {
+                            if (mMenuCallback != null) {
+                                mMenuCallback.onLanguageModeOn();
+                            }
+                        }
+                        return true;
+                    }
+                });
     }
 
     public void setMenuCallback(DrawerMenuCallback menuCallback) {

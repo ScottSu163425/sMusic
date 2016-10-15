@@ -46,7 +46,8 @@
     <string name="ask_delete_bill">删除这张歌单?</string>
     <string name="add_to_bill">添加到歌单</string>
     <string name="album">专辑</string>
-    <string name="share">分享</string>
+    <string name="file">文件大小</string>
+    <string name="time">时长</string>
     <string name="delete">删除</string>
     <string name="select_done">选好了</string>
     <string name="no_data">没有任何一条数据</string>
@@ -70,6 +71,8 @@
     <string name="delete_local_song_successfully">删除成功</string>
     <string name="delete_local_song_unsuccessfully">删除失败</string>
     <string name="empty_local_song">没有任何本地音乐</string>
+    <string name="chinese_language">中文</string>
+    <string name="english_language">英文</string>
 
 
 </resources>
