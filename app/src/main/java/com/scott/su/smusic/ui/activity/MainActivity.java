@@ -52,9 +52,7 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.callback.SimpleCallback;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.DialogUtil;
-import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.PermissionUtil;
-import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
@@ -143,8 +141,8 @@ public class MainActivity extends BaseActivity implements MainView {
             setIntent(getIntent);
         }
 
-        PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE,123);
-        PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE,321);
+        PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE, 123);
+        PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, 321);
 
         //Bind music play service
         mMusicPlayServiceConnection = new ServiceConnection() {
@@ -229,8 +227,8 @@ public class MainActivity extends BaseActivity implements MainView {
     public void initListener() {
         mDrawerMenuFragment.setMenuCallback(new DrawerMenuFragment.DrawerMenuCallback() {
             @Override
-            public void onStatisticsClick(View v) {
-                mMainPresenter.onDrawerMenuStatisticClick();
+            public void onTimerClick(View v) {
+                mMainPresenter.onDrawerMenuTimerClick();
             }
 
             @Override
@@ -693,7 +691,7 @@ public class MainActivity extends BaseActivity implements MainView {
         DisplayMetrics dm = resources.getDisplayMetrics();
         Configuration config = resources.getConfiguration();
         // 应用用户选择语言
-        config.locale = Locale.getDefault();
+        config.locale = Locale.CHINESE;
         resources.updateConfiguration(config, dm);
 
         recreateActivity(false);

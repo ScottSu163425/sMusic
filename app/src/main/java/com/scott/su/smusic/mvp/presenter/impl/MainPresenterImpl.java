@@ -134,7 +134,7 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void onDrawerMenuStatisticClick() {
+    public void onDrawerMenuTimerClick() {
         mMainView.showToastShort("Statistic");
     }
 

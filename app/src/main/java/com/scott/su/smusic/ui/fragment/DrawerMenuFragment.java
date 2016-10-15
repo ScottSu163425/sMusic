@@ -22,7 +22,7 @@ import com.su.scott.slibrary.util.ScreenUtil;
  */
 public class DrawerMenuFragment extends BaseFragment implements View.OnClickListener {
     private View mRootView;
-    private View mStatisticsMenuItem, mLanguageMenuItem, mUpdateMenuItem, mAboutMenuItem;
+    private View mTimerMenuItem, mLanguageMenuItem, mUpdateMenuItem, mAboutMenuItem;
     private SwitchCompat mNightModeSwitch;
     private DrawerMenuCallback mMenuCallback;
 
@@ -56,7 +56,7 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void initView() {
-        mStatisticsMenuItem = mRootView.findViewById(R.id.rl_item_statistics_drawer_menu);
+        mTimerMenuItem = mRootView.findViewById(R.id.rl_item_timer_drawer_menu);
         mUpdateMenuItem = mRootView.findViewById(R.id.rl_item_update_drawer_menu);
         mAboutMenuItem = mRootView.findViewById(R.id.rl_item_about_drawer_menu);
         mNightModeSwitch = (SwitchCompat) mRootView.findViewById(R.id.swtich_night_mode_drawer_menu);
@@ -70,7 +70,7 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void initListener() {
-        mStatisticsMenuItem.setOnClickListener(this);
+        mTimerMenuItem.setOnClickListener(this);
         mLanguageMenuItem.setOnClickListener(this);
         mUpdateMenuItem.setOnClickListener(this);
         mAboutMenuItem.setOnClickListener(this);
@@ -93,9 +93,9 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
     public void onClick(View view) {
         int id = view.getId();
 
-        if (id == mStatisticsMenuItem.getId()) {
+        if (id == mTimerMenuItem.getId()) {
             if (mMenuCallback != null) {
-                mMenuCallback.onStatisticsClick(view);
+                mMenuCallback.onTimerClick(view);
             }
         } else if (id == mLanguageMenuItem.getId()) {
             popLanguageMenu();
@@ -134,7 +134,7 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
     }
 
     public interface DrawerMenuCallback {
-        void onStatisticsClick(View v);
+        void onTimerClick(View v);
 
         void onNightModeOn();
 
