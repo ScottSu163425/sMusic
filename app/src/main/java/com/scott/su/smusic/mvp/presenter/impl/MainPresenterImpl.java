@@ -249,7 +249,8 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onBottomSheetAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity) {
         if (mBillModel.isBillContainsSong(billEntity, songEntity)) {
-            mMainView.showSnackbarShort(mMainView.getSnackbarParent(), mMainView.getViewContext().getString(R.string.already_exist_in_bill));
+            mMainView.showSnackbarShort(mMainView.getSnackbarParent(),
+                    mMainView.getViewContext().getString(R.string.already_exist_in_bill));
             return;
         }
 

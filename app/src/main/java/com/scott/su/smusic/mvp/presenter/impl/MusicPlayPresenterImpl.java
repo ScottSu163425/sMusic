@@ -4,10 +4,14 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.view.View;
 
+import com.scott.su.smusic.R;
 import com.scott.su.smusic.config.AppConfig;
+import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
+import com.scott.su.smusic.mvp.model.LocalBillModel;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
+import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
 import com.su.scott.slibrary.util.TimeUtil;
@@ -18,12 +22,14 @@ import com.su.scott.slibrary.util.TimeUtil;
 public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     private MusicPlayView mMusicPlayView;
     private LocalAlbumModel mAlbumModel;
+    private LocalBillModel mBillModel;
     private boolean isFirstTimePlay = true;
 
 
     public MusicPlayPresenterImpl(MusicPlayView mMusicPlayView) {
         this.mMusicPlayView = mMusicPlayView;
         this.mAlbumModel = new LocalAlbumModelImpl();
+        this.mBillModel = new LocalBillModelImpl();
     }
 
     @Override
@@ -59,6 +65,24 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
 
     @Override
     public void onViewWillDestroy() {
+    }
+
+    @Override
+    public void onAddToBillMenuItemClick() {
+        mMusicPlayView.showBillSelectionDialog(mMusicPlayView.getServiceCurrentPlayingSong());
+    }
+
+    @Override
+    public void onAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity) {
+        if (mBillModel.isBillContainsSong(billEntity, songEntity)) {
+            mMusicPlayView.showSnackbarShort(mMusicPlayView.getSnackbarParent(),
+                    mMusicPlayView.getViewContext().getString(R.string.already_exist_in_bill));
+            return;
+        }
+
+        mBillModel.addSongToBill(mMusicPlayView.getViewContext(), songEntity, billEntity);
+        AppConfig.setNeedToRefreshLocalBillDisplay(mMusicPlayView.getViewContext(), true);
+        mMusicPlayView.showSnackbarShort(mMusicPlayView.getSnackbarParent(), mMusicPlayView.getViewContext().getString(R.string.add_successfully));
     }
 
     @Override

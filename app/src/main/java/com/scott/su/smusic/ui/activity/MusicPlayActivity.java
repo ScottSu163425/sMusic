@@ -27,11 +27,13 @@ import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
+import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.MusicPlayPresenterImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
 import com.scott.su.smusic.service.MusicPlayService;
+import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.AnimUtil;
@@ -80,6 +82,9 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_add_to_bill) {
+            mMusicPlayPresenter.onAddToBillMenuItemClick();
+        }
         return true;
     }
 
@@ -289,6 +294,19 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         } else if (id == mShuffleButton.getId()) {
             mMusicPlayPresenter.onShuffleClick(view);
         }
+    }
+
+    @Override
+    public void showBillSelectionDialog(final LocalSongEntity songEntity) {
+        final LocalBillSelectionDialogFragment billSelectionDialogFragment = new LocalBillSelectionDialogFragment();
+        billSelectionDialogFragment.setCallback(new LocalBillSelectionDialogFragment.BillSelectionCallback() {
+            @Override
+            public void onBillSelected(LocalBillEntity billEntity) {
+                mMusicPlayPresenter.onAddToBillConfirmed(billEntity, songEntity);
+                billSelectionDialogFragment.dismissAllowingStateLoss();
+            }
+        });
+        billSelectionDialogFragment.show(getSupportFragmentManager(), "");
     }
 
     @Override
