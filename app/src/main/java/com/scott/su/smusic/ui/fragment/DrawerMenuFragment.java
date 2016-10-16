@@ -136,15 +136,13 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
                         }
                         if (item.getItemId() == R.id.menu_item_cancel_timer_popup_drawer) {
                             mMenuCallback.onTimerCancelClick();
-                        } else if (item.getItemId() == R.id.menu_item_5_min_timer_popup_drawer) {
-                            mMenuCallback.onTimerMinutesClick(5);
                         } else if (item.getItemId() == R.id.menu_item_15_min_timer_popup_drawer) {
                             mMenuCallback.onTimerMinutesClick(15);
                         } else if (item.getItemId() == R.id.menu_item_30_min_timer_popup_drawer) {
                             mMenuCallback.onTimerMinutesClick(30);
                         } else if (item.getItemId() == R.id.menu_item_60_min_timer_popup_drawer) {
                             mMenuCallback.onTimerMinutesClick(60);
-                        } else if (item.getItemId() == R.id.menu_item_30_min_timer_popup_drawer) {
+                        } else if (item.getItemId() == R.id.menu_item_120_min_timer_popup_drawer) {
                             mMenuCallback.onTimerMinutesClick(120);
                         }
                         return true;

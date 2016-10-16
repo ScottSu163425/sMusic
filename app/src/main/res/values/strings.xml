@@ -74,7 +74,6 @@
     <string name="chinese_language">中文</string>
     <string name="english_language">英文</string>
     <string name="cancel_timer">关闭定时</string>
-    <string name="timer_min_5">5分钟</string>
     <string name="timer_min_15">15分钟</string>
     <string name="timer_min_30">30分钟</string>
     <string name="timer_min_60">60分钟</string>

@@ -21,6 +21,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -266,11 +267,13 @@ public class MainActivity extends BaseActivity implements MainView {
             @Override
             public void onTimerCancelClick() {
                 T.showShort(getApplicationContext(), "Cancel timer.");
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
             }
 
             @Override
             public void onTimerMinutesClick(int minutes) {
                 T.showShort(getApplicationContext(), "Shut down after " + minutes + " minutes.");
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
             }
         });
 
