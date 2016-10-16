@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.Explode;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.EditText;
 
@@ -61,7 +63,7 @@ public class SearchActivity extends BaseActivity implements SearchView {
     @Override
     public void initPreData() {
         if (SdkUtil.isLolipopOrLatter()) {
-            getWindow().setEnterTransition(new Explode());
+            getWindow().setEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.slide_right));
         }
     }
 
@@ -253,5 +255,5 @@ public class SearchActivity extends BaseActivity implements SearchView {
                 })
                 .show(getSupportFragmentManager(), "");
     }
-    
+
 }
