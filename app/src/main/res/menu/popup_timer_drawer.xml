@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_item_cancel_timer_popup_drawer"
+        android:title="@string/cancel_timer" />
+
+    <item
+        android:id="@+id/menu_item_5_min_timer_popup_drawer"
+        android:title="@string/timer_min_5" />
+
+    <item
+        android:id="@+id/menu_item_15_min_timer_popup_drawer"
+        android:title="@string/timer_min_15" />
+
+    <item
+        android:id="@+id/menu_item_30_min_timer_popup_drawer"
+        android:title="@string/timer_min_30" />
+
+    <item
+        android:id="@+id/menu_item_60_min_timer_popup_drawer"
+        android:title="@string/timer_min_60" />
+
+    <item
+        android:id="@+id/menu_item_120_min_timer_popup_drawer"
+        android:title="@string/timer_min_120" />
+</menu>

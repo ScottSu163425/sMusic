@@ -53,6 +53,7 @@ import com.su.scott.slibrary.callback.SimpleCallback;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.DialogUtil;
 import com.su.scott.slibrary.util.PermissionUtil;
+import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
@@ -260,6 +261,16 @@ public class MainActivity extends BaseActivity implements MainView {
             @Override
             public void onAboutClick(View v) {
                 mMainPresenter.onDrawerMenuAboutClick();
+            }
+
+            @Override
+            public void onTimerCancelClick() {
+                T.showShort(getApplicationContext(), "Cancel timer.");
+            }
+
+            @Override
+            public void onTimerMinutesClick(int minutes) {
+                T.showShort(getApplicationContext(), "Shut down after " + minutes + " minutes.");
             }
         });
 

@@ -91,22 +91,19 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        int id = view.getId();
+        if (mMenuCallback == null) {
+            return;
+        }
 
+        int id = view.getId();
         if (id == mTimerMenuItem.getId()) {
-            if (mMenuCallback != null) {
-                mMenuCallback.onTimerClick(view);
-            }
+            popTimerMenu();
         } else if (id == mLanguageMenuItem.getId()) {
             popLanguageMenu();
         } else if (id == mUpdateMenuItem.getId()) {
-            if (mMenuCallback != null) {
-                mMenuCallback.onUpdateClick(view);
-            }
+            mMenuCallback.onUpdateClick(view);
         } else if (id == mAboutMenuItem.getId()) {
-            if (mMenuCallback != null) {
-                mMenuCallback.onAboutClick(view);
-            }
+            mMenuCallback.onAboutClick(view);
         }
     }
 
@@ -115,14 +112,40 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
                 new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
+                        if (mMenuCallback == null) {
+                            return true;
+                        }
+
                         if (item.getItemId() == R.id.menu_item_chinese_language_popup_drawer) {
-                            if (mMenuCallback != null) {
-                                mMenuCallback.onLanguageModeOff();
-                            }
+                            mMenuCallback.onLanguageModeOff();
                         } else if (item.getItemId() == R.id.menu_item_english_language_popup_drawer) {
-                            if (mMenuCallback != null) {
-                                mMenuCallback.onLanguageModeOn();
-                            }
+                            mMenuCallback.onLanguageModeOn();
+                        }
+                        return true;
+                    }
+                });
+    }
+
+    private void popTimerMenu() {
+        PopupMenuUtil.popMenu(getActivity(), R.menu.popup_timer_drawer, mTimerMenuItem,
+                new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        if (mMenuCallback == null) {
+                            return true;
+                        }
+                        if (item.getItemId() == R.id.menu_item_cancel_timer_popup_drawer) {
+                            mMenuCallback.onTimerCancelClick();
+                        } else if (item.getItemId() == R.id.menu_item_5_min_timer_popup_drawer) {
+                            mMenuCallback.onTimerMinutesClick(5);
+                        } else if (item.getItemId() == R.id.menu_item_15_min_timer_popup_drawer) {
+                            mMenuCallback.onTimerMinutesClick(15);
+                        } else if (item.getItemId() == R.id.menu_item_30_min_timer_popup_drawer) {
+                            mMenuCallback.onTimerMinutesClick(30);
+                        } else if (item.getItemId() == R.id.menu_item_60_min_timer_popup_drawer) {
+                            mMenuCallback.onTimerMinutesClick(60);
+                        } else if (item.getItemId() == R.id.menu_item_30_min_timer_popup_drawer) {
+                            mMenuCallback.onTimerMinutesClick(120);
                         }
                         return true;
                     }
@@ -147,6 +170,10 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
         void onUpdateClick(View v);
 
         void onAboutClick(View v);
+
+        void onTimerCancelClick();
+
+        void onTimerMinutesClick(int minutes);
     }
 
 }

@@ -69,4 +69,10 @@
     <string name="empty_local_song">Empty local music</string>
     <string name="chinese_language">Chinese</string>
     <string name="english_language">English</string>
+    <string name="cancel_timer">Stop Timer</string>
+    <string name="timer_min_5">5 minutes</string>
+    <string name="timer_min_15">15 minutes</string>
+    <string name="timer_min_30">30 minutes</string>
+    <string name="timer_min_60">60 minutes</string>
+    <string name="timer_min_120">120 minutes</string>
 </resources>
