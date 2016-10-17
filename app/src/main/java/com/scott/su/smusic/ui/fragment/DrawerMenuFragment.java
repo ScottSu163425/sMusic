@@ -155,8 +155,6 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
     }
 
     public interface DrawerMenuCallback {
-        void onTimerClick(View v);
-
         void onNightModeOn();
 
         void onNightModeOff();

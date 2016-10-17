@@ -30,6 +30,7 @@ import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
 import com.scott.su.smusic.callback.MusicPlayCallback;
+import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.constant.LocalSongDisplayType;
@@ -66,6 +67,14 @@ import java.util.Random;
  * 2016-8-18
  */
 public class MainActivity extends BaseActivity implements MainView {
+    private static final String NEED_OPEN_DRAWER = "NEED_OPEN_DRAWE";
+    private static final String CURRENT_TAB_POSITION = "CURRENT_TAB_POSITION";
+
+    private static final int REQUEST_CODE_LOCAL_SONG_SELECTION = 1111;
+    private static final int TAB_POSITION_SONG = 0;
+    private static final int TAB_POSITION_BILL = 1;
+    private static final int TAB_POSITION_ALBUM = 2;
+
     private MainPresenter mMainPresenter; //Presenter of mvp;
     private Toolbar mToolbar;   //Title bar;
     private DrawerLayout mDrawerLayout;     //Content drawer;
@@ -79,14 +88,8 @@ public class MainActivity extends BaseActivity implements MainView {
     private CreateBillDialogFragment mCreateBillDialogFragment;
     private ServiceConnection mMusicPlayServiceConnection;
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
-    private int mCurrentTabPosition = 0;
     private boolean mDataInitFinish = false;
 
-
-    private static final int REQUEST_CODE_LOCAL_SONG_SELECTION = 1111;
-    private static final int TAB_POSITION_SONG = 0;
-    private static final int TAB_POSITION_BILL = 1;
-    private static final int TAB_POSITION_ALBUM = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +114,6 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_search_menu_main) {
-//            stopService(new Intent(this, MusicPlayService.class));
             goToWithTransition(SearchActivity.class);
         }
         return true;
@@ -199,11 +201,8 @@ public class MainActivity extends BaseActivity implements MainView {
         mAlbumDisplayFragment = LocalAlbumDisplayFragment.newInstance();
 
         mSongDisplayFragment.setSwipeRefreshEnable(true);
-        mSongDisplayFragment.setLoadMoreEnable(false);
         mBillDisplayFragment.setSwipeRefreshEnable(false);
-        mBillDisplayFragment.setLoadMoreEnable(false);
-        mAlbumDisplayFragment.setLoadMoreEnable(false);
-
+        mAlbumDisplayFragment.setSwipeRefreshEnable(false);
 
         pageFragments.add(mSongDisplayFragment);
         pageFragments.add(mBillDisplayFragment);
@@ -216,11 +215,22 @@ public class MainActivity extends BaseActivity implements MainView {
         mTabLayout.setupWithViewPager(mViewPager);
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_container_drawer_menu_main, mDrawerMenuFragment).commit();
 
-//        if (getIntent().getBooleanExtra(NEED_OPEN_DRAWER, false)) {
-//            mDrawerLayout.openDrawer(Gravity.LEFT);
-//        }
+        if (getIntent().getBooleanExtra(NEED_OPEN_DRAWER, false)) {
+            mDrawerLayout.openDrawer(Gravity.LEFT);
+        }
 
-//        mViewPager.setCurrentItem(getIntent().getIntExtra(CURRENT_TAB_POSITION, 0), false);
+        int tabPosition = getIntent().getIntExtra(CURRENT_TAB_POSITION, 0);
+        mViewPager.setCurrentItem(tabPosition, true);
+
+        if (tabPosition == TAB_POSITION_SONG) {
+            ViewUtil.setViewVisiable(mFloatingActionButton);
+            mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_24dp);
+        } else if (tabPosition == TAB_POSITION_BILL) {
+            ViewUtil.setViewVisiable(mFloatingActionButton);
+            mFloatingActionButton.setImageResource(R.drawable.ic_add_fab_24dp);
+        } else if (tabPosition == TAB_POSITION_ALBUM) {
+            ViewUtil.setViewGone(mFloatingActionButton);
+        }
 
         mDataInitFinish = true;
     }
@@ -228,10 +238,6 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void initListener() {
         mDrawerMenuFragment.setMenuCallback(new DrawerMenuFragment.DrawerMenuCallback() {
-            @Override
-            public void onTimerClick(View v) {
-                mMainPresenter.onDrawerMenuTimerClick();
-            }
 
             @Override
             public void onNightModeOn() {
@@ -267,13 +273,13 @@ public class MainActivity extends BaseActivity implements MainView {
             @Override
             public void onTimerCancelClick() {
                 T.showShort(getApplicationContext(), "Cancel timer.");
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
+//                mDrawerLayout.closeDrawer(Gravity.LEFT);
             }
 
             @Override
             public void onTimerMinutesClick(int minutes) {
                 T.showShort(getApplicationContext(), "Shut down after " + minutes + " minutes.");
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
+//                mDrawerLayout.closeDrawer(Gravity.LEFT);
             }
         });
 
@@ -290,15 +296,15 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onDataLoading() {
-                hideFab();
+                hideFab(false);
             }
 
             @Override
             public void onDisplayDataChanged(List<LocalSongEntity> dataList) {
                 if (dataList == null || dataList.isEmpty()) {
-                    hideFab();
+                    hideFab(false);
                 } else {
-                    showFab();
+                    showFab(false);
                 }
             }
         });
@@ -326,17 +332,26 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onPageSelected(int position) {
-                mCurrentTabPosition = position;
                 if (position == TAB_POSITION_SONG) {
-                    showFab();
-                    AnimUtil.rotate2DPositive(mFloatingActionButton, 360, AnimUtil.DURATION_NORMAL);
-                    mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_notification_36dp);
+                    showFab(true);
+                    AnimUtil.rotate2DPositive(mFloatingActionButton, 360, AnimUtil.DURATION_SHORT);
+                    mFloatingActionButton.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_24dp);
+                        }
+                    }, AnimUtil.DURATION_SHORT_HALF);
                 } else if (position == TAB_POSITION_BILL) {
-                    showFab();
-                    AnimUtil.rotate2DPositive(mFloatingActionButton, 360, AnimUtil.DURATION_NORMAL);
-                    mFloatingActionButton.setImageResource(R.drawable.ic_add_fab_24dp);
+                    showFab(true);
+                    AnimUtil.rotate2DPositive(mFloatingActionButton, 360, AnimUtil.DURATION_SHORT);
+                    mFloatingActionButton.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mFloatingActionButton.setImageResource(R.drawable.ic_add_fab_24dp);
+                        }
+                    }, AnimUtil.DURATION_SHORT_HALF);
                 } else if (position == TAB_POSITION_ALBUM) {
-                    hideFab();
+                    hideFab(true);
                 }
             }
 
@@ -352,6 +367,7 @@ public class MainActivity extends BaseActivity implements MainView {
                 mMainPresenter.onFabClick();
             }
         });
+
         mFloatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -396,17 +412,17 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public boolean isCurrentTabSong() {
-        return mCurrentTabPosition == TAB_POSITION_SONG;
+        return mViewPager.getCurrentItem() == TAB_POSITION_SONG;
     }
 
     @Override
     public boolean isCurrentTabBill() {
-        return mCurrentTabPosition == TAB_POSITION_BILL;
+        return mViewPager.getCurrentItem() == TAB_POSITION_BILL;
     }
 
     @Override
     public boolean isCurrentTabAlbum() {
-        return mCurrentTabPosition == TAB_POSITION_ALBUM;
+        return mViewPager.getCurrentItem() == TAB_POSITION_ALBUM;
     }
 
     @Override
@@ -543,11 +559,13 @@ public class MainActivity extends BaseActivity implements MainView {
      * Show fab with animation.
      */
     @Override
-    public void showFab() {
+    public void showFab(boolean needAnim) {
         if (!ViewUtil.isViewVisiable(mFloatingActionButton)) {
-            // TODO: 2016/10/7 something wrong about time delay when deleting song.
-//            AnimUtil.scaleIn(mFloatingActionButton, AnimUtil.DURATION_SHORT);
-            ViewUtil.setViewVisiable(mFloatingActionButton);
+            if (needAnim) {
+                AnimUtil.scaleIn(mFloatingActionButton, AnimUtil.DURATION_SHORT);
+            } else {
+                ViewUtil.setViewVisiable(mFloatingActionButton);
+            }
         }
     }
 
@@ -555,12 +573,14 @@ public class MainActivity extends BaseActivity implements MainView {
      * Hide fab with animation.
      */
     @Override
-    public void hideFab() {
+    public void hideFab(boolean needAnim) {
         if (ViewUtil.isViewVisiable(mFloatingActionButton)) {
-            // TODO: 2016/10/7 something wrong about time delay when deleting song.
-//            AnimUtil.scaleOut(mFloatingActionButton, AnimUtil.DURATION_SHORT);
-//            AnimUtil.rotate2DNegative(mFloatingActionButton, 360, AnimUtil.DURATION_SHORT);
-            ViewUtil.setViewGone(mFloatingActionButton);
+            if (needAnim) {
+                AnimUtil.scaleOut(mFloatingActionButton, AnimUtil.DURATION_SHORT);
+                AnimUtil.rotate2DNegative(mFloatingActionButton, 360, AnimUtil.DURATION_SHORT);
+            } else {
+                ViewUtil.setViewGone(mFloatingActionButton);
+            }
         }
     }
 
@@ -712,11 +732,31 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     private void recreateActivity(boolean isForNightMode) {
-        getSupportFragmentManager().beginTransaction().remove(mAlbumDisplayFragment).commitAllowingStateLoss();
-        getSupportFragmentManager().beginTransaction().remove(mSongDisplayFragment).commitAllowingStateLoss();
-        getSupportFragmentManager().beginTransaction().remove(mBillDisplayFragment).commitAllowingStateLoss();
+//        getSupportFragmentManager().beginTransaction().remove(mAlbumDisplayFragment).commitAllowingStateLoss();
+//        getSupportFragmentManager().beginTransaction().remove(mSongDisplayFragment).commitAllowingStateLoss();
+//        getSupportFragmentManager().beginTransaction().remove(mBillDisplayFragment).commitAllowingStateLoss();
+//        recreate();
 
-        recreate();
+        //Another way to recreate activity with animation;
+        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra(NEED_OPEN_DRAWER, true);
+        intent.putExtra(CURRENT_TAB_POSITION, mViewPager.getCurrentItem());
+        startActivity(intent);
+
+        if (isForNightMode) {
+            if (AppConfig.isNightModeOn(MainActivity.this)) {
+                overridePendingTransition(R.anim.in_north, R.anim.out_south);
+            } else {
+                overridePendingTransition(R.anim.in_south, R.anim.out_north);
+            }
+        } else {
+            if (AppConfig.isLanguageModeOn(MainActivity.this)) {
+                overridePendingTransition(R.anim.in_west, R.anim.out_east);
+            } else {
+                overridePendingTransition(R.anim.in_east, R.anim.out_west);
+            }
+        }
     }
 
     @Override

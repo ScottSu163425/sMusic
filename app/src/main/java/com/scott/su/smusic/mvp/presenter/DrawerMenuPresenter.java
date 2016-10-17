@@ -5,7 +5,6 @@ package com.scott.su.smusic.mvp.presenter;
  */
 
 public interface DrawerMenuPresenter {
-    void onDrawerMenuTimerClick();
 
     void onDrawerMenuUpdateClick();
 
