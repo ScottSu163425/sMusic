@@ -230,7 +230,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
                     public void onClick(View view) {
                         Intent intent = new Intent(LocalBillDetailActivity.this, LocalSongSelectionActivity.class);
                         intent.putExtra(Constants.KEY_EXTRA_BILL, mBillEntity);
-                        goToForResult(intent, REQUESt_CODE_LOCAL_SONG_SELECTION);
+                        goToForResultWithTransition(intent, REQUESt_CODE_LOCAL_SONG_SELECTION);
                     }
                 });
     }
@@ -294,7 +294,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
     public void goToLocalSongSelectionActivity() {
         Intent intent = new Intent(LocalBillDetailActivity.this, LocalSongSelectionActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_BILL, mBillEntity);
-        goToForResult(intent, REQUESt_CODE_LOCAL_SONG_SELECTION);
+        goToForResultWithTransition(intent, REQUESt_CODE_LOCAL_SONG_SELECTION);
     }
 
     @Override

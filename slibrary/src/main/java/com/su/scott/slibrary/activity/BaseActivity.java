@@ -129,7 +129,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         }
     }
 
-    protected void goToForResult(Intent intent, int requestCode) {
+    protected void goToForResultWithTransition(Intent intent, int requestCode) {
         if (SdkUtil.isLolipopOrLatter()) {
             startActivityForResult(intent, requestCode, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         } else {
