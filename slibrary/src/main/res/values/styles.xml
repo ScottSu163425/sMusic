@@ -57,15 +57,15 @@
         <item name="android:textColor">@color/textColorPrimary</item>
     </style>
 
-    <style name="TextAppearanceBody2">
+    <style name="TextAppearanceBody">
+        <item name="android:textSize">@dimen/text_size_body</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+    </style>
+
+    <style name="TextAppearanceBodyBold">
         <item name="android:textSize">@dimen/text_size_body</item>
         <item name="android:textColor">@color/textColorPrimary</item>
         <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextAppearanceBody1">
-        <item name="android:textSize">@dimen/text_size_body</item>
-        <item name="android:textColor">@color/textColorPrimary</item>
     </style>
 
     <style name="TextAppearanceCaptionPrimary">

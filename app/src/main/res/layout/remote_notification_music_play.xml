@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/margin_xxs">
+
+    <ImageView
+        android:id="@+id/iv_cover_notification_music_play"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_cover_default_song_bill" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/margin_xs"
+        android:paddingRight="@dimen/margin_xs">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title_notification_music_play"
+                style="@style/TextAppearanceSubhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+            <TextView
+                android:id="@+id/tv_artist_notification_music_play"
+                style="@style/TextAppearanceCaptionSecondary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingTop="@dimen/margin_xxs" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btn_play_pause_notification_music_play"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/selector_transparent_half_light"
+        android:clickable="true">
+
+        <ImageView
+            android:id="@+id/iv_play_pause_notification_music_play"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_play_notification_grey_600_48dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btn_skip_next_notification_music_play"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginRight="@dimen/margin_xs"
+        android:background="@drawable/selector_transparent_half_light"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_skip_next_notification_grey_600_48dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/btn_cancel_notification_music_play"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/selector_transparent_half_light"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_close_grey_600_48dp" />
+    </RelativeLayout>
+
+
+</LinearLayout>

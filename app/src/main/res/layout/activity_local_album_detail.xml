@@ -68,7 +68,7 @@
 
                     <TextView
                         android:id="@+id/tv_artist_local_album_detail"
-                        style="@style/TextAppearanceBody1"
+                        style="@style/TextAppearanceBody"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:focusable="true"

@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/bill_name"
             android:maxLines="1"
-            style="@style/TextAppearanceBody2"
+            style="@style/TextAppearanceBodyBold"
             />
     </android.support.design.widget.TextInputLayout>
 

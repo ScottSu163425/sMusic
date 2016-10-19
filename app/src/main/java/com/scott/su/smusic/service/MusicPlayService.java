@@ -3,7 +3,6 @@ package com.scott.su.smusic.service;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
@@ -14,8 +13,8 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v7.app.NotificationCompat;
+import android.widget.RemoteViews;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.MusicPlayServiceCallback;
@@ -277,14 +276,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView, S
     int mCurrentRequestCode = 0;
 
     private void updateNotifycation() {
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setContentTitle(mCurrentPlayingSong.getTitle());
-        builder.setContentText(mCurrentPlayingSong.getArtist());
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setLargeIcon(BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlayingSong.getAlbumId())));
-        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
-        builder.setPriority(NotificationCompat.PRIORITY_MAX);
-        builder.setOngoing(true);
 
         Intent intentGoToMusicPlay = new Intent(this, MainActivity.class);
         intentGoToMusicPlay.putExtra(Constants.KEY_IS_FROM_NOTIFICATION, true);
@@ -293,25 +286,64 @@ public class MusicPlayService extends Service implements MusicPlayServiceView, S
         intentGoToMusicPlay.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntentGoToMusicPlay = PendingIntent.getActivity(this, mCurrentRequestCode, intentGoToMusicPlay, PendingIntent.FLAG_UPDATE_CURRENT);
 
+//        builder.setContentTitle(mCurrentPlayingSong.getTitle());
+//        builder.setContentText(mCurrentPlayingSong.getArtist());
+//        builder.setSmallIcon(R.mipmap.ic_launcher);
+//        builder.setLargeIcon(BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlayingSong.getAlbumId())));
+//        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
+//        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+//        builder.setOngoing(true);
+//
+//        builder.setContentIntent(pendingIntentGoToMusicPlay);
+//        builder.setFullScreenIntent(pendingIntentGoToMusicPlay, false);
+//
+//        //第一个参数是图标资源id 第二个是图标显示的名称，第三个图标点击要启动的PendingIntent
+//        builder.addAction(R.drawable.ic_skip_previous_notification_36dp, "", generateOperateIntent(REQUEST_CODE_PLAY_PREVIOUS, ACTION_PLAY_PREVIOUS));
+//        builder.addAction(isPlaying() ? R.drawable.ic_pause_36dp : R.drawable.ic_play_arrow_notification_36dp, "",
+//                generateOperateIntent(REQUEST_CODE_PLAY_PAUSE, ACTION_PLAY_PAUSE));
+//        builder.addAction(R.drawable.ic_skip_next_notification_36dp, "", generateOperateIntent(REQUEST_CODE_PLAY_NEXT, ACTION_PLAY_NEXT));
+//
+//        NotificationCompat.MediaStyle style = new NotificationCompat.MediaStyle();
+//        style.setMediaSession(new MediaSessionCompat(this, "MediaSession",
+//                new ComponentName(MusicPlayService.this, Intent.ACTION_MEDIA_BUTTON), null).getSessionToken());
+//        //CancelButton在5.0以下的机器有效
+//        style.setCancelButtonIntent(pendingIntentGoToMusicPlay);
+//        style.setShowCancelButton(true);
+//        //设置要现实在通知右方的图标 最多三个
+//        style.setShowActionsInCompactView(0, 1, 2);
+//
+//        builder.setStyle(style);
+//        builder.setShowWhen(false);
+
+        //Second way:
+        RemoteViews remoteViewNormal = new RemoteViews(getPackageName(), R.layout.remote_notification_music_play);
+        remoteViewNormal.setImageViewResource(R.id.iv_play_pause_notification_music_play,
+                isPlaying() ? R.drawable.ic_pause_notification_grey_600_48dp : R.drawable.ic_play_notification_grey_600_48dp);
+        remoteViewNormal.setBitmap(R.id.iv_cover_notification_music_play, "setImageBitmap", BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlayingSong.getAlbumId())));
+        remoteViewNormal.setTextViewText(R.id.tv_title_notification_music_play, mCurrentPlayingSong.getTitle());
+        remoteViewNormal.setTextViewText(R.id.tv_artist_notification_music_play, mCurrentPlayingSong.getArtist());
+        remoteViewNormal.setOnClickPendingIntent(R.id.btn_play_pause_notification_music_play, generateOperateIntent(REQUEST_CODE_PLAY_PAUSE, ACTION_PLAY_PAUSE));
+        remoteViewNormal.setOnClickPendingIntent(R.id.btn_skip_next_notification_music_play, generateOperateIntent(REQUEST_CODE_PLAY_NEXT, ACTION_PLAY_NEXT));
+
+//        RemoteViews remoteViewBig = new RemoteViews(getPackageName(), R.layout.remote_notification_music_play_big);
+//        remoteViewNormal.setImageViewResource(R.id.iv_play_pause_notification_music_play_big,
+//                isPlaying() ? R.drawable.ic_pause_notification_grey_600_48dp : R.drawable.ic_play_notification_grey_600_48dp);
+//        remoteViewNormal.setBitmap(R.id.iv_cover_notification_music_play_big, "setImageBitmap", BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlayingSong.getAlbumId())));
+//        remoteViewBig.setTextViewText(R.id.tv_title_notification_music_play_big, mCurrentPlayingSong.getTitle());
+//        remoteViewBig.setTextViewText(R.id.tv_artist_notification_music_play_big, mCurrentPlayingSong.getArtist());
+//        remoteViewBig.setOnClickPendingIntent(R.id.btn_play_pause_notification_music_play_big, generateOperateIntent(REQUEST_CODE_PLAY_PREVIOUS, ACTION_PLAY_PREVIOUS));
+//        remoteViewBig.setOnClickPendingIntent(R.id.btn_skip_previous_notification_music_play_big, generateOperateIntent(REQUEST_CODE_PLAY_PREVIOUS, ACTION_PLAY_PREVIOUS));
+//        remoteViewBig.setOnClickPendingIntent(R.id.btn_skip_next_notification_music_play_big, generateOperateIntent(REQUEST_CODE_PLAY_NEXT, ACTION_PLAY_NEXT));
+
+        builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentIntent(pendingIntentGoToMusicPlay);
-        builder.setFullScreenIntent(pendingIntentGoToMusicPlay, false);
-        //第一个参数是图标资源id 第二个是图标显示的名称，第三个图标点击要启动的PendingIntent
-        builder.addAction(R.drawable.ic_skip_previous_notification_36dp, "", generateOperateIntent(REQUEST_CODE_PLAY_PREVIOUS, ACTION_PLAY_PREVIOUS));
-        builder.addAction(isPlaying() ? R.drawable.ic_pause_36dp : R.drawable.ic_play_arrow_notification_36dp, "",
-                generateOperateIntent(REQUEST_CODE_PLAY_PAUSE, ACTION_PLAY_PAUSE));
-        builder.addAction(R.drawable.ic_skip_next_notification_36dp, "", generateOperateIntent(REQUEST_CODE_PLAY_NEXT, ACTION_PLAY_NEXT));
+        builder.setContent(remoteViewNormal);
 
-        NotificationCompat.MediaStyle style = new NotificationCompat.MediaStyle();
-        style.setMediaSession(new MediaSessionCompat(this, "MediaSession",
-                new ComponentName(MusicPlayService.this, Intent.ACTION_MEDIA_BUTTON), null).getSessionToken());
-        //CancelButton在5.0以下的机器有效
-        style.setCancelButtonIntent(pendingIntentGoToMusicPlay);
-        style.setShowCancelButton(true);
-        //设置要现实在通知右方的图标 最多三个
-        style.setShowActionsInCompactView(0, 1, 2);
+//        builder.setCustomBigContentView(remoteViewBig);// TODO: 2016/10/19 Throw exceptions if run it;
+        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
+        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+        builder.setOngoing(true);
 
-        builder.setStyle(style);
-        builder.setShowWhen(false);
         mNotificationManager.notify(ID_NOTIFICATION, builder.build());
         startForeground(ID_NOTIFICATION, builder.build());
         mCurrentRequestCode++;

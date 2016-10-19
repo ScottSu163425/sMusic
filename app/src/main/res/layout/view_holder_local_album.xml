@@ -43,7 +43,7 @@
 
             <TextView
                 android:id="@+id/tv_artist_view_holder_local_album"
-                style="@style/TextAppearanceBody1"
+                style="@style/TextAppearanceBody"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
