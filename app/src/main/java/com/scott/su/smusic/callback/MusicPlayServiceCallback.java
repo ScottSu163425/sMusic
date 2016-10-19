@@ -6,7 +6,7 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 /**
  * Created by asus on 2016/9/15.
  */
-public interface MusicPlayCallback {
+public interface MusicPlayServiceCallback {
 
     void onPlayStart();
 

@@ -108,7 +108,7 @@
 
                         <TextView
                             android:id="@+id/tv_current_time_music_play"
-                            style="@style/TextAppearanceCaption"
+                            style="@style/TextAppearanceCaptionSecondary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -121,7 +121,7 @@
 
                         <TextView
                             android:id="@+id/tv_total_time_music_play"
-                            style="@style/TextAppearanceCaption"
+                            style="@style/TextAppearanceCaptionSecondary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>

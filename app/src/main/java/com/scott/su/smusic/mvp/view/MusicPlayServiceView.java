@@ -2,7 +2,7 @@ package com.scott.su.smusic.mvp.view;
 
 import android.support.annotation.NonNull;
 
-import com.scott.su.smusic.callback.MusicPlayCallback;
+import com.scott.su.smusic.callback.MusicPlayServiceCallback;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
 import com.scott.su.smusic.entity.LocalSongEntity;
@@ -37,7 +37,7 @@ public interface MusicPlayServiceView {
 
     void removeServiceSong(LocalSongEntity songEntity);
 
-    void registerServicePlayCallback(@NonNull MusicPlayCallback callback);
+    void registerServicePlayCallback(@NonNull MusicPlayServiceCallback callback);
 
     void unregisterServicePlayCallback();
 }

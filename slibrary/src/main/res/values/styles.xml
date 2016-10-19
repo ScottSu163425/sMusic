@@ -68,7 +68,12 @@
         <item name="android:textColor">@color/textColorPrimary</item>
     </style>
 
-    <style name="TextAppearanceCaption">
+    <style name="TextAppearanceCaptionPrimary">
+        <item name="android:textSize">@dimen/text_size_caption</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+    </style>
+
+    <style name="TextAppearanceCaptionSecondary">
         <item name="android:textSize">@dimen/text_size_caption</item>
         <item name="android:textColor">@color/textColorSecondary</item>
     </style>

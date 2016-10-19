@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Binder;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -17,13 +18,16 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v7.app.NotificationCompat;
 
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.callback.MusicPlayCallback;
+import com.scott.su.smusic.callback.MusicPlayServiceCallback;
+import com.scott.su.smusic.callback.ShutDownServiceCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
+import com.scott.su.smusic.constant.TimerStatus;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayServiceView;
+import com.scott.su.smusic.mvp.view.ShutDownTimerServiceView;
 import com.scott.su.smusic.ui.activity.MainActivity;
 import com.scott.su.smusic.util.MusicPlayUtil;
 import com.su.scott.slibrary.util.TimeUtil;
@@ -34,37 +38,39 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2016/9/9.
  */
-public class MusicPlayService extends Service implements MusicPlayServiceView {
+public class MusicPlayService extends Service implements MusicPlayServiceView, ShutDownTimerServiceView {
     public static final String ACTION_PLAY_NEXT = "com.scott.su.smusic.service.play_next";
     public static final String ACTION_PLAY_PREVIOUS = "com.scott.su.smusic.service.play_previous";
     public static final String ACTION_PLAY_PAUSE = "com.scott.su.smusic.service.play_pause";
     public static final int REQUEST_CODE_PLAY_NEXT = 1;
     public static final int REQUEST_CODE_PLAY_PREVIOUS = 2;
     public static final int REQUEST_CODE_PLAY_PAUSE = 3;
-
     public static final int ID_NOTIFICATION = 123;
     public static final long DURATION_TIMER_DELAY = TimeUtil.MILLISECONDS_OF_SECOND / 10;
 
     private MediaPlayer mMediaPlayer;
     private NotificationManager mNotificationManager;
-    private MusicPlayCallback mMusicPlayCallback;
+    private MusicPlayServiceCallback mMusicPlayServiceCallback;
     private LocalSongEntity mCurrentPlayingSong;
     private ArrayList<LocalSongEntity> mCurrentPlayingSongs;
     private boolean mPlaySameSong;
     private boolean mPlayNextByDeleteing;
-
     private PlayStatus mCurrentPlayStatus = PlayStatus.Stop;
     private PlayMode mCurrentPlayMode = PlayMode.RepeatAll;
-    private Handler mTimerHandler = new Handler();
-    private Runnable mTimerRunnable = new Runnable() {
+    private Handler mPlayTimerHandler = new Handler();
+    private Runnable mPlayTimerRunnable = new Runnable() {
         @Override
         public void run() {
-            if (mMusicPlayCallback != null) {
-                mMusicPlayCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
+            if (mMusicPlayServiceCallback != null) {
+                mMusicPlayServiceCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
             }
-            mTimerHandler.postDelayed(this, DURATION_TIMER_DELAY);
+            mPlayTimerHandler.postDelayed(this, DURATION_TIMER_DELAY);
         }
     };
+
+    //ShutDown Timer
+    private CountDownTimer mShutDownTimer;
+    private TimerStatus mCurrentShutDownTimerStatus = TimerStatus.Stop;
 
 
     @Nullable
@@ -90,8 +96,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                if (mMusicPlayCallback != null) {
-                    mMusicPlayCallback.onPlayComplete();
+                if (mMusicPlayServiceCallback != null) {
+                    mMusicPlayServiceCallback.onPlayComplete();
                 }
                 playNext();
             }
@@ -171,12 +177,12 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     @Override
     public void pause() {
         if (mMediaPlayer != null && isPlaying()) {
-            stopTimer();
+            stopPlayTimer();
             mMediaPlayer.pause();
             mCurrentPlayStatus = PlayStatus.Pause;
             mPlaySameSong = true;
             if (isRegisterCallback()) {
-                mMusicPlayCallback.onPlayPause(mMediaPlayer.getCurrentPosition());
+                mMusicPlayServiceCallback.onPlayPause(mMediaPlayer.getCurrentPosition());
             }
             updateNotifycation();
         }
@@ -189,7 +195,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         } else {
             mMediaPlayer.seekTo(position);
         }
-        mMusicPlayCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
+        mMusicPlayServiceCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
         playResume();
     }
 
@@ -236,7 +242,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     private void stopMediaPlayer() {
-        stopTimer();
+        stopPlayTimer();
         mMediaPlayer.stop();
         mMediaPlayer.release();
         mMediaPlayer = null;
@@ -259,8 +265,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             mMediaPlayer.setDataSource(mCurrentPlayingSong.getPath());
             mMediaPlayer.prepare();
             startMediaPlayer();
-            if (mMusicPlayCallback != null) {
-                mMusicPlayCallback.onPlaySongChanged(mCurrentPlayingSong);
+            if (mMusicPlayServiceCallback != null) {
+                mMusicPlayServiceCallback.onPlaySongChanged(mCurrentPlayingSong);
             }
             updateNotifycation();
         } catch (IOException e) {
@@ -319,24 +325,24 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
     private void startMediaPlayer() {
         mMediaPlayer.start();
-        startTimer();
+        startPlayTimer();
         mCurrentPlayStatus = PlayStatus.Playing;
         if (isRegisterCallback()) {
-            mMusicPlayCallback.onPlayStart();
+            mMusicPlayServiceCallback.onPlayStart();
         }
     }
 
-    private void startTimer() {
-        stopTimer();
-        mTimerHandler.post(mTimerRunnable);
+    private void startPlayTimer() {
+        stopPlayTimer();
+        mPlayTimerHandler.post(mPlayTimerRunnable);
     }
 
-    private void stopTimer() {
-        mTimerHandler.removeCallbacks(mTimerRunnable);
+    private void stopPlayTimer() {
+        mPlayTimerHandler.removeCallbacks(mPlayTimerRunnable);
     }
 
     private boolean isRegisterCallback() {
-        return mMusicPlayCallback != null;
+        return mMusicPlayServiceCallback != null;
     }
 
     private boolean isStop() {
@@ -367,16 +373,55 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     @Override
-    public void registerServicePlayCallback(@NonNull MusicPlayCallback callback) {
-        this.mMusicPlayCallback = callback;
+    public void registerServicePlayCallback(@NonNull MusicPlayServiceCallback callback) {
+        this.mMusicPlayServiceCallback = callback;
     }
 
     @Override
     public void unregisterServicePlayCallback() {
-        this.mMusicPlayCallback = null;
+        this.mMusicPlayServiceCallback = null;
     }
 
-    public class MusicPlayServiceBinder extends Binder implements MusicPlayServiceView {
+    @Override
+    public TimerStatus getServiceCurrentTimerShutDownStatus() {
+        return mCurrentShutDownTimerStatus;
+    }
+
+    @Override
+    public void startShutDownTimer(long duration, long interval, ShutDownServiceCallback callback) {
+        stopShutDownTimer();
+        mShutDownTimer = generateCountDownTimer(duration, interval, callback);
+        mShutDownTimer.start();
+        callback.onStart();
+    }
+
+    @Override
+    public void stopShutDownTimer() {
+        if (mShutDownTimer != null) {
+            mShutDownTimer.cancel();
+            mShutDownTimer = null;
+        }
+    }
+
+    private CountDownTimer generateCountDownTimer(long duration, long interval, final ShutDownServiceCallback callback) {
+        return new CountDownTimer(duration, interval) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (callback != null) {
+                    callback.onTick(millisUntilFinished);
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                if (callback != null) {
+                    callback.onFinish();
+                }
+            }
+        };
+    }
+
+    public class MusicPlayServiceBinder extends Binder implements MusicPlayServiceView, ShutDownTimerServiceView {
 
         @Override
         public PlayStatus getServiceCurrentPlayStatus() {
@@ -439,13 +484,28 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         }
 
         @Override
-        public void registerServicePlayCallback(@NonNull MusicPlayCallback callback) {
+        public void registerServicePlayCallback(@NonNull MusicPlayServiceCallback callback) {
             MusicPlayService.this.registerServicePlayCallback(callback);
         }
 
         @Override
         public void unregisterServicePlayCallback() {
             MusicPlayService.this.unregisterServicePlayCallback();
+        }
+
+        @Override
+        public TimerStatus getServiceCurrentTimerShutDownStatus() {
+            return MusicPlayService.this.getServiceCurrentTimerShutDownStatus();
+        }
+
+        @Override
+        public void startShutDownTimer(long duration, long interval, ShutDownServiceCallback callback) {
+            MusicPlayService.this.startShutDownTimer(duration, interval, callback);
+        }
+
+        @Override
+        public void stopShutDownTimer() {
+            MusicPlayService.this.stopShutDownTimer();
         }
     }
 

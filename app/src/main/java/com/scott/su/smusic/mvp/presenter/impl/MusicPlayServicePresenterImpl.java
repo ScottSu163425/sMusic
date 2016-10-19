@@ -12,21 +12,21 @@ import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
-import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
+import com.scott.su.smusic.mvp.presenter.MusicPlayServicePresenter;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
 import com.su.scott.slibrary.util.TimeUtil;
 
 /**
  * Created by asus on 2016/9/4.
  */
-public class MusicPlayPresenterImpl implements MusicPlayPresenter {
+public class MusicPlayServicePresenterImpl implements MusicPlayServicePresenter {
     private MusicPlayView mMusicPlayView;
     private LocalAlbumModel mAlbumModel;
     private LocalBillModel mBillModel;
     private boolean isFirstTimePlay = true;
 
 
-    public MusicPlayPresenterImpl(MusicPlayView mMusicPlayView) {
+    public MusicPlayServicePresenterImpl(MusicPlayView mMusicPlayView) {
         this.mMusicPlayView = mMusicPlayView;
         this.mAlbumModel = new LocalAlbumModelImpl();
         this.mBillModel = new LocalBillModelImpl();

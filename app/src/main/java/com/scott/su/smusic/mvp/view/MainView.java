@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by asus on 2016/8/19.
  */
-public interface MainView extends BaseView, LocalSongBottomSheetView,MusicPlayServiceView {
+public interface MainView extends BaseView, LocalSongBottomSheetView,MusicPlayServiceView,ShutDownTimerServiceView {
 
     boolean isDataInitFinish();
 

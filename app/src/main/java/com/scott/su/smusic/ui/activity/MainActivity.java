@@ -28,14 +28,17 @@ import android.view.View;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
+import com.scott.su.smusic.callback.DrawerMenuCallback;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
-import com.scott.su.smusic.callback.MusicPlayCallback;
+import com.scott.su.smusic.callback.MusicPlayServiceCallback;
+import com.scott.su.smusic.callback.ShutDownServiceCallback;
 import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.constant.LocalSongDisplayType;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
+import com.scott.su.smusic.constant.TimerStatus;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
@@ -237,49 +240,46 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void initListener() {
-        mDrawerMenuFragment.setMenuCallback(new DrawerMenuFragment.DrawerMenuCallback() {
+        mDrawerMenuFragment.setMenuCallback(new DrawerMenuCallback() {
 
             @Override
-            public void onNightModeOn() {
-                mMainPresenter.onNightModeOn();
+            public void onDrawerMenuNightModeOn() {
+                mMainPresenter.onDrawerMenuNightModeOn();
             }
 
             @Override
-            public void onNightModeOff() {
-                mMainPresenter.onNightModeOff();
+            public void onDrawerMenuNightModeOff() {
+                mMainPresenter.onDrawerMenuNightModeOff();
             }
 
             @Override
-            public void onLanguageModeOn() {
-                mMainPresenter.onLanguageModeOn();
+            public void onDrawerMenuLanguageModeOn() {
+                mMainPresenter.onDrawerMenuLanguageModeOn();
             }
 
             @Override
-            public void onLanguageModeOff() {
-                mMainPresenter.onLanguageModeOff();
-            }
-
-
-            @Override
-            public void onUpdateClick(View v) {
-                mMainPresenter.onDrawerMenuUpdateClick();
+            public void onDrawerMenuLanguageModeOff() {
+                mMainPresenter.onDrawerMenuLanguageModeOff();
             }
 
             @Override
-            public void onAboutClick(View v) {
-                mMainPresenter.onDrawerMenuAboutClick();
+            public void onDrawerMenuUpdateClick(View v) {
+                mMainPresenter.onDrawerMenuUpdateClick(v);
             }
 
             @Override
-            public void onTimerCancelClick() {
-                T.showShort(getApplicationContext(), "Cancel timer.");
-//                mDrawerLayout.closeDrawer(Gravity.LEFT);
+            public void onDrawerMenuAboutClick(View v) {
+                mMainPresenter.onDrawerMenuAboutClick(v);
             }
 
             @Override
-            public void onTimerMinutesClick(int minutes) {
-                T.showShort(getApplicationContext(), "Shut down after " + minutes + " minutes.");
-//                mDrawerLayout.closeDrawer(Gravity.LEFT);
+            public void onDrawerMenuTimerCancelClick() {
+                mMainPresenter.onDrawerMenuTimerCancelClick();
+            }
+
+            @Override
+            public void onDrawerMenuTimerMinutesClick(long millisOfmin) {
+                mMainPresenter.onDrawerMenuTimerMinutesClick(millisOfmin);
             }
         });
 
@@ -484,7 +484,7 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public void registerServicePlayCallback(@NonNull MusicPlayCallback callback) {
+    public void registerServicePlayCallback(@NonNull MusicPlayServiceCallback callback) {
 
     }
 
@@ -790,4 +790,21 @@ public class MainActivity extends BaseActivity implements MainView {
         unbindService(mMusicPlayServiceConnection);
         super.onDestroy();
     }
+
+    @Override
+    public TimerStatus getServiceCurrentTimerShutDownStatus() {
+        return mMusicPlayServiceBinder.getServiceCurrentTimerShutDownStatus();
+    }
+
+    @Override
+    public void startShutDownTimer(long duration, long interval, ShutDownServiceCallback callback) {
+        mMusicPlayServiceBinder.startShutDownTimer(duration, interval, callback);
+    }
+
+    @Override
+    public void stopShutDownTimer() {
+        mMusicPlayServiceBinder.stopShutDownTimer();
+    }
+
+
 }

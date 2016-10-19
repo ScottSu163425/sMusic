@@ -10,12 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.callback.DrawerMenuCallback;
 import com.scott.su.smusic.config.AppConfig;
 import com.su.scott.slibrary.fragment.BaseFragment;
 import com.su.scott.slibrary.util.PopupMenuUtil;
 import com.su.scott.slibrary.util.ScreenUtil;
+import com.su.scott.slibrary.util.TimeUtil;
 
 /**
  * Created by Administrator on 2016/9/8.
@@ -23,6 +26,7 @@ import com.su.scott.slibrary.util.ScreenUtil;
 public class DrawerMenuFragment extends BaseFragment implements View.OnClickListener {
     private View mRootView;
     private View mTimerMenuItem, mLanguageMenuItem, mUpdateMenuItem, mAboutMenuItem;
+    private TextView mTimerTimeTextView;
     private SwitchCompat mNightModeSwitch;
     private DrawerMenuCallback mMenuCallback;
 
@@ -61,6 +65,7 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
         mAboutMenuItem = mRootView.findViewById(R.id.rl_item_about_drawer_menu);
         mNightModeSwitch = (SwitchCompat) mRootView.findViewById(R.id.swtich_night_mode_drawer_menu);
         mLanguageMenuItem = mRootView.findViewById(R.id.rl_item_language_drawer_menu);
+        mTimerTimeTextView = (TextView) mRootView.findViewById(R.id.tv_time_timer_drawer_menu);
     }
 
     @Override
@@ -79,9 +84,9 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
             public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
                 if (mMenuCallback != null) {
                     if (on) {
-                        mMenuCallback.onNightModeOn();
+                        mMenuCallback.onDrawerMenuNightModeOn();
                     } else {
-                        mMenuCallback.onNightModeOff();
+                        mMenuCallback.onDrawerMenuNightModeOff();
                     }
                 }
             }
@@ -101,9 +106,9 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
         } else if (id == mLanguageMenuItem.getId()) {
             popLanguageMenu();
         } else if (id == mUpdateMenuItem.getId()) {
-            mMenuCallback.onUpdateClick(view);
+            mMenuCallback.onDrawerMenuUpdateClick(view);
         } else if (id == mAboutMenuItem.getId()) {
-            mMenuCallback.onAboutClick(view);
+            mMenuCallback.onDrawerMenuAboutClick(view);
         }
     }
 
@@ -117,9 +122,9 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
                         }
 
                         if (item.getItemId() == R.id.menu_item_chinese_language_popup_drawer) {
-                            mMenuCallback.onLanguageModeOff();
+                            mMenuCallback.onDrawerMenuLanguageModeOff();
                         } else if (item.getItemId() == R.id.menu_item_english_language_popup_drawer) {
-                            mMenuCallback.onLanguageModeOn();
+                            mMenuCallback.onDrawerMenuLanguageModeOn();
                         }
                         return true;
                     }
@@ -135,15 +140,15 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
                             return true;
                         }
                         if (item.getItemId() == R.id.menu_item_cancel_timer_popup_drawer) {
-                            mMenuCallback.onTimerCancelClick();
+                            mMenuCallback.onDrawerMenuTimerCancelClick();
                         } else if (item.getItemId() == R.id.menu_item_15_min_timer_popup_drawer) {
-                            mMenuCallback.onTimerMinutesClick(15);
+                            mMenuCallback.onDrawerMenuTimerMinutesClick(15);
                         } else if (item.getItemId() == R.id.menu_item_30_min_timer_popup_drawer) {
-                            mMenuCallback.onTimerMinutesClick(30);
+                            mMenuCallback.onDrawerMenuTimerMinutesClick(30);
                         } else if (item.getItemId() == R.id.menu_item_60_min_timer_popup_drawer) {
-                            mMenuCallback.onTimerMinutesClick(60);
+                            mMenuCallback.onDrawerMenuTimerMinutesClick(60);
                         } else if (item.getItemId() == R.id.menu_item_120_min_timer_popup_drawer) {
-                            mMenuCallback.onTimerMinutesClick(120);
+                            mMenuCallback.onDrawerMenuTimerMinutesClick(120);
                         }
                         return true;
                     }
@@ -154,22 +159,13 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
         this.mMenuCallback = menuCallback;
     }
 
-    public interface DrawerMenuCallback {
-        void onNightModeOn();
+    public void setTimerTime(long millis) {
+        if (millis == 0) {
+            mTimerTimeTextView.setText("");
+            return;
+        }
 
-        void onNightModeOff();
-
-        void onLanguageModeOn();
-
-        void onLanguageModeOff();
-
-        void onUpdateClick(View v);
-
-        void onAboutClick(View v);
-
-        void onTimerCancelClick();
-
-        void onTimerMinutesClick(int minutes);
+        mTimerTimeTextView.setText(TimeUtil.millisecondToTime(millis));
     }
 
 }

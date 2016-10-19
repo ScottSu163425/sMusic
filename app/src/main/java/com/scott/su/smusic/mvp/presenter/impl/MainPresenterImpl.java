@@ -134,17 +134,7 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void onDrawerMenuUpdateClick() {
-        mMainView.showToastShort("Update");
-    }
-
-    @Override
-    public void onDrawerMenuAboutClick() {
-        mMainView.showToastShort("About");
-    }
-
-    @Override
-    public void onNightModeOn() {
+    public void onDrawerMenuNightModeOn() {
         if (AppConfig.isNightModeOn(mMainView.getViewContext())) {
             return;
         }
@@ -154,7 +144,7 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void onNightModeOff() {
+    public void onDrawerMenuNightModeOff() {
         if (!AppConfig.isNightModeOn(mMainView.getViewContext())) {
             return;
         }
@@ -164,7 +154,7 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void onLanguageModeOn() {
+    public void onDrawerMenuLanguageModeOn() {
         if (AppConfig.isLanguageModeOn(mMainView.getViewContext())) {
             return;
         }
@@ -175,7 +165,7 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void onLanguageModeOff() {
+    public void onDrawerMenuLanguageModeOff() {
         if (!AppConfig.isLanguageModeOn(mMainView.getViewContext())) {
             return;
         }
@@ -184,6 +174,27 @@ public class MainPresenterImpl implements MainPresenter {
         updateDefaultBillName();
         mMainView.updateBillDisplay();
     }
+
+    @Override
+    public void onDrawerMenuUpdateClick(View v) {
+
+    }
+
+    @Override
+    public void onDrawerMenuAboutClick(View v) {
+
+    }
+
+    @Override
+    public void onDrawerMenuTimerCancelClick() {
+
+    }
+
+    @Override
+    public void onDrawerMenuTimerMinutesClick(long millisOfmin) {
+
+    }
+
 
     private void updateDefaultBillName() {
         LocalBillEntity defaultBill = mBillModel.getDefaultBill(mMainView.getViewContext());

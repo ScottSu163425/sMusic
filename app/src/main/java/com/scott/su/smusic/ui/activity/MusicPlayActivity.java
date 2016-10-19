@@ -22,15 +22,15 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.callback.MusicPlayCallback;
+import com.scott.su.smusic.callback.MusicPlayServiceCallback;
 import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
-import com.scott.su.smusic.mvp.presenter.impl.MusicPlayPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.MusicPlayServicePresenter;
+import com.scott.su.smusic.mvp.presenter.impl.MusicPlayServicePresenterImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
 import com.scott.su.smusic.service.MusicPlayService;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
@@ -47,7 +47,7 @@ import java.util.ArrayList;
  * 2016-09-07 22:01:51
  */
 public class MusicPlayActivity extends BaseActivity implements MusicPlayView, View.OnClickListener {
-    private MusicPlayPresenter mMusicPlayPresenter;
+    private MusicPlayServicePresenter mMusicPlayPresenter;
     private TextView mMusicTitleTextView, mMusicArtistTextView, mCurrentTimeTextView, mTotalTimeTextView;
     private ImageView mCoverImageView, mBlurCoverImageView;
     private CardView mPlayControlCard;
@@ -70,7 +70,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_play);
 
-        mMusicPlayPresenter = new MusicPlayPresenterImpl(this);
+        mMusicPlayPresenter = new MusicPlayServicePresenterImpl(this);
         mMusicPlayPresenter.onViewFirstTimeCreated();
     }
 
@@ -109,7 +109,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                     mMusicPlayServiceBinder.setServicePlaySong(mCurrentPlayingSong, mCurrentPlayingSongList);
                 }
                 mMusicPlayServiceBinder.setServicePlayMode(mCurrentPlayMode);
-                mMusicPlayServiceBinder.registerServicePlayCallback(new MusicPlayCallback() {
+                mMusicPlayServiceBinder.registerServicePlayCallback(new MusicPlayServiceCallback() {
                     @Override
                     public void onPlayStart() {
                         mCurrentPlayStatus = PlayStatus.Playing;
@@ -546,7 +546,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public void registerServicePlayCallback(@NonNull MusicPlayCallback callback) {
+    public void registerServicePlayCallback(@NonNull MusicPlayServiceCallback callback) {
 
     }
 

@@ -58,14 +58,14 @@
 
                 <TextView
                     android:id="@+id/tv_artist_view_holder_local_song_selection"
-                    style="@style/TextAppearanceCaption"
+                    style="@style/TextAppearanceCaptionSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1" />
 
                 <TextView
-                    style="@style/TextAppearanceCaption"
+                    style="@style/TextAppearanceCaptionSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_xxs"
@@ -75,7 +75,7 @@
 
                 <TextView
                     android:id="@+id/tv_ablum_view_holder_local_song_selection"
-                    style="@style/TextAppearanceCaption"
+                    style="@style/TextAppearanceCaptionSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
