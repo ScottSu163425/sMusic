@@ -40,15 +40,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:gravity="center"
                         android:maxLines="1"
                         android:paddingTop="@dimen/margin_xs" />
 
                     <TextView
-                        android:id="@+id/tv_artist_notification_music_play_big"
+                        android:id="@+id/tv_artist_album_notification_music_play_big"
                         style="@style/TextAppearanceCaptionSecondary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:gravity="center"
                         android:maxLines="1"
                         android:paddingBottom="@dimen/margin_xs"
                         android:paddingTop="@dimen/margin_xxs" />

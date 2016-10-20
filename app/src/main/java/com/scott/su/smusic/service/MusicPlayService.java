@@ -16,7 +16,6 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.NotificationCompat;
-import android.view.View;
 import android.widget.RemoteViews;
 
 import com.scott.su.smusic.R;
@@ -29,7 +28,6 @@ import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayServiceView;
 import com.scott.su.smusic.ui.activity.MainActivity;
 import com.scott.su.smusic.util.MusicPlayUtil;
-import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.TimeUtil;
 
 import java.io.IOException;
@@ -366,7 +364,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         remoteViewBig.setBitmap(R.id.iv_cover_notification_music_play_big, "setImageBitmap",
                 BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlayingSong.getAlbumId())));
         remoteViewBig.setTextViewText(R.id.tv_title_notification_music_play_big, mCurrentPlayingSong.getTitle());
-        remoteViewBig.setTextViewText(R.id.tv_artist_notification_music_play_big,
+        remoteViewBig.setTextViewText(R.id.tv_artist_album_notification_music_play_big,
                 mCurrentPlayingSong.getArtist() + " - " + mCurrentPlayingSong.getAlbum());
         remoteViewBig.setOnClickPendingIntent(R.id.btn_play_pause_notification_music_play_big, generateOperateIntent(REQUEST_CODE_PLAY_PAUSE, ACTION_PLAY_PAUSE));
         remoteViewBig.setOnClickPendingIntent(R.id.btn_skip_previous_notification_music_play_big, generateOperateIntent(REQUEST_CODE_PLAY_PREVIOUS, ACTION_PLAY_PREVIOUS));

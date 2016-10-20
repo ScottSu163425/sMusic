@@ -46,7 +46,7 @@ public class CirclarRevealUtil {
     
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealIn(@NonNull View view, DIRECTION direction) {
-        revealIn(view, direction, DURATION_REVEAL_NORMAL, null, null);
+        revealIn(view, direction, DURATION_REVEAL_SHORT, null, null);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -61,7 +61,7 @@ public class CirclarRevealUtil {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealOut(@NonNull View view, DIRECTION direction, boolean autoHide) {
-        revealOut(view, direction, DURATION_REVEAL_NORMAL, null, null, autoHide);
+        revealOut(view, direction, DURATION_REVEAL_SHORT, null, null, autoHide);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -71,7 +71,7 @@ public class CirclarRevealUtil {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealOut(@NonNull View view, DIRECTION direction, boolean autoHide, @Nullable final AnimUtil.SimpleAnimListener listener) {
-        revealOut(view, direction, DURATION_REVEAL_NORMAL, null, listener, autoHide);
+        revealOut(view, direction, DURATION_REVEAL_SHORT, null, listener, autoHide);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
