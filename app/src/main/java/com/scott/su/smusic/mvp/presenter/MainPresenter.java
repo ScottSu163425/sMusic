@@ -17,6 +17,8 @@ import java.util.List;
  */
 public interface MainPresenter extends BasePresenter, LocalSongBottomSheetPresenter, DrawerMenuCallback {
 
+    void onInitDataComplete();
+
     void onLocalSongItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
 
     void onLocalSongItemMoreClick(LocalSongEntity songEntity);

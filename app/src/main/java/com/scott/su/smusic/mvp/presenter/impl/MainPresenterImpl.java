@@ -19,6 +19,7 @@ import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.view.MainView;
 import com.scott.su.smusic.util.MusicPlayUtil;
+import com.su.scott.slibrary.util.TimeUtil;
 
 import java.util.List;
 
@@ -36,6 +37,12 @@ public class MainPresenterImpl implements MainPresenter {
         this.mSongModel = new LocalSongModelImpl();
         this.mBillModel = new LocalBillModelImpl();
         this.mAlbumModel = new LocalAlbumModelImpl();
+    }
+
+    @Override
+    public void onInitDataComplete() {
+        mMainView.bindMusicPlayService();
+        mMainView.bindShutDownTimerService();
     }
 
     @Override
@@ -187,12 +194,12 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onDrawerMenuTimerCancelClick() {
-
+        mMainView.cancelShutDownTimer();
     }
 
     @Override
     public void onDrawerMenuTimerMinutesClick(long millisOfmin) {
-
+        mMainView.startShutDownTimer(millisOfmin, TimeUtil.MILLISECONDS_OF_SECOND);
     }
 
 
@@ -213,7 +220,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onViewResume() {
-        if (mMainView.isDataInitFinish()) {
+        if (mMainView.isInitDataComplete()) {
             if (AppConfig.isNeedToRefreshLocalSongDisplay(mMainView.getViewContext())) {
                 mMainView.updateSongDisplay();
                 AppConfig.setNeedToRefreshLocalSongDisplay(mMainView.getViewContext(), false);

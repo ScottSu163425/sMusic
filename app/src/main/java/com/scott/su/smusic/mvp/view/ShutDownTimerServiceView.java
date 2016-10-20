@@ -12,7 +12,7 @@ public interface ShutDownTimerServiceView {
 
     void startShutDownTimer(long duration, long interval );
 
-    void stopShutDownTimer();
+    void cancelShutDownTimer();
 
     void setTimerCallback(ShutDownServiceCallback callback);
 

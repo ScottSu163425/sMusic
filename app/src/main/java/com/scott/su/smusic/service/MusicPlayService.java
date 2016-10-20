@@ -3,7 +3,10 @@ package com.scott.su.smusic.service;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -25,6 +28,7 @@ import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayServiceView;
 import com.scott.su.smusic.ui.activity.MainActivity;
 import com.scott.su.smusic.util.MusicPlayUtil;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.TimeUtil;
 
 import java.io.IOException;
@@ -58,7 +62,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     private Runnable mPlayTimerRunnable = new Runnable() {
         @Override
         public void run() {
-            if (mMusicPlayServiceCallback != null) {
+            if (isRegisterCallback()) {
                 mMusicPlayServiceCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
             }
             mPlayTimerHandler.postDelayed(this, DURATION_TIMER_DELAY);
@@ -80,6 +84,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     public void onCreate() {
         super.onCreate();
 
+        registerReceiver(mStopPlayReceiver, new IntentFilter(Constants.ACTION_STOP_MUSIC_PLAY_SERVICE));
+
         initMediaPlayer();
     }
 
@@ -88,13 +94,12 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                if (mMusicPlayServiceCallback != null) {
+                if (isRegisterCallback()) {
                     mMusicPlayServiceCallback.onPlayComplete();
                 }
                 playNext();
             }
         });
-
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
@@ -118,24 +123,27 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
                 updateNotifycation();
             } else if (intent.getAction().equals(ACTION_STOP)) {
                 releaseAll();
-                mMusicPlayServiceCallback.onPlayStop();
             }
         }
-
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
         releaseAll();
+        unregisterReceiver(mStopPlayReceiver);
         super.onDestroy();
     }
 
     private void releaseAll() {
-        mCurrentPlayingSong=null;
-        mCurrentPlayingSongs=null;
+        mCurrentPlayingSong = null;
+        mCurrentPlayingSongs = null;
         releaseMediaPlayer();
         cancelService();
+
+        if (isRegisterCallback()) {
+            mMusicPlayServiceCallback.onPlayStop();
+        }
     }
 
     @Override
@@ -194,7 +202,9 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         } else {
             mMediaPlayer.seekTo(position);
         }
-        mMusicPlayServiceCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
+        if (isRegisterCallback()) {
+            mMusicPlayServiceCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
+        }
         playResume();
     }
 
@@ -269,7 +279,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             mMediaPlayer.setDataSource(mCurrentPlayingSong.getPath());
             mMediaPlayer.prepare();
             startMediaPlayer();
-            if (mMusicPlayServiceCallback != null) {
+            if (isRegisterCallback()) {
                 mMusicPlayServiceCallback.onPlaySongChanged(mCurrentPlayingSong);
             }
             updateNotifycation();
@@ -424,7 +434,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         this.mMusicPlayServiceCallback = null;
     }
 
-    public class MusicPlayServiceBinder extends Binder implements MusicPlayServiceView  {
+    public class MusicPlayServiceBinder extends Binder implements MusicPlayServiceView {
 
         @Override
         public PlayStatus getServiceCurrentPlayStatus() {
@@ -495,8 +505,14 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         public void unregisterServicePlayCallback() {
             MusicPlayService.this.unregisterServicePlayCallback();
         }
-
     }
+
+    private BroadcastReceiver mStopPlayReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            releaseAll();
+        }
+    };
 
 
 }

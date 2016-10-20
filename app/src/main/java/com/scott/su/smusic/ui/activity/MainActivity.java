@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity implements MainView {
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
     private ServiceConnection mShutDownTimerServiceConnection;
     private ShutDownTimerService.ShutDownTimerServiceBinder mShutDownTimerServiceBinder;
-    private boolean mDataInitFinish = false;
+    private boolean mInitDataComplete = false;
 
 
     @Override
@@ -154,12 +154,10 @@ public class MainActivity extends BaseActivity implements MainView {
 
         PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE, 123);
         PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, 321);
-
-        bindMusicPlayService();
-        bindShutDownTimerService();
     }
 
-    private void bindMusicPlayService() {
+    @Override
+    public void bindMusicPlayService() {
         //Bind music play service
         mMusicPlayServiceConnection = new ServiceConnection() {
             @Override
@@ -177,7 +175,8 @@ public class MainActivity extends BaseActivity implements MainView {
         bindService(intent, mMusicPlayServiceConnection, BIND_AUTO_CREATE);
     }
 
-    private void bindShutDownTimerService() {
+    @Override
+    public void bindShutDownTimerService() {
         mShutDownTimerServiceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -206,6 +205,7 @@ public class MainActivity extends BaseActivity implements MainView {
             }
         };
         Intent intent = new Intent(MainActivity.this, ShutDownTimerService.class);
+//        startService(intent);
         bindService(intent, mShutDownTimerServiceConnection, BIND_AUTO_CREATE);
     }
 
@@ -276,7 +276,8 @@ public class MainActivity extends BaseActivity implements MainView {
             ViewUtil.setViewGone(mFloatingActionButton);
         }
 
-        mDataInitFinish = true;
+        mInitDataComplete = true;
+        mMainPresenter.onInitDataComplete();
     }
 
     @Override
@@ -315,15 +316,12 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onDrawerMenuTimerCancelClick() {
-//                mMainPresenter.onDrawerMenuTimerCancelClick();
-                mShutDownTimerServiceBinder.stopShutDownTimer();
-                mDrawerMenuFragment.setTimerTime(0);
+                mMainPresenter.onDrawerMenuTimerCancelClick();
             }
 
             @Override
             public void onDrawerMenuTimerMinutesClick(final long millisOfmin) {
-//                mMainPresenter.onDrawerMenuTimerMinutesClick(millisOfmin);
-                mShutDownTimerServiceBinder.startShutDownTimer(millisOfmin, TimeUtil.MILLISECONDS_OF_SECOND);
+                mMainPresenter.onDrawerMenuTimerMinutesClick(millisOfmin);
             }
         });
 
@@ -423,8 +421,8 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public boolean isDataInitFinish() {
-        return mDataInitFinish;
+    public boolean isInitDataComplete() {
+        return mInitDataComplete;
     }
 
     @Override
@@ -831,8 +829,13 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     protected void onDestroy() {
-        unbindService(mMusicPlayServiceConnection);
-        unbindService(mShutDownTimerServiceConnection);
+        if (mMusicPlayServiceConnection != null) {
+            unbindService(mMusicPlayServiceConnection);
+        }
+
+        if (mShutDownTimerServiceConnection != null) {
+            unbindService(mShutDownTimerServiceConnection);
+        }
         super.onDestroy();
     }
 
@@ -847,8 +850,9 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public void stopShutDownTimer() {
-        mShutDownTimerServiceBinder.stopShutDownTimer();
+    public void cancelShutDownTimer() {
+        mShutDownTimerServiceBinder.cancelShutDownTimer();
+        mDrawerMenuFragment.setTimerTime(0);
     }
 
     @Override

@@ -10,5 +10,6 @@ public class Constants {
     public static final String KEY_EXTRA_ALBUM = "KEY_EXTRA_ALBUM";
     public static final String KEY_IS_FROM_NOTIFICATION = "KEY_IS_FROM_NOTIFICATION";
     public static final String KEY_POSITION_OF_BILL = "KEY_POSITION_OF_BILL";
+    public static final String ACTION_STOP_MUSIC_PLAY_SERVICE = "ACTION_STOP_MUSIC_PLAY_SERVICE";
 
 }

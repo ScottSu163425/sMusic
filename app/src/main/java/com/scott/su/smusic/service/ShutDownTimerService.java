@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.scott.su.smusic.callback.ShutDownServiceCallback;
+import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.TimerStatus;
 import com.scott.su.smusic.mvp.view.ShutDownTimerServiceView;
 
@@ -17,7 +18,7 @@ import com.scott.su.smusic.mvp.view.ShutDownTimerServiceView;
 public class ShutDownTimerService extends Service implements ShutDownTimerServiceView {
     private CountDownTimer mShutDownTimer;
     private TimerStatus mCurrentShutDownTimerStatus = TimerStatus.Stop;
-    private  ShutDownServiceCallback mTimerCallback;
+    private ShutDownServiceCallback mTimerCallback;
 
     @Nullable
     @Override
@@ -32,31 +33,31 @@ public class ShutDownTimerService extends Service implements ShutDownTimerServic
     }
 
     @Override
-    public void startShutDownTimer(long duration, long interval ) {
-        stopShutDownTimer();
-        mShutDownTimer = generateCountDownTimer(duration, interval );
+    public void startShutDownTimer(long duration, long interval) {
+        cancelShutDownTimer();
+        mShutDownTimer = generateCountDownTimer(duration, interval);
         mShutDownTimer.start();
-        if (mTimerCallback!=null){
+        if (mTimerCallback != null) {
             mTimerCallback.onStart(duration);
         }
-        mCurrentShutDownTimerStatus=TimerStatus.Ticking;
+        mCurrentShutDownTimerStatus = TimerStatus.Ticking;
     }
 
     @Override
-    public void stopShutDownTimer() {
+    public void cancelShutDownTimer() {
         if (mShutDownTimer != null) {
             mShutDownTimer.cancel();
             mShutDownTimer = null;
-            mCurrentShutDownTimerStatus=TimerStatus.Stop;
+            mCurrentShutDownTimerStatus = TimerStatus.Stop;
         }
     }
 
     @Override
     public void setTimerCallback(ShutDownServiceCallback callback) {
-        this.mTimerCallback=callback;
+        this.mTimerCallback = callback;
     }
 
-    private CountDownTimer generateCountDownTimer(long duration, long interval ) {
+    private CountDownTimer generateCountDownTimer(long duration, long interval) {
         return new CountDownTimer(duration, interval) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -70,12 +71,22 @@ public class ShutDownTimerService extends Service implements ShutDownTimerServic
                 if (mTimerCallback != null) {
                     mTimerCallback.onFinish();
                 }
-                mCurrentShutDownTimerStatus=TimerStatus.Stop;
+                mCurrentShutDownTimerStatus = TimerStatus.Stop;
+                sendStopBrocast();
             }
         };
     }
 
-    public class ShutDownTimerServiceBinder extends Binder implements ShutDownTimerServiceView{
+    /**
+     * Send a brocast to Music play service to stop it.
+     */
+    private void sendStopBrocast() {
+        Intent intent = new Intent();
+        intent.setAction(Constants.ACTION_STOP_MUSIC_PLAY_SERVICE);
+        sendBroadcast(intent);
+    }
+
+    public class ShutDownTimerServiceBinder extends Binder implements ShutDownTimerServiceView {
 
         @Override
         public TimerStatus getServiceCurrentTimerShutDownStatus() {
@@ -84,12 +95,12 @@ public class ShutDownTimerService extends Service implements ShutDownTimerServic
 
         @Override
         public void startShutDownTimer(long duration, long interval) {
-            ShutDownTimerService.this.startShutDownTimer(duration,interval);
+            ShutDownTimerService.this.startShutDownTimer(duration, interval);
         }
 
         @Override
-        public void stopShutDownTimer() {
-            ShutDownTimerService.this.stopShutDownTimer();
+        public void cancelShutDownTimer() {
+            ShutDownTimerService.this.cancelShutDownTimer();
         }
 
         @Override
