@@ -16,6 +16,7 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.NotificationCompat;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.scott.su.smusic.R;
@@ -331,6 +332,20 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 //        builder.setShowWhen(false);
 
         //Second way:
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentIntent(pendingIntentGoToMusicPlay);
+        builder.setContent(generateContentRemoteView());
+        builder.setCustomBigContentView(generateBigContentRemoteView());
+        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
+        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+        builder.setOngoing(true);
+
+        mNotificationManager.notify(ID_NOTIFICATION, builder.build());
+        startForeground(ID_NOTIFICATION, builder.build());
+        mCurrentRequestCode++;
+    }
+
+    private RemoteViews generateContentRemoteView() {
         RemoteViews remoteViewNormal = new RemoteViews(getPackageName(), R.layout.remote_notification_music_play);
         remoteViewNormal.setImageViewResource(R.id.iv_play_pause_notification_music_play,
                 isPlaying() ? R.drawable.ic_pause_notification_grey_600_48dp : R.drawable.ic_play_notification_grey_600_48dp);
@@ -341,8 +356,10 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         remoteViewNormal.setOnClickPendingIntent(R.id.btn_play_pause_notification_music_play, generateOperateIntent(REQUEST_CODE_PLAY_PAUSE, ACTION_PLAY_PAUSE));
         remoteViewNormal.setOnClickPendingIntent(R.id.btn_skip_next_notification_music_play, generateOperateIntent(REQUEST_CODE_PLAY_NEXT, ACTION_PLAY_NEXT));
         remoteViewNormal.setOnClickPendingIntent(R.id.btn_cancel_notification_music_play, generateOperateIntent(REQUEST_CODE_STOP, ACTION_STOP));
+        return remoteViewNormal;
+    }
 
-
+    private RemoteViews generateBigContentRemoteView() {
         RemoteViews remoteViewBig = new RemoteViews(getPackageName(), R.layout.remote_notification_music_play_big);
         remoteViewBig.setImageViewResource(R.id.iv_play_pause_notification_music_play_big,
                 isPlaying() ? R.drawable.ic_pause_notification_grey_600_48dp : R.drawable.ic_play_notification_grey_600_48dp);
@@ -355,18 +372,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         remoteViewBig.setOnClickPendingIntent(R.id.btn_skip_previous_notification_music_play_big, generateOperateIntent(REQUEST_CODE_PLAY_PREVIOUS, ACTION_PLAY_PREVIOUS));
         remoteViewBig.setOnClickPendingIntent(R.id.btn_skip_next_notification_music_play_big, generateOperateIntent(REQUEST_CODE_PLAY_NEXT, ACTION_PLAY_NEXT));
         remoteViewBig.setOnClickPendingIntent(R.id.btn_cancel_notification_music_play_big, generateOperateIntent(REQUEST_CODE_STOP, ACTION_STOP));
-
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContentIntent(pendingIntentGoToMusicPlay);
-        builder.setContent(remoteViewNormal);
-        builder.setCustomBigContentView(remoteViewBig);
-        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
-        builder.setPriority(NotificationCompat.PRIORITY_MAX);
-        builder.setOngoing(true);
-
-        mNotificationManager.notify(ID_NOTIFICATION, builder.build());
-        startForeground(ID_NOTIFICATION, builder.build());
-        mCurrentRequestCode++;
+        return remoteViewBig;
     }
 
     private PendingIntent generateOperateIntent(int requestCode, String action) {
