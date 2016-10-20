@@ -346,7 +346,11 @@ public class MainActivity extends BaseActivity implements MainView {
                 if (dataList == null || dataList.isEmpty()) {
                     hideFab(false);
                 } else {
-                    showFab(false);
+                    //Fix problem that after recreate main activity the fab still showing,when current position of viewpager
+                    //is album,which is not supposed to be shown ;
+                    if (mViewPager.getCurrentItem() != TAB_POSITION_ALBUM) {
+                        showFab(false);
+                    }
                 }
             }
         });
