@@ -214,7 +214,7 @@ public class SearchActivity extends BaseActivity implements SearchView {
     public void goToAlbumDetail(LocalAlbumEntity entity) {
         Intent intent = new Intent(SearchActivity.this, LocalAlbumDetailActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_ALBUM, entity);
-        goTo(intent);
+        goToWithTransition(intent);
     }
 
     @Override
