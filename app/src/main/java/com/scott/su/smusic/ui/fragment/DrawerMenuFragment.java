@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SwitchCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.DrawerMenuCallback;
 import com.scott.su.smusic.config.AppConfig;
 import com.su.scott.slibrary.fragment.BaseFragment;
+import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.PopupMenuUtil;
 import com.su.scott.slibrary.util.ScreenUtil;
 import com.su.scott.slibrary.util.TimeUtil;
@@ -30,7 +32,7 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
     private SwitchCompat mNightModeSwitch;
     private DrawerMenuCallback mMenuCallback;
 
-    public static final float PERCENTAGE_OF_SCREEN_WIDTH = 0.81f;
+    public static final float PERCENTAGE_OF_SCREEN_WIDTH = 0.80f;
 
     @Nullable
     @Override
@@ -162,10 +164,17 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
     public void setTimerTime(long millis) {
         if (millis == 0) {
             mTimerTimeTextView.setText("");
-            return;
-        }
+        } else {
+            if (TextUtils.isEmpty(mTimerTimeTextView.getText().toString().trim())) {
+                AnimUtil.tada(mTimerTimeTextView);
+            }
 
-        mTimerTimeTextView.setText(TimeUtil.millisecondToTime(millis));
+            if (TimeUtil.millisecondToHour(millis) >= 1) {
+                mTimerTimeTextView.setText(TimeUtil.millisecondToHHMMSS(millis));
+            } else {
+                mTimerTimeTextView.setText(TimeUtil.millisecondToMMSS(millis));
+            }
+        }
     }
 
 }

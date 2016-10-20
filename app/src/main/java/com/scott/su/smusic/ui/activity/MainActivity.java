@@ -46,6 +46,7 @@ import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.MainPresenterImpl;
 import com.scott.su.smusic.mvp.view.MainView;
 import com.scott.su.smusic.service.MusicPlayService;
+import com.scott.su.smusic.service.ShutDownTimerService;
 import com.scott.su.smusic.ui.fragment.CreateBillDialogFragment;
 import com.scott.su.smusic.ui.fragment.DrawerMenuFragment;
 import com.scott.su.smusic.ui.fragment.LocalAlbumDisplayFragment;
@@ -59,6 +60,7 @@ import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.DialogUtil;
 import com.su.scott.slibrary.util.PermissionUtil;
 import com.su.scott.slibrary.util.T;
+import com.su.scott.slibrary.util.TimeUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
@@ -91,6 +93,8 @@ public class MainActivity extends BaseActivity implements MainView {
     private CreateBillDialogFragment mCreateBillDialogFragment;
     private ServiceConnection mMusicPlayServiceConnection;
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
+    private ServiceConnection mShutDownTimerServiceConnection;
+    private ShutDownTimerService.ShutDownTimerServiceBinder mShutDownTimerServiceBinder;
     private boolean mDataInitFinish = false;
 
 
@@ -151,6 +155,11 @@ public class MainActivity extends BaseActivity implements MainView {
         PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE, 123);
         PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, 321);
 
+        bindMusicPlayService();
+        bindShutDownTimerService();
+    }
+
+    private void bindMusicPlayService() {
         //Bind music play service
         mMusicPlayServiceConnection = new ServiceConnection() {
             @Override
@@ -166,6 +175,38 @@ public class MainActivity extends BaseActivity implements MainView {
         Intent intent = new Intent(MainActivity.this, MusicPlayService.class);
         startService(intent);
         bindService(intent, mMusicPlayServiceConnection, BIND_AUTO_CREATE);
+    }
+
+    private void bindShutDownTimerService() {
+        mShutDownTimerServiceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                mShutDownTimerServiceBinder = (ShutDownTimerService.ShutDownTimerServiceBinder) iBinder;
+                mShutDownTimerServiceBinder.setTimerCallback(new ShutDownServiceCallback() {
+                    @Override
+                    public void onStart(long duration) {
+                        T.showShort(getApplicationContext(), TimeUtil.millisecondToMinute(duration) + "分钟后停止播放");
+                    }
+
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        mDrawerMenuFragment.setTimerTime(millisUntilFinished);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        mDrawerMenuFragment.setTimerTime(0);
+                    }
+                });
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+                mShutDownTimerServiceBinder = null;
+            }
+        };
+        Intent intent = new Intent(MainActivity.this, ShutDownTimerService.class);
+        bindService(intent, mShutDownTimerServiceConnection, BIND_AUTO_CREATE);
     }
 
     @Override
@@ -274,12 +315,15 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onDrawerMenuTimerCancelClick() {
-                mMainPresenter.onDrawerMenuTimerCancelClick();
+//                mMainPresenter.onDrawerMenuTimerCancelClick();
+                mShutDownTimerServiceBinder.stopShutDownTimer();
+                mDrawerMenuFragment.setTimerTime(0);
             }
 
             @Override
-            public void onDrawerMenuTimerMinutesClick(long millisOfmin) {
-                mMainPresenter.onDrawerMenuTimerMinutesClick(millisOfmin);
+            public void onDrawerMenuTimerMinutesClick(final long millisOfmin) {
+//                mMainPresenter.onDrawerMenuTimerMinutesClick(millisOfmin);
+                mShutDownTimerServiceBinder.startShutDownTimer(millisOfmin, TimeUtil.MILLISECONDS_OF_SECOND);
             }
         });
 
@@ -788,22 +832,28 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     protected void onDestroy() {
         unbindService(mMusicPlayServiceConnection);
+        unbindService(mShutDownTimerServiceConnection);
         super.onDestroy();
     }
 
     @Override
     public TimerStatus getServiceCurrentTimerShutDownStatus() {
-        return mMusicPlayServiceBinder.getServiceCurrentTimerShutDownStatus();
+        return mShutDownTimerServiceBinder.getServiceCurrentTimerShutDownStatus();
     }
 
     @Override
-    public void startShutDownTimer(long duration, long interval, ShutDownServiceCallback callback) {
-        mMusicPlayServiceBinder.startShutDownTimer(duration, interval, callback);
+    public void startShutDownTimer(long duration, long interval) {
+        mShutDownTimerServiceBinder.startShutDownTimer(duration, interval);
     }
 
     @Override
     public void stopShutDownTimer() {
-        mMusicPlayServiceBinder.stopShutDownTimer();
+        mShutDownTimerServiceBinder.stopShutDownTimer();
+    }
+
+    @Override
+    public void setTimerCallback(ShutDownServiceCallback callback) {
+        mShutDownTimerServiceBinder.setTimerCallback(callback);
     }
 
 

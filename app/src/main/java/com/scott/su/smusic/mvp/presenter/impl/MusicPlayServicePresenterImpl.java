@@ -182,7 +182,6 @@ public class MusicPlayServicePresenterImpl implements MusicPlayServicePresenter 
     @Override
     public void onPlayStop() {
         mMusicPlayView.setPlayButtonPause();
-
     }
 
     @Override
@@ -221,6 +220,6 @@ public class MusicPlayServicePresenterImpl implements MusicPlayServicePresenter 
         mMusicPlayView.setSeekBarMax(mMusicPlayView.getServiceCurrentPlayingSong().getDuration());
         mMusicPlayView.setPlayingMusicTitle(mMusicPlayView.getServiceCurrentPlayingSong().getTitle());
         mMusicPlayView.setPlayingMusicArtist(mMusicPlayView.getServiceCurrentPlayingSong().getArtist());
-        mMusicPlayView.setTotalPlayTime(TimeUtil.millisecondToTimeWithinHour(mMusicPlayView.getServiceCurrentPlayingSong().getDuration()));
+        mMusicPlayView.setTotalPlayTime(TimeUtil.millisecondToMMSS(mMusicPlayView.getServiceCurrentPlayingSong().getDuration()));
     }
 }

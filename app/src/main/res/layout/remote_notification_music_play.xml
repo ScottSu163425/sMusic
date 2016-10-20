@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="@dimen/margin_xxs">
 
     <ImageView
         android:id="@+id/iv_cover_notification_music_play"
-        android:layout_width="50dp"
+        android:layout_width="64dp"
         android:layout_height="match_parent"
         android:src="@drawable/ic_cover_default_song_bill" />
 
@@ -72,7 +72,6 @@
             android:layout_height="36dp"
             android:layout_centerInParent="true"
             android:src="@drawable/ic_skip_next_notification_grey_600_48dp" />
-
     </RelativeLayout>
 
     <RelativeLayout

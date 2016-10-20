@@ -10,8 +10,10 @@ public interface ShutDownTimerServiceView {
 
     TimerStatus getServiceCurrentTimerShutDownStatus();
 
-    void startShutDownTimer(long duration, long interval, ShutDownServiceCallback callback);
+    void startShutDownTimer(long duration, long interval );
 
     void stopShutDownTimer();
+
+    void setTimerCallback(ShutDownServiceCallback callback);
 
 }

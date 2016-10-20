@@ -141,8 +141,9 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
                     @Override
                     public void onPlayStop() {
-                        mCurrentPlayStatus = PlayStatus.Stop;
-                        mMusicPlayPresenter.onPlayStop();
+//                        mCurrentPlayStatus = PlayStatus.Stop;
+//                        mMusicPlayPresenter.onPlayStop();
+                        onBackPressed();
                     }
 
                     @Override
@@ -261,7 +262,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mPlayProgressSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mCurrentTimeTextView.setText(TimeUtil.millisecondToTimeWithinHour(progress));
+                mCurrentTimeTextView.setText(TimeUtil.millisecondToMMSS(progress));
                 mMusicTitleTextView.requestFocus();
             }
 

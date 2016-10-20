@@ -105,8 +105,8 @@ public class TimeUtil {
         return h * MINUTE_OF_HOUR;
     }
 
-    public static String millisecondToTimeWithinHour(long ms) {
-        return millisecondToTime(ms).substring(3);
+    public static String millisecondToMMSS(long ms) {
+        return millisecondToHHMMSS(ms).substring(3);
     }
 
     /**
@@ -115,7 +115,7 @@ public class TimeUtil {
      * @param ms
      * @return
      */
-    public static String millisecondToTime(long ms) {
+    public static String millisecondToHHMMSS(long ms) {
         int hour = 0;
         int minute = 0;
         int second = 0;
@@ -133,8 +133,8 @@ public class TimeUtil {
      * @param s
      * @return
      */
-    public static String secondToTime(long s) {
-        return millisecondToTime(secondToMillisecond(s));
+    public static String secondToHHMMSS(long s) {
+        return millisecondToHHMMSS(secondToMillisecond(s));
     }
 
     /**

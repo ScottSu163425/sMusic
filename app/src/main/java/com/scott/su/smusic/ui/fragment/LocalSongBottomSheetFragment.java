@@ -43,7 +43,7 @@ public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragmen
         return new String[]{
                 getString(R.string.add_to_bill),
                 getString(R.string.album) + ": " + mSongEntity.getAlbum(),
-                getString(R.string.time) + ": " + TimeUtil.millisecondToTimeWithinHour(mSongEntity.getDuration()),
+                getString(R.string.time) + ": " + TimeUtil.millisecondToMMSS(mSongEntity.getDuration()),
                 getString(R.string.file) + ": " + FileUtil.getFileOrFilesSize(mSongEntity.getPath(), FileUtil.SIZETYPE_MB) + "M",
                 getString(R.string.delete),};
     }

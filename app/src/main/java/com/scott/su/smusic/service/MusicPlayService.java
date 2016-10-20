@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Binder;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -18,15 +17,12 @@ import android.widget.RemoteViews;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.MusicPlayServiceCallback;
-import com.scott.su.smusic.callback.ShutDownServiceCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
-import com.scott.su.smusic.constant.TimerStatus;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayServiceView;
-import com.scott.su.smusic.mvp.view.ShutDownTimerServiceView;
 import com.scott.su.smusic.ui.activity.MainActivity;
 import com.scott.su.smusic.util.MusicPlayUtil;
 import com.su.scott.slibrary.util.TimeUtil;
@@ -37,13 +33,15 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2016/9/9.
  */
-public class MusicPlayService extends Service implements MusicPlayServiceView, ShutDownTimerServiceView {
+public class MusicPlayService extends Service implements MusicPlayServiceView {
     public static final String ACTION_PLAY_NEXT = "com.scott.su.smusic.service.play_next";
     public static final String ACTION_PLAY_PREVIOUS = "com.scott.su.smusic.service.play_previous";
     public static final String ACTION_PLAY_PAUSE = "com.scott.su.smusic.service.play_pause";
+    public static final String ACTION_STOP = "com.scott.su.smusic.service.stop";
     public static final int REQUEST_CODE_PLAY_NEXT = 1;
     public static final int REQUEST_CODE_PLAY_PREVIOUS = 2;
     public static final int REQUEST_CODE_PLAY_PAUSE = 3;
+    public static final int REQUEST_CODE_STOP = 4;
     public static final int ID_NOTIFICATION = 123;
     public static final long DURATION_TIMER_DELAY = TimeUtil.MILLISECONDS_OF_SECOND / 10;
 
@@ -66,11 +64,6 @@ public class MusicPlayService extends Service implements MusicPlayServiceView, S
             mPlayTimerHandler.postDelayed(this, DURATION_TIMER_DELAY);
         }
     };
-
-    //ShutDown Timer
-    private CountDownTimer mShutDownTimer;
-    private TimerStatus mCurrentShutDownTimerStatus = TimerStatus.Stop;
-
 
     @Nullable
     @Override
@@ -123,6 +116,9 @@ public class MusicPlayService extends Service implements MusicPlayServiceView, S
                     play();
                 }
                 updateNotifycation();
+            } else if (intent.getAction().equals(ACTION_STOP)) {
+                releaseAll();
+                mMusicPlayServiceCallback.onPlayStop();
             }
         }
 
@@ -131,11 +127,15 @@ public class MusicPlayService extends Service implements MusicPlayServiceView, S
 
     @Override
     public void onDestroy() {
-        if (mMediaPlayer != null) {
-            mMediaPlayer.stop();
-            mMediaPlayer.release();
-        }
+        releaseAll();
         super.onDestroy();
+    }
+
+    private void releaseAll() {
+        mCurrentPlayingSong=null;
+        mCurrentPlayingSongs=null;
+        releaseMediaPlayer();
+        cancelService();
     }
 
     @Override
@@ -230,7 +230,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView, S
         }
 
         if (mCurrentPlayingSongs.size() == 0) {
-            stopMediaPlayer();
+            releaseMediaPlayer();
             return;
         }
 
@@ -240,11 +240,16 @@ public class MusicPlayService extends Service implements MusicPlayServiceView, S
         }
     }
 
-    private void stopMediaPlayer() {
-        stopPlayTimer();
-        mMediaPlayer.stop();
-        mMediaPlayer.release();
-        mMediaPlayer = null;
+    private void releaseMediaPlayer() {
+        if (mMediaPlayer != null) {
+            stopPlayTimer();
+            mMediaPlayer.stop();
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
+    }
+
+    private void cancelService() {
         stopForeground(true);
         mNotificationManager.cancelAll();
         stopSelf();
@@ -319,27 +324,32 @@ public class MusicPlayService extends Service implements MusicPlayServiceView, S
         RemoteViews remoteViewNormal = new RemoteViews(getPackageName(), R.layout.remote_notification_music_play);
         remoteViewNormal.setImageViewResource(R.id.iv_play_pause_notification_music_play,
                 isPlaying() ? R.drawable.ic_pause_notification_grey_600_48dp : R.drawable.ic_play_notification_grey_600_48dp);
-        remoteViewNormal.setBitmap(R.id.iv_cover_notification_music_play, "setImageBitmap", BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlayingSong.getAlbumId())));
+        remoteViewNormal.setBitmap(R.id.iv_cover_notification_music_play, "setImageBitmap",
+                BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlayingSong.getAlbumId())));
         remoteViewNormal.setTextViewText(R.id.tv_title_notification_music_play, mCurrentPlayingSong.getTitle());
         remoteViewNormal.setTextViewText(R.id.tv_artist_notification_music_play, mCurrentPlayingSong.getArtist());
         remoteViewNormal.setOnClickPendingIntent(R.id.btn_play_pause_notification_music_play, generateOperateIntent(REQUEST_CODE_PLAY_PAUSE, ACTION_PLAY_PAUSE));
         remoteViewNormal.setOnClickPendingIntent(R.id.btn_skip_next_notification_music_play, generateOperateIntent(REQUEST_CODE_PLAY_NEXT, ACTION_PLAY_NEXT));
+        remoteViewNormal.setOnClickPendingIntent(R.id.btn_cancel_notification_music_play, generateOperateIntent(REQUEST_CODE_STOP, ACTION_STOP));
 
-//        RemoteViews remoteViewBig = new RemoteViews(getPackageName(), R.layout.remote_notification_music_play_big);
-//        remoteViewNormal.setImageViewResource(R.id.iv_play_pause_notification_music_play_big,
-//                isPlaying() ? R.drawable.ic_pause_notification_grey_600_48dp : R.drawable.ic_play_notification_grey_600_48dp);
-//        remoteViewNormal.setBitmap(R.id.iv_cover_notification_music_play_big, "setImageBitmap", BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlayingSong.getAlbumId())));
-//        remoteViewBig.setTextViewText(R.id.tv_title_notification_music_play_big, mCurrentPlayingSong.getTitle());
-//        remoteViewBig.setTextViewText(R.id.tv_artist_notification_music_play_big, mCurrentPlayingSong.getArtist());
-//        remoteViewBig.setOnClickPendingIntent(R.id.btn_play_pause_notification_music_play_big, generateOperateIntent(REQUEST_CODE_PLAY_PREVIOUS, ACTION_PLAY_PREVIOUS));
-//        remoteViewBig.setOnClickPendingIntent(R.id.btn_skip_previous_notification_music_play_big, generateOperateIntent(REQUEST_CODE_PLAY_PREVIOUS, ACTION_PLAY_PREVIOUS));
-//        remoteViewBig.setOnClickPendingIntent(R.id.btn_skip_next_notification_music_play_big, generateOperateIntent(REQUEST_CODE_PLAY_NEXT, ACTION_PLAY_NEXT));
+
+        RemoteViews remoteViewBig = new RemoteViews(getPackageName(), R.layout.remote_notification_music_play_big);
+        remoteViewBig.setImageViewResource(R.id.iv_play_pause_notification_music_play_big,
+                isPlaying() ? R.drawable.ic_pause_notification_grey_600_48dp : R.drawable.ic_play_notification_grey_600_48dp);
+        remoteViewBig.setBitmap(R.id.iv_cover_notification_music_play_big, "setImageBitmap",
+                BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlayingSong.getAlbumId())));
+        remoteViewBig.setTextViewText(R.id.tv_title_notification_music_play_big, mCurrentPlayingSong.getTitle());
+        remoteViewBig.setTextViewText(R.id.tv_artist_notification_music_play_big,
+                mCurrentPlayingSong.getArtist() + " - " + mCurrentPlayingSong.getAlbum());
+        remoteViewBig.setOnClickPendingIntent(R.id.btn_play_pause_notification_music_play_big, generateOperateIntent(REQUEST_CODE_PLAY_PAUSE, ACTION_PLAY_PAUSE));
+        remoteViewBig.setOnClickPendingIntent(R.id.btn_skip_previous_notification_music_play_big, generateOperateIntent(REQUEST_CODE_PLAY_PREVIOUS, ACTION_PLAY_PREVIOUS));
+        remoteViewBig.setOnClickPendingIntent(R.id.btn_skip_next_notification_music_play_big, generateOperateIntent(REQUEST_CODE_PLAY_NEXT, ACTION_PLAY_NEXT));
+        remoteViewBig.setOnClickPendingIntent(R.id.btn_cancel_notification_music_play_big, generateOperateIntent(REQUEST_CODE_STOP, ACTION_STOP));
 
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentIntent(pendingIntentGoToMusicPlay);
         builder.setContent(remoteViewNormal);
-
-//        builder.setCustomBigContentView(remoteViewBig);// TODO: 2016/10/19 Throw exceptions if run it;
+        builder.setCustomBigContentView(remoteViewBig);
         builder.setDefaults(NotificationCompat.DEFAULT_ALL);
         builder.setPriority(NotificationCompat.PRIORITY_MAX);
         builder.setOngoing(true);
@@ -414,46 +424,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView, S
         this.mMusicPlayServiceCallback = null;
     }
 
-    @Override
-    public TimerStatus getServiceCurrentTimerShutDownStatus() {
-        return mCurrentShutDownTimerStatus;
-    }
-
-    @Override
-    public void startShutDownTimer(long duration, long interval, ShutDownServiceCallback callback) {
-        stopShutDownTimer();
-        mShutDownTimer = generateCountDownTimer(duration, interval, callback);
-        mShutDownTimer.start();
-        callback.onStart();
-    }
-
-    @Override
-    public void stopShutDownTimer() {
-        if (mShutDownTimer != null) {
-            mShutDownTimer.cancel();
-            mShutDownTimer = null;
-        }
-    }
-
-    private CountDownTimer generateCountDownTimer(long duration, long interval, final ShutDownServiceCallback callback) {
-        return new CountDownTimer(duration, interval) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                if (callback != null) {
-                    callback.onTick(millisUntilFinished);
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                if (callback != null) {
-                    callback.onFinish();
-                }
-            }
-        };
-    }
-
-    public class MusicPlayServiceBinder extends Binder implements MusicPlayServiceView, ShutDownTimerServiceView {
+    public class MusicPlayServiceBinder extends Binder implements MusicPlayServiceView  {
 
         @Override
         public PlayStatus getServiceCurrentPlayStatus() {
@@ -525,20 +496,6 @@ public class MusicPlayService extends Service implements MusicPlayServiceView, S
             MusicPlayService.this.unregisterServicePlayCallback();
         }
 
-        @Override
-        public TimerStatus getServiceCurrentTimerShutDownStatus() {
-            return MusicPlayService.this.getServiceCurrentTimerShutDownStatus();
-        }
-
-        @Override
-        public void startShutDownTimer(long duration, long interval, ShutDownServiceCallback callback) {
-            MusicPlayService.this.startShutDownTimer(duration, interval, callback);
-        }
-
-        @Override
-        public void stopShutDownTimer() {
-            MusicPlayService.this.stopShutDownTimer();
-        }
     }
 
 
