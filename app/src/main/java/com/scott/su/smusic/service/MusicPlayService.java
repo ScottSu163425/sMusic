@@ -239,7 +239,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         }
 
         if (mCurrentPlayingSongs.size() == 0) {
-            releaseMediaPlayer();
+            releaseAll();
             return;
         }
 

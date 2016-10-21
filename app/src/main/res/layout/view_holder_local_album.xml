@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@android:style/Widget.DeviceDefault.Button"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/margin_xxs"
@@ -13,6 +12,7 @@
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
     android:orientation="horizontal"
+    android:stateListAnimator="@drawable/selector_card_elevation_s"
     android:transitionName="@string/transition_name_card">
 
     <RelativeLayout
