@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface MusicPlayView extends BaseView, MusicPlayServiceView {
 
-   void showBillSelectionDialog(LocalSongEntity songEntity);
+    void showBillSelectionDialog(LocalSongEntity songEntity);
 
     void setCurrentPlayingSong(LocalSongEntity songEntity);
 
@@ -38,17 +38,11 @@ public interface MusicPlayView extends BaseView, MusicPlayServiceView {
 
     boolean isPlayShuffle();
 
-    boolean isPlayModeTagRepeatAll();
+    void setPlayRepeatAll(boolean needAnim);
 
-    boolean isPlayModeTagRepeatOne();
+    void setPlayRepeatOne(boolean needAnim);
 
-    void setPlayRepeatAll();
-
-    void setPlayRepeatOne();
-
-    void setPlayShuffleFromRepeatAll();
-
-    void setPlayShuffleFromRepeatOne();
+    void setPlayRepeatShuffle(boolean needAnim);
 
     PlayMode getCurrentPlayMode();
 

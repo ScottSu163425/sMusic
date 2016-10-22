@@ -23,8 +23,6 @@ public interface MusicPlayServicePresenter extends BasePresenter, MusicPlayServi
 
     void onRepeatClick(View view);
 
-    void onShuffleClick(View view);
-
     void onServiceConnected();
 
     void onServiceDisconnected();

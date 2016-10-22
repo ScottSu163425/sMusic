@@ -52,13 +52,12 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     private ImageView mCoverImageView, mBlurCoverImageView;
     private CardView mPlayControlCard;
     private FloatingActionButton mPlayButton;
-    private ImageButton mRepeatButton, mSkipPreviousButton, mSkipNextButton, mShuffleButton;
+    private ImageButton mRepeatButton, mSkipPreviousButton, mSkipNextButton, mPlayListButton;
     private AppCompatSeekBar mPlayProgressSeekBar;
     private LocalSongEntity mInitialPlayingSong;
     private LocalSongEntity mCurrentPlayingSong;
     private ArrayList<LocalSongEntity> mCurrentPlayingSongList;
     private PlayMode mCurrentPlayMode = PlayMode.RepeatAll;
-    private PlayMode mPlayModeTag = PlayMode.RepeatAll;
     private PlayStatus mCurrentPlayStatus;
     private ServiceConnection mMusicPlayServiceConnection;
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
@@ -243,7 +242,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mSkipPreviousButton = (ImageButton) findViewById(R.id.imgbtn_skip_previous_music_play);
         mSkipNextButton = (ImageButton) findViewById(R.id.imgbtn_skip_next_music_play);
         mRepeatButton = (ImageButton) findViewById(R.id.imgbtn_repeat_music_play);
-        mShuffleButton = (ImageButton) findViewById(R.id.imgbtn_shuffle_music_play);
+        mPlayListButton = (ImageButton) findViewById(R.id.imgbtn_play_list_music_play);
 
     }
 
@@ -257,7 +256,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mSkipPreviousButton.setOnClickListener(this);
         mSkipNextButton.setOnClickListener(this);
         mRepeatButton.setOnClickListener(this);
-        mShuffleButton.setOnClickListener(this);
+        mPlayListButton.setOnClickListener(this);
 
         mPlayProgressSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -292,8 +291,8 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
             mMusicPlayPresenter.onSkipNextClick(view);
         } else if (id == mRepeatButton.getId()) {
             mMusicPlayPresenter.onRepeatClick(view);
-        } else if (id == mShuffleButton.getId()) {
-            mMusicPlayPresenter.onShuffleClick(view);
+        } else if (id == mPlayListButton.getId()) {
+//            mMusicPlayPresenter.onShuffleClick(view);
         }
     }
 
@@ -425,42 +424,50 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public boolean isPlayModeTagRepeatAll() {
-        return mPlayModeTag == PlayMode.RepeatAll;
-    }
-
-    @Override
-    public boolean isPlayModeTagRepeatOne() {
-        return mMusicPlayServiceBinder.getServicePlayMode() == PlayMode.RepeatOne;
-    }
-
-    @Override
-    public void setPlayRepeatAll() {
-        mRepeatButton.setImageResource(R.drawable.ic_repeat_all_selected_24dp);
-        mShuffleButton.setImageResource(R.drawable.ic_shuffle_normal_24dp);
+    public void setPlayRepeatAll(boolean needAnim) {
+        if (needAnim) {
+            AnimUtil.rotate2DPositive(mRepeatButton, 360, AnimUtil.DURATION_SHORT);
+            mRepeatButton.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mRepeatButton.setImageResource(R.drawable.ic_repeat_all_selected_24dp);
+                }
+            }, AnimUtil.DURATION_SHORT_HALF);
+        } else {
+            mRepeatButton.setImageResource(R.drawable.ic_repeat_all_selected_24dp);
+        }
         mCurrentPlayMode = PlayMode.RepeatAll;
-        mPlayModeTag = PlayMode.RepeatAll;
     }
 
     @Override
-    public void setPlayRepeatOne() {
-        mRepeatButton.setImageResource(R.drawable.ic_repeat_one_selected_24dp);
-        mShuffleButton.setImageResource(R.drawable.ic_shuffle_normal_24dp);
+    public void setPlayRepeatOne(boolean needAnim) {
+        if (needAnim) {
+            AnimUtil.rotate2DPositive(mRepeatButton, 360, AnimUtil.DURATION_SHORT);
+            mRepeatButton.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mRepeatButton.setImageResource(R.drawable.ic_repeat_one_selected_24dp);
+                }
+            }, AnimUtil.DURATION_SHORT_HALF);
+        } else {
+            mRepeatButton.setImageResource(R.drawable.ic_repeat_all_selected_24dp);
+        }
         mCurrentPlayMode = PlayMode.RepeatOne;
-        mPlayModeTag = PlayMode.RepeatOne;
     }
 
     @Override
-    public void setPlayShuffleFromRepeatAll() {
-        mShuffleButton.setImageResource(R.drawable.ic_shuffle_selected_24dp);
-        mRepeatButton.setImageResource(R.drawable.ic_repeat_all_normal_24dp);
-        mCurrentPlayMode = PlayMode.Shuffle;
-    }
-
-    @Override
-    public void setPlayShuffleFromRepeatOne() {
-        mShuffleButton.setImageResource(R.drawable.ic_shuffle_selected_24dp);
-        mRepeatButton.setImageResource(R.drawable.ic_repeat_one_normal_24dp);
+    public void setPlayRepeatShuffle(boolean needAnim) {
+        if (needAnim) {
+            AnimUtil.rotate2DPositive(mRepeatButton, 360, AnimUtil.DURATION_SHORT);
+            mRepeatButton.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mRepeatButton.setImageResource(R.drawable.ic_shuffle_selected_24dp);
+                }
+            }, AnimUtil.DURATION_SHORT_HALF);
+        } else {
+            mRepeatButton.setImageResource(R.drawable.ic_repeat_all_selected_24dp);
+        }
         mCurrentPlayMode = PlayMode.Shuffle;
     }
 

@@ -41,16 +41,16 @@ public class MusicPlayServicePresenterImpl implements MusicPlayServicePresenter 
         mMusicPlayView.initListener();
 
         if (AppConfig.isPlayRepeatOne(mMusicPlayView.getViewContext())) {
-            mMusicPlayView.setPlayRepeatOne();
+            mMusicPlayView.setPlayRepeatOne(false);
             mMusicPlayView.setServicePlayMode(mMusicPlayView.getCurrentPlayMode());
         } else if (AppConfig.isPlayRepeatAll(mMusicPlayView.getViewContext())) {
-            mMusicPlayView.setPlayRepeatAll();
+            mMusicPlayView.setPlayRepeatAll(false);
             mMusicPlayView.setServicePlayMode(mMusicPlayView.getCurrentPlayMode());
         } else if (AppConfig.isPlayShuffle(mMusicPlayView.getViewContext())) {
-            mMusicPlayView.setPlayShuffleFromRepeatAll();
+            mMusicPlayView.setPlayRepeatShuffle(false);
             mMusicPlayView.setServicePlayMode(mMusicPlayView.getCurrentPlayMode());
         } else {
-            mMusicPlayView.setPlayRepeatAll();
+            mMusicPlayView.setPlayRepeatAll(false);
             AppConfig.setPlayRepeatAll(mMusicPlayView.getViewContext());
             mMusicPlayView.setServicePlayMode(mMusicPlayView.getCurrentPlayMode());
         }
@@ -107,32 +107,16 @@ public class MusicPlayServicePresenterImpl implements MusicPlayServicePresenter 
     @Override
     public void onRepeatClick(View view) {
         if (mMusicPlayView.isPlayRepeatAll()) {
-            mMusicPlayView.setPlayRepeatOne();
+            mMusicPlayView.setPlayRepeatOne(true);
             AppConfig.setPlayRepeatOne(mMusicPlayView.getViewContext());
         } else if (mMusicPlayView.isPlayRepeatOne()) {
-            mMusicPlayView.setPlayRepeatAll();
-            AppConfig.setPlayRepeatAll(mMusicPlayView.getViewContext());
+            mMusicPlayView.setPlayRepeatShuffle(true);
+            AppConfig.setPlayRepeatShuffle(mMusicPlayView.getViewContext());
         } else if (mMusicPlayView.isPlayShuffle()) {
-            if (mMusicPlayView.isPlayModeTagRepeatAll()) {
-                mMusicPlayView.setPlayRepeatAll();
-                AppConfig.setPlayRepeatAll(mMusicPlayView.getViewContext());
-            } else if (mMusicPlayView.isPlayModeTagRepeatOne()) {
-                mMusicPlayView.setPlayRepeatOne();
-                AppConfig.setPlayRepeatOne(mMusicPlayView.getViewContext());
-            }
+            mMusicPlayView.setPlayRepeatAll(true);
+            AppConfig.setPlayRepeatAll(mMusicPlayView.getViewContext());
         }
         mMusicPlayView.setServicePlayMode(mMusicPlayView.getCurrentPlayMode());
-    }
-
-    @Override
-    public void onShuffleClick(View view) {
-        if (mMusicPlayView.isPlayModeTagRepeatAll()) {
-            mMusicPlayView.setPlayShuffleFromRepeatAll();
-        } else if (mMusicPlayView.isPlayModeTagRepeatOne()) {
-            mMusicPlayView.setPlayShuffleFromRepeatOne();
-        }
-        mMusicPlayView.setServicePlayMode(mMusicPlayView.getCurrentPlayMode());
-        AppConfig.setPlayShuffle(mMusicPlayView.getViewContext());
     }
 
     @Override

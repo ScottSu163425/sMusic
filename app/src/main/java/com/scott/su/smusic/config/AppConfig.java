@@ -138,7 +138,7 @@ public class AppConfig {
                 .putBoolean(PLAY_MODE_SHUFFLE, false).apply();
     }
 
-    public static void setPlayShuffle(Context context) {
+    public static void setPlayRepeatShuffle(Context context) {
         PreferenceManager
                 .getDefaultSharedPreferences(context)
                 .edit()

@@ -103,7 +103,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_xs"
                         android:layout_marginRight="@dimen/margin_xs"
-                        android:layout_marginTop="@dimen/margin_xs"
+                        android:layout_marginTop="@dimen/margin_s"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -141,7 +141,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:background="@null"
-                            android:foreground="?attr/selectableItemBackground"
+                            android:foreground="?attr/selectableItemBackgroundBorderless"
                             android:padding="@dimen/margin_xs"
                             android:src="@drawable/ic_repeat_all_selected_24dp" />
 
@@ -182,7 +182,7 @@
                             android:src="@drawable/ic_skip_next_36dp" />
 
                         <ImageButton
-                            android:id="@+id/imgbtn_shuffle_music_play"
+                            android:id="@+id/imgbtn_play_list_music_play"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -190,7 +190,7 @@
                             android:background="@null"
                             android:foreground="?attr/selectableItemBackground"
                             android:padding="@dimen/margin_xs"
-                            android:src="@drawable/ic_shuffle_normal_24dp" />
+                            android:src="@drawable/ic_playlist_play_24dp" />
                     </RelativeLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
