@@ -10,7 +10,7 @@ public interface MusicPlayServiceCallback {
 
     void onPlayStart();
 
-    void onPlaySongChanged( LocalSongEntity songEntity);
+    void onPlaySongChanged( LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong);
 
     void onPlayProgressUpdate(long currentPositionMillSec);
 

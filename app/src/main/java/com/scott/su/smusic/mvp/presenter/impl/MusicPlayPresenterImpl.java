@@ -23,7 +23,6 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     private MusicPlayView mMusicPlayView;
     private LocalAlbumModel mAlbumModel;
     private LocalBillModel mBillModel;
-    private boolean isFirstTimePlay = true;
 
 
     public MusicPlayPresenterImpl(MusicPlayView mMusicPlayView) {
@@ -141,10 +140,9 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     }
 
     @Override
-    public void onPlaySongChanged(LocalSongEntity songEntity) {
-        mMusicPlayView.setCurrentPlayingSong(songEntity);
-        updateCurrentPlayingSongInfo(!isFirstTimePlay);
-        isFirstTimePlay = false;
+    public void onPlaySongChanged( LocalSongEntity previousPlaySong,LocalSongEntity currentPlayingSong) {
+        mMusicPlayView.setCurrentPlayingSong(currentPlayingSong);
+        updateCurrentPlayingSongInfo(true);
     }
 
     @Override

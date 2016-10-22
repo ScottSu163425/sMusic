@@ -10,9 +10,11 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 
 import com.scott.su.smusic.R;
+import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 
 /**
@@ -66,7 +68,7 @@ public class CreateBillDialogFragment extends DialogFragment {
                         mInputLayout.setError(getResources().getString(R.string.error_input_empty));
                         return;
                     }
-                    if (input.length()> mInputLayout.getCounterMaxLength()) {
+                    if (input.length() > mInputLayout.getCounterMaxLength()) {
                         mInputLayout.setErrorEnabled(true);
                         mInputLayout.setError(getResources().getString(R.string.error_text_length_overflow));
                         return;
@@ -87,7 +89,9 @@ public class CreateBillDialogFragment extends DialogFragment {
         mRootView.post(new Runnable() {
             @Override
             public void run() {
-                CirclarRevealUtil.revealIn(mRootView, CirclarRevealUtil.DIRECTION.LEFT_TOP);
+                CirclarRevealUtil.revealIn(mRootView, CirclarRevealUtil.DIRECTION.CENTER_TOP,
+                        AnimUtil.DURATION_NORMAL
+                        , new DecelerateInterpolator());
             }
         });
 

@@ -28,6 +28,7 @@ import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayServiceView;
 import com.scott.su.smusic.ui.activity.MainActivity;
 import com.scott.su.smusic.util.MusicPlayUtil;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.TimeUtil;
 
 import java.io.IOException;
@@ -51,6 +52,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     private MediaPlayer mMediaPlayer;
     private NotificationManager mNotificationManager;
     private MusicPlayServiceCallback mMusicPlayServiceCallback;
+    private LocalSongEntity mPreviousPlayingSong;
     private LocalSongEntity mCurrentPlayingSong;
     private ArrayList<LocalSongEntity> mPlayListSongs;
     private boolean mPlaySameSong;
@@ -136,17 +138,6 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         super.onDestroy();
     }
 
-    private void releaseAll() {
-        mCurrentPlayingSong = null;
-        mPlayListSongs = null;
-        releaseMediaPlayer();
-        cancelService();
-
-        if (isRegisterCallback()) {
-            mMusicPlayServiceCallback.onPlayStop();
-        }
-    }
-
     @Override
     public void setServiceCurrentPlaySong(LocalSongEntity currentPlaySong) {
         if (mCurrentPlayingSong == null) {
@@ -156,13 +147,15 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         } else {
             mPlaySameSong = false;
         }
-        this.mCurrentPlayingSong = currentPlaySong;
+
+        mPreviousPlayingSong = mCurrentPlayingSong;
+        mCurrentPlayingSong = currentPlaySong;
         MusicPlayUtil.addSongToPlayList(mPlayListSongs, mCurrentPlayingSong);
     }
 
     @Override
     public void addServicePlayListSongs(ArrayList<LocalSongEntity> playSongs) {
-        MusicPlayUtil.addSongsToPlayList(mPlayListSongs, playSongs,mCurrentPlayingSong);
+        MusicPlayUtil.addSongsToPlayList(mPlayListSongs, playSongs, mCurrentPlayingSong);
     }
 
     @Override
@@ -224,9 +217,11 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     public void playNext() {
         if (mPlayNextByDeleteing && mCurrentPlayMode == PlayMode.RepeatOne) {
             //When deleting a playing song,which is playing with repeate-one,We need to change the position of next playing song.
+            mPreviousPlayingSong = mCurrentPlayingSong;
             mCurrentPlayingSong = MusicPlayUtil.getNextSong(mCurrentPlayingSong, mPlayListSongs, PlayMode.RepeatAll);
             mPlayNextByDeleteing = false;
         } else {
+            mPreviousPlayingSong = mCurrentPlayingSong;
             mCurrentPlayingSong = MusicPlayUtil.getNextSong(mCurrentPlayingSong, mPlayListSongs, mCurrentPlayMode);
         }
         playNew();
@@ -285,8 +280,9 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             mMediaPlayer.setDataSource(mCurrentPlayingSong.getPath());
             mMediaPlayer.prepare();
             startMediaPlayer();
-            if (isRegisterCallback()) {
-                mMusicPlayServiceCallback.onPlaySongChanged(mCurrentPlayingSong);
+
+            if (mPreviousPlayingSong != null && isRegisterCallback()) {
+                mMusicPlayServiceCallback.onPlaySongChanged(mPreviousPlayingSong, mCurrentPlayingSong);
             }
             updateNotifycation();
         } catch (IOException e) {
@@ -500,5 +496,16 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         }
     };
 
+    private void releaseAll() {
+        mCurrentPlayingSong = null;
+        mPreviousPlayingSong = null;
+        mPlayListSongs = null;
+        releaseMediaPlayer();
+        cancelService();
+
+        if (isRegisterCallback()) {
+            mMusicPlayServiceCallback.onPlayStop();
+        }
+    }
 
 }

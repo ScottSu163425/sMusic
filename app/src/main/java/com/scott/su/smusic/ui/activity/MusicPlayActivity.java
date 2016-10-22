@@ -15,7 +15,6 @@ import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -23,7 +22,6 @@ import android.widget.TextView;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.MusicPlayServiceCallback;
-import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
@@ -38,7 +36,6 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
-import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.TimeUtil;
 
@@ -121,9 +118,9 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                     }
 
                     @Override
-                    public void onPlaySongChanged(LocalSongEntity songEntity) {
-                        mMusicPlayPresenter.onPlaySongChanged(songEntity);
-                        mCurrentPlayingSong = songEntity;
+                    public void onPlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong) {
+                        mMusicPlayPresenter.onPlaySongChanged(previousPlaySong, currentPlayingSong);
+                        mCurrentPlayingSong = currentPlayingSong;
                     }
 
                     @Override
@@ -182,17 +179,9 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 //                                    CirclarRevealUtil.DURATION_REVEAL_SHORT,
 //                                    false);
                         } else {
-
-                            if (AppConfig.isNightModeOn(MusicPlayActivity.this)) {
-                                CirclarRevealUtil.revealIn(mPlayControlCard,
-                                        CirclarRevealUtil.DIRECTION.CENTER,
-                                        CirclarRevealUtil.DURATION_REVEAL_NORMAL,
-                                        new AccelerateInterpolator());
-                            } else {
-                                CirclarRevealUtil.revealIn(mPlayControlCard,
-                                        CirclarRevealUtil.DIRECTION.CENTER,
-                                        CirclarRevealUtil.DURATION_REVEAL_NORMAL);
-                            }
+                            CirclarRevealUtil.revealIn(mPlayControlCard,
+                                    CirclarRevealUtil.DIRECTION.CENTER,
+                                    CirclarRevealUtil.DURATION_REVEAL_NORMAL);
                         }
                     }
 
@@ -296,7 +285,6 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
             mMusicPlayPresenter.onSkipNextClick(view);
         } else if (id == mRepeatButton.getId()) {
             mMusicPlayPresenter.onRepeatClick(view);
-            L.d("===>", mMusicPlayServiceBinder.getServicePlayListSongs().toString());
         } else if (id == mPlayListButton.getId()) {
 //            mMusicPlayPresenter.onShuffleClick(view);
         }
@@ -603,8 +591,10 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     protected void onDestroy() {
+        mMusicPlayServiceBinder.unregisterServicePlayCallback();
         unbindService(mMusicPlayServiceConnection);
         mMusicPlayPresenter.onViewWillDestroy();
+        mMusicPlayPresenter = null;
         super.onDestroy();
     }
 
