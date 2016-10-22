@@ -21,6 +21,7 @@ import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.PopupMenuUtil;
 import com.su.scott.slibrary.util.ScreenUtil;
 import com.su.scott.slibrary.util.TimeUtil;
+import com.su.scott.slibrary.util.ViewUtil;
 
 /**
  * Created by Administrator on 2016/9/8.
@@ -99,6 +100,10 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onClick(View view) {
         if (mMenuCallback == null) {
+            return;
+        }
+
+        if (ViewUtil.isFastClick()) {
             return;
         }
 

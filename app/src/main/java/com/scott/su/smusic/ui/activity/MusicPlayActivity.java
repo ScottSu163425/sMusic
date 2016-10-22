@@ -38,6 +38,7 @@ import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.TimeUtil;
+import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
 
@@ -60,6 +61,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
     private boolean mSeeking;  //Is Seekbar seeking.
     boolean mExisting = false; //Is activity existing.
+    boolean mCanCoverReveal = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -280,8 +282,14 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         if (id == mPlayButton.getId()) {
             mMusicPlayPresenter.onPlayClick(view);
         } else if (id == mSkipPreviousButton.getId()) {
+            if (ViewUtil.isFastClick()) {
+                return;
+            }
             mMusicPlayPresenter.onSkipPreviousClick(view);
         } else if (id == mSkipNextButton.getId()) {
+            if (ViewUtil.isFastClick()) {
+                return;
+            }
             mMusicPlayPresenter.onSkipNextClick(view);
         } else if (id == mRepeatButton.getId()) {
             mMusicPlayPresenter.onRepeatClick(view);
@@ -364,23 +372,33 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         }
 
         if (needReveal) {
-            CirclarRevealUtil.revealOut(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER, CirclarRevealUtil.DURATION_REVEAL_NORMAL
-                    , null, new AnimUtil.SimpleAnimListener() {
-                        @Override
-                        public void onAnimStart() {
-                        }
+            if (mCanCoverReveal) {
+                CirclarRevealUtil.revealOut(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER, CirclarRevealUtil.DURATION_REVEAL_NORMAL
+                        , null, new AnimUtil.SimpleAnimListener() {
+                            @Override
+                            public void onAnimStart() {
+                            }
 
-                        @Override
-                        public void onAnimEnd() {
-                            ImageLoader.load(MusicPlayActivity.this,
-                                    path,
-                                    mCoverImageView,
-                                    R.color.background_music_play,
-                                    R.color.background_music_play
-                            );
-                            CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER);
-                        }
-                    }, false);
+                            @Override
+                            public void onAnimEnd() {
+                                ImageLoader.load(MusicPlayActivity.this,
+                                        path,
+                                        mCoverImageView,
+                                        R.color.background_music_play,
+                                        R.color.background_music_play
+                                );
+                                CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER);
+                            }
+                        }, false);
+            } else {
+                ImageLoader.load(MusicPlayActivity.this,
+                        path,
+                        mCoverImageView,
+                        R.color.background_music_play,
+                        R.color.background_music_play
+                );
+                mCanCoverReveal = true;
+            }
         } else {
             ImageLoader.load(MusicPlayActivity.this,
                     path,
@@ -397,19 +415,18 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
             return;
         }
 
-        AnimUtil.alpha(mBlurCoverImageView, AnimUtil.ACTION.OUT, 1.0f, 0, AnimUtil.DURATION_LONG, null, new AnimUtil.SimpleAnimListener() {
+        AnimUtil.alpha(mBlurCoverImageView, AnimUtil.ACTION.IN, 0, 1.0f, AnimUtil.DURATION_XLONG, null, new AnimUtil.SimpleAnimListener() {
             @Override
             public void onAnimStart() {
-
+                mBlurCoverImageView.setImageBitmap(bitmap);
             }
 
             @Override
             public void onAnimEnd() {
-                mBlurCoverImageView.setImageBitmap(bitmap);
-                AnimUtil.alphaIn(mBlurCoverImageView);
+
             }
         });
-
+//        mBlurCoverImageView.setImageBitmap(bitmap);
 //        CirclarRevealUtil.revealIn(mBlurCoverImageView, CirclarRevealUtil.DIRECTION.CENTER_TOP, AnimUtil.DURATION_LONG);
     }
 
