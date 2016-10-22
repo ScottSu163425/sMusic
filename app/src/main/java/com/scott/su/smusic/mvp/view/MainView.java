@@ -63,8 +63,6 @@ public interface MainView extends BaseView, LocalSongBottomSheetView, MusicPlayS
 
     void goToMusicWithSharedElement(LocalSongEntity entity, View sharedElement, String transitionName);
 
-    void goToMusicWithSharedElementFromFAB();
-
     void turnOnNightMode();
 
     void turnOffNightMode();

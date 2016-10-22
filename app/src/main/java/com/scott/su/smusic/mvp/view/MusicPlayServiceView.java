@@ -17,9 +17,11 @@ public interface MusicPlayServiceView {
 
     LocalSongEntity getServiceCurrentPlayingSong();
 
-    ArrayList<LocalSongEntity> getServiceCurrentPlayingSongs();
+    ArrayList<LocalSongEntity> getServicePlayListSongs();
 
-    void setServicePlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs);
+    void setServiceCurrentPlaySong(LocalSongEntity currentPlaySong);
+
+    void addServicePlayListSongs(ArrayList<LocalSongEntity> playSongs);
 
     void setServicePlayMode(PlayMode playMode);
 

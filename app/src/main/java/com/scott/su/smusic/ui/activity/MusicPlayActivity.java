@@ -29,8 +29,8 @@ import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.MusicPlayServicePresenter;
-import com.scott.su.smusic.mvp.presenter.impl.MusicPlayServicePresenterImpl;
+import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
+import com.scott.su.smusic.mvp.presenter.impl.MusicPlayPresenterImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
 import com.scott.su.smusic.service.MusicPlayService;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
@@ -38,6 +38,7 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.TimeUtil;
 
@@ -47,7 +48,7 @@ import java.util.ArrayList;
  * 2016-09-07 22:01:51
  */
 public class MusicPlayActivity extends BaseActivity implements MusicPlayView, View.OnClickListener {
-    private MusicPlayServicePresenter mMusicPlayPresenter;
+    private MusicPlayPresenter mMusicPlayPresenter;
     private TextView mMusicTitleTextView, mMusicArtistTextView, mCurrentTimeTextView, mTotalTimeTextView;
     private ImageView mCoverImageView, mBlurCoverImageView;
     private CardView mPlayControlCard;
@@ -56,7 +57,6 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     private AppCompatSeekBar mPlayProgressSeekBar;
     private LocalSongEntity mInitialPlayingSong;
     private LocalSongEntity mCurrentPlayingSong;
-    private ArrayList<LocalSongEntity> mCurrentPlayingSongList;
     private PlayMode mCurrentPlayMode = PlayMode.RepeatAll;
     private PlayStatus mCurrentPlayStatus;
     private ServiceConnection mMusicPlayServiceConnection;
@@ -69,7 +69,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_play);
 
-        mMusicPlayPresenter = new MusicPlayServicePresenterImpl(this);
+        mMusicPlayPresenter = new MusicPlayPresenterImpl(this);
         mMusicPlayPresenter.onViewFirstTimeCreated();
     }
 
@@ -97,16 +97,21 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         initTransition();
 
         mCurrentPlayingSong = getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG);
-        mCurrentPlayingSongList = getIntent().getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS);
+        final ArrayList<LocalSongEntity> playingSongs = getIntent().getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS);
         mInitialPlayingSong = mCurrentPlayingSong;
 
         mMusicPlayServiceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                 mMusicPlayServiceBinder = (MusicPlayService.MusicPlayServiceBinder) iBinder;
-                if (mCurrentPlayingSong != null && mCurrentPlayingSongList != null) {
-                    mMusicPlayServiceBinder.setServicePlaySong(mCurrentPlayingSong, mCurrentPlayingSongList);
+                if (mCurrentPlayingSong != null) {
+                    mMusicPlayServiceBinder.setServiceCurrentPlaySong(mCurrentPlayingSong);
                 }
+
+                if (playingSongs != null) {
+                    mMusicPlayServiceBinder.addServicePlayListSongs(playingSongs);
+                }
+
                 mMusicPlayServiceBinder.setServicePlayMode(mCurrentPlayMode);
                 mMusicPlayServiceBinder.registerServicePlayCallback(new MusicPlayServiceCallback() {
                     @Override
@@ -291,6 +296,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
             mMusicPlayPresenter.onSkipNextClick(view);
         } else if (id == mRepeatButton.getId()) {
             mMusicPlayPresenter.onRepeatClick(view);
+            L.d("===>", mMusicPlayServiceBinder.getServicePlayListSongs().toString());
         } else if (id == mPlayListButton.getId()) {
 //            mMusicPlayPresenter.onShuffleClick(view);
         }
@@ -315,13 +321,24 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public LocalSongEntity getServiceCurrentPlayingSong() {
+    public LocalSongEntity getCurrentPlayingSong() {
         return mCurrentPlayingSong;
     }
 
     @Override
-    public ArrayList<LocalSongEntity> getServiceCurrentPlayingSongs() {
-        return mCurrentPlayingSongList;
+    public LocalSongEntity getServiceCurrentPlayingSong() {
+        if (mMusicPlayServiceBinder != null) {
+            return mMusicPlayServiceBinder.getServiceCurrentPlayingSong();
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<LocalSongEntity> getServicePlayListSongs() {
+        if (mMusicPlayServiceBinder != null) {
+            return mMusicPlayServiceBinder.getServicePlayListSongs();
+        }
+        return null;
     }
 
     @Override
@@ -507,7 +524,12 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public void setServicePlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs) {
+    public void setServiceCurrentPlaySong(LocalSongEntity currentPlaySong) {
+
+    }
+
+    @Override
+    public void addServicePlayListSongs(ArrayList<LocalSongEntity> playSongs) {
 
     }
 

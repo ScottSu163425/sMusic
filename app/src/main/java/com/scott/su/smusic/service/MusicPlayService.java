@@ -52,7 +52,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     private NotificationManager mNotificationManager;
     private MusicPlayServiceCallback mMusicPlayServiceCallback;
     private LocalSongEntity mCurrentPlayingSong;
-    private ArrayList<LocalSongEntity> mCurrentPlayingSongs;
+    private ArrayList<LocalSongEntity> mPlayListSongs;
     private boolean mPlaySameSong;
     private boolean mPlayNextByDeleteing;
     private PlayStatus mCurrentPlayStatus = PlayStatus.Stop;
@@ -85,10 +85,12 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
         registerReceiver(mStopPlayReceiver, new IntentFilter(Constants.ACTION_STOP_MUSIC_PLAY_SERVICE));
 
-        initMediaPlayer();
+        init();
     }
 
-    private void initMediaPlayer() {
+    private void init() {
+        mPlayListSongs = new ArrayList<>();
+
         mMediaPlayer = new MediaPlayer();
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -105,7 +107,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (mMediaPlayer == null) {
-            initMediaPlayer();
+            init();
         }
 
         if (intent != null && intent.getAction() != null) {
@@ -136,7 +138,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
     private void releaseAll() {
         mCurrentPlayingSong = null;
-        mCurrentPlayingSongs = null;
+        mPlayListSongs = null;
         releaseMediaPlayer();
         cancelService();
 
@@ -146,7 +148,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     @Override
-    public void setServicePlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs) {
+    public void setServiceCurrentPlaySong(LocalSongEntity currentPlaySong) {
         if (mCurrentPlayingSong == null) {
             mPlaySameSong = false;
         } else if (mCurrentPlayingSong.getSongId() == currentPlaySong.getSongId()) {
@@ -155,7 +157,12 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             mPlaySameSong = false;
         }
         this.mCurrentPlayingSong = currentPlaySong;
-        this.mCurrentPlayingSongs = playSongs;
+        MusicPlayUtil.addSongToPlayList(mPlayListSongs, mCurrentPlayingSong);
+    }
+
+    @Override
+    public void addServicePlayListSongs(ArrayList<LocalSongEntity> playSongs) {
+        MusicPlayUtil.addSongsToPlayList(mPlayListSongs, playSongs,mCurrentPlayingSong);
     }
 
     @Override
@@ -209,7 +216,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
     @Override
     public void playPrevious() {
-        mCurrentPlayingSong = MusicPlayUtil.getPreviousSong(mCurrentPlayingSong, mCurrentPlayingSongs, mCurrentPlayMode);
+        mCurrentPlayingSong = MusicPlayUtil.getPreviousSong(mCurrentPlayingSong, mPlayListSongs, mCurrentPlayMode);
         playNew();
     }
 
@@ -217,28 +224,28 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     public void playNext() {
         if (mPlayNextByDeleteing && mCurrentPlayMode == PlayMode.RepeatOne) {
             //When deleting a playing song,which is playing with repeate-one,We need to change the position of next playing song.
-            mCurrentPlayingSong = MusicPlayUtil.getNextSong(mCurrentPlayingSong, mCurrentPlayingSongs, PlayMode.RepeatAll);
+            mCurrentPlayingSong = MusicPlayUtil.getNextSong(mCurrentPlayingSong, mPlayListSongs, PlayMode.RepeatAll);
             mPlayNextByDeleteing = false;
         } else {
-            mCurrentPlayingSong = MusicPlayUtil.getNextSong(mCurrentPlayingSong, mCurrentPlayingSongs, mCurrentPlayMode);
+            mCurrentPlayingSong = MusicPlayUtil.getNextSong(mCurrentPlayingSong, mPlayListSongs, mCurrentPlayMode);
         }
         playNew();
     }
 
     @Override
     public void removeServiceSong(LocalSongEntity songEntity) {
-        if (mCurrentPlayingSongs == null || mCurrentPlayingSongs.isEmpty()) {
+        if (mPlayListSongs == null || mPlayListSongs.isEmpty()) {
             return;
         }
 
-        for (LocalSongEntity entity : mCurrentPlayingSongs) {
+        for (LocalSongEntity entity : mPlayListSongs) {
             if (entity.getSongId() == songEntity.getSongId()) {
-                mCurrentPlayingSongs.remove(entity);
+                mPlayListSongs.remove(entity);
                 break;
             }
         }
 
-        if (mCurrentPlayingSongs.size() == 0) {
+        if (mPlayListSongs.size() == 0) {
             releaseAll();
             return;
         }
@@ -296,40 +303,10 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         Intent intentGoToMusicPlay = new Intent(this, MainActivity.class);
         intentGoToMusicPlay.putExtra(Constants.KEY_IS_FROM_NOTIFICATION, true);
         intentGoToMusicPlay.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mCurrentPlayingSong);
-        intentGoToMusicPlay.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mCurrentPlayingSongs);
+        intentGoToMusicPlay.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mPlayListSongs);
         intentGoToMusicPlay.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntentGoToMusicPlay = PendingIntent.getActivity(this, mCurrentRequestCode, intentGoToMusicPlay, PendingIntent.FLAG_UPDATE_CURRENT);
 
-//        builder.setContentTitle(mCurrentPlayingSong.getTitle());
-//        builder.setContentText(mCurrentPlayingSong.getArtist());
-//        builder.setSmallIcon(R.mipmap.ic_launcher);
-//        builder.setLargeIcon(BitmapFactory.decodeFile(new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(this, mCurrentPlayingSong.getAlbumId())));
-//        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
-//        builder.setPriority(NotificationCompat.PRIORITY_MAX);
-//        builder.setOngoing(true);
-//
-//        builder.setContentIntent(pendingIntentGoToMusicPlay);
-//        builder.setFullScreenIntent(pendingIntentGoToMusicPlay, false);
-//
-//        //第一个参数是图标资源id 第二个是图标显示的名称，第三个图标点击要启动的PendingIntent
-//        builder.addAction(R.drawable.ic_skip_previous_notification_36dp, "", generateOperateIntent(REQUEST_CODE_PLAY_PREVIOUS, ACTION_PLAY_PREVIOUS));
-//        builder.addAction(isPlaying() ? R.drawable.ic_pause_36dp : R.drawable.ic_play_arrow_notification_36dp, "",
-//                generateOperateIntent(REQUEST_CODE_PLAY_PAUSE, ACTION_PLAY_PAUSE));
-//        builder.addAction(R.drawable.ic_skip_next_notification_36dp, "", generateOperateIntent(REQUEST_CODE_PLAY_NEXT, ACTION_PLAY_NEXT));
-//
-//        NotificationCompat.MediaStyle style = new NotificationCompat.MediaStyle();
-//        style.setMediaSession(new MediaSessionCompat(this, "MediaSession",
-//                new ComponentName(MusicPlayService.this, Intent.ACTION_MEDIA_BUTTON), null).getSessionToken());
-//        //CancelButton在5.0以下的机器有效
-//        style.setCancelButtonIntent(pendingIntentGoToMusicPlay);
-//        style.setShowCancelButton(true);
-//        //设置要现实在通知右方的图标 最多三个
-//        style.setShowActionsInCompactView(0, 1, 2);
-//
-//        builder.setStyle(style);
-//        builder.setShowWhen(false);
-
-        //Second way:
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentIntent(pendingIntentGoToMusicPlay);
         builder.setContent(generateContentRemoteView());
@@ -424,8 +401,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     @Override
-    public ArrayList<LocalSongEntity> getServiceCurrentPlayingSongs() {
-        return mCurrentPlayingSongs;
+    public ArrayList<LocalSongEntity> getServicePlayListSongs() {
+        return mPlayListSongs;
     }
 
     @Override
@@ -451,13 +428,18 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         }
 
         @Override
-        public ArrayList<LocalSongEntity> getServiceCurrentPlayingSongs() {
-            return MusicPlayService.this.getServiceCurrentPlayingSongs();
+        public ArrayList<LocalSongEntity> getServicePlayListSongs() {
+            return MusicPlayService.this.getServicePlayListSongs();
         }
 
         @Override
-        public void setServicePlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs) {
-            MusicPlayService.this.setServicePlaySong(currentPlaySong, playSongs);
+        public void setServiceCurrentPlaySong(LocalSongEntity currentPlaySong) {
+            MusicPlayService.this.setServiceCurrentPlaySong(currentPlaySong);
+        }
+
+        @Override
+        public void addServicePlayListSongs(ArrayList<LocalSongEntity> playSongs) {
+            MusicPlayService.this.addServicePlayListSongs(playSongs);
         }
 
         @Override

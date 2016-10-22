@@ -13,7 +13,7 @@ import java.util.Random;
  */
 
 public class MusicPlayUtil {
-    public static LocalSongEntity getPreviousSong(LocalSongEntity currentSong, List<LocalSongEntity> songList, PlayMode playMode) {
+    public static LocalSongEntity getPreviousSong(@NonNull LocalSongEntity currentSong, @NonNull List<LocalSongEntity> songList, @NonNull PlayMode playMode) {
         if (playMode == PlayMode.RepeatOne) {
             return currentSong;
         }
@@ -41,7 +41,7 @@ public class MusicPlayUtil {
         return null;
     }
 
-    public static LocalSongEntity getNextSong(LocalSongEntity currentSong, List<LocalSongEntity> songList, PlayMode playMode) {
+    public static LocalSongEntity getNextSong(@NonNull LocalSongEntity currentSong, @NonNull List<LocalSongEntity> songList, @NonNull PlayMode playMode) {
         if (playMode == PlayMode.RepeatOne) {
             return currentSong;
         }
@@ -69,7 +69,7 @@ public class MusicPlayUtil {
         return null;
     }
 
-    public static int getSongPosition(LocalSongEntity currentSong, List<LocalSongEntity> songList) {
+    public static int getSongPosition(@NonNull LocalSongEntity currentSong, @NonNull List<LocalSongEntity> songList) {
         int size = songList.size();
         for (int i = 0; i < size; i++) {
             LocalSongEntity songEntity = songList.get(i);
@@ -94,6 +94,49 @@ public class MusicPlayUtil {
         }
 
         return randomPosition;
+    }
+
+    public static void addSongToPlayList(@NonNull List<LocalSongEntity> playList, @NonNull LocalSongEntity songEntity) {
+        if (playList.isEmpty()) {
+            playList.add(songEntity);
+            return;
+        }
+
+        if (isPlayListContains(playList, songEntity)) {
+            //If the song is already exists in the play list, put the song on the first position of the list;
+            playList.remove(getSongPosition(songEntity, playList));
+        }
+        playList.add(0, songEntity);
+    }
+
+
+    public static void addSongsToPlayList(@NonNull List<LocalSongEntity> playList, @NonNull List<LocalSongEntity> songEntities, @NonNull LocalSongEntity currentPlayingSong) {
+        if (songEntities.isEmpty()) {
+            return;
+        }
+
+        if (playList.isEmpty()) {
+            playList.addAll(songEntities);
+            return;
+        }
+
+        //Keep the order;
+        for (int i = songEntities.size() - 1; i >= 0; i--) {
+            if (songEntities.get(i).getSongId() == currentPlayingSong.getSongId()) {
+                continue;
+            }
+            addSongToPlayList(playList, songEntities.get(i));
+        }
+        addSongToPlayList(playList, currentPlayingSong);
+    }
+
+    public static boolean isPlayListContains(@NonNull List<LocalSongEntity> playList, @NonNull LocalSongEntity songEntity) {
+        for (LocalSongEntity localSongEntity : playList) {
+            if (localSongEntity.getSongId() == songEntity.getSongId()) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

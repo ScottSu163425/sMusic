@@ -18,6 +18,8 @@ public interface MusicPlayView extends BaseView, MusicPlayServiceView {
 
     void setCurrentPlayingSong(LocalSongEntity songEntity);
 
+    LocalSongEntity getCurrentPlayingSong();
+
     void setPlayingMusicTitle(String title);
 
     void setPlayingMusicArtist(String artist);

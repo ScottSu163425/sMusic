@@ -12,21 +12,21 @@ import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
-import com.scott.su.smusic.mvp.presenter.MusicPlayServicePresenter;
+import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
 import com.su.scott.slibrary.util.TimeUtil;
 
 /**
  * Created by asus on 2016/9/4.
  */
-public class MusicPlayServicePresenterImpl implements MusicPlayServicePresenter {
+public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     private MusicPlayView mMusicPlayView;
     private LocalAlbumModel mAlbumModel;
     private LocalBillModel mBillModel;
     private boolean isFirstTimePlay = true;
 
 
-    public MusicPlayServicePresenterImpl(MusicPlayView mMusicPlayView) {
+    public MusicPlayPresenterImpl(MusicPlayView mMusicPlayView) {
         this.mMusicPlayView = mMusicPlayView;
         this.mAlbumModel = new LocalAlbumModelImpl();
         this.mBillModel = new LocalBillModelImpl();
@@ -69,7 +69,7 @@ public class MusicPlayServicePresenterImpl implements MusicPlayServicePresenter 
 
     @Override
     public void onAddToBillMenuItemClick() {
-        mMusicPlayView.showBillSelectionDialog(mMusicPlayView.getServiceCurrentPlayingSong());
+        mMusicPlayView.showBillSelectionDialog(mMusicPlayView.getCurrentPlayingSong());
     }
 
     @Override
@@ -183,14 +183,14 @@ public class MusicPlayServicePresenterImpl implements MusicPlayServicePresenter 
     }
 
     private void updateCurrentPlayingSongInfo(boolean needReveal) {
-        String path = mAlbumModel.getAlbumCoverPathByAlbumId(mMusicPlayView.getViewContext(), mMusicPlayView.getServiceCurrentPlayingSong().getAlbumId());
+        String path = mAlbumModel.getAlbumCoverPathByAlbumId(mMusicPlayView.getViewContext(), mMusicPlayView.getCurrentPlayingSong().getAlbumId());
         mMusicPlayView.loadCover(path, needReveal);
 
         if (!AppConfig.isNightModeOn(mMusicPlayView.getViewContext())) {
             new AsyncTask<Void, Void, Bitmap>() {
                 @Override
                 protected Bitmap doInBackground(Void... voids) {
-                    return mAlbumModel.getAlbumCoverBitmapBlur(mMusicPlayView.getViewContext(), mMusicPlayView.getServiceCurrentPlayingSong().getAlbumId());
+                    return mAlbumModel.getAlbumCoverBitmapBlur(mMusicPlayView.getViewContext(), mMusicPlayView.getCurrentPlayingSong().getAlbumId());
                 }
 
                 @Override
@@ -201,9 +201,9 @@ public class MusicPlayServicePresenterImpl implements MusicPlayServicePresenter 
             }.execute();
         }
         mMusicPlayView.setSeekBarCurrentPosition(0);
-        mMusicPlayView.setSeekBarMax(mMusicPlayView.getServiceCurrentPlayingSong().getDuration());
-        mMusicPlayView.setPlayingMusicTitle(mMusicPlayView.getServiceCurrentPlayingSong().getTitle());
-        mMusicPlayView.setPlayingMusicArtist(mMusicPlayView.getServiceCurrentPlayingSong().getArtist());
-        mMusicPlayView.setTotalPlayTime(TimeUtil.millisecondToMMSS(mMusicPlayView.getServiceCurrentPlayingSong().getDuration()));
+        mMusicPlayView.setSeekBarMax(mMusicPlayView.getCurrentPlayingSong().getDuration());
+        mMusicPlayView.setPlayingMusicTitle(mMusicPlayView.getCurrentPlayingSong().getTitle());
+        mMusicPlayView.setPlayingMusicArtist(mMusicPlayView.getCurrentPlayingSong().getArtist());
+        mMusicPlayView.setTotalPlayTime(TimeUtil.millisecondToMMSS(mMusicPlayView.getCurrentPlayingSong().getDuration()));
     }
 }

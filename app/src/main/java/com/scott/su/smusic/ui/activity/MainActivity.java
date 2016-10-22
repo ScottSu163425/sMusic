@@ -481,12 +481,17 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public ArrayList<LocalSongEntity> getServiceCurrentPlayingSongs() {
-        return mMusicPlayServiceBinder.getServiceCurrentPlayingSongs();
+    public ArrayList<LocalSongEntity> getServicePlayListSongs() {
+        return mMusicPlayServiceBinder.getServicePlayListSongs();
     }
 
     @Override
-    public void setServicePlaySong(LocalSongEntity currentPlaySong, ArrayList<LocalSongEntity> playSongs) {
+    public void setServiceCurrentPlaySong(LocalSongEntity currentPlaySong ) {
+    }
+
+    @Override
+    public void addServicePlayListSongs(ArrayList<LocalSongEntity> playSongs) {
+
     }
 
     @Override
@@ -733,11 +738,6 @@ public class MainActivity extends BaseActivity implements MainView {
         goToWithSharedElements(intent,
                 new View[]{sharedElement, mFloatingActionButton},
                 new String[]{transitionName, getString(R.string.transition_name_fab)});
-    }
-
-    @Override
-    public void goToMusicWithSharedElementFromFAB() {
-
     }
 
     @Override
