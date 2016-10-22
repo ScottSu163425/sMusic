@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
         android:layout_margin="@dimen/margin_s"
-        android:src="@drawable/ic_play_arrow_notification_36dp"
+        android:src="@drawable/ic_play_arrow__white_24dp"
         android:transitionName="@string/transition_name_fab"
         android:visibility="gone"
         app:backgroundTint="@color/colorImpact"

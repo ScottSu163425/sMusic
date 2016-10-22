@@ -161,7 +161,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_margin="@dimen/margin_xs"
-                            android:src="@drawable/ic_play_arrow_24dp"
+                            android:src="@drawable/ic_play_arrow__white_24dp"
                             android:transitionName="@string/transition_name_fab"
                             app:backgroundTint="@color/colorImpact"
                             app:elevation="@dimen/elevation_fab_normal"

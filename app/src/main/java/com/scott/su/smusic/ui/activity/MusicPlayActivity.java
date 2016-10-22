@@ -426,7 +426,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     public void setPlayRepeatAll(boolean needAnim) {
         if (needAnim) {
-            AnimUtil.rotate2DPositive(mRepeatButton, 360, AnimUtil.DURATION_SHORT);
+            AnimUtil.rotate2DPositive(mRepeatButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT);
             mRepeatButton.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -442,7 +442,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     public void setPlayRepeatOne(boolean needAnim) {
         if (needAnim) {
-            AnimUtil.rotate2DPositive(mRepeatButton, 360, AnimUtil.DURATION_SHORT);
+            AnimUtil.rotate2DPositive(mRepeatButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT);
             mRepeatButton.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -458,7 +458,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     public void setPlayRepeatShuffle(boolean needAnim) {
         if (needAnim) {
-            AnimUtil.rotate2DPositive(mRepeatButton, 360, AnimUtil.DURATION_SHORT);
+            AnimUtil.rotate2DPositive(mRepeatButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT);
             mRepeatButton.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -498,7 +498,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public void setPlayButtonPause() {
-        mPlayButton.setImageResource(R.drawable.ic_play_arrow_24dp);
+        mPlayButton.setImageResource(R.drawable.ic_play_arrow__white_24dp);
     }
 
     @Override

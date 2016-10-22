@@ -96,6 +96,7 @@ public class MainActivity extends BaseActivity implements MainView {
     private ServiceConnection mShutDownTimerServiceConnection;
     private ShutDownTimerService.ShutDownTimerServiceBinder mShutDownTimerServiceBinder;
     private boolean mInitDataComplete = false;
+    private boolean mFabPlayRandom = false;
 
 
     @Override
@@ -268,7 +269,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
         if (tabPosition == TAB_POSITION_SONG) {
             ViewUtil.setViewVisiable(mFloatingActionButton);
-            mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_24dp);
+            mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow__white_24dp);
         } else if (tabPosition == TAB_POSITION_BILL) {
             ViewUtil.setViewVisiable(mFloatingActionButton);
             mFloatingActionButton.setImageResource(R.drawable.ic_add_fab_24dp);
@@ -380,16 +381,14 @@ public class MainActivity extends BaseActivity implements MainView {
             public void onPageSelected(int position) {
                 if (position == TAB_POSITION_SONG) {
                     showFab(true);
-                    AnimUtil.rotate2DPositive(mFloatingActionButton, 360, AnimUtil.DURATION_SHORT);
-                    mFloatingActionButton.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow_24dp);
-                        }
-                    }, AnimUtil.DURATION_SHORT_HALF);
+                    if (mFabPlayRandom) {
+                        setFabPlayRandom();
+                    } else {
+                        setFabPlayCurrent();
+                    }
                 } else if (position == TAB_POSITION_BILL) {
                     showFab(true);
-                    AnimUtil.rotate2DPositive(mFloatingActionButton, 360, AnimUtil.DURATION_SHORT);
+                    AnimUtil.rotate2DPositive(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT);
                     mFloatingActionButton.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -623,7 +622,7 @@ public class MainActivity extends BaseActivity implements MainView {
         if (ViewUtil.isViewVisiable(mFloatingActionButton)) {
             if (needAnim) {
                 AnimUtil.scaleOut(mFloatingActionButton, AnimUtil.DURATION_SHORT);
-                AnimUtil.rotate2DNegative(mFloatingActionButton, 360, AnimUtil.DURATION_SHORT);
+                AnimUtil.rotate2DNegative(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT);
             } else {
                 ViewUtil.setViewGone(mFloatingActionButton);
             }
@@ -775,6 +774,35 @@ public class MainActivity extends BaseActivity implements MainView {
         resources.updateConfiguration(config, dm);
 
         recreateActivity(false);
+    }
+
+    @Override
+    public boolean isFabPlayRandom() {
+        return mFabPlayRandom;
+    }
+
+    @Override
+    public void setFabPlayRandom() {
+        AnimUtil.rotate2DPositive(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT);
+        mFloatingActionButton.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mFloatingActionButton.setImageResource(R.drawable.ic_shuffle_white_24dp);
+            }
+        }, AnimUtil.DURATION_SHORT_HALF);
+        mFabPlayRandom = true;
+    }
+
+    @Override
+    public void setFabPlayCurrent() {
+        AnimUtil.rotate2DPositive(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT);
+        mFloatingActionButton.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow__white_24dp);
+            }
+        }, AnimUtil.DURATION_SHORT_HALF);
+        mFabPlayRandom = false;
     }
 
     private void recreateActivity(boolean isForNightMode) {

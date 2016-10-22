@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout_fragment_base_display"
@@ -19,10 +18,10 @@
                 android:id="@+id/recycler_view_fragment_base_display"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical"
-                android:visibility="gone"
+                android:clipChildren="false"
                 android:clipToPadding="false"
-                android:clipChildren="false"/>
+                android:scrollbars="vertical"
+                android:visibility="gone" />
 
             <FrameLayout
                 android:id="@+id/fl_container_loading_layout_fragment_base_display"

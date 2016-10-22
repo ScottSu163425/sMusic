@@ -63,7 +63,7 @@ public class MainPresenterImpl implements MainPresenter {
                 return;
             }
 
-            if (mMainView.getServiceCurrentPlayingSong() == null) {
+            if (mMainView.getServiceCurrentPlayingSong() == null||mMainView.isFabPlayRandom()) {
                 //Has not played any song,play random;
                 mMainView.playRandomSong();
             } else {
@@ -79,8 +79,10 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onFabLongClick() {
-        if (mMainView.isCurrentTabSong()) {
-            mMainView.playRandomSong();
+        if (mMainView.isFabPlayRandom()) {
+            mMainView.setFabPlayCurrent();
+        } else {
+            mMainView.setFabPlayRandom();
         }
     }
 

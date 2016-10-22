@@ -73,4 +73,10 @@ public interface MainView extends BaseView, LocalSongBottomSheetView, MusicPlayS
 
     void turnOffLanguageMode();
 
+    boolean isFabPlayRandom();
+
+    void setFabPlayRandom();
+
+    void setFabPlayCurrent();
+
 }
