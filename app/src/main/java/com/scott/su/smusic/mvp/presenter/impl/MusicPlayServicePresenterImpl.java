@@ -51,8 +51,8 @@ public class MusicPlayServicePresenterImpl implements MusicPlayServicePresenter 
             mMusicPlayView.setServicePlayMode(mMusicPlayView.getCurrentPlayMode());
         } else {
             mMusicPlayView.setPlayRepeatAll(false);
-            AppConfig.setPlayRepeatAll(mMusicPlayView.getViewContext());
             mMusicPlayView.setServicePlayMode(mMusicPlayView.getCurrentPlayMode());
+            AppConfig.setPlayRepeatAll(mMusicPlayView.getViewContext());
         }
 
         updateCurrentPlayingSongInfo(false);
