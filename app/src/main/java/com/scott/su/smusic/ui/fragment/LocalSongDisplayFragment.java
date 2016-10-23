@@ -216,5 +216,4 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 
         void onDisplayDataChanged(List<LocalSongEntity> dataList);
     }
-
 }

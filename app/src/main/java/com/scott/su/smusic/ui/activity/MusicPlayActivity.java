@@ -295,7 +295,10 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         } else if (id == mRepeatButton.getId()) {
             mMusicPlayPresenter.onRepeatClick(view);
         } else if (id == mPlayListButton.getId()) {
-            new PlayListBottomSheetDisplayFragment().show(getSupportFragmentManager(), "");
+            // TODO: 2016/10/23  
+            PlayListBottomSheetDisplayFragment playListBottomSheetDisplayFragment = new PlayListBottomSheetDisplayFragment();
+            playListBottomSheetDisplayFragment.show(getSupportFragmentManager(), "");
+            playListBottomSheetDisplayFragment.setDataList(mMusicPlayServiceBinder.getServicePlayListSongs());
         }
     }
 
