@@ -7,8 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.transition.Explode;
-import android.transition.Slide;
 import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -24,7 +22,7 @@ import com.scott.su.smusic.mvp.presenter.SearchPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.SearchPresenterImpl;
 import com.scott.su.smusic.mvp.view.SearchView;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
-import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
+import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.ViewUtil;
@@ -231,23 +229,23 @@ public class SearchActivity extends BaseActivity implements SearchView {
 
     @Override
     public void showLocalSongBottomSheet(LocalSongEntity songEntity) {
-        LocalSongBottomSheetFragment.newInstance()
+        LocalSongBottomSheetMenuFragment.newInstance()
                 .setLocalSongEntity(songEntity)
                 .setMenuClickCallback(new LocalSongBottomSheetCallback() {
                     @Override
-                    public void onAddToBillClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                    public void onAddToBillClick(LocalSongBottomSheetMenuFragment fragment, LocalSongEntity songEntity) {
                         mSearchPresenter.onBottomSheetAddToBillClick(songEntity);
                         fragment.dismissAllowingStateLoss();
                     }
 
                     @Override
-                    public void onAlbumClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                    public void onAlbumClick(LocalSongBottomSheetMenuFragment fragment, LocalSongEntity songEntity) {
                         mSearchPresenter.onBottomSheetAlbumClick(songEntity);
                         fragment.dismissAllowingStateLoss();
                     }
 
                     @Override
-                    public void onDeleteClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                    public void onDeleteClick(LocalSongBottomSheetMenuFragment fragment, LocalSongEntity songEntity) {
                         mSearchPresenter.onBottomSheetDeleteClick(songEntity);
                         fragment.dismissAllowingStateLoss();
                     }

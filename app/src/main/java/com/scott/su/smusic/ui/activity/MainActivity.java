@@ -52,7 +52,7 @@ import com.scott.su.smusic.ui.fragment.DrawerMenuFragment;
 import com.scott.su.smusic.ui.fragment.LocalAlbumDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
-import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
+import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.callback.SimpleCallback;
@@ -430,23 +430,23 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void showLocalSongBottomSheet(LocalSongEntity songEntity) {
-        LocalSongBottomSheetFragment.newInstance()
+        LocalSongBottomSheetMenuFragment.newInstance()
                 .setLocalSongEntity(songEntity)
                 .setMenuClickCallback(new LocalSongBottomSheetCallback() {
                     @Override
-                    public void onAddToBillClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                    public void onAddToBillClick(LocalSongBottomSheetMenuFragment fragment, LocalSongEntity songEntity) {
                         mMainPresenter.onBottomSheetAddToBillClick(songEntity);
                         fragment.dismissAllowingStateLoss();
                     }
 
                     @Override
-                    public void onAlbumClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                    public void onAlbumClick(LocalSongBottomSheetMenuFragment fragment, LocalSongEntity songEntity) {
                         mMainPresenter.onBottomSheetAlbumClick(songEntity);
                         fragment.dismissAllowingStateLoss();
                     }
 
                     @Override
-                    public void onDeleteClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                    public void onDeleteClick(LocalSongBottomSheetMenuFragment fragment, LocalSongEntity songEntity) {
                         mMainPresenter.onBottomSheetDeleteClick(songEntity);
                         fragment.dismissAllowingStateLoss();
                     }
@@ -486,7 +486,7 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public void setServiceCurrentPlaySong(LocalSongEntity currentPlaySong ) {
+    public void setServiceCurrentPlaySong(LocalSongEntity currentPlaySong) {
     }
 
     @Override
@@ -601,7 +601,7 @@ public class MainActivity extends BaseActivity implements MainView {
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mSongDisplayFragment.getDisplayDataList().get(position));
         intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
         goToWithSharedElements(intent,
-                new View[]{mSongDisplayFragment.getSongViewHolder(position).getCoverImageView(), mFloatingActionButton},
+                new View[]{mSongDisplayFragment.getViewHolder(position).getCoverImageView(), mFloatingActionButton},
                 new String[]{getString(R.string.transition_name_cover), getString(R.string.transition_name_fab)});
     }
 
@@ -645,10 +645,7 @@ public class MainActivity extends BaseActivity implements MainView {
             }
         });
 //        }
-
-        if (!mCreateBillDialogFragment.isVisible()) {
-            mCreateBillDialogFragment.show(getSupportFragmentManager(), "");
-        }
+        mCreateBillDialogFragment.show(getSupportFragmentManager(), "");
     }
 
     @Override

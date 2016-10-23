@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/8/30.
  */
-public abstract class BaseListBottomSheetMenuFragment extends BottomSheetDialogFragment {
+public abstract class BaseBottomSheetMenuFragment extends BottomSheetDialogFragment {
     private View mRootView;
     private TextView mTitleTextView;
     private RecyclerView mMenuRecyclerView;
@@ -43,9 +43,9 @@ public abstract class BaseListBottomSheetMenuFragment extends BottomSheetDialogF
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_base_list_bottom_sheet, container, false);
-        mTitleTextView = (TextView) mRootView.findViewById(R.id.tv_title_fragment_base_list_bottom_sheet);
-        mMenuRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_menu_fragment_base_list_bottom_sheet);
+        mRootView = inflater.inflate(R.layout.fragment_base_bottom_sheet_menu, container, false);
+        mTitleTextView = (TextView) mRootView.findViewById(R.id.tv_title_fragment_base_bottom_sheet);
+        mMenuRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_menu_fragment_base_bottom_sheet);
 
         mTitleTextView.setText(getTitle());
 

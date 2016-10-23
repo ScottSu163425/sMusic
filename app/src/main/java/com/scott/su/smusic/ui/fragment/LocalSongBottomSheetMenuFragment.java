@@ -5,20 +5,24 @@ import android.support.annotation.NonNull;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.su.scott.slibrary.fragment.BaseListBottomSheetMenuFragment;
+import com.su.scott.slibrary.fragment.BaseBottomSheetMenuFragment;
 import com.su.scott.slibrary.util.FileUtil;
 import com.su.scott.slibrary.util.TimeUtil;
 
 /**
  * Created by Administrator on 2016/8/30.
  */
-public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragment {
+public class LocalSongBottomSheetMenuFragment extends BaseBottomSheetMenuFragment {
+    private static final int INDEX_MENU_ITEM_ADD_TO_BILL = 0;
+    private static final int INDEX_MENU_ITEM_ALBUM = 1;
+    private static final int INDEX_MENU_ITEM_DELETE = 4;
+
     private LocalSongEntity mSongEntity;
     private LocalSongBottomSheetCallback mLocalSongBottomSheetCallback;
 
 
-    public static LocalSongBottomSheetFragment newInstance() {
-        LocalSongBottomSheetFragment instance = new LocalSongBottomSheetFragment();
+    public static LocalSongBottomSheetMenuFragment newInstance() {
+        LocalSongBottomSheetMenuFragment instance = new LocalSongBottomSheetMenuFragment();
         return instance;
     }
 
@@ -52,27 +56,27 @@ public class LocalSongBottomSheetFragment extends BaseListBottomSheetMenuFragmen
     @Override
     protected void onMenuItemClick(int position, String itemName) {
         if (mLocalSongBottomSheetCallback != null) {
-            if (position == 0) {
+            if (position == INDEX_MENU_ITEM_ADD_TO_BILL) {
                 mLocalSongBottomSheetCallback.onAddToBillClick(this, mSongEntity);
                 dismissAllowingStateLoss();
-            } else if (position == 1) {
+            } else if (position == INDEX_MENU_ITEM_ALBUM) {
                 mLocalSongBottomSheetCallback.onAlbumClick(this, mSongEntity);
                 dismissAllowingStateLoss();
-            } else if (position == 4) {
+            } else if (position == INDEX_MENU_ITEM_DELETE) {
                 mLocalSongBottomSheetCallback.onDeleteClick(this, mSongEntity);
                 dismissAllowingStateLoss();
             }
         }
     }
 
-    public LocalSongBottomSheetFragment setLocalSongEntity(LocalSongEntity songEntity) {
+    public LocalSongBottomSheetMenuFragment setLocalSongEntity(LocalSongEntity songEntity) {
         this.mSongEntity = songEntity;
-        return LocalSongBottomSheetFragment.this;
+        return LocalSongBottomSheetMenuFragment.this;
     }
 
-    public LocalSongBottomSheetFragment setMenuClickCallback(LocalSongBottomSheetCallback mLocalSongBottomSheetCallback) {
+    public LocalSongBottomSheetMenuFragment setMenuClickCallback(LocalSongBottomSheetCallback mLocalSongBottomSheetCallback) {
         this.mLocalSongBottomSheetCallback = mLocalSongBottomSheetCallback;
-        return LocalSongBottomSheetFragment.this;
+        return LocalSongBottomSheetMenuFragment.this;
     }
 
 }

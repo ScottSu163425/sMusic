@@ -32,6 +32,7 @@ import com.scott.su.smusic.mvp.presenter.impl.MusicPlayPresenterImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
 import com.scott.su.smusic.service.MusicPlayService;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
+import com.scott.su.smusic.ui.fragment.PlayListBottomSheetDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.AnimUtil;
@@ -294,7 +295,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         } else if (id == mRepeatButton.getId()) {
             mMusicPlayPresenter.onRepeatClick(view);
         } else if (id == mPlayListButton.getId()) {
-//            mMusicPlayPresenter.onShuffleClick(view);
+            new PlayListBottomSheetDisplayFragment().show(getSupportFragmentManager(), "");
         }
     }
 

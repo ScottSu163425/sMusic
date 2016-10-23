@@ -268,7 +268,7 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
         return ((LinearLayoutManager) (getDisplayRecyclerView().getLayoutManager())).findLastVisibleItemPosition();
     }
 
-    public VH getSongViewHolder(int position) {
+    public VH getViewHolder(int position) {
         int firstItemPosition = getFirstVisibleItemPosition();
         if (position - firstItemPosition >= 0) {
             //得到要更新的item的view

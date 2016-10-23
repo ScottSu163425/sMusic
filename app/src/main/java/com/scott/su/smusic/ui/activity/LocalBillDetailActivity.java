@@ -27,7 +27,7 @@ import com.scott.su.smusic.mvp.presenter.impl.LocalBillDetailPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalBillDetailView;
 import com.scott.su.smusic.ui.fragment.CommonInputDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
-import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetFragment;
+import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.manager.ImageLoader;
@@ -317,23 +317,23 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
 
     @Override
     public void showBillSongBottomSheet(LocalSongEntity songEntity) {
-        LocalSongBottomSheetFragment.newInstance()
+        LocalSongBottomSheetMenuFragment.newInstance()
                 .setLocalSongEntity(songEntity)
                 .setMenuClickCallback(new LocalSongBottomSheetCallback() {
                     @Override
-                    public void onAddToBillClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                    public void onAddToBillClick(LocalSongBottomSheetMenuFragment fragment, LocalSongEntity songEntity) {
                         mBillDetailPresenter.onBottomSheetAddToBillClick(songEntity);
                         fragment.dismissAllowingStateLoss();
                     }
 
                     @Override
-                    public void onAlbumClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                    public void onAlbumClick(LocalSongBottomSheetMenuFragment fragment, LocalSongEntity songEntity) {
                         mBillDetailPresenter.onBottomSheetAlbumClick(songEntity);
                         fragment.dismissAllowingStateLoss();
                     }
 
                     @Override
-                    public void onDeleteClick(LocalSongBottomSheetFragment fragment, LocalSongEntity songEntity) {
+                    public void onDeleteClick(LocalSongBottomSheetMenuFragment fragment, LocalSongEntity songEntity) {
                         mBillDetailPresenter.onBottomSheetDeleteClick(songEntity);
                         fragment.dismissAllowingStateLoss();
                     }
