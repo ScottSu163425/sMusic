@@ -140,7 +140,7 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     }
 
     @Override
-    public void onPlaySongChanged( LocalSongEntity previousPlaySong,LocalSongEntity currentPlayingSong) {
+    public void onPlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong) {
         mMusicPlayView.setCurrentPlayingSong(currentPlayingSong);
         updateCurrentPlayingSongInfo(true);
     }
@@ -203,5 +203,22 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
         mMusicPlayView.setPlayingMusicTitle(mMusicPlayView.getCurrentPlayingSong().getTitle());
         mMusicPlayView.setPlayingMusicArtist(mMusicPlayView.getCurrentPlayingSong().getArtist());
         mMusicPlayView.setTotalPlayTime(TimeUtil.millisecondToMMSS(mMusicPlayView.getCurrentPlayingSong().getDuration()));
+    }
+
+    @Override
+    public void onPlayListItemClick(View itemView, LocalSongEntity entity, int position) {
+        mMusicPlayView.setServiceCurrentPlaySong(entity);
+        mMusicPlayView.play();
+    }
+
+    @Override
+    public void onPlayListItemRemoveClick(View view, int position, LocalSongEntity entity) {
+        mMusicPlayView.removeServiceSong(entity);
+        mMusicPlayView.updatePlayListBottomSheet(mMusicPlayView.getServicePlayListSongs());
+    }
+
+    @Override
+    public void onPlayListClearClick(View view) {
+        mMusicPlayView.clearServiceSongs();
     }
 }

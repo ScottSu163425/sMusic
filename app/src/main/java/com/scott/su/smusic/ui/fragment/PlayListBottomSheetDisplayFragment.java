@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.PlayListDisplayAdapter;
-import com.scott.su.smusic.callback.PlayListItemCallback;
+import com.scott.su.smusic.callback.PlayListBottomSheetCallback;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 
@@ -28,7 +28,8 @@ public class PlayListBottomSheetDisplayFragment extends BottomSheetDialogFragmen
     private PlayListDisplayAdapter mDisplayAdapter;
     private List<LocalSongEntity> mPlayListSongs = new ArrayList<>();
     private boolean mDataListChanged;
-    private PlayListItemCallback mItemCallback;
+    private View mClearBtn;
+    private PlayListBottomSheetCallback mItemCallback;
 
     public static PlayListBottomSheetDisplayFragment newInstance() {
         PlayListBottomSheetDisplayFragment instance = new PlayListBottomSheetDisplayFragment();
@@ -46,7 +47,7 @@ public class PlayListBottomSheetDisplayFragment extends BottomSheetDialogFragmen
                 @Override
                 public void onItemRemoveClick(View view, int position, LocalSongEntity entity) {
                     if (mItemCallback != null) {
-                        mItemCallback.onItemRemoveClick(view, position, entity);
+                        mItemCallback.onPlayListItemRemoveClick(view, position, entity);
                     }
                 }
             };
@@ -54,12 +55,23 @@ public class PlayListBottomSheetDisplayFragment extends BottomSheetDialogFragmen
                 @Override
                 public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
                     if (mItemCallback != null) {
-                        mItemCallback.onItemClick(itemView, entity, position);
+                        mItemCallback.onPlayListItemClick(itemView, entity, position);
                     }
                 }
             });
             mDisplayAdapter.setDataList(mPlayListSongs);
             mPlayListSongRecyclerView.setAdapter(mDisplayAdapter);
+            mClearBtn = mRootView.findViewById(R.id.tv_clear_fragment_play_list_bottom_sheet);
+
+            mClearBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mItemCallback != null) {
+                        mItemCallback.onPlayListClearClick(v);
+                        PlayListBottomSheetDisplayFragment.this.dismissAllowingStateLoss();
+                    }
+                }
+            });
         }
         return mRootView;
     }
@@ -79,8 +91,15 @@ public class PlayListBottomSheetDisplayFragment extends BottomSheetDialogFragmen
         }
     }
 
-    public  PlayListBottomSheetDisplayFragment setItemCallback(PlayListItemCallback itemCallback) {
+    public PlayListBottomSheetDisplayFragment setItemCallback(PlayListBottomSheetCallback itemCallback) {
         this.mItemCallback = itemCallback;
         return this;
     }
+
+
+    public void updatePlayList(List<LocalSongEntity> dataList) {
+        mPlayListSongs = dataList;
+        mDisplayAdapter.notifyDataSetChanged();
+    }
+
 }

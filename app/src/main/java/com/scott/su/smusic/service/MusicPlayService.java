@@ -148,9 +148,11 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             mPlaySameSong = false;
         }
 
-        mPreviousPlayingSong = mCurrentPlayingSong;
-        mCurrentPlayingSong = currentPlaySong;
-        MusicPlayUtil.addSongToPlayList(mPlayListSongs, mCurrentPlayingSong);
+        if (!mPlaySameSong) {
+            mPreviousPlayingSong = mCurrentPlayingSong;
+            mCurrentPlayingSong = currentPlaySong;
+            MusicPlayUtil.addSongToPlayList(mPlayListSongs, mCurrentPlayingSong);
+        }
     }
 
     @Override
@@ -245,10 +247,22 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             return;
         }
 
+        //If delete current playing song, play next song;
         if (mCurrentPlayingSong.getSongId() == songEntity.getSongId()) {
             mPlayNextByDeleteing = true;
             playNext();
         }
+    }
+
+    @Override
+    public void clearServiceSongs() {
+        if (mPlayListSongs == null || mPlayListSongs.isEmpty()) {
+            releaseAll();
+            return;
+        }
+
+        mPlayListSongs.clear();
+        releaseAll();
     }
 
     private void releaseMediaPlayer() {
@@ -476,6 +490,11 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         @Override
         public void removeServiceSong(LocalSongEntity songEntity) {
             MusicPlayService.this.removeServiceSong(songEntity);
+        }
+
+        @Override
+        public void clearServiceSongs() {
+            MusicPlayService.this.clearServiceSongs();
         }
 
         @Override

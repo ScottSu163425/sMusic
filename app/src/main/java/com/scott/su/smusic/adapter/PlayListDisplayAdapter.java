@@ -52,7 +52,7 @@ public abstract class PlayListDisplayAdapter extends BaseDisplayAdapter<PlayList
             }
         });
 
-        viewHolder.getRemoveImageView().setOnClickListener(new View.OnClickListener() {
+        viewHolder.getRemoveBtn().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onItemRemoveClick(view, position, entity);

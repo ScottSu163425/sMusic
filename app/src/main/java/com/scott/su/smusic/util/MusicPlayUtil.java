@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.entity.LocalSongEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -103,10 +104,17 @@ public class MusicPlayUtil {
         }
 
         if (isPlayListContains(playList, songEntity)) {
-            //If the song is already exists in the play list, put the song on the first position of the list;
-            playList.remove(getSongPosition(songEntity, playList));
+            return;
         }
-        playList.add(0, songEntity);
+
+//        if (isPlayListContains(playList, songEntity)) {
+//            //If the song is already exists in the play list, put the song on the first position of the list;
+//            playList.remove(getSongPosition(songEntity, playList));
+//            return;
+//        }
+
+//        playList.add(0, songEntity);
+        playList.add(songEntity);
     }
 
 
@@ -120,14 +128,18 @@ public class MusicPlayUtil {
             return;
         }
 
-        //Keep the order;
-        for (int i = songEntities.size() - 1; i >= 0; i--) {
-            if (songEntities.get(i).getSongId() == currentPlayingSong.getSongId()) {
-                continue;
-            }
-            addSongToPlayList(playList, songEntities.get(i));
+//        //Keep the order;
+//        for (int i = songEntities.size() - 1; i >= 0; i--) {
+//            if (songEntities.get(i).getSongId() == currentPlayingSong.getSongId()) {
+//                continue;
+//            }
+//            addSongToPlayList(playList, songEntities.get(i));
+//        }
+//        addSongToPlayList(playList, currentPlayingSong);
+
+        for (LocalSongEntity songEntity : songEntities) {
+            addSongToPlayList(playList, songEntity);
         }
-        addSongToPlayList(playList, currentPlayingSong);
     }
 
     public static boolean isPlayListContains(@NonNull List<LocalSongEntity> playList, @NonNull LocalSongEntity songEntity) {

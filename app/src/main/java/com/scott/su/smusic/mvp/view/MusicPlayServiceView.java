@@ -39,7 +39,10 @@ public interface MusicPlayServiceView {
 
     void removeServiceSong(LocalSongEntity songEntity);
 
+    void clearServiceSongs();
+
     void registerServicePlayCallback(@NonNull MusicPlayServiceCallback callback);
 
     void unregisterServicePlayCallback();
+
 }

@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.MusicPlayServiceCallback;
-import com.scott.su.smusic.callback.PlayListItemCallback;
+import com.scott.su.smusic.callback.PlayListBottomSheetCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
@@ -44,6 +44,7 @@ import com.su.scott.slibrary.util.TimeUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 2016-09-07 22:01:51
@@ -106,16 +107,19 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                 mMusicPlayServiceBinder = (MusicPlayService.MusicPlayServiceBinder) iBinder;
-                if (mCurrentPlayingSong != null) {
-                    mMusicPlayServiceBinder.setServiceCurrentPlaySong(mCurrentPlayingSong);
-                }
 
+                //To keep the order what it is,set Play list songs befor set current play song.
                 if (playingSongs != null) {
-                    mMusicPlayServiceBinder.addServicePlayListSongs(playingSongs);
+                    addServicePlayListSongs(playingSongs);
                 }
 
-                mMusicPlayServiceBinder.setServicePlayMode(mCurrentPlayMode);
-                mMusicPlayServiceBinder.registerServicePlayCallback(new MusicPlayServiceCallback() {
+                if (mCurrentPlayingSong != null) {
+                    setServiceCurrentPlaySong(mCurrentPlayingSong);
+                }
+
+
+                setServicePlayMode(mCurrentPlayMode);
+                registerServicePlayCallback(new MusicPlayServiceCallback() {
                     @Override
                     public void onPlayStart() {
                         mCurrentPlayStatus = PlayStatus.Playing;
@@ -526,22 +530,36 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         mPlayButton.setImageResource(R.drawable.ic_play_arrow__white_24dp);
     }
 
+    PlayListBottomSheetDisplayFragment mPlayListBottomSheetDisplayFragment;
+
     @Override
     public void showPlayListBottomSheet() {
-        PlayListBottomSheetDisplayFragment.newInstance()
+        mPlayListBottomSheetDisplayFragment = PlayListBottomSheetDisplayFragment.newInstance()
                 .setDataList(mMusicPlayServiceBinder.getServicePlayListSongs())
-                .setItemCallback(new PlayListItemCallback() {
+                .setItemCallback(new PlayListBottomSheetCallback() {
                     @Override
-                    public void onItemClick(View itemView, LocalSongEntity entity, int position) {
-                        T.showShort(getApplicationContext(), "onItemClick " + entity.getTitle());
+                    public void onPlayListItemClick(View itemView, LocalSongEntity entity, int position) {
+                        mMusicPlayPresenter.onPlayListItemClick(itemView, entity, position);
                     }
 
                     @Override
-                    public void onItemRemoveClick(View view, int position, LocalSongEntity entity) {
-                        T.showShort(getApplicationContext(), "onItemRemoveClick " + entity.getTitle());
+                    public void onPlayListItemRemoveClick(View view, int position, LocalSongEntity entity) {
+                        mMusicPlayPresenter.onPlayListItemRemoveClick(view, position, entity);
                     }
-                })
-                .show(getSupportFragmentManager(), "");
+
+                    @Override
+                    public void onPlayListClearClick(View view) {
+                        mMusicPlayPresenter.onPlayListClearClick(view);
+                    }
+                });
+        mPlayListBottomSheetDisplayFragment.show(getSupportFragmentManager(), "");
+    }
+
+    @Override
+    public void updatePlayListBottomSheet(List<LocalSongEntity> songEntities) {
+        if (mPlayListBottomSheetDisplayFragment != null && mPlayListBottomSheetDisplayFragment.isResumed()) {
+            mPlayListBottomSheetDisplayFragment.updatePlayList(songEntities);
+        }
     }
 
     @Override
@@ -551,12 +569,12 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public void setServiceCurrentPlaySong(LocalSongEntity currentPlaySong) {
-
+        mMusicPlayServiceBinder.setServiceCurrentPlaySong(currentPlaySong);
     }
 
     @Override
     public void addServicePlayListSongs(ArrayList<LocalSongEntity> playSongs) {
-
+        mMusicPlayServiceBinder.addServicePlayListSongs(playSongs);
     }
 
     @Override
@@ -602,13 +620,18 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public void registerServicePlayCallback(@NonNull MusicPlayServiceCallback callback) {
+    public void clearServiceSongs() {
+        mMusicPlayServiceBinder.clearServiceSongs();
+    }
 
+    @Override
+    public void registerServicePlayCallback(@NonNull MusicPlayServiceCallback callback) {
+        mMusicPlayServiceBinder.registerServicePlayCallback(callback);
     }
 
     @Override
     public void unregisterServicePlayCallback() {
-
+        mMusicPlayServiceBinder.unregisterServicePlayCallback();
     }
 
     @Override

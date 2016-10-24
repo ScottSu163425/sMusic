@@ -60,4 +60,6 @@ public interface MusicPlayView extends BaseView, MusicPlayServiceView {
 
     void showPlayListBottomSheet();
 
+    void updatePlayListBottomSheet(List<LocalSongEntity> songEntities);
+
 }
