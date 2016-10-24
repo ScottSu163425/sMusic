@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.MusicPlayServiceCallback;
+import com.scott.su.smusic.callback.PlayListItemCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
@@ -38,6 +39,7 @@ import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.SdkUtil;
+import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.TimeUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
@@ -295,10 +297,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         } else if (id == mRepeatButton.getId()) {
             mMusicPlayPresenter.onRepeatClick(view);
         } else if (id == mPlayListButton.getId()) {
-            // TODO: 2016/10/23  
-            PlayListBottomSheetDisplayFragment playListBottomSheetDisplayFragment = new PlayListBottomSheetDisplayFragment();
-            playListBottomSheetDisplayFragment.show(getSupportFragmentManager(), "");
-            playListBottomSheetDisplayFragment.setDataList(mMusicPlayServiceBinder.getServicePlayListSongs());
+            showPlayListBottomSheet();
         }
     }
 
@@ -525,6 +524,24 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     public void setPlayButtonPause() {
         mPlayButton.setImageResource(R.drawable.ic_play_arrow__white_24dp);
+    }
+
+    @Override
+    public void showPlayListBottomSheet() {
+        PlayListBottomSheetDisplayFragment.newInstance()
+                .setDataList(mMusicPlayServiceBinder.getServicePlayListSongs())
+                .setItemCallback(new PlayListItemCallback() {
+                    @Override
+                    public void onItemClick(View itemView, LocalSongEntity entity, int position) {
+                        T.showShort(getApplicationContext(), "onItemClick " + entity.getTitle());
+                    }
+
+                    @Override
+                    public void onItemRemoveClick(View view, int position, LocalSongEntity entity) {
+                        T.showShort(getApplicationContext(), "onItemRemoveClick " + entity.getTitle());
+                    }
+                })
+                .show(getSupportFragmentManager(), "");
     }
 
     @Override

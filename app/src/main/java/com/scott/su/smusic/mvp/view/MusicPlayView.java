@@ -58,4 +58,6 @@ public interface MusicPlayView extends BaseView, MusicPlayServiceView {
 
     void setPlayButtonPause();
 
+    void showPlayListBottomSheet();
+
 }

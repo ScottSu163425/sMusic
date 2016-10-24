@@ -339,13 +339,17 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onDataLoading() {
-                hideFab(false);
+                // FIXME: 2016/10/24 
+//                hideFab(false);
             }
 
             @Override
             public void onDisplayDataChanged(List<LocalSongEntity> dataList) {
                 if (dataList == null || dataList.isEmpty()) {
-                    hideFab(false);
+                    //Show fab when current tab is bill,even through the data is empty.
+                    if (mViewPager.getCurrentItem() == TAB_POSITION_SONG) {
+                        hideFab(false);
+                    }
                 } else {
                     //Fix problem that after recreate main activity the fab still showing,when current position of viewpager
                     //is album,which is not supposed to be shown ;
