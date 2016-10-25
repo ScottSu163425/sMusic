@@ -12,6 +12,7 @@ import com.scott.su.smusic.R;
  */
 public class PlayListViewHolder extends RecyclerView.ViewHolder {
     private TextView numberTextView, titleTextView, artistTextView, albumTextView;
+    private ImageView indicatorImageView;
     private View removeBtn;
 
     public PlayListViewHolder(View itemView) {
@@ -21,7 +22,8 @@ public class PlayListViewHolder extends RecyclerView.ViewHolder {
         titleTextView = (TextView) itemView.findViewById(R.id.tv_title_view_holder_play_list);
         artistTextView = (TextView) itemView.findViewById(R.id.tv_artist_view_holder_play_list);
         albumTextView = (TextView) itemView.findViewById(R.id.tv_ablum_view_holder_play_list);
-        removeBtn =  itemView.findViewById(R.id.iv_remove_view_holder_play_list);
+        indicatorImageView = (ImageView) itemView.findViewById(R.id.iv_indicator_view_holder_play_list);
+        removeBtn = itemView.findViewById(R.id.iv_remove_view_holder_play_list);
     }
 
     public TextView getNumberTextView() {
@@ -44,4 +46,7 @@ public class PlayListViewHolder extends RecyclerView.ViewHolder {
         return removeBtn;
     }
 
+    public ImageView getIndicatorImageView() {
+        return indicatorImageView;
+    }
 }

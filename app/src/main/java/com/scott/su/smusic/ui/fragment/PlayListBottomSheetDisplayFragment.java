@@ -13,6 +13,7 @@ import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.PlayListDisplayAdapter;
 import com.scott.su.smusic.callback.PlayListBottomSheetCallback;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.util.MusicPlayUtil;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class PlayListBottomSheetDisplayFragment extends BottomSheetDialogFragmen
     private boolean mDataListChanged;
     private View mClearBtn;
     private PlayListBottomSheetCallback mItemCallback;
+    private int mCurrentPlayPosition = -1;
 
     public static PlayListBottomSheetDisplayFragment newInstance() {
         PlayListBottomSheetDisplayFragment instance = new PlayListBottomSheetDisplayFragment();
@@ -76,18 +78,35 @@ public class PlayListBottomSheetDisplayFragment extends BottomSheetDialogFragmen
         return mRootView;
     }
 
-    public PlayListBottomSheetDisplayFragment setDataList(List<LocalSongEntity> dataList) {
-        mPlayListSongs = dataList;
+    public PlayListBottomSheetDisplayFragment setDataList(List<LocalSongEntity> playListSongs, LocalSongEntity currentSong) {
+        mPlayListSongs = playListSongs;
         mDataListChanged = true;
+        mCurrentPlayPosition = MusicPlayUtil.getSongPosition(currentSong, playListSongs);
         return this;
+    }
+
+    public void updatePlayList(List<LocalSongEntity> playListSongs, LocalSongEntity currentSong) {
+        mPlayListSongs = playListSongs;
+        mCurrentPlayPosition = MusicPlayUtil.getSongPosition(currentSong, playListSongs);
+        mDisplayAdapter.setSelectedPosition(mCurrentPlayPosition);
+        mDisplayAdapter.notifyDataSetChanged();
+        scrollToCurrentPosition();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         if (mDataListChanged) {
+            mDisplayAdapter.setSelectedPosition(mCurrentPlayPosition);
             mDisplayAdapter.notifyDataSetChanged();
+            scrollToCurrentPosition();
             mDataListChanged = false;
+        }
+    }
+
+    private void scrollToCurrentPosition() {
+        if (mCurrentPlayPosition != -1) {
+            mPlayListSongRecyclerView.smoothScrollToPosition(mCurrentPlayPosition);
         }
     }
 
@@ -96,10 +115,5 @@ public class PlayListBottomSheetDisplayFragment extends BottomSheetDialogFragmen
         return this;
     }
 
-
-    public void updatePlayList(List<LocalSongEntity> dataList) {
-        mPlayListSongs = dataList;
-        mDisplayAdapter.notifyDataSetChanged();
-    }
 
 }

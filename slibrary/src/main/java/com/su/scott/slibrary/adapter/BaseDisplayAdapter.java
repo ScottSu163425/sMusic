@@ -103,7 +103,6 @@ public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> 
 
     public void setSelectedPosition(int selectedPosition) {
         this.selectedPosition = selectedPosition;
-        notifyDataSetChanged();
     }
 
     public void removeItem(int position) {

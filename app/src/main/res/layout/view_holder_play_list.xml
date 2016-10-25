@@ -10,14 +10,28 @@
     android:foreground="?attr/selectableItemBackground"
     android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_number_view_holder_play_list"
-        style="@style/TextAppearanceSubhead"
+
+    <RelativeLayout
         android:layout_width="@dimen/size_image_view_holder_local_song"
-        android:layout_height="@dimen/size_image_view_holder_local_song"
-        android:layout_margin="@dimen/margin_xxs"
-        android:gravity="center"
-        android:text="1" />
+        android:layout_height="@dimen/size_image_view_holder_local_song">
+
+        <TextView
+            android:id="@+id/tv_number_view_holder_play_list"
+            style="@style/TextAppearanceSubhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="1"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_indicator_view_holder_play_list"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_play_list_indicator"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

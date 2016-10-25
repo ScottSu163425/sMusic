@@ -535,7 +535,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     public void showPlayListBottomSheet() {
         mPlayListBottomSheetDisplayFragment = PlayListBottomSheetDisplayFragment.newInstance()
-                .setDataList(mMusicPlayServiceBinder.getServicePlayListSongs())
+                .setDataList(mMusicPlayServiceBinder.getServicePlayListSongs(), mMusicPlayServiceBinder.getServiceCurrentPlayingSong())
                 .setItemCallback(new PlayListBottomSheetCallback() {
                     @Override
                     public void onPlayListItemClick(View itemView, LocalSongEntity entity, int position) {
@@ -556,9 +556,9 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public void updatePlayListBottomSheet(List<LocalSongEntity> songEntities) {
+    public void updatePlayListBottomSheet(List<LocalSongEntity> playListSongs, LocalSongEntity currentSong) {
         if (mPlayListBottomSheetDisplayFragment != null && mPlayListBottomSheetDisplayFragment.isResumed()) {
-            mPlayListBottomSheetDisplayFragment.updatePlayList(songEntities);
+            mPlayListBottomSheetDisplayFragment.updatePlayList(playListSongs,currentSong);
         }
     }
 

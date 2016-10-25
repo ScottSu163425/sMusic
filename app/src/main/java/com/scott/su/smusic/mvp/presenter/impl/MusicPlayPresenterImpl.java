@@ -214,7 +214,7 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     @Override
     public void onPlayListItemRemoveClick(View view, int position, LocalSongEntity entity) {
         mMusicPlayView.removeServiceSong(entity);
-        mMusicPlayView.updatePlayListBottomSheet(mMusicPlayView.getServicePlayListSongs());
+        mMusicPlayView.updatePlayListBottomSheet(mMusicPlayView.getServicePlayListSongs(), mMusicPlayView.getServiceCurrentPlayingSong());
     }
 
     @Override

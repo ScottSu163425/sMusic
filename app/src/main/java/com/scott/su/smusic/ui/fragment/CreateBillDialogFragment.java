@@ -89,9 +89,7 @@ public class CreateBillDialogFragment extends DialogFragment {
         mRootView.post(new Runnable() {
             @Override
             public void run() {
-                CirclarRevealUtil.revealIn(mRootView, CirclarRevealUtil.DIRECTION.CENTER_TOP,
-                        AnimUtil.DURATION_NORMAL
-                        , new DecelerateInterpolator());
+                CirclarRevealUtil.revealIn(mRootView, CirclarRevealUtil.DIRECTION.LEFT_TOP);
             }
         });
 

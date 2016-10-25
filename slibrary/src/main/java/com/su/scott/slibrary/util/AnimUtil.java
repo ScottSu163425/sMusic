@@ -25,8 +25,10 @@ public class AnimUtil {
     public static final long DURATION_NORMAL_HALF = DURATION_NORMAL / 2;
     public static final long DURATION_LONG_HALF = DURATION_LONG / 2;
 
+    public static final long ROTATION_DEGREE_ROUND_ZERO = 0;
     public static final long ROTATION_DEGREE_ROUND = 360;
     public static final long ROTATION_DEGREE_ROUND_HALF = ROTATION_DEGREE_ROUND / 2;
+    public static final long ROTATION_DEGREE_ROUND_QUARTER = ROTATION_DEGREE_ROUND/4;
 
 
     public interface SimpleAnimListener {

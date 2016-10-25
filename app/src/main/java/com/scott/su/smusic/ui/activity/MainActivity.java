@@ -58,7 +58,6 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.callback.SimpleCallback;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.DialogUtil;
-import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.PermissionUtil;
 import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.TimeUtil;
