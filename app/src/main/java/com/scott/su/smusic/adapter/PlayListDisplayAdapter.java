@@ -44,7 +44,7 @@ public abstract class PlayListDisplayAdapter extends BaseDisplayAdapter<PlayList
             //Set current position indicator as playing state;
             ViewUtil.setViewVisiable(viewHolder.getIndicatorImageView());
             ViewUtil.setViewGone(viewHolder.getNumberTextView());
-            AnimUtil.rotate2D(viewHolder.getIndicatorImageView(), AnimUtil.ROTATION_DEGREE_ROUND_QUARTER, -AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_NORMAL, new OvershootInterpolator(), null);
+            AnimUtil.rotate2D(viewHolder.getIndicatorImageView(), AnimUtil.ROTATION_DEGREE_ROUND_ZERO, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_NORMAL, new OvershootInterpolator(), null);
         } else {
             ViewUtil.setViewVisiable(viewHolder.getNumberTextView());
             ViewUtil.setViewGone(viewHolder.getIndicatorImageView());
