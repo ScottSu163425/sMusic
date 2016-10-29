@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
-import com.scott.su.smusic.util.BitmapLruCache;
+import cache.BitmapLruCache;
 import com.su.scott.slibrary.util.BlurUtil;
 import com.su.scott.slibrary.util.StringUtil;
 

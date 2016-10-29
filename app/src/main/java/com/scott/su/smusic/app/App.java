@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatDelegate;
 import android.util.DisplayMetrics;
 
 import com.scott.su.smusic.config.AppConfig;
-import com.scott.su.smusic.util.BitmapLruCache;
-import com.scott.su.smusic.util.CoverPathCache;
+import cache.BitmapLruCache;
+import cache.CoverPathCache;
 
 import org.xutils.x;
 

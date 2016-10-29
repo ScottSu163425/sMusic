@@ -1,4 +1,4 @@
-package com.scott.su.smusic.util;
+package cache;
 
 
 import android.graphics.Bitmap;

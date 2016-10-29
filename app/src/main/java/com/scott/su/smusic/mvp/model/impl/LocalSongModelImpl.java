@@ -9,7 +9,7 @@ import android.text.TextUtils;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalSongModel;
-import com.scott.su.smusic.util.CoverPathCache;
+import cache.CoverPathCache;
 import com.su.scott.slibrary.util.StringUtil;
 
 import java.io.File;

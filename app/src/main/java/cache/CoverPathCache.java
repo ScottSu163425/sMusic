@@ -1,4 +1,4 @@
-package com.scott.su.smusic.util;
+package cache;
 
 
 import android.support.v4.util.LruCache;
