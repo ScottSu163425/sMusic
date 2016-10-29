@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatDelegate;
 import android.util.DisplayMetrics;
 
 import com.scott.su.smusic.config.AppConfig;
+import com.scott.su.smusic.util.BitmapLruCache;
+import com.scott.su.smusic.util.CoverPathCache;
 
 import org.xutils.x;
 
@@ -46,5 +48,14 @@ public class App extends Application {
         super.onCreate();
 
         x.Ext.init(this); //Initialize for xUtils;
+    }
+
+    @Override
+    public void onTerminate() {
+        //Release cache.
+        BitmapLruCache.getInstance().release();
+        CoverPathCache.getInstance().release();
+
+        super.onTerminate();
     }
 }

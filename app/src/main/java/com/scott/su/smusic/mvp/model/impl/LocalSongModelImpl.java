@@ -4,10 +4,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalSongModel;
+import com.scott.su.smusic.util.CoverPathCache;
 import com.su.scott.slibrary.util.StringUtil;
 
 import java.io.File;
@@ -57,7 +59,14 @@ public class LocalSongModelImpl implements LocalSongModel {
             localSongEntity.setDuration(duration);
             localSongEntity.setSize(size);
             localSongEntity.setPath(path);
-            localSongEntity.setCoverPath(localAlbumModel.getAlbumCoverPathByAlbumId(context,albumId));
+
+            //Get and set covert path from LruCache if exists,otherwise cache it.
+            String coverPath = CoverPathCache.getInstance().get(albumId + "");
+            if (TextUtils.isEmpty(coverPath)) {
+                coverPath = localAlbumModel.getAlbumCoverPathByAlbumId(context, albumId);
+                CoverPathCache.getInstance().put(albumId + "", coverPath);
+            }
+            localSongEntity.setCoverPath(coverPath);
             songEntities.add(localSongEntity);
         }
         cursor.close();

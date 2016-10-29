@@ -38,5 +38,12 @@ public class BitmapLruCache {
         return blurCache.get(path);
     }
 
+    public void release(){
+        if(blurCache!=null){
+            blurCache.evictAll();
+            blurCache=null;
+        }
+    }
+
 
 }
