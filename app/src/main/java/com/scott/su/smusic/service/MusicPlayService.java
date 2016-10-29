@@ -180,7 +180,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
                 playResume();
             } else {
                 //Play different song.
-                playNew();
+                playNew(false);
             }
         }
     }
@@ -231,7 +231,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     @Override
     public void playPrevious() {
         mCurrentPlayingSong = MusicPlayUtil.getPreviousSong(mCurrentPlayingSong, mPlayListSongs, mCurrentPlayMode);
-        playNew();
+        playNew(true);
     }
 
     @Override
@@ -245,7 +245,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             mPreviousPlayingSong = mCurrentPlayingSong;
             mCurrentPlayingSong = MusicPlayUtil.getNextSong(mCurrentPlayingSong, mPlayListSongs, mCurrentPlayMode);
         }
-        playNew();
+        playNew(true);
     }
 
     @Override
@@ -306,7 +306,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         }
     }
 
-    private void playNew() {
+    private void playNew(boolean isSkipping) {
         try {
             mMediaPlayer.reset();
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -314,7 +314,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             mMediaPlayer.prepare();
             startMediaPlayer();
 
-            if (mPreviousPlayingSong != null && isRegisterCallback()) {
+            if (isSkipping && mPreviousPlayingSong != null && isRegisterCallback()) {
 //                mMusicPlayServiceCallback.onPlaySongChanged(mPreviousPlayingSong, mCurrentPlayingSong);
                 notifiAllOnPlaySongChanged(mPreviousPlayingSong, mCurrentPlayingSong);
             }

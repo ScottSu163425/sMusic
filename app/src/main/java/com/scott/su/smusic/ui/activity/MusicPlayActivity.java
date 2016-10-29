@@ -68,7 +68,6 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     private boolean mSeeking;  //Is Seekbar seeking.
     boolean mExisting = false; //Is activity existing.
 
-    boolean mCanCoverReveal = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -341,36 +340,26 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         }
 
         if (needReveal) {
-            if (mCanCoverReveal) {
-                CirclarRevealUtil.revealOut(mCoverImageView,
-                        CirclarRevealUtil.DIRECTION.CENTER,
-                        CirclarRevealUtil.DURATION_REVEAL_SHORT,
-                        new DecelerateInterpolator(),
-                        new AnimUtil.SimpleAnimListener() {
-                            @Override
-                            public void onAnimStart() {
-                            }
+            CirclarRevealUtil.revealOut(mCoverImageView,
+                    CirclarRevealUtil.DIRECTION.CENTER,
+                    CirclarRevealUtil.DURATION_REVEAL_SHORT,
+                    new DecelerateInterpolator(),
+                    new AnimUtil.SimpleAnimListener() {
+                        @Override
+                        public void onAnimStart() {
+                        }
 
-                            @Override
-                            public void onAnimEnd() {
-                                ImageLoader.load(MusicPlayActivity.this,
-                                        path,
-                                        mCoverImageView,
-                                        R.color.transparent,
-                                        R.color.background_music_play
-                                );
-                                CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER);
-                            }
-                        }, false);
-            } else {
-                ImageLoader.load(MusicPlayActivity.this,
-                        path,
-                        mCoverImageView,
-                        R.color.transparent,
-                        R.color.background_music_play
-                );
-                mCanCoverReveal = true;
-            }
+                        @Override
+                        public void onAnimEnd() {
+                            ImageLoader.load(MusicPlayActivity.this,
+                                    path,
+                                    mCoverImageView,
+                                    R.color.transparent,
+                                    R.color.background_music_play
+                            );
+                            CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER);
+                        }
+                    }, false);
         } else {
             ImageLoader.load(MusicPlayActivity.this,
                     path,

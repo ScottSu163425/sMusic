@@ -58,6 +58,7 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.callback.SimpleCallback;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.DialogUtil;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.PermissionUtil;
 import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.TimeUtil;
@@ -67,6 +68,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 2016-8-18
@@ -593,7 +596,8 @@ public class MainActivity extends BaseActivity implements MainView {
             mAlbumDisplayFragment.reInitialize();
         }
     }
-//
+
+    //
     @Override
     public void playSongInPosition(final int position, final boolean needOpenMusicPlay) {
         scrollSongPositionTo(position, new SimpleCallback() {
