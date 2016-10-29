@@ -20,6 +20,10 @@ import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter;
+
 /**
  * Created by asus on 2016/8/19.
  */
@@ -58,7 +62,7 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
             }
         });
 
-        return mLocalAlbumDisplayAdapter;
+        return new SlideInBottomAnimationAdapter(mLocalAlbumDisplayAdapter);
     }
 
     @Override
