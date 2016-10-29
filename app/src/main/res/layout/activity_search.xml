@@ -6,11 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:orientation="vertical"
     tools:context="com.scott.su.smusic.ui.activity.SearchActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+        android:id="@+id/app_bar_layout_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
@@ -21,9 +20,8 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:theme="@style/AppTheme.AppBarOverlay">
+            app:theme="@style/AppTheme.AppBarOverlay"/>
 
-        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.CardView
@@ -33,7 +31,7 @@
         android:layout_marginRight="@dimen/margin_xs"
         android:translationZ="@dimen/margin_xs"
         app:cardElevation="@dimen/cardview_default_elevation"
-        app:layout_anchor="@id/app_bar"
+        app:layout_anchor="@id/app_bar_layout_search"
         app:layout_anchorGravity="bottom|right">
 
         <LinearLayout
