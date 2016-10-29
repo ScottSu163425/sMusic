@@ -28,11 +28,11 @@ import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayServiceView;
 import com.scott.su.smusic.ui.activity.MainActivity;
 import com.scott.su.smusic.util.MusicPlayUtil;
-import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.TimeUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/9/9.
@@ -51,7 +51,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
     private MediaPlayer mMediaPlayer;
     private NotificationManager mNotificationManager;
-    private MusicPlayServiceCallback mMusicPlayServiceCallback;
+    private List<MusicPlayServiceCallback> mCallbacks = new ArrayList<>();
+    //    private MusicPlayServiceCallback mMusicPlayServiceCallback;
     private LocalSongEntity mPreviousPlayingSong;
     private LocalSongEntity mCurrentPlayingSong;
     private ArrayList<LocalSongEntity> mPlayListSongs;
@@ -64,7 +65,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         @Override
         public void run() {
             if (isRegisterCallback()) {
-                mMusicPlayServiceCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
+//                mMusicPlayServiceCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
+                notifiAllOnPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
             }
             mPlayTimerHandler.postDelayed(this, DURATION_TIMER_DELAY);
         }
@@ -98,7 +100,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 if (isRegisterCallback()) {
-                    mMusicPlayServiceCallback.onPlayComplete();
+//                    mMusicPlayServiceCallback.onPlayComplete();
+                    notifiAllOnPlayComplete();
                 }
                 playNext();
             }
@@ -204,7 +207,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             mCurrentPlayStatus = PlayStatus.Pause;
             mPlaySameSong = true;
             if (isRegisterCallback()) {
-                mMusicPlayServiceCallback.onPlayPause(mMediaPlayer.getCurrentPosition());
+//                mMusicPlayServiceCallback.onPlayPause(mMediaPlayer.getCurrentPosition());
+                notifiAllOnPlayPause(mMediaPlayer.getCurrentPosition());
             }
             updateNotifycation();
         }
@@ -218,7 +222,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             mMediaPlayer.seekTo(position);
         }
         if (isRegisterCallback()) {
-            mMusicPlayServiceCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
+//            mMusicPlayServiceCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
+            notifiAllOnPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
         }
         playResume();
     }
@@ -310,7 +315,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             startMediaPlayer();
 
             if (mPreviousPlayingSong != null && isRegisterCallback()) {
-                mMusicPlayServiceCallback.onPlaySongChanged(mPreviousPlayingSong, mCurrentPlayingSong);
+//                mMusicPlayServiceCallback.onPlaySongChanged(mPreviousPlayingSong, mCurrentPlayingSong);
+                notifiAllOnPlaySongChanged(mPreviousPlayingSong, mCurrentPlayingSong);
             }
             updateNotifycation();
         } catch (IOException e) {
@@ -385,7 +391,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         startPlayTimer();
         mCurrentPlayStatus = PlayStatus.Playing;
         if (isRegisterCallback()) {
-            mMusicPlayServiceCallback.onPlayStart();
+//            mMusicPlayServiceCallback.onPlayStart();
+            notifiAllOnPlayStart();
         }
     }
 
@@ -399,7 +406,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     private boolean isRegisterCallback() {
-        return mMusicPlayServiceCallback != null;
+//        return mMusicPlayServiceCallback != null;
+        return !mCallbacks.isEmpty();
     }
 
     private boolean isStop() {
@@ -426,17 +434,25 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
     @Override
     public ArrayList<LocalSongEntity> getServicePlayListSongs() {
+        if (mPlayListSongs == null) {
+            mPlayListSongs = new ArrayList<>();
+        }
         return mPlayListSongs;
     }
 
     @Override
     public void registerServicePlayCallback(@NonNull MusicPlayServiceCallback callback) {
-        this.mMusicPlayServiceCallback = callback;
+        this.mCallbacks.add(callback);
+//        this.mMusicPlayServiceCallback = callback;
     }
 
     @Override
-    public void unregisterServicePlayCallback() {
-        this.mMusicPlayServiceCallback = null;
+    public void unregisterServicePlayCallback(@NonNull MusicPlayServiceCallback callback) {
+//        this.mMusicPlayServiceCallback = null;
+        if (mCallbacks.isEmpty()) {
+            return;
+        }
+        mCallbacks.remove(callback);
     }
 
     public class MusicPlayServiceBinder extends Binder implements MusicPlayServiceView {
@@ -522,8 +538,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         }
 
         @Override
-        public void unregisterServicePlayCallback() {
-            MusicPlayService.this.unregisterServicePlayCallback();
+        public void unregisterServicePlayCallback(@NonNull MusicPlayServiceCallback callback) {
+            MusicPlayService.this.unregisterServicePlayCallback(callback);
         }
     }
 
@@ -537,13 +553,83 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     private void releaseAll() {
         mCurrentPlayingSong = null;
         mPreviousPlayingSong = null;
-        mPlayListSongs = null;
+        mPlayListSongs.clear();
         releaseMediaPlayer();
         cancelService();
 
         if (isRegisterCallback()) {
-            mMusicPlayServiceCallback.onPlayStop();
+//            mMusicPlayServiceCallback.onPlayStop();
+            notifiAllOnPlayStop();
         }
     }
 
+    private void notifiAllOnPlayStart() {
+        if (mCallbacks.isEmpty()) {
+            return;
+        }
+
+        for (MusicPlayServiceCallback callback : mCallbacks) {
+            callback.onPlayStart();
+        }
+    }
+
+    private void notifiAllOnPlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong) {
+        if (mCallbacks.isEmpty()) {
+            return;
+        }
+
+        for (MusicPlayServiceCallback callback : mCallbacks) {
+            callback.onPlaySongChanged(previousPlaySong, currentPlayingSong);
+        }
+    }
+
+    private void notifiAllOnPlayProgressUpdate(long currentPositionMillSec) {
+        if (mCallbacks.isEmpty()) {
+            return;
+        }
+
+        for (MusicPlayServiceCallback callback : mCallbacks) {
+            callback.onPlayProgressUpdate(currentPositionMillSec);
+        }
+    }
+
+    private void notifiAllOnPlayPause(long currentPositionMillSec) {
+        if (mCallbacks.isEmpty()) {
+            return;
+        }
+
+        for (MusicPlayServiceCallback callback : mCallbacks) {
+            callback.onPlayPause(currentPositionMillSec);
+        }
+    }
+
+    private void notifiAllOnPlayResume() {
+        if (mCallbacks.isEmpty()) {
+            return;
+        }
+
+        for (MusicPlayServiceCallback callback : mCallbacks) {
+            callback.onPlayResume();
+        }
+    }
+
+    private void notifiAllOnPlayStop() {
+        if (mCallbacks.isEmpty()) {
+            return;
+        }
+
+        for (MusicPlayServiceCallback callback : mCallbacks) {
+            callback.onPlayStop();
+        }
+    }
+
+    private void notifiAllOnPlayComplete() {
+        if (mCallbacks.isEmpty()) {
+            return;
+        }
+
+        for (MusicPlayServiceCallback callback : mCallbacks) {
+            callback.onPlayComplete();
+        }
+    }
 }

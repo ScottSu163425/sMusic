@@ -45,6 +45,6 @@ public interface MusicPlayServiceView {
 
     void registerServicePlayCallback(@NonNull MusicPlayServiceCallback callback);
 
-    void unregisterServicePlayCallback();
+    void unregisterServicePlayCallback(@NonNull MusicPlayServiceCallback callback);
 
 }

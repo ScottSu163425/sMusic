@@ -122,48 +122,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
 
                 setServicePlayMode(mCurrentPlayMode);
-                registerServicePlayCallback(new MusicPlayServiceCallback() {
-                    @Override
-                    public void onPlayStart() {
-                        mCurrentPlayStatus = PlayStatus.Playing;
-                        mMusicPlayPresenter.onPlayStart();
-                    }
-
-                    @Override
-                    public void onPlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong) {
-                        mMusicPlayPresenter.onPlaySongChanged(previousPlaySong, currentPlayingSong);
-                        mCurrentPlayingSong = currentPlayingSong;
-                    }
-
-                    @Override
-                    public void onPlayProgressUpdate(long currentPositionMillSec) {
-                        mMusicPlayPresenter.onPlayProgressUpdate(currentPositionMillSec);
-                    }
-
-                    @Override
-                    public void onPlayPause(long currentPositionMillSec) {
-                        mCurrentPlayStatus = PlayStatus.Pause;
-                        mMusicPlayPresenter.onPlayPause(currentPositionMillSec);
-                    }
-
-                    @Override
-                    public void onPlayResume() {
-                        mCurrentPlayStatus = PlayStatus.Playing;
-                        mMusicPlayPresenter.onPlayResume();
-                    }
-
-                    @Override
-                    public void onPlayStop() {
-//                        mCurrentPlayStatus = PlayStatus.Stop;
-//                        mMusicPlayPresenter.onPlayStop();
-                        onBackPressed();
-                    }
-
-                    @Override
-                    public void onPlayComplete() {
-                        mMusicPlayPresenter.onPlayComplete();
-                    }
-                });
+                registerServicePlayCallback(mMusicPlayServiceCallback);
                 mCurrentPlayStatus = mMusicPlayServiceBinder.getServiceCurrentPlayStatus();
                 mMusicPlayPresenter.onServiceConnected();
             }
@@ -382,26 +341,36 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         }
 
         if (needReveal) {
-            CirclarRevealUtil.revealOut(mCoverImageView,
-                    CirclarRevealUtil.DIRECTION.LEFT_TOP,
-                    CirclarRevealUtil.DURATION_REVEAL_SHORT,
-                    new DecelerateInterpolator(),
-                    new AnimUtil.SimpleAnimListener() {
-                        @Override
-                        public void onAnimStart() {
-                        }
+            if (mCanCoverReveal) {
+                CirclarRevealUtil.revealOut(mCoverImageView,
+                        CirclarRevealUtil.DIRECTION.LEFT_TOP,
+                        CirclarRevealUtil.DURATION_REVEAL_SHORT,
+                        new DecelerateInterpolator(),
+                        new AnimUtil.SimpleAnimListener() {
+                            @Override
+                            public void onAnimStart() {
+                            }
 
-                        @Override
-                        public void onAnimEnd() {
-                            ImageLoader.load(MusicPlayActivity.this,
-                                    path,
-                                    mCoverImageView,
-                                    R.color.transparent,
-                                    R.color.background_music_play
-                            );
-                            CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.LEFT_TOP);
-                        }
-                    }, false);
+                            @Override
+                            public void onAnimEnd() {
+                                ImageLoader.load(MusicPlayActivity.this,
+                                        path,
+                                        mCoverImageView,
+                                        R.color.transparent,
+                                        R.color.background_music_play
+                                );
+                                CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.LEFT_TOP);
+                            }
+                        }, false);
+            } else {
+                ImageLoader.load(MusicPlayActivity.this,
+                        path,
+                        mCoverImageView,
+                        R.color.transparent,
+                        R.color.background_music_play
+                );
+                mCanCoverReveal = true;
+            }
         } else {
             ImageLoader.load(MusicPlayActivity.this,
                     path,
@@ -638,9 +607,52 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public void unregisterServicePlayCallback() {
-        mMusicPlayServiceBinder.unregisterServicePlayCallback();
+    public void unregisterServicePlayCallback(@NonNull MusicPlayServiceCallback callback) {
+        mMusicPlayServiceBinder.unregisterServicePlayCallback(mMusicPlayServiceCallback);
     }
+
+    private MusicPlayServiceCallback mMusicPlayServiceCallback = new MusicPlayServiceCallback() {
+        @Override
+        public void onPlayStart() {
+            mCurrentPlayStatus = PlayStatus.Playing;
+            mMusicPlayPresenter.onPlayStart();
+        }
+
+        @Override
+        public void onPlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong) {
+            mMusicPlayPresenter.onPlaySongChanged(previousPlaySong, currentPlayingSong);
+            mCurrentPlayingSong = currentPlayingSong;
+        }
+
+        @Override
+        public void onPlayProgressUpdate(long currentPositionMillSec) {
+            mMusicPlayPresenter.onPlayProgressUpdate(currentPositionMillSec);
+        }
+
+        @Override
+        public void onPlayPause(long currentPositionMillSec) {
+            mCurrentPlayStatus = PlayStatus.Pause;
+            mMusicPlayPresenter.onPlayPause(currentPositionMillSec);
+        }
+
+        @Override
+        public void onPlayResume() {
+            mCurrentPlayStatus = PlayStatus.Playing;
+            mMusicPlayPresenter.onPlayResume();
+        }
+
+        @Override
+        public void onPlayStop() {
+//                        mCurrentPlayStatus = PlayStatus.Stop;
+//                        mMusicPlayPresenter.onPlayStop();
+            onBackPressed();
+        }
+
+        @Override
+        public void onPlayComplete() {
+            mMusicPlayPresenter.onPlayComplete();
+        }
+    };
 
     @Override
     public void onBackPressed() {
@@ -660,7 +672,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     protected void onDestroy() {
-        mMusicPlayServiceBinder.unregisterServicePlayCallback();
+        mMusicPlayServiceBinder.unregisterServicePlayCallback(mMusicPlayServiceCallback);
         unbindService(mMusicPlayServiceConnection);
         mMusicPlayPresenter.onViewWillDestroy();
         mMusicPlayPresenter = null;
