@@ -29,6 +29,8 @@ public interface MusicPlayServiceView {
 
     void play();
 
+    void play(int position);
+
     void pause();
 
     void seekTo(int position);

@@ -25,7 +25,7 @@
             android:maxLines="1"
             android:scrollHorizontally="true"
             android:singleLine="true"
-            android:text="播放列表"
+            android:text="@string/play_list"
             android:textStyle="bold" />
 
         <TextView
@@ -38,7 +38,7 @@
             style="@style/TextAppearanceCaptionSecondary"
             android:foreground="?attr/selectableItemBackground"
             android:padding="@dimen/margin_s"
-            android:text="清空"/>
+            android:text="@string/clear"/>
     </RelativeLayout>
 
     <View

@@ -43,7 +43,7 @@ public interface MainView extends BaseView, LocalSongBottomSheetView, MusicPlayS
 
     void updateAlbumDisplay();
 
-    void playSongInPosition(int position);
+    void playSongInPosition(int position,boolean needOpenMusicPlay);
 
     void playRandomSong();
 

@@ -78,6 +78,9 @@
     <string name="timer_min_30">30分钟</string>
     <string name="timer_min_60">60分钟</string>
     <string name="timer_min_120">120分钟</string>
+    <string name="play_list">播放列表</string>
+    <string name="clear">清空</string>
+    <string name="ask_clear_play_list">清空播放列表?</string>
 
 
 </resources>

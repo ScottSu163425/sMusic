@@ -70,7 +70,6 @@ public class PlayListBottomSheetDisplayFragment extends BottomSheetDialogFragmen
                 public void onClick(View v) {
                     if (mItemCallback != null) {
                         mItemCallback.onPlayListClearClick(v);
-                        PlayListBottomSheetDisplayFragment.this.dismissAllowingStateLoss();
                     }
                 }
             });

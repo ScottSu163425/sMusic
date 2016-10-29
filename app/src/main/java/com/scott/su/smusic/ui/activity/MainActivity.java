@@ -513,6 +513,11 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
+    public void play(int position) {
+
+    }
+
+    @Override
     public void pause() {
 
     }
@@ -590,11 +595,18 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public void playSongInPosition(final int position) {
+    public void playSongInPosition(final int position, final boolean needOpenMusicPlay) {
         scrollSongPositionTo(position, new SimpleCallback() {
             @Override
             public void onCallback() {
-                goToMusicWithSharedElementInPosition(position);
+                if (needOpenMusicPlay) {
+                    goToMusicWithSharedElementInPosition(position);
+                } else {
+                    if (mMusicPlayServiceBinder.getServicePlayListSongs().isEmpty()) {
+                        mMusicPlayServiceBinder.addServicePlayListSongs(mSongDisplayFragment.getDisplayDataList());
+                    }
+                    mMusicPlayServiceBinder.play(position);
+                }
             }
         });
     }
@@ -602,7 +614,7 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void playRandomSong() {
         final int randomPositon = new Random().nextInt(mSongDisplayFragment.getDisplayDataList().size());
-        playSongInPosition(randomPositon);
+        playSongInPosition(randomPositon, false);
     }
 
     private void goToMusicWithSharedElementInPosition(int position) {

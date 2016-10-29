@@ -1,6 +1,7 @@
 package com.scott.su.smusic.ui.activity;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
@@ -15,6 +16,7 @@ import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -38,8 +40,8 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
+import com.su.scott.slibrary.util.DialogUtil;
 import com.su.scott.slibrary.util.SdkUtil;
-import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.TimeUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
@@ -65,6 +67,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
     private boolean mSeeking;  //Is Seekbar seeking.
     boolean mExisting = false; //Is activity existing.
+
     boolean mCanCoverReveal = false;
 
     @Override
@@ -379,38 +382,31 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         }
 
         if (needReveal) {
-            if (mCanCoverReveal) {
-                CirclarRevealUtil.revealOut(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER, CirclarRevealUtil.DURATION_REVEAL_NORMAL
-                        , null, new AnimUtil.SimpleAnimListener() {
-                            @Override
-                            public void onAnimStart() {
-                            }
+            CirclarRevealUtil.revealOut(mCoverImageView,
+                    CirclarRevealUtil.DIRECTION.LEFT_TOP,
+                    CirclarRevealUtil.DURATION_REVEAL_SHORT,
+                    new DecelerateInterpolator(),
+                    new AnimUtil.SimpleAnimListener() {
+                        @Override
+                        public void onAnimStart() {
+                        }
 
-                            @Override
-                            public void onAnimEnd() {
-                                ImageLoader.load(MusicPlayActivity.this,
-                                        path,
-                                        mCoverImageView,
-                                        R.color.background_music_play,
-                                        R.color.background_music_play
-                                );
-                                CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER);
-                            }
-                        }, false);
-            } else {
-                ImageLoader.load(MusicPlayActivity.this,
-                        path,
-                        mCoverImageView,
-                        R.color.background_music_play,
-                        R.color.background_music_play
-                );
-                mCanCoverReveal = true;
-            }
+                        @Override
+                        public void onAnimEnd() {
+                            ImageLoader.load(MusicPlayActivity.this,
+                                    path,
+                                    mCoverImageView,
+                                    R.color.transparent,
+                                    R.color.background_music_play
+                            );
+                            CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.LEFT_TOP);
+                        }
+                    }, false);
         } else {
             ImageLoader.load(MusicPlayActivity.this,
                     path,
                     mCoverImageView,
-                    R.color.background_music_play,
+                    R.color.transparent,
                     R.color.background_music_play
             );
         }
@@ -548,8 +544,15 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                     }
 
                     @Override
-                    public void onPlayListClearClick(View view) {
-                        mMusicPlayPresenter.onPlayListClearClick(view);
+                    public void onPlayListClearClick(final View view) {
+                        DialogUtil.showDialog(MusicPlayActivity.this, null, getString(R.string.ask_clear_play_list), null, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mPlayListBottomSheetDisplayFragment.dismissAllowingStateLoss();
+                                dialog.dismiss();
+                                mMusicPlayPresenter.onPlayListClearClick(view);
+                            }
+                        }, null, null);
                     }
                 });
         mPlayListBottomSheetDisplayFragment.show(getSupportFragmentManager(), "");
@@ -558,7 +561,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     public void updatePlayListBottomSheet(List<LocalSongEntity> playListSongs, LocalSongEntity currentSong) {
         if (mPlayListBottomSheetDisplayFragment != null && mPlayListBottomSheetDisplayFragment.isResumed()) {
-            mPlayListBottomSheetDisplayFragment.updatePlayList(playListSongs,currentSong);
+            mPlayListBottomSheetDisplayFragment.updatePlayList(playListSongs, currentSong);
         }
     }
 
@@ -592,6 +595,11 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     public void play() {
         mMusicPlayServiceBinder.play();
+    }
+
+    @Override
+    public void play(int position) {
+        mMusicPlayServiceBinder.play(position);
     }
 
     @Override

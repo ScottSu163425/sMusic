@@ -63,13 +63,13 @@ public class MainPresenterImpl implements MainPresenter {
                 return;
             }
 
-            if (mMainView.getServiceCurrentPlayingSong() == null||mMainView.isFabPlayRandom()) {
+            if (mMainView.getServiceCurrentPlayingSong() == null || mMainView.isFabPlayRandom()) {
                 //Has not played any song,play random;
                 mMainView.playRandomSong();
             } else {
                 //A song is playing or paused;
                 final int currentPlayingSongPositon = MusicPlayUtil.getSongPosition(mMainView.getServiceCurrentPlayingSong(), mMainView.getDisplaySongs());
-                mMainView.playSongInPosition(currentPlayingSongPositon);
+                mMainView.playSongInPosition(currentPlayingSongPositon, true);
             }
         } else if (mMainView.isCurrentTabBill()) {
             mMainView.showCreateBillDialog();

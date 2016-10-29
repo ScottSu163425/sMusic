@@ -17,22 +17,18 @@ import java.util.List;
  * Feature: RecyclerView适配器基类
  */
 public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> extends RecyclerView.Adapter<VH> {
+    public static final int  POSITION_NONE = -1;
 
     protected Activity context;
-
     private RecyclerView recyclerView;
-
     private List<E> dataList;
-
     private int selectedPosition = -1;
-
     private ItemClickCallback<E> itemClickCallback;
 
     protected abstract VH createVH(ViewGroup parent, int viewType);
-
     protected abstract void bindVH(VH viewHolder, E entity, int position);
-
     protected abstract void onDataListChanged();
+
 
     public BaseDisplayAdapter(Activity context) {
         this.context = context;

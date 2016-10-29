@@ -183,6 +183,20 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     @Override
+    public void play(int position) {
+        if (mPlayListSongs.isEmpty()) {
+            return;
+        }
+
+        if (position < 0 || position >= mPlayListSongs.size()) {
+            return;
+        }
+
+        setServiceCurrentPlaySong(mPlayListSongs.get(position));
+        play();
+    }
+
+    @Override
     public void pause() {
         if (mMediaPlayer != null && isPlaying()) {
             stopPlayTimer();
@@ -465,6 +479,11 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         @Override
         public void play() {
             MusicPlayService.this.play();
+        }
+
+        @Override
+        public void play(int position) {
+            MusicPlayService.this.play(position);
         }
 
         @Override
