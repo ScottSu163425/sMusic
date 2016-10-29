@@ -343,7 +343,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         if (needReveal) {
             if (mCanCoverReveal) {
                 CirclarRevealUtil.revealOut(mCoverImageView,
-                        CirclarRevealUtil.DIRECTION.LEFT_TOP,
+                        CirclarRevealUtil.DIRECTION.CENTER,
                         CirclarRevealUtil.DURATION_REVEAL_SHORT,
                         new DecelerateInterpolator(),
                         new AnimUtil.SimpleAnimListener() {
@@ -359,7 +359,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                                         R.color.transparent,
                                         R.color.background_music_play
                                 );
-                                CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.LEFT_TOP);
+                                CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER);
                             }
                         }, false);
             } else {

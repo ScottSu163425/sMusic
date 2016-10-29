@@ -6,6 +6,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalSongModel;
 import com.su.scott.slibrary.util.StringUtil;
 
@@ -24,6 +25,7 @@ public class LocalSongModelImpl implements LocalSongModel {
 
     @Override
     public List<LocalSongEntity> getLocalSongs(Context context) {
+        LocalAlbumModel localAlbumModel = new LocalAlbumModelImpl();
         List<LocalSongEntity> songEntities = new ArrayList<>();
         if (context == null) {
             return songEntities;
@@ -55,6 +57,7 @@ public class LocalSongModelImpl implements LocalSongModel {
             localSongEntity.setDuration(duration);
             localSongEntity.setSize(size);
             localSongEntity.setPath(path);
+            localSongEntity.setCoverPath(localAlbumModel.getAlbumCoverPathByAlbumId(context,albumId));
             songEntities.add(localSongEntity);
         }
         cursor.close();

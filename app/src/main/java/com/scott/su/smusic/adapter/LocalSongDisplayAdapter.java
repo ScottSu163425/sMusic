@@ -71,7 +71,8 @@ public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSo
             ViewUtil.setViewVisiable(viewHolder.getCoverImageView());
             ViewUtil.setViewGone(viewHolder.getNumberTextView());
             ImageLoader.load(context,
-                    new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(context, entity.getAlbumId()),
+//                    new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(context, entity.getAlbumId()),
+                    entity.getCoverPath(),
                     viewHolder.getCoverImageView(),
                     R.color.place_holder_loading,
                     R.drawable.ic_cover_default_song_bill

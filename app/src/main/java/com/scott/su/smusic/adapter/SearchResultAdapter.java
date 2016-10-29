@@ -90,7 +90,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
             viewHolder.getAlbumTextView().setText(entity.getAlbum());
 
             ImageLoader.load(context,
-                    new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(context, entity.getAlbumId()),
+//                    new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(context, entity.getAlbumId()),
+                    entity.getCoverPath(),
                     viewHolder.getCoverImageView(),
                     R.color.place_holder_loading,
                     R.drawable.ic_cover_default_song_bill

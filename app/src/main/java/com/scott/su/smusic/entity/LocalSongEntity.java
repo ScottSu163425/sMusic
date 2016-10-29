@@ -44,6 +44,9 @@ public class LocalSongEntity implements Parcelable {
     @Column(name = "path")
     private String path;
 
+    @Column(name = "coverPath")
+    private String coverPath;
+
     @Column(name = "billIds")
     private String billIds;
 
@@ -133,6 +136,14 @@ public class LocalSongEntity implements Parcelable {
         this.title = title;
     }
 
+    public String getCoverPath() {
+        return coverPath;
+    }
+
+    public void setCoverPath(String coverPath) {
+        this.coverPath = coverPath;
+    }
+
     public void appendBillId(long billId) {
         if (TextUtils.isEmpty(getBillIds())) {
             setBillIds(billId + ID_DIVIDER);
@@ -153,7 +164,6 @@ public class LocalSongEntity implements Parcelable {
         return !TextUtils.isEmpty(getBillIds());
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -170,6 +180,7 @@ public class LocalSongEntity implements Parcelable {
         dest.writeLong(this.duration);
         dest.writeLong(this.size);
         dest.writeString(this.path);
+        dest.writeString(this.coverPath);
         dest.writeString(this.billIds);
     }
 
@@ -183,10 +194,11 @@ public class LocalSongEntity implements Parcelable {
         this.duration = in.readLong();
         this.size = in.readLong();
         this.path = in.readString();
+        this.coverPath = in.readString();
         this.billIds = in.readString();
     }
 
-    public static final Parcelable.Creator<LocalSongEntity> CREATOR = new Parcelable.Creator<LocalSongEntity>() {
+    public static final Creator<LocalSongEntity> CREATOR = new Creator<LocalSongEntity>() {
         @Override
         public LocalSongEntity createFromParcel(Parcel source) {
             return new LocalSongEntity(source);
@@ -210,6 +222,7 @@ public class LocalSongEntity implements Parcelable {
                 ", duration=" + duration +
                 ", size=" + size +
                 ", path='" + path + '\'' +
+                ", coverPath='" + coverPath + '\'' +
                 ", billIds='" + billIds + '\'' +
                 '}';
     }
