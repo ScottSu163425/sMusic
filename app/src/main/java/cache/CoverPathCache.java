@@ -12,8 +12,8 @@ public class CoverPathCache {
     private static CoverPathCache instance;
 
     private CoverPathCache() {
-        int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-        coverPathCache = new LruCache<>(maxMemory / 16);
+        //1M cache space;
+        coverPathCache = new LruCache<>(1 * 1024 * 1024);
     }
 
     public static CoverPathCache getInstance() {
@@ -34,7 +34,6 @@ public class CoverPathCache {
     public void release() {
         if (coverPathCache != null) {
             coverPathCache.evictAll();
-            coverPathCache = null;
         }
     }
 

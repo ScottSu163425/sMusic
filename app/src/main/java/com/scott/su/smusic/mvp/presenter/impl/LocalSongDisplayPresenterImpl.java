@@ -14,6 +14,8 @@ import com.su.scott.slibrary.util.L;
 import java.util.ArrayList;
 import java.util.List;
 
+import cache.LocalSongEntityCache;
+
 
 /**
  * Created by asus on 2016/8/19.
@@ -29,6 +31,7 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
 
     @Override
     public void onSwipRefresh() {
+        LocalSongEntityCache.getInstance().release();
         getAndDisplayLocalSongs();
     }
 

@@ -9,7 +9,11 @@ import android.text.TextUtils;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalSongModel;
+
 import cache.CoverPathCache;
+import cache.LocalSongEntityCache;
+
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.StringUtil;
 
 import java.io.File;
@@ -41,7 +45,15 @@ public class LocalSongModelImpl implements LocalSongModel {
                 continue;
             }
 
+            //Get entity from cache directly if it exists in cache.
             long songId = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID));
+            LocalSongEntity entityFromCache = LocalSongEntityCache.getInstance().get(songId + "");
+            if (entityFromCache != null) {
+                songEntities.add(entityFromCache);
+                L.e("===>get song from cache:", entityFromCache.toString());
+                continue;
+            }
+
             String title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
             String artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
             String album = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM));
@@ -66,7 +78,12 @@ public class LocalSongModelImpl implements LocalSongModel {
                 coverPath = localAlbumModel.getAlbumCoverPathByAlbumId(context, albumId);
                 CoverPathCache.getInstance().put(albumId + "", coverPath);
             }
+
             localSongEntity.setCoverPath(coverPath);
+
+            //Put the whole entity into the cache;
+            LocalSongEntityCache.getInstance().put(songId + "", localSongEntity);
+
             songEntities.add(localSongEntity);
         }
         cursor.close();

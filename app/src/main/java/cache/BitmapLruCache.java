@@ -14,8 +14,8 @@ public class BitmapLruCache {
     private static BitmapLruCache instance;
 
     private BitmapLruCache() {
-        int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-        blurCache = new LruCache<String, Bitmap>(maxMemory / 8) {
+        //3M cache space;
+        blurCache = new LruCache<String, Bitmap>(4 * 1024 * 1024) {
             @Override
             protected int sizeOf(String key, Bitmap value) {
                 return value.getByteCount() / 1024;
@@ -38,10 +38,9 @@ public class BitmapLruCache {
         return blurCache.get(path);
     }
 
-    public void release(){
-        if(blurCache!=null){
+    public void release() {
+        if (blurCache != null) {
             blurCache.evictAll();
-            blurCache=null;
         }
     }
 

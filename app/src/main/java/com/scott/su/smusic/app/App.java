@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatDelegate;
 import android.util.DisplayMetrics;
 
 import com.scott.su.smusic.config.AppConfig;
+
 import cache.BitmapLruCache;
 import cache.CoverPathCache;
+import cache.LocalSongEntityCache;
 
 import org.xutils.x;
 
@@ -22,6 +24,7 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
+        //Init the day-night theme and language configure.
         if (AppConfig.isNightModeOn(this)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
@@ -44,10 +47,10 @@ public class App extends Application {
             resources.updateConfiguration(config, dm);
         }
 
-
         super.onCreate();
 
-        x.Ext.init(this); //Initialize for xUtils;
+        //Initialize for xUtils;
+        x.Ext.init(this);
     }
 
     @Override
@@ -55,6 +58,7 @@ public class App extends Application {
         //Release cache.
         BitmapLruCache.getInstance().release();
         CoverPathCache.getInstance().release();
+        LocalSongEntityCache.getInstance().release();
 
         super.onTerminate();
     }
