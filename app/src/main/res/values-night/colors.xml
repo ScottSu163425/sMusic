@@ -11,7 +11,7 @@
     <color name="colorImpact">#3F51B5</color>
     <color name="colorImpactDark">#2a36b1</color>
 
-    <color name="place_holder_loading">@color/md_grey_400</color>
+    <color name="place_holder_loading">@color/md_grey_300</color>
     <color name="place_holder_error">@color/md_grey_800</color>
 
     <color name="background_music_play">#222222</color>
