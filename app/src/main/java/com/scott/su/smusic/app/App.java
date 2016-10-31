@@ -8,9 +8,9 @@ import android.util.DisplayMetrics;
 
 import com.scott.su.smusic.config.AppConfig;
 
-import cache.BitmapLruCache;
-import cache.CoverPathCache;
-import cache.LocalSongEntityCache;
+import com.scott.su.smusic.cache.BitmapLruCache;
+import com.scott.su.smusic.cache.CoverPathCache;
+import com.scott.su.smusic.cache.LocalSongEntityCache;
 
 import org.xutils.x;
 
@@ -55,7 +55,7 @@ public class App extends Application {
 
     @Override
     public void onTerminate() {
-        //Release cache.
+        //Release com.scott.su.smusic.cache.
         BitmapLruCache.getInstance().release();
         CoverPathCache.getInstance().release();
         LocalSongEntityCache.getInstance().release();

@@ -10,8 +10,8 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalSongModel;
 
-import cache.CoverPathCache;
-import cache.LocalSongEntityCache;
+import com.scott.su.smusic.cache.CoverPathCache;
+import com.scott.su.smusic.cache.LocalSongEntityCache;
 
 import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.StringUtil;
@@ -45,7 +45,7 @@ public class LocalSongModelImpl implements LocalSongModel {
                 continue;
             }
 
-            //Get entity from cache directly if it exists in cache.
+            //Get entity from com.scott.su.smusic.cache directly if it exists in com.scott.su.smusic.cache.
             long songId = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID));
             LocalSongEntity entityFromCache = LocalSongEntityCache.getInstance().get(songId + "");
             if (entityFromCache != null) {
@@ -72,7 +72,7 @@ public class LocalSongModelImpl implements LocalSongModel {
             localSongEntity.setSize(size);
             localSongEntity.setPath(path);
 
-            //Get and set covert path from LruCache if exists,otherwise cache it.
+            //Get and set covert path from LruCache if exists,otherwise com.scott.su.smusic.cache it.
             String coverPath = CoverPathCache.getInstance().get(albumId + "");
             if (TextUtils.isEmpty(coverPath)) {
                 coverPath = localAlbumModel.getAlbumCoverPathByAlbumId(context, albumId);
@@ -81,7 +81,7 @@ public class LocalSongModelImpl implements LocalSongModel {
 
             localSongEntity.setCoverPath(coverPath);
 
-            //Put the whole entity into the cache;
+            //Put the whole entity into the com.scott.su.smusic.cache;
             LocalSongEntityCache.getInstance().put(songId + "", localSongEntity);
 
             songEntities.add(localSongEntity);

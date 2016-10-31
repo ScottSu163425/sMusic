@@ -1,4 +1,4 @@
-package cache;
+package com.scott.su.smusic.cache;
 
 
 import android.graphics.Bitmap;
@@ -10,8 +10,8 @@ import android.support.v4.util.LruCache;
  */
 public class BitmapLruCache {
     private LruCache<String, Bitmap> blurCache;
-
     private static BitmapLruCache instance;
+
 
     private BitmapLruCache() {
         //3M cache space;

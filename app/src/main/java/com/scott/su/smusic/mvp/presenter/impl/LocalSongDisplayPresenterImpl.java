@@ -9,12 +9,11 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalSongDisplayPresenter;
 import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
-import com.su.scott.slibrary.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cache.LocalSongEntityCache;
+import com.scott.su.smusic.cache.LocalSongEntityCache;
 
 
 /**

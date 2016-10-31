@@ -1,4 +1,4 @@
-package cache;
+package com.scott.su.smusic.cache;
 
 
 import android.support.v4.util.LruCache;
@@ -14,7 +14,7 @@ public class LocalSongEntityCache {
     private static LocalSongEntityCache mInstance;
 
     private LocalSongEntityCache() {
-        //2M cache space;
+        //2M com.scott.su.smusic.cache space;
         mEntityCache = new LruCache<>(2 * 1024 * 1024);
     }
 

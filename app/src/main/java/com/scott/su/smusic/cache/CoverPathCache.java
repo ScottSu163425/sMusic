@@ -1,4 +1,4 @@
-package cache;
+package com.scott.su.smusic.cache;
 
 
 import android.support.v4.util.LruCache;
@@ -12,7 +12,7 @@ public class CoverPathCache {
     private static CoverPathCache instance;
 
     private CoverPathCache() {
-        //1M cache space;
+        //1M com.scott.su.smusic.cache space;
         coverPathCache = new LruCache<>(1 * 1024 * 1024);
     }
 
