@@ -136,8 +136,6 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
     public void initData() {
         mBillSongDisplayFragment = LocalSongDisplayFragment.newInstance(LocalSongDisplayType.Bill, mBillEntity,
                 LocalSongDisplayStyle.NumberDivider);
-        mBillSongDisplayFragment.setSwipeRefreshEnable(false);
-        mBillSongDisplayFragment.setLoadMoreEnable(false);
 
         getSupportFragmentManager()
                 .beginTransaction()

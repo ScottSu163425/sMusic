@@ -47,8 +47,6 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
     protected void onFirstTimeCreateView() {
         mLocalAlbumDisplayPresenter = new LocalAlbumDisplayPresenterImpl(this);
         mLocalAlbumDisplayPresenter.onViewFirstTimeCreated();
-
-        this.setSwipeRefreshEnable(true);
     }
 
     @Override
@@ -83,6 +81,16 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
     @Override
     protected int getErrorLayout() {
         return R.layout.display_error_default;
+    }
+
+    @Override
+    protected boolean canSwipeRefresh() {
+        return false;
+    }
+
+    @Override
+    protected boolean canLoadMore() {
+        return false;
     }
 
     @Override
@@ -122,7 +130,7 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
     }
 
     @Override
-    public void setLoadMoreData(@NonNull List<LocalAlbumEntity> dataList) {
+    public void addLoadMoreData(@NonNull List<LocalAlbumEntity> dataList) {
     }
 
     @Override

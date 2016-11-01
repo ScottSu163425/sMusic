@@ -87,8 +87,6 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
                 mSongSelectionPresenter.onSelectedCountChanged(isEmpty);
             }
         });
-        mLocalSongSlectionDisplayFragment.setSwipeRefreshEnable(false);
-        mLocalSongSlectionDisplayFragment.setLoadMoreEnable(false);
 
         getSupportFragmentManager().
                 beginTransaction().

@@ -50,7 +50,6 @@ public class LocalSongModelImpl implements LocalSongModel {
             LocalSongEntity entityFromCache = LocalSongEntityCache.getInstance().get(songId + "");
             if (entityFromCache != null) {
                 songEntities.add(entityFromCache);
-                L.e("===>get song from cache:", entityFromCache.toString());
                 continue;
             }
 

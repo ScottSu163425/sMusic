@@ -118,13 +118,23 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     }
 
     @Override
+    protected boolean canSwipeRefresh() {
+        return true;
+    }
+
+    @Override
+    protected boolean canLoadMore() {
+        return true;
+    }
+
+    @Override
     protected void onSwipeRefresh() {
         mSongDisplayPresenter.onSwipRefresh();
     }
 
     @Override
     protected void onLoadMore() {
-
+        mSongDisplayPresenter.onLoadMore();
     }
 
     @Override
@@ -157,7 +167,12 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     }
 
     @Override
-    public void setLoadMoreData(@NonNull List<LocalSongEntity> dataList) {
+    public void addLoadMoreData(@NonNull List<LocalSongEntity> dataList) {
+        mSongDisplayAdapter.getDataList().addAll(dataList);
+        mSongDisplayAdapter.notifyDataSetChanged();
+        if (mDisplayCallback != null) {
+            mDisplayCallback.onDisplayDataChanged(mSongDisplayAdapter.getDataList());
+        }
     }
 
     @Override

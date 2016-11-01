@@ -9,8 +9,6 @@ import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.holder.LocalSongViewHolder;
 import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
-import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.ViewUtil;
@@ -21,10 +19,7 @@ import java.util.List;
  * Created by asus on 2016/8/19.
  */
 public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSongViewHolder, LocalSongEntity> {
-
     private LocalSongDisplayStyle localSongDisplayStyle = LocalSongDisplayStyle.NumberDivider; //RecyclerView item layout type
-
-    private LocalSongModelImpl localSongModel;
 
 
     public abstract void onItemMoreClick(View view, int position, LocalSongEntity entity);
@@ -33,13 +28,11 @@ public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSo
     public LocalSongDisplayAdapter(Activity context, LocalSongDisplayStyle localSongDisplayStyle) {
         super(context);
         this.localSongDisplayStyle = localSongDisplayStyle;
-        localSongModel = new LocalSongModelImpl();
     }
 
     public LocalSongDisplayAdapter(Activity context, List<LocalSongEntity> dataList, LocalSongDisplayStyle localSongDisplayStyle) {
         super(context, dataList);
         this.localSongDisplayStyle = localSongDisplayStyle;
-        localSongModel = new LocalSongModelImpl();
     }
 
     @Override
@@ -71,7 +64,6 @@ public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSo
             ViewUtil.setViewVisiable(viewHolder.getCoverImageView());
             ViewUtil.setViewGone(viewHolder.getNumberTextView());
             ImageLoader.load(context,
-//                    new LocalAlbumModelImpl().getAlbumCoverPathByAlbumId(context, entity.getAlbumId()),
                     entity.getCoverPath(),
                     viewHolder.getCoverImageView(),
                     R.color.place_holder_loading,

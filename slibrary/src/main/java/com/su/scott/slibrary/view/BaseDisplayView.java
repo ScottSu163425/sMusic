@@ -34,7 +34,7 @@ public interface BaseDisplayView<E> extends BaseView {
 
     void setDisplayData(@NonNull List<E> dataList);
 
-    void setLoadMoreData(@NonNull List<E> dataList);
+    void addLoadMoreData(@NonNull List<E> dataList);
 
     void handleItemClick(View itemView, E entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
 

@@ -71,6 +71,16 @@ public class LocalSongSlectionDisplayFragment extends BaseDisplayFragment<LocalS
     }
 
     @Override
+    protected boolean canSwipeRefresh() {
+        return false;
+    }
+
+    @Override
+    protected boolean canLoadMore() {
+        return false;
+    }
+
+    @Override
     protected void onSwipeRefresh() {
 
     }
@@ -107,7 +117,7 @@ public class LocalSongSlectionDisplayFragment extends BaseDisplayFragment<LocalS
     }
 
     @Override
-    public void setLoadMoreData(@NonNull List<LocalSongEntity> dataList) {
+    public void addLoadMoreData(@NonNull List<LocalSongEntity> dataList) {
 
     }
 

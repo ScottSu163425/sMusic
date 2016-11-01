@@ -92,9 +92,6 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
     public void initData() {
         mSongDisplayFragment = LocalSongDisplayFragment.newInstance(LocalSongDisplayType.Album, mAlbumEntity, LocalSongDisplayStyle.NumberDivider);
 
-        mSongDisplayFragment.setSwipeRefreshEnable(false);
-        mSongDisplayFragment.setLoadMoreEnable(false);
-
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fl_container_display_songs_local_album_detail, mSongDisplayFragment)

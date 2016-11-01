@@ -31,12 +31,12 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
     @Override
     public void onSwipRefresh() {
         LocalSongEntityCache.getInstance().release();
-        getAndDisplayLocalSongs();
+        getAndDisplayLocalSongs(false);
     }
 
     @Override
     public void onLoadMore() {
-
+        getAndDisplayLocalSongs(true);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
 
     @Override
     public void onViewFirstTimeCreated() {
-        getAndDisplayLocalSongs();
+        getAndDisplayLocalSongs(false);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
     public void onViewWillDestroy() {
     }
 
-    private void getAndDisplayLocalSongs() {
+    private void getAndDisplayLocalSongs(final boolean isLoadMore) {
         new AsyncTask<Void, Void, List<LocalSongEntity>>() {
             @Override
             protected void onPreExecute() {
@@ -100,12 +100,16 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
                     result = new ArrayList<LocalSongEntity>();
                 }
 
-                mSongDisplayView.setDisplayData(result);
+                if (!isLoadMore) {
+                    mSongDisplayView.setDisplayData(result);
 
-                if (result.size() == 0) {
-                    mSongDisplayView.showEmpty();
+                    if (result.size() == 0) {
+                        mSongDisplayView.showEmpty();
+                    } else {
+                        mSongDisplayView.display();
+                    }
                 } else {
-                    mSongDisplayView.display();
+                    mSongDisplayView.addLoadMoreData(result);
                 }
             }
         }.execute();

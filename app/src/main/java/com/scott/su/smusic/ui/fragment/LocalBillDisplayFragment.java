@@ -20,9 +20,6 @@ import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
-
 /**
  * Created by asus on 2016/8/19.
  */
@@ -46,8 +43,6 @@ public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntit
     protected void onFirstTimeCreateView() {
         mSongBillDisplayPresenter = new LocalBillDisplayPresenterImpl(this);
         mSongBillDisplayPresenter.onViewFirstTimeCreated();
-
-        this.setSwipeRefreshEnable(true);
     }
 
     @Override
@@ -82,6 +77,16 @@ public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntit
     @Override
     protected int getErrorLayout() {
         return R.layout.display_error_default;
+    }
+
+    @Override
+    protected boolean canSwipeRefresh() {
+        return false;
+    }
+
+    @Override
+    protected boolean canLoadMore() {
+        return false;
     }
 
     @Override
@@ -122,7 +127,7 @@ public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntit
     }
 
     @Override
-    public void setLoadMoreData(@NonNull List<LocalBillEntity> dataList) {
+    public void addLoadMoreData(@NonNull List<LocalBillEntity> dataList) {
     }
 
     @Override

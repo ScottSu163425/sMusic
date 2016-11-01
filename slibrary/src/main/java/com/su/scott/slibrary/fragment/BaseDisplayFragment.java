@@ -1,7 +1,6 @@
 package com.su.scott.slibrary.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,8 +12,6 @@ import android.widget.FrameLayout;
 
 import com.su.scott.slibrary.R;
 import com.su.scott.slibrary.view.BaseDisplayView;
-
-import java.util.List;
 
 /**
  * @类名 BaseDisplayFragment
@@ -30,8 +27,7 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
     private FrameLayout mEmptyLayout;
     private FrameLayout mErrorLayout;
     private boolean mIsFirstTimeCreateView = true;
-    private boolean mSwipeRefreshEnable = false;
-    private boolean mLoadMoreEnable = false;
+
 
     protected abstract void onFirstTimeCreateView();
 
@@ -39,17 +35,15 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
 
     protected abstract RecyclerView.LayoutManager getLayoutManager();
 
-    protected abstract
-    @LayoutRes
-    int getLoadingLayout();
+    protected abstract int getLoadingLayout();
 
-    protected abstract
-    @LayoutRes
-    int getEmptyLayout();
+    protected abstract int getEmptyLayout();
 
-    protected abstract
-    @LayoutRes
-    int getErrorLayout();
+    protected abstract int getErrorLayout();
+
+    protected abstract boolean canSwipeRefresh();
+
+    protected abstract boolean canLoadMore();
 
     protected abstract void onSwipeRefresh();
 
@@ -102,7 +96,6 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
 
                     //上拉自动加载更多
                     LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
                     if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                         //获取最后一个完全显示的ItemPosition
                         int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
@@ -111,7 +104,7 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
                         // 判断是否滚动到底部，并且是向下滚动
                         if (lastVisibleItem == (totalItemCount - 1)) {
                             //加载更多
-                            if (isLoadMoreEnable()) {
+                            if (canLoadMore()) {
                                 onLoadMore();
                             }
                         }
@@ -131,7 +124,7 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
                     onSwipeRefresh();
                 }
             });
-            mSwipeRefreshLayout.setEnabled(mSwipeRefreshEnable);
+            mSwipeRefreshLayout.setEnabled(canSwipeRefresh());
         }
         return mRootView;
     }
@@ -181,28 +174,9 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
         mDisplayRecyclerView.setVisibility(View.GONE);
     }
 
-    public boolean isSwipeRefreshEnable() {
-        return mSwipeRefreshEnable;
-    }
-
-    public void setSwipeRefreshEnable(boolean mSwipeRefreshEnable) {
-        this.mSwipeRefreshEnable = mSwipeRefreshEnable;
-        if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setEnabled(mSwipeRefreshEnable);
-        }
-    }
-
-    public boolean isLoadMoreEnable() {
-        return mLoadMoreEnable;
-    }
-
-    public void setLoadMoreEnable(boolean mLoadMoreEnable) {
-        this.mLoadMoreEnable = mLoadMoreEnable;
-    }
-
     @Override
     public void performSwipeRefresh() {
-        if (!isSwipeRefreshEnable()) {
+        if (!canSwipeRefresh()) {
             return;
         }
         mSwipeRefreshLayout.setRefreshing(true);
@@ -210,7 +184,7 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
 
     @Override
     public void stopSwipeRefresh() {
-        if (!isSwipeRefreshEnable()) {
+        if (!canSwipeRefresh()) {
             return;
         }
         mSwipeRefreshLayout.setRefreshing(false);
