@@ -50,7 +50,7 @@ public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> 
 
     @Override
     public int getItemCount() {
-        return dataList == null ? 0 : dataList.size();
+        return dataList.size();
     }
 
     @Override

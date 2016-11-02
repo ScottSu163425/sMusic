@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.su.scott.slibrary.R;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.ScreenUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 import com.su.scott.slibrary.view.BaseDisplayView;
@@ -142,19 +143,19 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
         mDisplayRecyclerView.setAdapter(getAdapter());
 
         //setup load more
-        mDisplayRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+       /* if (canLoadMore()) {
+            mDisplayRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
 
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
-                    int totalItemCount = manager.getItemCount();
+                    LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+                        int totalItemCount = manager.getItemCount();
 
-                    if (lastVisibleItem == (totalItemCount - 1)) {
-                        if (canLoadMore()) {
+                        if (lastVisibleItem == (totalItemCount - 1)) {
                             int itemHeight = getViewHolder(getFirstVisibleItemPosition()).itemView.getHeight();
                             int itemCount = getAdapter().getItemCount();
                             int screenHeight = ScreenUtil.getScreenHeight(getActivity());
@@ -174,13 +175,13 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
                         }
                     }
                 }
-            }
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-            }
-        });
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                }
+            });
+        }*/
 
     }
 

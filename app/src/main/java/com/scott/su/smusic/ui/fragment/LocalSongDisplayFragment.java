@@ -164,6 +164,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
 
     @Override
     public void setDisplayData(@NonNull List<LocalSongEntity> dataList) {
+        L.e("===>etDisplayData");
         mSongDisplayAdapter.setDataList(dataList);
         mSongDisplayAdapter.notifyDataSetChanged();
         if (mDisplayCallback != null) {
