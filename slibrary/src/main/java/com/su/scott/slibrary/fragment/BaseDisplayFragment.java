@@ -1,6 +1,7 @@
 package com.su.scott.slibrary.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.su.scott.slibrary.R;
+import com.su.scott.slibrary.util.ScreenUtil;
+import com.su.scott.slibrary.util.ViewUtil;
 import com.su.scott.slibrary.view.BaseDisplayView;
 
 /**
@@ -19,14 +22,19 @@ import com.su.scott.slibrary.view.BaseDisplayView;
  * @作者 Su
  * @时间 2016年7月
  */
-public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements BaseDisplayView<E> {
+public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder> extends BaseFragment implements BaseDisplayView<E> {
+    private static final int LAYOUT_ID_DISPLAY_DEFAULT_LOADING = R.layout.display_loading_default;
+    private static final int LAYOUT_ID_DISPLAY_DEFAULT_EMPTY = R.layout.display_empty_default;
+    private static final int LAYOUT_ID_DISPLAY_DEFAULT_ERROR = R.layout.display_error_default;
+    private static final int LAYOUT_ID_DISPLAY_DEFAULT_FOOTER = R.layout.display_footer_default;
+
     private View mRootView;
     private RecyclerView mDisplayRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FrameLayout mLoadingLayout;
     private FrameLayout mEmptyLayout;
     private FrameLayout mErrorLayout;
-    private View mFooterView;
+    private FrameLayout mFooterLayout;
     private boolean mIsFirstTimeCreateView = true;
 
 
@@ -36,11 +44,21 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
 
     protected abstract RecyclerView.LayoutManager getLayoutManager();
 
-    protected abstract int getLoadingLayout();
+    protected abstract
+    @LayoutRes
+    int getLoadingLayoutRes();
 
-    protected abstract int getEmptyLayout();
+    protected abstract
+    @LayoutRes
+    int getEmptyLayoutRes();
 
-    protected abstract int getErrorLayout();
+    protected abstract
+    @LayoutRes
+    int getErrorLayoutRes();
+
+    protected abstract
+    @LayoutRes
+    int getFooterLayoutRes();
 
     protected abstract boolean canSwipeRefresh();
 
@@ -60,76 +78,110 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
             mRootView = inflater.inflate(R.layout.fragment_base_display, container, false);
-            mDisplayRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_fragment_base_display);
-            mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipe_refresh_layout_fragment_base_display);
-            mLoadingLayout = (FrameLayout) mRootView.findViewById(R.id.fl_container_loading_layout_fragment_base_display);
-            mEmptyLayout = (FrameLayout) mRootView.findViewById(R.id.fl_container_empty_layout_fragment_base_display);
-            mErrorLayout = (FrameLayout) mRootView.findViewById(R.id.fl_container_error_layout_fragment_base_display);
-            mFooterView = mRootView.findViewById(R.id.rl_footer_fragment_base_display);
+            initDisplyView();
+            initStateLayout(inflater, container, savedInstanceState);
+            initSwipRefresh();
+            initRecyclerView();
+        }
+        return mRootView;
+    }
 
-            mLoadingLayout.addView(inflater.inflate(getLoadingLayout(), container, false), new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-            mEmptyLayout.addView(inflater.inflate(getEmptyLayout(), container, false), new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-            mErrorLayout.addView(inflater.inflate(getErrorLayout(), container, false), new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+    private void initDisplyView() {
+        mDisplayRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_fragment_base_display);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipe_refresh_layout_fragment_base_display);
+        mLoadingLayout = (FrameLayout) mRootView.findViewById(R.id.fl_container_loading_layout_fragment_base_display);
+        mEmptyLayout = (FrameLayout) mRootView.findViewById(R.id.fl_container_empty_layout_fragment_base_display);
+        mErrorLayout = (FrameLayout) mRootView.findViewById(R.id.fl_container_error_layout_fragment_base_display);
+        mFooterLayout = (FrameLayout) mRootView.findViewById(R.id.fl_container_footer_layout_fragment_base_display);
+    }
 
-            mEmptyLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onEmptyClick();
-                }
-            });
+    private void initStateLayout(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //Set specific or default state layout.
+        mLoadingLayout.addView(inflater.inflate(getLoadingLayoutRes() == 0 ? LAYOUT_ID_DISPLAY_DEFAULT_LOADING : getLoadingLayoutRes(), container, false),
+                new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
 
-            mErrorLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onErrorClick();
-                }
-            });
+        mEmptyLayout.addView(inflater.inflate(getEmptyLayoutRes() == 0 ? LAYOUT_ID_DISPLAY_DEFAULT_EMPTY : getEmptyLayoutRes(), container, false),
+                new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
 
-            mDisplayRecyclerView.setHasFixedSize(true);
-            mDisplayRecyclerView.setLayoutManager(getLayoutManager());
-            mDisplayRecyclerView.setAdapter(getAdapter());
+        mErrorLayout.addView(inflater.inflate(getErrorLayoutRes() == 0 ? LAYOUT_ID_DISPLAY_DEFAULT_ERROR : getErrorLayoutRes(), container, false),
+                new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
 
-            //setup loadmore
-            mDisplayRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mFooterLayout.addView(inflater.inflate(getFooterLayoutRes() == 0 ? LAYOUT_ID_DISPLAY_DEFAULT_FOOTER : getFooterLayoutRes(), container, false),
+                new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
 
-                @Override
-                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
+        mEmptyLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onEmptyClick();
+            }
+        });
 
-                    //上拉自动加载更多
-                    LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        //获取最后一个完全显示的ItemPosition
-                        int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
-                        int totalItemCount = manager.getItemCount();
+        mErrorLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onErrorClick();
+            }
+        });
+    }
 
-                        // 判断是否滚动到底部，并且是向下滚动
-                        if (lastVisibleItem == (totalItemCount - 1)) {
-                            //加载更多
-                            if (canLoadMore()) {
-                                mFooterView.setVisibility(View.VISIBLE);
-                                onLoadMore();
+    private void initSwipRefresh() {
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.md_indigo_500, R.color.md_red_500, R.color.md_green_500, R.color.md_yellow_500);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onSwipeRefresh();
+            }
+        });
+
+        mSwipeRefreshLayout.setEnabled(canSwipeRefresh());
+    }
+
+    private void initRecyclerView() {
+        mDisplayRecyclerView.setHasFixedSize(true);
+        mDisplayRecyclerView.setLayoutManager(getLayoutManager());
+        mDisplayRecyclerView.setAdapter(getAdapter());
+
+        //setup load more
+        mDisplayRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+                    int totalItemCount = manager.getItemCount();
+
+                    if (lastVisibleItem == (totalItemCount - 1)) {
+                        if (canLoadMore()) {
+                            int itemHeight = getViewHolder(getFirstVisibleItemPosition()).itemView.getHeight();
+                            int itemCount = getAdapter().getItemCount();
+                            int screenHeight = ScreenUtil.getScreenHeight(getActivity());
+                            int totalItemHeight = itemHeight * itemCount;
+
+                            //If the items could not fill a screen height,then disable load more even if user pull the items;
+                            if (totalItemHeight < screenHeight) {
+                                return;
                             }
+
+                            if (mSwipeRefreshLayout.isRefreshing()) {
+                                return;
+                            }
+
+                            mFooterLayout.setVisibility(View.VISIBLE);
+                            onLoadMore();
                         }
                     }
                 }
+            }
 
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-                }
-            });
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
 
-            mSwipeRefreshLayout.setColorSchemeResources(R.color.md_indigo_500, R.color.md_red_500, R.color.md_green_500, R.color.md_yellow_500);
-            mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    onSwipeRefresh();
-                }
-            });
-            mSwipeRefreshLayout.setEnabled(canSwipeRefresh());
-        }
-        return mRootView;
     }
 
     @Override
@@ -144,41 +196,41 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
     @Override
     public void display() {
         stopSwipeRefresh();
-        mLoadingLayout.setVisibility(View.GONE);
-        mEmptyLayout.setVisibility(View.GONE);
-        mErrorLayout.setVisibility(View.GONE);
-        mFooterView.setVisibility(View.GONE);
-        mDisplayRecyclerView.setVisibility(View.VISIBLE);
+        ViewUtil.setViewVisiable(mDisplayRecyclerView);
+        ViewUtil.setViewGone(mLoadingLayout);
+        ViewUtil.setViewGone(mEmptyLayout);
+        ViewUtil.setViewGone(mErrorLayout);
+        ViewUtil.setViewGone(mFooterLayout);
     }
 
     @Override
     public void showLoading() {
         stopSwipeRefresh();
-        mLoadingLayout.setVisibility(View.VISIBLE);
-        mEmptyLayout.setVisibility(View.GONE);
-        mErrorLayout.setVisibility(View.GONE);
-        mDisplayRecyclerView.setVisibility(View.GONE);
-        mFooterView.setVisibility(View.GONE);
+        ViewUtil.setViewVisiable(mLoadingLayout);
+        ViewUtil.setViewGone(mDisplayRecyclerView);
+        ViewUtil.setViewGone(mEmptyLayout);
+        ViewUtil.setViewGone(mErrorLayout);
+        ViewUtil.setViewGone(mFooterLayout);
     }
 
     @Override
     public void showEmpty() {
         stopSwipeRefresh();
-        mLoadingLayout.setVisibility(View.GONE);
-        mEmptyLayout.setVisibility(View.VISIBLE);
-        mErrorLayout.setVisibility(View.GONE);
-        mDisplayRecyclerView.setVisibility(View.GONE);
-        mFooterView.setVisibility(View.GONE);
+        ViewUtil.setViewVisiable(mEmptyLayout);
+        ViewUtil.setViewGone(mDisplayRecyclerView);
+        ViewUtil.setViewGone(mLoadingLayout);
+        ViewUtil.setViewGone(mErrorLayout);
+        ViewUtil.setViewGone(mFooterLayout);
     }
 
     @Override
     public void showError() {
         stopSwipeRefresh();
-        mLoadingLayout.setVisibility(View.GONE);
-        mEmptyLayout.setVisibility(View.GONE);
-        mErrorLayout.setVisibility(View.VISIBLE);
-        mDisplayRecyclerView.setVisibility(View.GONE);
-        mFooterView.setVisibility(View.GONE);
+        ViewUtil.setViewVisiable(mErrorLayout);
+        ViewUtil.setViewGone(mDisplayRecyclerView);
+        ViewUtil.setViewGone(mLoadingLayout);
+        ViewUtil.setViewGone(mEmptyLayout);
+        ViewUtil.setViewGone(mFooterLayout);
     }
 
     @Override

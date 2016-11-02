@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * BaseDisplayAdapter
- * ESchoolbag <com.ftet.userhomeframe>
  * Created by su on 2016/4/6.
  * Feature: RecyclerView适配器基类
  */

@@ -48,17 +48,11 @@
                     android:visibility="gone" />
             </FrameLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl_footer_fragment_base_display"
+            <FrameLayout
+                android:id="@+id/fl_container_footer_layout_fragment_base_display"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:visibility="gone">
-
-                <com.pnikosis.materialishprogress.ProgressWheel
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerInParent="true" />
-            </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 

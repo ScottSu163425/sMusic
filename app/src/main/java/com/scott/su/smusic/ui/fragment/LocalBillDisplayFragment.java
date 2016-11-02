@@ -65,18 +65,23 @@ public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntit
     }
 
     @Override
-    protected int getLoadingLayout() {
-        return R.layout.display_loading_default;
+    protected int getLoadingLayoutRes() {
+        return 0;
     }
 
     @Override
-    protected int getEmptyLayout() {
-        return R.layout.display_empty_local_song;
+    protected int getEmptyLayoutRes() {
+        return 0;
     }
 
     @Override
-    protected int getErrorLayout() {
-        return R.layout.display_error_default;
+    protected int getErrorLayoutRes() {
+        return 0;
+    }
+
+    @Override
+    protected int getFooterLayoutRes() {
+        return 0;
     }
 
     @Override

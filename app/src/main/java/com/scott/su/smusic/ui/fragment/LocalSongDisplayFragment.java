@@ -103,18 +103,23 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     }
 
     @Override
-    protected int getLoadingLayout() {
+    protected int getLoadingLayoutRes() {
         return R.layout.display_loading_default;
     }
 
     @Override
-    protected int getEmptyLayout() {
+    protected int getEmptyLayoutRes() {
         return R.layout.display_empty_local_song;
     }
 
     @Override
-    protected int getErrorLayout() {
-        return R.layout.display_error_default;
+    protected int getErrorLayoutRes() {
+        return 0;
+    }
+
+    @Override
+    protected int getFooterLayoutRes() {
+        return 0;
     }
 
     @Override

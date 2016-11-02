@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalAlbumDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.LocalAlbumViewHolder;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
@@ -20,9 +19,7 @@ import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter;
 
 /**
  * Created by asus on 2016/8/19.
@@ -69,18 +66,23 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
     }
 
     @Override
-    protected int getLoadingLayout() {
-        return R.layout.display_loading_default;
+    protected int getLoadingLayoutRes() {
+        return 0;
     }
 
     @Override
-    protected int getEmptyLayout() {
-        return R.layout.display_empty_local_song;
+    protected int getEmptyLayoutRes() {
+        return 0;
     }
 
     @Override
-    protected int getErrorLayout() {
-        return R.layout.display_error_default;
+    protected int getErrorLayoutRes() {
+        return 0;
+    }
+
+    @Override
+    protected int getFooterLayoutRes() {
+        return 0;
     }
 
     @Override
