@@ -26,6 +26,7 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
     private FrameLayout mLoadingLayout;
     private FrameLayout mEmptyLayout;
     private FrameLayout mErrorLayout;
+    private View mFooterView;
     private boolean mIsFirstTimeCreateView = true;
 
 
@@ -64,6 +65,7 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
             mLoadingLayout = (FrameLayout) mRootView.findViewById(R.id.fl_container_loading_layout_fragment_base_display);
             mEmptyLayout = (FrameLayout) mRootView.findViewById(R.id.fl_container_empty_layout_fragment_base_display);
             mErrorLayout = (FrameLayout) mRootView.findViewById(R.id.fl_container_error_layout_fragment_base_display);
+            mFooterView = mRootView.findViewById(R.id.rl_footer_fragment_base_display);
 
             mLoadingLayout.addView(inflater.inflate(getLoadingLayout(), container, false), new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
             mEmptyLayout.addView(inflater.inflate(getEmptyLayout(), container, false), new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
@@ -105,6 +107,7 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
                         if (lastVisibleItem == (totalItemCount - 1)) {
                             //加载更多
                             if (canLoadMore()) {
+                                mFooterView.setVisibility(View.VISIBLE);
                                 onLoadMore();
                             }
                         }
@@ -144,6 +147,7 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
         mLoadingLayout.setVisibility(View.GONE);
         mEmptyLayout.setVisibility(View.GONE);
         mErrorLayout.setVisibility(View.GONE);
+        mFooterView.setVisibility(View.GONE);
         mDisplayRecyclerView.setVisibility(View.VISIBLE);
     }
 
@@ -154,6 +158,7 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
         mEmptyLayout.setVisibility(View.GONE);
         mErrorLayout.setVisibility(View.GONE);
         mDisplayRecyclerView.setVisibility(View.GONE);
+        mFooterView.setVisibility(View.GONE);
     }
 
     @Override
@@ -163,6 +168,7 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
         mEmptyLayout.setVisibility(View.VISIBLE);
         mErrorLayout.setVisibility(View.GONE);
         mDisplayRecyclerView.setVisibility(View.GONE);
+        mFooterView.setVisibility(View.GONE);
     }
 
     @Override
@@ -172,6 +178,7 @@ public abstract class BaseDisplayFragment<E, VH> extends BaseFragment implements
         mEmptyLayout.setVisibility(View.GONE);
         mErrorLayout.setVisibility(View.VISIBLE);
         mDisplayRecyclerView.setVisibility(View.GONE);
+        mFooterView.setVisibility(View.GONE);
     }
 
     @Override

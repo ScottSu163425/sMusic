@@ -85,7 +85,7 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
 
     @Override
     protected boolean canSwipeRefresh() {
-        return false;
+        return true;
     }
 
     @Override
@@ -100,7 +100,6 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
 
     @Override
     protected void onLoadMore() {
-
     }
 
     @Override
