@@ -21,31 +21,26 @@ import com.scott.su.smusic.mvp.presenter.impl.LocalSongDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
-import com.su.scott.slibrary.util.L;
-import com.su.scott.slibrary.util.T;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 
 /**
  * Created by asus on 2016/8/19.
  */
 public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity, LocalSongViewHolder> implements LocalSongDisplayView {
+    private static final String KEY_DISPLAY_TYPE_ENTITY = "KEY_DISPLAY_TYPE_ENTITY ";
+    private static final String KEY_DISPLAY_TYPE = "KEY_DISPLAY_TYPE";
+    private static final String KEY_DISPLAY_STYLE = "KEY_DISPLAY_STYLE";
+
     private LocalSongDisplayPresenter mSongDisplayPresenter;
     private LocalSongDisplayAdapter mSongDisplayAdapter;
     private LocalSongDisplayStyle mLocalSongDisplayStyle = LocalSongDisplayStyle.NumberDivider;
     private LocalSongDisplayType mDisplayType = LocalSongDisplayType.Normal;
+
     private LocalBillEntity mSongsBillEntity;
     private LocalAlbumEntity mSongsAlbumEntity;
     private LocalSongDisplayCallback mDisplayCallback;
-
-    private static final String KEY_DISPLAY_TYPE_ENTITY = "KEY_DISPLAY_TYPE_ENTITY ";
-    private static final String KEY_DISPLAY_TYPE = "KEY_DISPLAY_TYPE";
-    private static final String KEY_DISPLAY_STYLE = "KEY_DISPLAY_STYLE";
 
 
     public static LocalSongDisplayFragment newInstance(LocalSongDisplayType displayType, @Nullable Object entity, LocalSongDisplayStyle localSongDisplayStyle) {

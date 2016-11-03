@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.su.scott.slibrary.R;
-import com.su.scott.slibrary.util.L;
-import com.su.scott.slibrary.util.ScreenUtil;
+import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 import com.su.scott.slibrary.view.BaseDisplayView;
 
@@ -143,7 +142,7 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
         mDisplayRecyclerView.setAdapter(getAdapter());
 
         //setup load more
-       /* if (canLoadMore()) {
+        if (canLoadMore()) {
             mDisplayRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
                 @Override
@@ -158,11 +157,11 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
                         if (lastVisibleItem == (totalItemCount - 1)) {
                             int itemHeight = getViewHolder(getFirstVisibleItemPosition()).itemView.getHeight();
                             int itemCount = getAdapter().getItemCount();
-                            int screenHeight = ScreenUtil.getScreenHeight(getActivity());
                             int totalItemHeight = itemHeight * itemCount;
+                            int recyclerViewHeight = getRecyclerView().getHeight();
 
-                            //If the items could not fill a screen height,then disable load more even if user pull the items;
-                            if (totalItemHeight < screenHeight) {
+                            //If the items could not fill a recycler view height,then disable load more even if user pull up the items;
+                            if (totalItemHeight < recyclerViewHeight) {
                                 return;
                             }
 
@@ -170,7 +169,11 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
                                 return;
                             }
 
-                            mFooterLayout.setVisibility(View.VISIBLE);
+                            if (ViewUtil.isViewVisiable(mFooterLayout)) {
+                                return;
+                            }
+
+                            showLoadMoreFooter();
                             onLoadMore();
                         }
                     }
@@ -181,7 +184,7 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
                     super.onScrolled(recyclerView, dx, dy);
                 }
             });
-        }*/
+        }
 
     }
 
@@ -202,6 +205,7 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
         ViewUtil.setViewGone(mEmptyLayout);
         ViewUtil.setViewGone(mErrorLayout);
         ViewUtil.setViewGone(mFooterLayout);
+//        hideLoadMoreFooter();
     }
 
     @Override
@@ -212,6 +216,7 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
         ViewUtil.setViewGone(mEmptyLayout);
         ViewUtil.setViewGone(mErrorLayout);
         ViewUtil.setViewGone(mFooterLayout);
+//        hideLoadMoreFooter();
     }
 
     @Override
@@ -222,6 +227,7 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
         ViewUtil.setViewGone(mLoadingLayout);
         ViewUtil.setViewGone(mErrorLayout);
         ViewUtil.setViewGone(mFooterLayout);
+//        hideLoadMoreFooter();
     }
 
     @Override
@@ -232,7 +238,20 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
         ViewUtil.setViewGone(mLoadingLayout);
         ViewUtil.setViewGone(mEmptyLayout);
         ViewUtil.setViewGone(mFooterLayout);
+//        hideLoadMoreFooter();
     }
+
+    private void showLoadMoreFooter() {
+        if (!ViewUtil.isViewVisiable(mFooterLayout)) {
+            AnimUtil.alphaIn(mFooterLayout);
+        }
+    }
+
+//    private void hideLoadMoreFooter() {
+//        if (!ViewUtil.isViewVisiable(mFooterLayout)) {
+//            AnimUtil.alphaOut(mFooterLayout);
+//        }
+//    }
 
     @Override
     public void performSwipeRefresh() {

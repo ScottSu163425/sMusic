@@ -1,7 +1,7 @@
 package com.su.scott.slibrary.adapter;
 
 import android.app.Activity;
-import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -9,7 +9,6 @@ import com.su.scott.slibrary.callback.ItemClickCallback;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by su on 2016/4/6.
@@ -20,7 +19,7 @@ public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> 
 
     protected Activity context;
     private RecyclerView recyclerView;
-    private List<E> dataList;
+    private List<E> dataList = new ArrayList<>();
     private int selectedPosition = -1;
     private ItemClickCallback<E> itemClickCallback;
 
@@ -34,7 +33,6 @@ public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> 
 
     public BaseDisplayAdapter(Activity context) {
         this.context = context;
-        this.setDataList(new ArrayList<E>());
     }
 
     public BaseDisplayAdapter(Activity context, List<E> dataList) {
@@ -60,32 +58,39 @@ public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        setRecyclerView(recyclerView);
+        this.recyclerView = recyclerView;
     }
 
     public List<E> getDataList() {
         return dataList;
     }
 
-    public void setDataList(List<E> dataList) {
+    public void setDataList(@NonNull List<E> dataList) {
         this.dataList = dataList;
         onDataListChanged();
     }
+
+    public void addData(@NonNull E data) {
+        dataList.add(data);
+        onDataListChanged();
+    }
+
+    public void addDataList(@NonNull List<E> dataList) {
+        this.dataList.addAll(dataList);
+        onDataListChanged();
+    }
+
 
     protected ItemClickCallback<E> getItemClickCallback() {
         return itemClickCallback;
     }
 
-    public void setItemClickCallback(ItemClickCallback<E> itemClickCallback) {
+    public void setItemClickCallback(@NonNull ItemClickCallback<E> itemClickCallback) {
         this.itemClickCallback = itemClickCallback;
     }
 
     public RecyclerView getRecyclerView() {
         return recyclerView;
-    }
-
-    private void setRecyclerView(RecyclerView recyclerView) {
-        this.recyclerView = recyclerView;
     }
 
     public E getItemEntity(int position) {
