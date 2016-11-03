@@ -245,10 +245,6 @@ public class MainActivity extends BaseActivity implements MainView {
         mBillDisplayFragment = LocalBillDisplayFragment.newInstance();
         mAlbumDisplayFragment = LocalAlbumDisplayFragment.newInstance();
 
-//        mSongDisplayFragment.setSwipeRefreshEnable(true);
-//        mBillDisplayFragment.setSwipeRefreshEnable(false);
-//        mAlbumDisplayFragment.setSwipeRefreshEnable(false);
-
         pageFragments.add(mSongDisplayFragment);
         pageFragments.add(mBillDisplayFragment);
         pageFragments.add(mAlbumDisplayFragment);

@@ -9,13 +9,14 @@ import com.su.scott.slibrary.callback.ItemClickCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by su on 2016/4/6.
  * Feature: RecyclerView适配器基类
  */
 public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> extends RecyclerView.Adapter<VH> {
-    public static final int  POSITION_NONE = -1;
+    public static final int POSITION_NONE = -1;
 
     protected Activity context;
     private RecyclerView recyclerView;
@@ -23,8 +24,11 @@ public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> 
     private int selectedPosition = -1;
     private ItemClickCallback<E> itemClickCallback;
 
+
     protected abstract VH createVH(ViewGroup parent, int viewType);
+
     protected abstract void bindVH(VH viewHolder, E entity, int position);
+
     protected abstract void onDataListChanged();
 
 
