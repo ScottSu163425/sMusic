@@ -883,6 +883,10 @@ public class MainActivity extends BaseActivity implements MainView {
         if (mShutDownTimerServiceConnection != null) {
             unbindService(mShutDownTimerServiceConnection);
         }
+
+        if (mMainPresenter != null) {
+            mMainPresenter.onViewWillDestroy();
+        }
         super.onDestroy();
     }
 

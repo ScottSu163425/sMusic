@@ -46,7 +46,9 @@ public class LocalAlbumDetailPresenterImpl implements LocalAlbumDetailPresenter 
 
     @Override
     public void onViewWillDestroy() {
-
+        if (mAlbumDetailView != null) {
+            mAlbumDetailView = null;
+        }
     }
 
     @Override

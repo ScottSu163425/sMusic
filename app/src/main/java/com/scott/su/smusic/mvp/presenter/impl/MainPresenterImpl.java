@@ -242,7 +242,9 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onViewWillDestroy() {
-
+        if (mMainView != null) {
+            mMainView = null;
+        }
     }
 
 

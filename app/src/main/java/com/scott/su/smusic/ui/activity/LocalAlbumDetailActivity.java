@@ -208,5 +208,11 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
 
     }
 
-
+    @Override
+    protected void onDestroy() {
+        if (mPresenter != null) {
+            mPresenter.onViewWillDestroy();
+        }
+        super.onDestroy();
+    }
 }

@@ -66,7 +66,9 @@ public class SearchPresenterImpl implements SearchPresenter {
 
     @Override
     public void onViewWillDestroy() {
-
+        if (mSearchView != null) {
+            mSearchView = null;
+        }
     }
 
     @Override

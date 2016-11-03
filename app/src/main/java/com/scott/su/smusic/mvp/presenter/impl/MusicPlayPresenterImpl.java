@@ -64,6 +64,9 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
 
     @Override
     public void onViewWillDestroy() {
+        if (mMusicPlayView != null) {
+            mMusicPlayView = null;
+        }
     }
 
     @Override

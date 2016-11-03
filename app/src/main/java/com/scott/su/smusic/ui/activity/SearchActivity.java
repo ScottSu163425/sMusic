@@ -256,4 +256,11 @@ public class SearchActivity extends BaseActivity implements SearchView {
                 .show(getSupportFragmentManager(), "");
     }
 
+    @Override
+    protected void onDestroy() {
+        if (mSearchPresenter!=null){
+            mSearchPresenter.onViewWillDestroy();
+        }
+        super.onDestroy();
+    }
 }

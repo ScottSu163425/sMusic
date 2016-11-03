@@ -466,4 +466,12 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
                     }
                 }, null, null);
     }
+
+    @Override
+    protected void onDestroy() {
+        if (mBillDetailPresenter!=null){
+            mBillDetailPresenter.onViewWillDestroy();
+        }
+        super.onDestroy();
+    }
 }

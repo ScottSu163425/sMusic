@@ -663,8 +663,10 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     protected void onDestroy() {
         mMusicPlayServiceBinder.unregisterServicePlayCallback(mMusicPlayServiceCallback);
         unbindService(mMusicPlayServiceConnection);
-        mMusicPlayPresenter.onViewWillDestroy();
-        mMusicPlayPresenter = null;
+
+        if (mMusicPlayPresenter != null) {
+            mMusicPlayPresenter.onViewWillDestroy();
+        }
         super.onDestroy();
     }
 

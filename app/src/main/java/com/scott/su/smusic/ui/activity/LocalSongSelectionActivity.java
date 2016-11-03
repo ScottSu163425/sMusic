@@ -152,4 +152,11 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
         return true;
     }
 
+    @Override
+    protected void onDestroy() {
+        if (mSongSelectionPresenter!=null){
+            mSongSelectionPresenter.onViewWillDestroy();
+        }
+        super.onDestroy();
+    }
 }

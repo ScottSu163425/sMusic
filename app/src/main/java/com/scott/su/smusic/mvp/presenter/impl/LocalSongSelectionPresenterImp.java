@@ -44,6 +44,9 @@ public class LocalSongSelectionPresenterImp implements LocalSongSelectionPresent
 
     @Override
     public void onViewWillDestroy() {
-
+        if (mSongSelectionView != null) {
+            mSongSelectionView = null;
+        }
     }
+
 }

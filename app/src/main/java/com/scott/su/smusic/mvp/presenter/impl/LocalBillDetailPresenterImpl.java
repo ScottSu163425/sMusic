@@ -257,7 +257,9 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
 
     @Override
     public void onViewWillDestroy() {
-
+        if (mBillDetailView != null) {
+            mBillDetailView = null;
+        }
     }
 
     @Override
