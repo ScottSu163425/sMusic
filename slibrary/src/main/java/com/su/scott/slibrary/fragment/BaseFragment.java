@@ -22,13 +22,24 @@ import com.su.scott.slibrary.view.BaseView;
  */
 public abstract class BaseFragment extends Fragment implements BaseView {
     private ProgressDialog mLoadingDialog;
-    private String mNetworkErrorTip  ;
+    private String mNetworkErrorTip;
+    private boolean mIsFirstTimeCreateView = true;
 
+    protected abstract void onFirstTimeCreateView();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mNetworkErrorTip=getString(R.string.network_error);
+        mNetworkErrorTip = getString(R.string.network_error);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mIsFirstTimeCreateView) {
+            onFirstTimeCreateView();
+            mIsFirstTimeCreateView = false;
+        }
     }
 
     @Override

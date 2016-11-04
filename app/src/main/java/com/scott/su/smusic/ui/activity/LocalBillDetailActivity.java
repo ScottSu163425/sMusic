@@ -469,7 +469,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
 
     @Override
     protected void onDestroy() {
-        if (mBillDetailPresenter!=null){
+        if (mBillDetailPresenter != null) {
             mBillDetailPresenter.onViewWillDestroy();
         }
         super.onDestroy();

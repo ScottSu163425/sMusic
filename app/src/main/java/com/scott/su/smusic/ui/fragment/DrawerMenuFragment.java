@@ -28,7 +28,7 @@ import com.su.scott.slibrary.util.ViewUtil;
  */
 public class DrawerMenuFragment extends BaseFragment implements View.OnClickListener {
     private View mRootView;
-    private View mTimerMenuItem, mLanguageMenuItem, mUpdateMenuItem, mAboutMenuItem;
+    private View mStatisticMenuItem, mTimerMenuItem, mLanguageMenuItem, mUpdateMenuItem, mAboutMenuItem;
     private TextView mTimerTimeTextView;
     private SwitchCompat mNightModeSwitch;
     private DrawerMenuCallback mMenuCallback;
@@ -69,6 +69,7 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
         mNightModeSwitch = (SwitchCompat) mRootView.findViewById(R.id.swtich_night_mode_drawer_menu);
         mLanguageMenuItem = mRootView.findViewById(R.id.rl_item_language_drawer_menu);
         mTimerTimeTextView = (TextView) mRootView.findViewById(R.id.tv_time_timer_drawer_menu);
+        mStatisticMenuItem = mRootView.findViewById(R.id.rl_item_statistic_drawer_menu);
     }
 
     @Override
@@ -78,6 +79,7 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void initListener() {
+        mStatisticMenuItem.setOnClickListener(this);
         mTimerMenuItem.setOnClickListener(this);
         mLanguageMenuItem.setOnClickListener(this);
         mUpdateMenuItem.setOnClickListener(this);
@@ -108,7 +110,9 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
         }
 
         int id = view.getId();
-        if (id == mTimerMenuItem.getId()) {
+        if (id == mStatisticMenuItem.getId()) {
+            mMenuCallback.onDrawerMenuStaticticClick(view);
+        } else if (id == mTimerMenuItem.getId()) {
             popTimerMenu();
         } else if (id == mLanguageMenuItem.getId()) {
             popLanguageMenu();
@@ -182,4 +186,8 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
         }
     }
 
+    @Override
+    protected void onFirstTimeCreateView() {
+
+    }
 }

@@ -21,5 +21,8 @@ public interface DrawerMenuCallback {
 
     void onDrawerMenuTimerCancelClick();
 
-    void onDrawerMenuTimerMinutesClick(long millisOfmin );
+    void onDrawerMenuTimerMinutesClick(long millisOfmin);
+
+    void onDrawerMenuStaticticClick(View v);
+
 }

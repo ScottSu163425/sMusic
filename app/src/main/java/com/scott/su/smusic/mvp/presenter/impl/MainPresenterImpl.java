@@ -204,6 +204,11 @@ public class MainPresenterImpl implements MainPresenter {
         mMainView.startShutDownTimer(millisOfmin, TimeUtil.MILLISECONDS_OF_SECOND);
     }
 
+    @Override
+    public void onDrawerMenuStaticticClick(View v) {
+
+    }
+
 
     private void updateDefaultBillName() {
         LocalBillEntity defaultBill = mBillModel.getDefaultBill(mMainView.getViewContext());

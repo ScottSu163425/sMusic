@@ -35,10 +35,6 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
     private FrameLayout mEmptyLayout;
     private FrameLayout mErrorLayout;
     private FrameLayout mFooterLayout;
-    private boolean mIsFirstTimeCreateView = true;
-
-
-    protected abstract void onFirstTimeCreateView();
 
     protected abstract RecyclerView.Adapter getAdapter();
 
@@ -189,15 +185,6 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (mIsFirstTimeCreateView) {
-            onFirstTimeCreateView();
-            mIsFirstTimeCreateView = false;
-        }
-    }
-
-    @Override
     public void display() {
         stopSwipeRefresh();
         ViewUtil.setViewVisiable(mDisplayRecyclerView);
@@ -345,6 +332,12 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
 
     public RecyclerView getRecyclerView() {
         return getDisplayRecyclerView();
+    }
+
+    public void setSwipeRefreshEnable(boolean enable) {
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setEnabled(enable);
+        }
     }
 
 

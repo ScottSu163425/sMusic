@@ -320,6 +320,12 @@ public class MainActivity extends BaseActivity implements MainView {
             public void onDrawerMenuTimerMinutesClick(final long millisOfmin) {
                 mMainPresenter.onDrawerMenuTimerMinutesClick(millisOfmin);
             }
+
+            @Override
+            public void onDrawerMenuStaticticClick(View v) {
+                T.showShort(getApplicationContext(), "Statistic");
+                mMainPresenter.onDrawerMenuStaticticClick(v);
+            }
         });
 
         mSongDisplayFragment.setDisplayCallback(new LocalSongDisplayFragment.LocalSongDisplayCallback() {
