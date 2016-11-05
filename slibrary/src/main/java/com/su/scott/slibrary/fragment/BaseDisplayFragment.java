@@ -2,6 +2,7 @@ package com.su.scott.slibrary.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,13 +31,16 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
 
     private View mRootView;
     private RecyclerView mDisplayRecyclerView;
+    private RecyclerView.Adapter mDisplayAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FrameLayout mLoadingLayout;
     private FrameLayout mEmptyLayout;
     private FrameLayout mErrorLayout;
     private FrameLayout mFooterLayout;
 
-    protected abstract RecyclerView.Adapter getAdapter();
+    protected abstract
+    @NonNull
+    RecyclerView.Adapter getAdapter();
 
     protected abstract RecyclerView.LayoutManager getLayoutManager();
 
@@ -133,9 +137,10 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
     }
 
     private void initRecyclerView() {
+        mDisplayAdapter = getAdapter();
         mDisplayRecyclerView.setHasFixedSize(true);
         mDisplayRecyclerView.setLayoutManager(getLayoutManager());
-        mDisplayRecyclerView.setAdapter(getAdapter());
+        mDisplayRecyclerView.setAdapter(mDisplayAdapter);
 
         //setup load more
         if (canLoadMore()) {
@@ -152,7 +157,7 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
 
                         if (lastVisibleItem == (totalItemCount - 1)) {
                             int itemHeight = getViewHolder(getFirstVisibleItemPosition()).itemView.getHeight();
-                            int itemCount = getAdapter().getItemCount();
+                            int itemCount = mDisplayAdapter.getItemCount();
                             int totalItemHeight = itemHeight * itemCount;
                             int recyclerViewHeight = getRecyclerView().getHeight();
 

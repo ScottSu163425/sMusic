@@ -62,11 +62,13 @@ public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> 
     }
 
     public List<E> getDataList() {
-        return dataList;
+        return this.dataList;
     }
 
     public void setDataList(@NonNull List<E> dataList) {
-        this.dataList = dataList;
+//        this.dataList = dataList;
+        this.dataList.clear();
+        this.dataList.addAll(dataList);
         onDataListChanged();
     }
 

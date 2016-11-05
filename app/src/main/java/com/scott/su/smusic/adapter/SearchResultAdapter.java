@@ -81,10 +81,6 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
             final LocalSongViewHolder viewHolder = (LocalSongViewHolder) holder;
             final LocalSongEntity entity = (LocalSongEntity) result.get(position);
 
-            ViewUtil.setViewVisiable(viewHolder.getCoverAreaLayout());
-            ViewUtil.setViewVisiable(viewHolder.getCoverImageView());
-            ViewUtil.setViewGone(viewHolder.getNumberTextView());
-
             viewHolder.getTitleTextView().setText(entity.getTitle());
             viewHolder.getArtistTextView().setText(entity.getArtist());
             viewHolder.getAlbumTextView().setText(entity.getAlbum());
@@ -99,8 +95,6 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                setSelectedPosition(position);
-
                     if (onSearchResultClickListener != null) {
                         onSearchResultClickListener.onLocalSongClick(entity, viewHolder.getCoverImageView(), context.getString(R.string.transition_name_cover));
                     }

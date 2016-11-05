@@ -10,42 +10,15 @@
     android:foreground="?attr/selectableItemBackground"
     android:orientation="horizontal">
 
-    <View
-        android:id="@+id/view_indicator_view_holder_local_song"
-        android:layout_width="@dimen/width_indicator_selection_local_song"
-        android:layout_height="match_parent"
+    <ImageView
+        android:id="@+id/iv_cover_view_holder_local_song"
+        android:layout_width="@dimen/size_image_view_holder_local_song"
+        android:layout_height="@dimen/size_image_view_holder_local_song"
         android:layout_marginBottom="@dimen/margin_xxs"
+        android:layout_marginLeft="@dimen/margin_xs"
+        android:layout_marginRight="@dimen/margin_xxs"
         android:layout_marginTop="@dimen/margin_xxs"
-        android:background="@drawable/shape_indicator_selected_view_holder_local_song"
-        android:visibility="gone" />
-
-    <FrameLayout
-        android:id="@+id/fl_cover_area_view_holder_local_song"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/tv_number_view_holder_local_song"
-            style="@style/TextAppearanceSubhead"
-            android:layout_width="@dimen/size_image_view_holder_local_song"
-            android:layout_height="@dimen/size_image_view_holder_local_song"
-            android:layout_margin="@dimen/margin_xxs"
-            android:gravity="center"
-            android:text="1" />
-
-        <ImageView
-            android:id="@+id/iv_cover_view_holder_local_song"
-            android:layout_width="@dimen/size_image_view_holder_local_song"
-            android:layout_height="@dimen/size_image_view_holder_local_song"
-            android:layout_marginBottom="@dimen/margin_xxs"
-            android:layout_marginLeft="@dimen/margin_xs"
-            android:layout_marginRight="@dimen/margin_xxs"
-            android:layout_marginTop="@dimen/margin_xxs"
-            android:transitionName="@string/transition_name_cover"
-            android:visibility="gone" />
-    </FrameLayout>
+        android:transitionName="@string/transition_name_cover" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -67,8 +40,8 @@
                 style="@style/TextAppearanceSubhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:ellipsize="end"/>
+                android:ellipsize="end"
+                android:maxLines="1" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -81,9 +54,8 @@
                     style="@style/TextAppearanceCaptionSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
                     android:ellipsize="end"
-             />
+                    android:maxLines="1" />
 
                 <TextView
                     style="@style/TextAppearanceCaptionSecondary"
@@ -99,8 +71,8 @@
                     style="@style/TextAppearanceCaptionSecondary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end" />
+                    android:ellipsize="end"
+                    android:maxLines="1" />
             </LinearLayout>
         </LinearLayout>
 

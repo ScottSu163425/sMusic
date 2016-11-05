@@ -239,10 +239,8 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     public void initData() {
         List<Fragment> pageFragments = new ArrayList<>();
-
         mDrawerMenuFragment = new DrawerMenuFragment();
-        mSongDisplayFragment = LocalSongDisplayFragment.newInstance(LocalSongDisplayType.Normal, null,
-                LocalSongDisplayStyle.CoverDivider);
+        mSongDisplayFragment = LocalSongDisplayFragment.newInstance();
         mBillDisplayFragment = LocalBillDisplayFragment.newInstance();
         mAlbumDisplayFragment = LocalAlbumDisplayFragment.newInstance();
 

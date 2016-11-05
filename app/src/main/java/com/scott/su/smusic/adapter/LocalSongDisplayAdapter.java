@@ -19,20 +19,16 @@ import java.util.List;
  * Created by asus on 2016/8/19.
  */
 public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSongViewHolder, LocalSongEntity> {
-    private LocalSongDisplayStyle localSongDisplayStyle = LocalSongDisplayStyle.NumberDivider; //RecyclerView item layout type
-
 
     public abstract void onItemMoreClick(View view, int position, LocalSongEntity entity);
 
 
-    public LocalSongDisplayAdapter(Activity context, LocalSongDisplayStyle localSongDisplayStyle) {
+    public LocalSongDisplayAdapter(Activity context) {
         super(context);
-        this.localSongDisplayStyle = localSongDisplayStyle;
     }
 
-    public LocalSongDisplayAdapter(Activity context, List<LocalSongEntity> dataList, LocalSongDisplayStyle localSongDisplayStyle) {
+    public LocalSongDisplayAdapter(Activity context, List<LocalSongEntity> dataList) {
         super(context, dataList);
-        this.localSongDisplayStyle = localSongDisplayStyle;
     }
 
     @Override
@@ -43,45 +39,12 @@ public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSo
 
     @Override
     protected void bindVH(final LocalSongViewHolder viewHolder, final LocalSongEntity entity, final int position) {
-        if (localSongDisplayStyle == LocalSongDisplayStyle.NumberDivider || localSongDisplayStyle == LocalSongDisplayStyle.OnlyNumber) {
-            if (localSongDisplayStyle == LocalSongDisplayStyle.NumberDivider) {
-                ViewUtil.setViewVisiable(viewHolder.getDividerView());
-            } else {
-                //OnlyNumber
-                ViewUtil.setViewGone(viewHolder.getDividerView());
-            }
-            ViewUtil.setViewVisiable(viewHolder.getCoverAreaLayout());
-            ViewUtil.setViewVisiable(viewHolder.getNumberTextView());
-            ViewUtil.setViewGone(viewHolder.getCoverImageView());
-            ViewUtil.setText(viewHolder.getNumberTextView(), (position + 1) + "", "");
-        } else if (localSongDisplayStyle == LocalSongDisplayStyle.CoverDivider || localSongDisplayStyle == LocalSongDisplayStyle.OnlyCover) {
-            if (localSongDisplayStyle == LocalSongDisplayStyle.CoverDivider) {
-                ViewUtil.setViewVisiable(viewHolder.getDividerView());
-            } else {
-                ViewUtil.setViewGone(viewHolder.getDividerView());
-            }
-            ViewUtil.setViewVisiable(viewHolder.getCoverAreaLayout());
-            ViewUtil.setViewVisiable(viewHolder.getCoverImageView());
-            ViewUtil.setViewGone(viewHolder.getNumberTextView());
-            ImageLoader.load(context,
-                    entity.getCoverPath(),
-                    viewHolder.getCoverImageView(),
-                    R.color.place_holder_loading,
-                    R.drawable.ic_cover_default_song_bill
-            );
-        } else if (localSongDisplayStyle == LocalSongDisplayStyle.OnlyDivider) {
-            ViewUtil.setViewGone(viewHolder.getCoverAreaLayout());
-            ViewUtil.setViewVisiable(viewHolder.getDividerView());
-        } else if (localSongDisplayStyle == LocalSongDisplayStyle.None) {
-            ViewUtil.setViewGone(viewHolder.getCoverAreaLayout());
-            ViewUtil.setViewGone(viewHolder.getDividerView());
-        }
-//
-//        if (getSelectedPosition() == position) {
-//            ViewUtil.setViewVisiable(viewHolder.getSelectionIndicatorView());
-//        } else {
-//            ViewUtil.setViewGone(viewHolder.getSelectionIndicatorView());
-//        }
+        ImageLoader.load(context,
+                entity.getCoverPath(),
+                viewHolder.getCoverImageView(),
+                R.color.place_holder_loading,
+                R.drawable.ic_cover_default_song_bill
+        );
 
         ViewUtil.setText(viewHolder.getTitleTextView(), entity.getTitle(), "");
         ViewUtil.setText(viewHolder.getArtistTextView(), entity.getArtist(), "");
@@ -90,14 +53,6 @@ public abstract class LocalSongDisplayAdapter extends BaseDisplayAdapter<LocalSo
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (getSelectedPosition() != position) {
-//                    if (getSelectedPosition() != POSITION_NONE) {
-//                        notifyItemChanged(getSelectedPosition());
-//                    }
-//                    setSelectedPosition(position);
-//                    notifyItemChanged(getSelectedPosition());
-//                }
-
                 if (getItemClickCallback() != null) {
                     getItemClickCallback().onItemClick(v, entity, position,
                             new View[]{viewHolder.getCoverImageView()},

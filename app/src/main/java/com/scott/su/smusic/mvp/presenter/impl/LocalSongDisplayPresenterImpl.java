@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.scott.su.smusic.cache.LocalSongEntityCache;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalSongDisplayPresenter;
@@ -12,8 +13,6 @@ import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.scott.su.smusic.cache.LocalSongEntityCache;
 
 
 /**
@@ -77,16 +76,7 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
 
             @Override
             protected List<LocalSongEntity> doInBackground(Void... voids) {
-                if (mSongDisplayView.isDisplayForNormal()) {
-                    return mSongModel.getLocalSongs(mSongDisplayView.getViewContext());
-                } else if (mSongDisplayView.isDisplayForBill()) {
-                    return mSongModel.getLocalSongsBySongIds(mSongDisplayView.getViewContext(),
-                            mSongDisplayView.getSongBillEntity().getBillSongIdsLongArray());
-                } else if (mSongDisplayView.isDisplayForAlbum()) {
-                    return mSongModel.getLocalSongsBySongIds(mSongDisplayView.getViewContext(),
-                            mSongDisplayView.getSongAlbumEntity().getAlbumSongIdsLongArray());
-                }
-                return null;
+                return mSongModel.getLocalSongs(mSongDisplayView.getViewContext());
             }
 
             @Override
