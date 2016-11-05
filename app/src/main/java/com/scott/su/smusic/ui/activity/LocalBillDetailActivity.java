@@ -16,8 +16,8 @@ import android.widget.ImageView;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
+import com.scott.su.smusic.callback.LocalSongDisplayCallback;
 import com.scott.su.smusic.constant.Constants;
-import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.constant.LocalSongDisplayType;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
@@ -25,10 +25,10 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.LocalBillDetailPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalBillDetailPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalBillDetailView;
+import com.scott.su.smusic.ui.fragment.BillSongDisplayFragment;
 import com.scott.su.smusic.ui.fragment.CommonInputDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
-import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.AnimUtil;
@@ -46,7 +46,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
     private LocalBillDetailPresenter mBillDetailPresenter;
     private LocalBillEntity mBillEntity;
     private ImageView mCoverImageView;
-    private LocalSongDisplayFragment mBillSongDisplayFragment;
+    private BillSongDisplayFragment mBillSongDisplayFragment;
     private FloatingActionButton mPlayFAB;
     private CommonInputDialogFragment mEditDialogFragment;
 
@@ -134,8 +134,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
 
     @Override
     public void initData() {
-        mBillSongDisplayFragment = LocalSongDisplayFragment.newInstance(LocalSongDisplayType.Bill, mBillEntity,
-                LocalSongDisplayStyle.NumberDivider);
+        mBillSongDisplayFragment = BillSongDisplayFragment.newInstance(mBillEntity);
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -145,7 +144,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
 
     @Override
     public void initListener() {
-        mBillSongDisplayFragment.setDisplayCallback(new LocalSongDisplayFragment.LocalSongDisplayCallback() {
+        mBillSongDisplayFragment.setDisplayCallback(new LocalSongDisplayCallback() {
 
             @Override
             public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
+import com.scott.su.smusic.callback.LocalSongDisplayCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.LocalSongDisplayStyle;
 import com.scott.su.smusic.constant.LocalSongDisplayType;
@@ -100,7 +101,7 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
 
     @Override
     public void initListener() {
-        mSongDisplayFragment.setDisplayCallback(new LocalSongDisplayFragment.LocalSongDisplayCallback() {
+        mSongDisplayFragment.setDisplayCallback(new LocalSongDisplayCallback() {
             @Override
             public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
                 mPresenter.onAlbumSongItemClick(itemView, position, entity);

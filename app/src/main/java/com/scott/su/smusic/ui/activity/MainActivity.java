@@ -30,6 +30,7 @@ import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
 import com.scott.su.smusic.callback.DrawerMenuCallback;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
+import com.scott.su.smusic.callback.LocalSongDisplayCallback;
 import com.scott.su.smusic.callback.MusicPlayServiceCallback;
 import com.scott.su.smusic.callback.ShutDownServiceCallback;
 import com.scott.su.smusic.config.AppConfig;
@@ -328,7 +329,7 @@ public class MainActivity extends BaseActivity implements MainView {
             }
         });
 
-        mSongDisplayFragment.setDisplayCallback(new LocalSongDisplayFragment.LocalSongDisplayCallback() {
+        mSongDisplayFragment.setDisplayCallback(new LocalSongDisplayCallback() {
             @Override
             public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
                 mMainPresenter.onLocalSongItemClick(itemView, entity, position, sharedElements, transitionNames, data);

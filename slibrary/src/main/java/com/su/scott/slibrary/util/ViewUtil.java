@@ -3,7 +3,6 @@ package com.su.scott.slibrary.util;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -56,6 +55,10 @@ public class ViewUtil {
 
     public static void setText(@NonNull TextView editText, String text, String defaultText) {
         editText.setText(TextUtils.isEmpty(text) ? defaultText : text);
+    }
+
+    public static void setText(@NonNull TextView editText, String text) {
+        editText.setText(text);
     }
 
 }
