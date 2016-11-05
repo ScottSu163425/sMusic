@@ -14,17 +14,15 @@ import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
 import com.scott.su.smusic.callback.LocalSongDisplayCallback;
 import com.scott.su.smusic.constant.Constants;
-import com.scott.su.smusic.constant.LocalSongDisplayStyle;
-import com.scott.su.smusic.constant.LocalSongDisplayType;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.LocalAlbumDetailPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalAlbumDetailPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalAlbumDetailView;
+import com.scott.su.smusic.ui.fragment.AlbumSongDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
-import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.SdkUtil;
@@ -37,7 +35,7 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
     private CardView mAlbumInfoCard;
     private ImageView mAlbumCoverImageView;
     private TextView mAlbumTitleTextView, mAlbumArtistTextView, mAlbumCountTextView;
-    private LocalSongDisplayFragment mSongDisplayFragment;
+    private AlbumSongDisplayFragment mSongDisplayFragment;
 
 
     @Override
@@ -91,7 +89,7 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
 
     @Override
     public void initData() {
-        mSongDisplayFragment = LocalSongDisplayFragment.newInstance(LocalSongDisplayType.Album, mAlbumEntity, LocalSongDisplayStyle.NumberDivider);
+        mSongDisplayFragment = AlbumSongDisplayFragment.newInstance(mAlbumEntity);
 
         getSupportFragmentManager()
                 .beginTransaction()

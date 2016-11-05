@@ -8,9 +8,9 @@ import android.view.View;
 import com.scott.su.smusic.cache.LocalSongEntityCache;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
+import com.scott.su.smusic.mvp.presenter.AlbumSongDisplayPresenter;
 import com.scott.su.smusic.mvp.presenter.BillSongDisplayPresenter;
-import com.scott.su.smusic.mvp.presenter.BillSongDisplayPresenter;
-import com.scott.su.smusic.mvp.view.BillSongDisplayView;
+import com.scott.su.smusic.mvp.view.AlbumSongDisplayView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +19,12 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public class BillSongDisplayPresenterImpl implements BillSongDisplayPresenter {
-    private BillSongDisplayView mSongDisplayView;
+public class AlbumSongDisplayPresenterImpl implements AlbumSongDisplayPresenter {
+    private AlbumSongDisplayView mSongDisplayView;
     private LocalSongModelImpl mSongModel;
 
-    public BillSongDisplayPresenterImpl(BillSongDisplayView billSongDisplayView) {
-        this.mSongDisplayView = billSongDisplayView;
+    public AlbumSongDisplayPresenterImpl(AlbumSongDisplayView songDisplayView) {
+        this.mSongDisplayView = songDisplayView;
         this.mSongModel = new LocalSongModelImpl();
     }
 
@@ -78,7 +78,7 @@ public class BillSongDisplayPresenterImpl implements BillSongDisplayPresenter {
             @Override
             protected List<LocalSongEntity> doInBackground(Void... voids) {
                 return mSongModel.getLocalSongsBySongIds(mSongDisplayView.getViewContext(),
-                        mSongDisplayView.getSongBillEntity().getBillSongIdsLongArray());
+                        mSongDisplayView.getSongAlbumEntity().getAlbumSongIdsLongArray());
             }
 
             @Override

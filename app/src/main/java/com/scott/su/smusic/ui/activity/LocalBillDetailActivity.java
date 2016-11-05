@@ -18,7 +18,6 @@ import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
 import com.scott.su.smusic.callback.LocalSongDisplayCallback;
 import com.scott.su.smusic.constant.Constants;
-import com.scott.su.smusic.constant.LocalSongDisplayType;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
@@ -242,7 +241,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
         if (needReveal) {
             CirclarRevealUtil.revealOut(mCoverImageView,
                     CirclarRevealUtil.DIRECTION.CENTER,
-                    CirclarRevealUtil.DURATION_REVEAL_NORMAL,
+                    CirclarRevealUtil.DURATION_REVEAL_SHORT,
                     new DecelerateInterpolator(),
                     new AnimUtil.SimpleAnimListener() {
                         @Override
