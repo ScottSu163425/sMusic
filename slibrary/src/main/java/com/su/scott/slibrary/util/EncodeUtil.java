@@ -1,11 +1,16 @@
 package com.su.scott.slibrary.util;
 
+import android.os.Build;
+import android.text.Html;
 import android.util.Base64;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -13,123 +18,180 @@ import java.security.NoSuchAlgorithmException;
  * Created by Administrator on 2016/7/26.
  */
 public class EncodeUtil {
-    private static final char[] DIGITS_LOWER = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
-            'e', 'f'                         };
 
-    public static MessageDigest MD5 = null;
+    private EncodeUtil() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
-    static {
+    /**
+     * URL编码
+     * <p>若想自己指定字符集,可以使用{@link #urlEncode(String input, String charset)}方法</p>
+     *
+     * @param input 要编码的字符
+     * @return 编码为UTF-8的字符串
+     */
+    public static String urlEncode(String input) {
+        return urlEncode(input, "UTF-8");
+    }
+
+    /**
+     * URL编码
+     * <p>若系统不支持指定的编码字符集,则直接将input原样返回</p>
+     *
+     * @param input   要编码的字符
+     * @param charset 字符集
+     * @return 编码为字符集的字符串
+     */
+    public static String urlEncode(String input, String charset) {
         try {
-            MD5 = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException ne) {
-            ne.printStackTrace();
+            return URLEncoder.encode(input, charset);
+        } catch (UnsupportedEncodingException e) {
+            return input;
         }
     }
 
-    public static String FileMD5(File file) {
-        FileInputStream fileInputStream = null;
+    /**
+     * URL解码
+     * <p>若想自己指定字符集,可以使用 {@link #urlDecode(String input, String charset)}方法</p>
+     *
+     * @param input 要解码的字符串
+     * @return URL解码后的字符串
+     */
+    public static String urlDecode(String input) {
+        return urlDecode(input, "UTF-8");
+    }
+
+    /**
+     * URL解码
+     * <p>若系统不支持指定的解码字符集,则直接将input原样返回</p>
+     *
+     * @param input   要解码的字符串
+     * @param charset 字符集
+     * @return URL解码为指定字符集的字符串
+     */
+    public static String urlDecode(String input, String charset) {
         try {
-            fileInputStream = new FileInputStream(file);
-            byte[] buffer = new byte[8192];
-            int length;
-            while ((length = fileInputStream.read(buffer)) != -1) {
-                MD5.update(buffer, 0, length);
+            return URLDecoder.decode(input, charset);
+        } catch (UnsupportedEncodingException e) {
+            return input;
+        }
+    }
+
+    /**
+     * Base64编码
+     *
+     * @param input 要编码的字符串
+     * @return Base64编码后的字符串
+     */
+    public static byte[] base64Encode(String input) {
+        return base64Encode(input.getBytes());
+    }
+
+    /**
+     * Base64编码
+     *
+     * @param input 要编码的字节数组
+     * @return Base64编码后的字符串
+     */
+    public static byte[] base64Encode(byte[] input) {
+        return Base64.encode(input, Base64.NO_WRAP);
+    }
+
+    /**
+     * Base64编码
+     *
+     * @param input 要编码的字节数组
+     * @return Base64编码后的字符串
+     */
+    public static String base64Encode2String(byte[] input) {
+        return Base64.encodeToString(input, Base64.NO_WRAP);
+    }
+
+    /**
+     * Base64解码
+     *
+     * @param input 要解码的字符串
+     * @return Base64解码后的字符串
+     */
+    public static byte[] base64Decode(String input) {
+        return Base64.decode(input, Base64.NO_WRAP);
+    }
+
+    /**
+     * Base64解码
+     *
+     * @param input 要解码的字符串
+     * @return Base64解码后的字符串
+     */
+    public static byte[] base64Decode(byte[] input) {
+        return Base64.decode(input, Base64.NO_WRAP);
+    }
+
+    /**
+     * Base64URL安全编码
+     * <p>将Base64中的URL非法字符�?,/=转为其他字符, 见RFC3548</p>
+     *
+     * @param input 要Base64URL安全编码的字符串
+     * @return Base64URL安全编码后的字符串
+     */
+    public static byte[] base64UrlSafeEncode(String input) {
+        return Base64.encode(input.getBytes(), Base64.URL_SAFE);
+    }
+
+    /**
+     * Html编码
+     *
+     * @param input 要Html编码的字符串
+     * @return Html编码后的字符串
+     */
+    public static String htmlEncode(String input) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            return Html.escapeHtml(input);
+        } else {
+            // 参照Html.escapeHtml()中代码
+            StringBuilder out = new StringBuilder();
+            for (int i = 0, len = input.length(); i < len; i++) {
+                char c = input.charAt(i);
+                if (c == '<') {
+                    out.append("&lt;");
+                } else if (c == '>') {
+                    out.append("&gt;");
+                } else if (c == '&') {
+                    out.append("&amp;");
+                } else if (c >= 0xD800 && c <= 0xDFFF) {
+                    if (c < 0xDC00 && i + 1 < len) {
+                        char d = input.charAt(i + 1);
+                        if (d >= 0xDC00 && d <= 0xDFFF) {
+                            i++;
+                            int codepoint = 0x010000 | (int) c - 0xD800 << 10 | (int) d - 0xDC00;
+                            out.append("&#").append(codepoint).append(";");
+                        }
+                    }
+                } else if (c > 0x7E || c < ' ') {
+                    out.append("&#").append((int) c).append(";");
+                } else if (c == ' ') {
+                    while (i + 1 < len && input.charAt(i + 1) == ' ') {
+                        out.append("&nbsp;");
+                        i++;
+                    }
+                    out.append(' ');
+                } else {
+                    out.append(c);
+                }
             }
-            return new BigInteger(1, MD5.digest()).toString(16);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            try {
-                if (fileInputStream != null)
-                    fileInputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-    /**
-     * encode By MD5
-     *
-     * @param str
-     * @return String
-     */
-    public static String md5(String str) {
-        if (str == null) {
-            return null;
-        }
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            messageDigest.update(str.getBytes());
-            return new String(encodeHex(messageDigest.digest()));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            return out.toString();
         }
     }
 
     /**
-     * 对数据（字节）进行Base64编码
+     * Html解码
      *
-     * @param data 要编码的数据（字节数组）
-     * @return 返回编码后的字符串
+     * @param input 待解码的字符串
+     * @return Html解码后的字符串
      */
-    public static String Base64Encode(byte[] data) {
-        String ret = null;
-        if (data != null && data.length > 0) {
-            ret = Base64.encodeToString(data, Base64.NO_WRAP);
-        }
-        return ret;
+    public static String htmlDecode(String input) {
+        return Html.fromHtml(input).toString();
     }
 
-    /**
-     * 对Base64编码后的数据进行还原
-     *
-     * @param data 使用Base64编码过的数据
-     * @return 返回还原后的数据（字节数组）
-     */
-    public static byte[] Base64Decode(String data) {
-        byte[] ret = null;
-        if (data != null && data.length() > 0) {
-            ret = Base64.decode(data, Base64.NO_WRAP);
-        }
-        return ret;
-    }
 
-    /**
-     * 使用MD5获取数据的摘要信息
-     *
-     * @param data 数据
-     * @return 摘要信息
-     */
-    public static String toMD5(byte[] data) {
-        String ret = null;
-        try {
-            byte[] digest = MessageDigest.getInstance("md5").digest(data);
-            ret = Base64Encode(digest);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return ret;
-    }
-
-    /**
-     * Converts an array of bytes into an array of characters representing the hexadecimal values of each byte in order.
-     * The returned array will be double the length of the passed array, as it takes two characters to represent any
-     * given byte.
-     *
-     * @param data a byte[] to convert to Hex characters
-     * @return A char[] containing hexadecimal characters
-     */
-    protected static char[] encodeHex(final byte[] data) {
-        final int l = data.length;
-        final char[] out = new char[l << 1];
-        // two characters form the hex value.
-        for (int i = 0, j = 0; i < l; i++) {
-            out[j++] = DIGITS_LOWER[(0xF0 & data[i]) >>> 4];
-            out[j++] = DIGITS_LOWER[0x0F & data[i]];
-        }
-        return out;
-    }
 }
