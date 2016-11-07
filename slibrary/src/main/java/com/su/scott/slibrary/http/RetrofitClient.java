@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitClient {
-    public static final String URL_BASE = "http://v.juhe.cn/";
+    public static final String URL_BASE = "http://www.baidu.com/";
     public static final int TIMEOUT_SECOND_CONNECT = 10;
     public static final int TIMEOUT_SECOND_READ = 10;
     public static final int TIMEOUT_SECOND_WRITE = 20;

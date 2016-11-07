@@ -87,7 +87,7 @@ public class PlayListBottomSheetDisplayFragment extends BottomSheetDialogFragmen
     public void updatePlayList(List<LocalSongEntity> playListSongs, LocalSongEntity currentSong) {
         mPlayListSongs = playListSongs;
         mCurrentPlayPosition = MusicPlayUtil.getSongPosition(currentSong, playListSongs);
-        mDisplayAdapter.setSelectedPosition(mCurrentPlayPosition);
+        mDisplayAdapter.setSelectedPosition(mCurrentPlayPosition, true);
         mDisplayAdapter.notifyDataSetChanged();
         scrollToCurrentPosition();
     }
@@ -96,7 +96,7 @@ public class PlayListBottomSheetDisplayFragment extends BottomSheetDialogFragmen
     public void onResume() {
         super.onResume();
         if (mDataListChanged) {
-            mDisplayAdapter.setSelectedPosition(mCurrentPlayPosition);
+            mDisplayAdapter.setSelectedPosition(mCurrentPlayPosition,true);
             mDisplayAdapter.notifyDataSetChanged();
             scrollToCurrentPosition();
             mDataListChanged = false;

@@ -22,6 +22,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
+
 /**
  * Created by Administrator on 2016/9/27.
  */
@@ -84,59 +90,55 @@ public class SearchPresenterImpl implements SearchPresenter {
             return;
         }
 
-        new AsyncTask<Void, Void, List[]>() {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                mSearchView.showLoading();
-            }
+        mSearchView.showLoading();
+        Observable.just(keyword)
+                .map(new Func1<String, List[]>() {
+                    @Override
+                    public List[] call(String s) {
+                        List<LocalSongEntity> localSongEntities = mSongModel.searchLocalSong(mSearchView.getViewContext(), keyword);
+                        List<LocalBillEntity> localBillEntities = mBillModel.searchBill(mSearchView.getViewContext(), keyword);
+                        List<LocalAlbumEntity> localAlbumEntities = mAlbumModel.searchLocalAlbum(mSearchView.getViewContext(), keyword);
+                        List[] result = new List[3];
+                        result[0] = localSongEntities;
+                        result[1] = localBillEntities;
+                        result[2] = localAlbumEntities;
+                        return result;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List[]>() {
+                    @Override
+                    public void call(List[] lists) {
+                        List<LocalSongEntity> localSongEntities = lists[0];
+                        List<LocalBillEntity> localBillEntities = lists[1];
+                        List<LocalAlbumEntity> localAlbumEntities = lists[2];
+                        List result = new ArrayList();
 
-            @Override
-            protected List[] doInBackground(Void... voids) {
-                List<LocalSongEntity> localSongEntities = mSongModel.searchLocalSong(mSearchView.getViewContext(), keyword);
-                List<LocalBillEntity> localBillEntities = mBillModel.searchBill(mSearchView.getViewContext(), keyword);
-                List<LocalAlbumEntity> localAlbumEntities = mAlbumModel.searchLocalAlbum(mSearchView.getViewContext(), keyword);
-                List[] result = new List[3];
-                result[0] = localSongEntities;
-                result[1] = localBillEntities;
-                result[2] = localAlbumEntities;
+                        if (!localSongEntities.isEmpty()) {
+                            result.add(mSearchView.getViewContext().getString(R.string.local_music));
+                            result.addAll(localSongEntities);
+                        }
 
-                return result;
-            }
+                        if (!localBillEntities.isEmpty()) {
+                            result.add(mSearchView.getViewContext().getString(R.string.local_bill));
+                            result.addAll(localBillEntities);
+                        }
 
-            @Override
-            protected void onPostExecute(List[] lists) {
-                super.onPostExecute(lists);
+                        if (!localAlbumEntities.isEmpty()) {
+                            result.add(mSearchView.getViewContext().getString(R.string.album));
+                            result.addAll(localAlbumEntities);
+                        }
 
-                List<LocalSongEntity> localSongEntities = lists[0];
-                List<LocalBillEntity> localBillEntities = lists[1];
-                List<LocalAlbumEntity> localAlbumEntities = lists[2];
-                List result = new ArrayList();
+                        mSearchView.setResult(result);
 
-                if (!localSongEntities.isEmpty()) {
-                    result.add(mSearchView.getViewContext().getString(R.string.local_music));
-                    result.addAll(localSongEntities);
-                }
-
-                if (!localBillEntities.isEmpty()) {
-                    result.add(mSearchView.getViewContext().getString(R.string.local_bill));
-                    result.addAll(localBillEntities);
-                }
-
-                if (!localAlbumEntities.isEmpty()) {
-                    result.add(mSearchView.getViewContext().getString(R.string.album));
-                    result.addAll(localAlbumEntities);
-                }
-
-                mSearchView.setResult(result);
-
-                if (result.isEmpty()) {
-                    mSearchView.showEmpty();
-                } else {
-                    mSearchView.showResult();
-                }
-            }
-        }.execute();
+                        if (result.isEmpty()) {
+                            mSearchView.showEmpty();
+                        } else {
+                            mSearchView.showResult();
+                        }
+                    }
+                });
     }
 
     @Override

@@ -16,6 +16,12 @@ import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
 import com.su.scott.slibrary.util.TimeUtil;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
+
 /**
  * Created by asus on 2016/9/4.
  */
@@ -188,18 +194,21 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
         mMusicPlayView.loadCover(path, needReveal);
 
         if (!AppConfig.isNightModeOn(mMusicPlayView.getViewContext())) {
-            new AsyncTask<Void, Void, Bitmap>() {
-                @Override
-                protected Bitmap doInBackground(Void... voids) {
-                    return mAlbumModel.getAlbumCoverBitmapBlur(mMusicPlayView.getViewContext(), mMusicPlayView.getCurrentPlayingSong().getAlbumId());
-                }
-
-                @Override
-                protected void onPostExecute(Bitmap bitmap) {
-                    super.onPostExecute(bitmap);
-                    mMusicPlayView.loadBlurCover(bitmap);
-                }
-            }.execute();
+            Observable.just(mMusicPlayView.getCurrentPlayingSong().getAlbumId())
+                    .map(new Func1<Long, Bitmap>() {
+                        @Override
+                        public Bitmap call(Long albumId) {
+                            return mAlbumModel.getAlbumCoverBitmapBlur(mMusicPlayView.getViewContext(), albumId);
+                        }
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<Bitmap>() {
+                        @Override
+                        public void call(Bitmap bitmap) {
+                            mMusicPlayView.loadBlurCover(bitmap);
+                        }
+                    });
         }
         mMusicPlayView.setSeekBarCurrentPosition(0);
         mMusicPlayView.setSeekBarMax(mMusicPlayView.getCurrentPlayingSong().getDuration());

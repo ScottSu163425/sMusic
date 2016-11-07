@@ -1,5 +1,6 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,13 @@ import com.su.scott.slibrary.manager.AsyncTaskHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -30,7 +38,7 @@ public class LocalAlbumDisplayPresenterImpl implements LocalAlbumDisplayPresente
 
     @Override
     public void onSwipRefresh() {
-        getAndDisplayLocalSongs();
+        getAndDisplayLocalSongs(true);
     }
 
     @Override
@@ -55,7 +63,7 @@ public class LocalAlbumDisplayPresenterImpl implements LocalAlbumDisplayPresente
 
     @Override
     public void onViewFirstTimeCreated() {
-        getAndDisplayLocalSongs();
+        getAndDisplayLocalSongs(false);
     }
 
     @Override
@@ -68,38 +76,37 @@ public class LocalAlbumDisplayPresenterImpl implements LocalAlbumDisplayPresente
 
     }
 
-    private void getAndDisplayLocalSongs() {
-        new AsyncTask<Void, Void, List<LocalAlbumEntity>>() {
+    private void getAndDisplayLocalSongs(boolean isRefresh) {
+        if (!isRefresh) {
+            mLocalAlbumDisplayView.showLoading();
+        }
+
+        Observable.create(new Observable.OnSubscribe<List<LocalAlbumEntity>>() {
             @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                mLocalAlbumDisplayView.showLoading();
+            public void call(Subscriber<? super List<LocalAlbumEntity>> subscriber) {
+                subscriber.onNext(mLocalAlbumModel.getLocalAlbums(mLocalAlbumDisplayView.getViewContext()));
             }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<LocalAlbumEntity>>() {
+                    @Override
+                    public void call(List<LocalAlbumEntity> localAlbumEntities) {
+                        List<LocalAlbumEntity> result = localAlbumEntities;
 
-            @Override
-            protected List<LocalAlbumEntity> doInBackground(Void... voids) {
-                return mLocalAlbumModel.getLocalAlbums(mLocalAlbumDisplayView.getViewContext());
-            }
+                        if (result == null) {
+                            result = new ArrayList<LocalAlbumEntity>();
+                        }
 
-            @Override
-            protected void onPostExecute(List<LocalAlbumEntity> localAlbumEntities) {
-                super.onPostExecute(localAlbumEntities);
+                        mLocalAlbumDisplayView.setDisplayData(result);
 
-                List<LocalAlbumEntity> result = localAlbumEntities;
-
-                if (result == null) {
-                    result = new ArrayList<LocalAlbumEntity>();
-                }
-
-                mLocalAlbumDisplayView.setDisplayData(result);
-
-                if (result.size() == 0) {
-                    mLocalAlbumDisplayView.showEmpty();
-                } else {
-                    mLocalAlbumDisplayView.display();
-                }
-            }
-        }.execute();
+                        if (result.size() == 0) {
+                            mLocalAlbumDisplayView.showEmpty();
+                        } else {
+                            mLocalAlbumDisplayView.display();
+                        }
+                    }
+                });
     }
 
 

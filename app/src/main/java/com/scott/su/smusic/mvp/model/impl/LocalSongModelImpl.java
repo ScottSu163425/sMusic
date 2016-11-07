@@ -86,6 +86,7 @@ public class LocalSongModelImpl implements LocalSongModel {
             songEntities.add(localSongEntity);
         }
         cursor.close();
+
         return songEntities;
     }
 
@@ -103,6 +104,7 @@ public class LocalSongModelImpl implements LocalSongModel {
                 return songEntity;
             }
         }
+
         return null;
     }
 
@@ -121,6 +123,7 @@ public class LocalSongModelImpl implements LocalSongModel {
                 }
             }
         }
+
         return result;
     }
 
@@ -138,6 +141,7 @@ public class LocalSongModelImpl implements LocalSongModel {
             }
 
         }
+
         return result;
     }
 

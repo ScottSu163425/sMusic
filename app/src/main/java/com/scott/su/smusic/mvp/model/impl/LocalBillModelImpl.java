@@ -136,6 +136,7 @@ public class LocalBillModelImpl implements LocalBillModel {
         } catch (DbException e) {
             e.printStackTrace();
         }
+
         return result;
     }
 
@@ -186,6 +187,7 @@ public class LocalBillModelImpl implements LocalBillModel {
                 }
             }
         }
+
         return result;
     }
 
@@ -194,6 +196,7 @@ public class LocalBillModelImpl implements LocalBillModel {
         if (billEntity.isBillEmpty()) {
             return false;
         }
+
         return billEntity.getBillSongIds().contains(songEntity.getSongId() + "");
     }
 
@@ -204,6 +207,7 @@ public class LocalBillModelImpl implements LocalBillModel {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -264,6 +268,7 @@ public class LocalBillModelImpl implements LocalBillModel {
                 result.add(billEntity);
             }
         }
+
         return result;
     }
 

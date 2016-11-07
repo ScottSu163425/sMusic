@@ -67,6 +67,7 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
                 return albumEntity;
             }
         }
+
         return null;
     }
 
@@ -83,6 +84,7 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
         }
         //Second way to get the path(Uri) of album cover;
 //        path = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"), albumId).toString();
+
         return path;
     }
 
@@ -92,6 +94,7 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
         if (songEntity == null) {
             return null;
         }
+
         return getAlbumCoverPathByAlbumId(context, songEntity.getAlbumId());
     }
 
@@ -104,6 +107,7 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
             bitmap = BlurUtil.blur(BitmapFactory.decodeFile(path));
             BitmapLruCache.getInstance().put(path, bitmap);
         }
+
         return bitmap;
     }
 
@@ -122,6 +126,7 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
                 result.add(albumEntity);
             }
         }
+
         return result;
     }
 
@@ -161,6 +166,7 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
             songEntities.add(localSongEntity);
         }
         cursor.close();
+
         return songEntities;
     }
 
@@ -177,6 +183,7 @@ public class LocalAlbumModelImpl implements LocalAlbumModel {
                 return songEntity;
             }
         }
+
         return null;
     }
 

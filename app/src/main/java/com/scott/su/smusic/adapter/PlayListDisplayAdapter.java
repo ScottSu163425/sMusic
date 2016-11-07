@@ -58,11 +58,7 @@ public abstract class PlayListDisplayAdapter extends BaseDisplayAdapter<PlayList
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getSelectedPosition() != -1) {
-                    notifyItemChanged(getSelectedPosition());
-                }
-                setSelectedPosition(position);
-                notifyItemChanged(position);
+                setSelectedPosition(position,true);
                 if (getItemClickCallback() != null) {
                     getItemClickCallback().onItemClick(v, entity, position, null, null, null);
                 }

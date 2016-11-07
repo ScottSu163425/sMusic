@@ -14,6 +14,12 @@ import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
 
 /**
  * Created by asus on 2016/8/19.
@@ -30,7 +36,7 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
     @Override
     public void onSwipRefresh() {
         LocalSongEntityCache.getInstance().release();
-        getAndDisplayLocalSongs();
+        getAndDisplayLocalSongs(true);
     }
 
     @Override
@@ -54,7 +60,7 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
 
     @Override
     public void onViewFirstTimeCreated() {
-        getAndDisplayLocalSongs();
+        getAndDisplayLocalSongs(false);
     }
 
     @Override
@@ -66,38 +72,37 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
     public void onViewWillDestroy() {
     }
 
-    private void getAndDisplayLocalSongs() {
-        new AsyncTask<Void, Void, List<LocalSongEntity>>() {
+    private void getAndDisplayLocalSongs(boolean isRefresh) {
+        if (!isRefresh) {
+            mSongDisplayView.showLoading();
+        }
+
+        Observable.create(new Observable.OnSubscribe<List<LocalSongEntity>>() {
             @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                mSongDisplayView.setLoading();
+            public void call(Subscriber<? super List<LocalSongEntity>> subscriber) {
+                subscriber.onNext(mSongModel.getLocalSongs(mSongDisplayView.getViewContext()));
             }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<LocalSongEntity>>() {
+                    @Override
+                    public void call(List<LocalSongEntity> songEntities) {
+                        List<LocalSongEntity> result = songEntities;
 
-            @Override
-            protected List<LocalSongEntity> doInBackground(Void... voids) {
-                return mSongModel.getLocalSongs(mSongDisplayView.getViewContext());
-            }
+                        if (result == null) {
+                            result = new ArrayList<LocalSongEntity>();
+                        }
 
-            @Override
-            protected void onPostExecute(List<LocalSongEntity> localSongEntities) {
-                super.onPostExecute(localSongEntities);
+                        mSongDisplayView.setDisplayData(result);
 
-                List<LocalSongEntity> result = localSongEntities;
-
-                if (result == null) {
-                    result = new ArrayList<LocalSongEntity>();
-                }
-
-                mSongDisplayView.setDisplayData(result);
-
-                if (result.size() == 0) {
-                    mSongDisplayView.showEmpty();
-                } else {
-                    mSongDisplayView.display();
-                }
-            }
-        }.execute();
+                        if (result.size() == 0) {
+                            mSongDisplayView.showEmpty();
+                        } else {
+                            mSongDisplayView.display();
+                        }
+                    }
+                });
     }
 
 

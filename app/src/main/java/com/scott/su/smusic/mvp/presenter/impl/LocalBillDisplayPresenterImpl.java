@@ -14,6 +14,12 @@ import com.scott.su.smusic.mvp.view.LocalBillDisplayView;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
 
 /**
  * Created by asus on 2016/8/19.
@@ -29,7 +35,6 @@ public class LocalBillDisplayPresenterImpl implements LocalBillDisplayPresenter 
 
     @Override
     public void onSwipRefresh() {
-        getAndDisplayLocalSongBills();
     }
 
     @Override
@@ -55,7 +60,7 @@ public class LocalBillDisplayPresenterImpl implements LocalBillDisplayPresenter 
     @Override
     public void onViewFirstTimeCreated() {
         mBillDisplayView.showLoading();
-        getAndDisplayLocalSongBills();
+        getAndDisplayLocalSongBills(false);
     }
 
     @Override
@@ -68,32 +73,38 @@ public class LocalBillDisplayPresenterImpl implements LocalBillDisplayPresenter 
 
     }
 
-    private void getAndDisplayLocalSongBills() {
-        new AsyncTask<Void, Void, List<LocalBillEntity>>() {
+    private void getAndDisplayLocalSongBills(boolean isRefresh) {
+        if (!isRefresh) {
+            mBillDisplayView.showLoading();
+        }
+
+        Observable.create(new Observable.OnSubscribe<List<LocalBillEntity>>() {
             @Override
-            protected List<LocalBillEntity> doInBackground(Void... voids) {
-                return mBillModel.getBills(mBillDisplayView.getViewContext());
+            public void call(Subscriber<? super List<LocalBillEntity>> subscriber) {
+                subscriber.onNext(mBillModel.getBills(mBillDisplayView.getViewContext()));
             }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<LocalBillEntity>>() {
+                    @Override
+                    public void call(List<LocalBillEntity> localBillEntities) {
 
-            @Override
-            protected void onPostExecute(List<LocalBillEntity> localSongBillEntities) {
-                super.onPostExecute(localSongBillEntities);
+                        List<LocalBillEntity> result = localBillEntities;
 
-                List<LocalBillEntity> result = localSongBillEntities;
+                        if (result == null) {
+                            result = new ArrayList<LocalBillEntity>();
+                        }
 
-                if (result == null) {
-                    result = new ArrayList<LocalBillEntity>();
-                }
+                        mBillDisplayView.setDisplayData(result);
 
-                mBillDisplayView.setDisplayData(result);
-
-                if (result.size() == 0) {
-                    mBillDisplayView.showEmpty();
-                } else {
-                    mBillDisplayView.display();
-                }
-            }
-        }.execute();
+                        if (result.size() == 0) {
+                            mBillDisplayView.showEmpty();
+                        } else {
+                            mBillDisplayView.display();
+                        }
+                    }
+                });
     }
 
 

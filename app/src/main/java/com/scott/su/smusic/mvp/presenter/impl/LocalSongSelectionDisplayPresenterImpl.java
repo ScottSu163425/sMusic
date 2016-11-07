@@ -1,6 +1,5 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -13,6 +12,12 @@ import com.scott.su.smusic.mvp.view.LocalSongSelectionDisplayView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by asus on 2016/8/27.
@@ -68,31 +73,35 @@ public class LocalSongSelectionDisplayPresenterImpl implements LocalSongSelectio
     }
 
     private void getAndDisplayLocalSongs() {
-        new AsyncTask<Void, Void, List<LocalSongEntity>>() {
+        mDisplayView.showLoading();
+
+        Observable.create(new Observable.OnSubscribe<List<LocalSongEntity>>() {
             @Override
-            protected List<LocalSongEntity> doInBackground(Void... voids) {
-                return mLocalSongModel.getLocalSongs(mDisplayView.getViewContext());
+            public void call(Subscriber<? super List<LocalSongEntity>> subscriber) {
+                subscriber.onNext(mLocalSongModel.getLocalSongs(mDisplayView.getViewContext()));
             }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<LocalSongEntity>>() {
+                    @Override
+                    public void call(List<LocalSongEntity> songEntities) {
 
-            @Override
-            protected void onPostExecute(List<LocalSongEntity> localSongEntities) {
-                super.onPostExecute(localSongEntities);
+                        List<LocalSongEntity> result = songEntities;
 
-                List<LocalSongEntity> result = localSongEntities;
+                        if (result == null) {
+                            result = new ArrayList<LocalSongEntity>();
+                        }
 
-                if (result == null) {
-                    result = new ArrayList<LocalSongEntity>();
-                }
+                        mDisplayView.setDisplayData(result);
 
-                mDisplayView.setDisplayData(result);
-
-                if (result.size() == 0) {
-                    mDisplayView.showEmpty();
-                } else {
-                    mDisplayView.display();
-                }
-            }
-        }.execute();
+                        if (result.size() == 0) {
+                            mDisplayView.showEmpty();
+                        } else {
+                            mDisplayView.display();
+                        }
+                    }
+                });
     }
 
 }
