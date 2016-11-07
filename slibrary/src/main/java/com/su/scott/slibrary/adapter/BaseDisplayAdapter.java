@@ -20,7 +20,7 @@ public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> 
     protected Activity context;
     private RecyclerView recyclerView;
     private List<E> dataList = new ArrayList<>();
-    private int selectedPosition = -1;
+    private int selectedPosition = POSITION_NONE;
     private ItemClickCallback<E> itemClickCallback;
 
 
@@ -106,8 +106,20 @@ public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> 
         return selectedPosition;
     }
 
-    public void setSelectedPosition(int selectedPosition) {
+    public void setSelectedPosition(int selectedPosition, boolean animNotify) {
+        if (this.selectedPosition == selectedPosition) {
+            return;
+        }
+
+        if (this.selectedPosition != POSITION_NONE && animNotify) {
+            notifyItemChanged(this.selectedPosition);
+        }
+
         this.selectedPosition = selectedPosition;
+
+        if (animNotify) {
+            notifyItemChanged(this.selectedPosition);
+        }
     }
 
     public void removeItem(int position) {
