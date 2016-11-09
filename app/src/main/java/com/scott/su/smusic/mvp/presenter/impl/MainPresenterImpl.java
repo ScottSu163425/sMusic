@@ -149,7 +149,6 @@ public class MainPresenterImpl implements MainPresenter {
         }
         AppConfig.setNightMode(mMainView.getViewContext(), true);
         mMainView.turnOnNightMode();
-        mMainView.updateBillDisplay();
     }
 
     @Override
@@ -159,7 +158,6 @@ public class MainPresenterImpl implements MainPresenter {
         }
         AppConfig.setNightMode(mMainView.getViewContext(), false);
         mMainView.turnOffNightMode();
-        mMainView.updateBillDisplay();
     }
 
     @Override
@@ -170,7 +168,6 @@ public class MainPresenterImpl implements MainPresenter {
         AppConfig.setLanguageMode(mMainView.getViewContext(), true);
         mMainView.turnOnLanguageMode();
         updateDefaultBillName();
-        mMainView.updateBillDisplay();
     }
 
     @Override
@@ -181,7 +178,6 @@ public class MainPresenterImpl implements MainPresenter {
         AppConfig.setLanguageMode(mMainView.getViewContext(), false);
         mMainView.turnOffLanguageMode();
         updateDefaultBillName();
-        mMainView.updateBillDisplay();
     }
 
     @Override
