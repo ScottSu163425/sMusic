@@ -79,10 +79,12 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onFabLongClick() {
-        if (mMainView.isFabPlayRandom()) {
-            mMainView.setFabPlayCurrent();
-        } else {
-            mMainView.setFabPlayRandom();
+        if (mMainView.isCurrentTabSong()) {
+            if (mMainView.isFabPlayRandom()) {
+                mMainView.setFabPlayCurrent();
+            } else {
+                mMainView.setFabPlayRandom();
+            }
         }
     }
 
