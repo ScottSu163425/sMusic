@@ -27,7 +27,15 @@ public interface MusicPlayServiceView {
 
     PlayMode getServicePlayMode();
 
+    /**
+     * Play without song change callback
+     */
     void play();
+
+    /**
+     * Play with song change callback
+     */
+    void playSkip();
 
     void play(int position);
 

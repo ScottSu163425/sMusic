@@ -556,6 +556,11 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
+    public void playSkip() {
+        mMusicPlayServiceBinder.playSkip();
+    }
+
+    @Override
     public void play(int position) {
         mMusicPlayServiceBinder.play(position);
     }

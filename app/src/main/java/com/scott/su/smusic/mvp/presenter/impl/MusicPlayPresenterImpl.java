@@ -220,7 +220,8 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     @Override
     public void onPlayListItemClick(View itemView, LocalSongEntity entity, int position) {
         mMusicPlayView.setServiceCurrentPlaySong(entity);
-        mMusicPlayView.play();
+        //Need play with callback to update current playing music info.
+        mMusicPlayView.playSkip();
     }
 
     @Override

@@ -186,6 +186,18 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     @Override
+    public void playSkip() {
+        if (mMediaPlayer != null && mCurrentPlayingSong != null) {
+            if (mPlaySameSong) {
+                playResume();
+            } else {
+                //Play different song.
+                playNew(true);
+            }
+        }
+    }
+
+    @Override
     public void play(int position) {
         if (mPlayListSongs.isEmpty()) {
             return;
@@ -207,7 +219,6 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             mCurrentPlayStatus = PlayStatus.Pause;
             mPlaySameSong = true;
             if (isRegisterCallback()) {
-//                mMusicPlayServiceCallback.onPlayPause(mMediaPlayer.getCurrentPosition());
                 notifyAllOnPlayPause(mMediaPlayer.getCurrentPosition());
             }
             updateNotifycation();
@@ -222,7 +233,6 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             mMediaPlayer.seekTo(position);
         }
         if (isRegisterCallback()) {
-//            mMusicPlayServiceCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
             notifyAllOnPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
         }
         playResume();
@@ -314,7 +324,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             mMediaPlayer.prepare();
             startMediaPlayer();
 
-            //Only by skip next or previous should notifiy playing song changed;
+            //Only by skip next or previous should notify playing song changed;
             if (isSkipping && mPreviousPlayingSong != null && isRegisterCallback()) {
 //                mMusicPlayServiceCallback.onPlaySongChanged(mPreviousPlayingSong, mCurrentPlayingSong);
                 notifyAllOnPlaySongChanged(mPreviousPlayingSong, mCurrentPlayingSong);
@@ -496,6 +506,11 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         @Override
         public void play() {
             MusicPlayService.this.play();
+        }
+
+        @Override
+        public void playSkip() {
+            MusicPlayService.this.playSkip();
         }
 
         @Override

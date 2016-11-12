@@ -514,6 +514,11 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
+    public void playSkip() {
+
+    }
+
+    @Override
     public void play(int position) {
 
     }
