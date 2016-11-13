@@ -216,7 +216,11 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
         if (position == 0) {
             mBillDetailView.goToMusicPlayWithCoverSharedElement(entity);
         } else {
-            mBillDetailView.goToMusicPlay(entity);
+            if (mBillDetailView.isFabVisiable()) {
+                mBillDetailView.goToMusicPlayWithFab(entity);
+            }else {
+                mBillDetailView.goToMusicPlayWithoutFab(entity);
+            }
         }
 
     }

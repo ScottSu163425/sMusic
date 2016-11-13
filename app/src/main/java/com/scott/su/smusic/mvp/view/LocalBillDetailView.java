@@ -41,12 +41,16 @@ public interface LocalBillDetailView extends BaseView, LocalSongBottomSheetView 
 
     void goToMusicPlayWithCoverSharedElement(LocalSongEntity entity);
 
-    void goToMusicPlay(LocalSongEntity entity);
+    void goToMusicPlayWithFab(LocalSongEntity entity);
 
     void showEditBillNameDialog();
 
     void dismissEditBillNameDialog();
 
     void updateBillInfo();
+
+    boolean isFabVisiable();
+
+    void goToMusicPlayWithoutFab(LocalSongEntity entity);
 
 }

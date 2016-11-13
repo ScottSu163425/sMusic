@@ -9,7 +9,7 @@
     tools:context=".ui.activity.LocalBillDetailActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+        android:id="@+id/app_bar_local_bill_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
@@ -59,12 +59,13 @@
         android:layout_margin="@dimen/margin_s"
         android:src="@drawable/ic_play_arrow__white_24dp"
         android:transitionName="@string/transition_name_fab"
-        android:visibility="gone"
         app:backgroundTint="@color/colorImpact"
         app:elevation="@dimen/elevation_fab_normal"
         app:fabSize="normal"
-        app:layout_anchor="@id/app_bar"
+        android:visibility="invisible"
+        app:layout_anchor="@id/app_bar_local_bill_detail"
         app:layout_anchorGravity="bottom|right"
+        app:layout_behavior="@string/bottom_sheet_behavior"
         app:pressedTranslationZ="@dimen/elevation_fab_pressed"
         app:rippleColor="@color/colorImpactDark" />
 

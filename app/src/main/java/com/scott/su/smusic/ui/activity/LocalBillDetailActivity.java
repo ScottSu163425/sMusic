@@ -1,9 +1,12 @@
 package com.scott.su.smusic.ui.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
@@ -33,6 +36,7 @@ import com.su.scott.slibrary.manager.ImageLoader;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.DialogUtil;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
@@ -44,6 +48,7 @@ import java.util.List;
 public class LocalBillDetailActivity extends BaseActivity implements LocalBillDetailView {
     private LocalBillDetailPresenter mBillDetailPresenter;
     private LocalBillEntity mBillEntity;
+    private AppBarLayout mAppBarLayout;
     private ImageView mCoverImageView;
     private BillSongDisplayFragment mBillSongDisplayFragment;
     private FloatingActionButton mPlayFAB;
@@ -95,6 +100,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
         } else {
             mBillDetailPresenter.onTransitionEnd();
         }
+        CollapsingToolbarLayout collapsingToolbarLayout;
     }
 
     @Override
@@ -122,6 +128,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
 
     @Override
     public void initView() {
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar_local_bill_detail);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout_bill_detail);
         mCoverImageView = (ImageView) findViewById(R.id.iv_cover_local_bill_detail);
         mPlayFAB = (FloatingActionButton) findViewById(R.id.fab_local_bill_detail);
@@ -143,6 +150,30 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
 
     @Override
     public void initListener() {
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            private int lastVerticalOffset = 0;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                int totalScrollRange = appBarLayout.getTotalScrollRange();
+                int scrollDistance = verticalOffset - lastVerticalOffset;
+
+                if (scrollDistance > 0) {
+                    //Scrolling down.
+                    if (Math.abs(verticalOffset) < (totalScrollRange / 3)) {
+                        showFab();
+                    }
+                } else {
+                    //Scrolling up.
+                    if (Math.abs(verticalOffset) > (totalScrollRange / 3)) {
+                        hideFab();
+                    }
+                }
+
+                lastVerticalOffset = verticalOffset;
+            }
+        });
+
         mBillSongDisplayFragment.setDisplayCallback(new LocalSongDisplayCallback() {
 
             @Override
@@ -275,14 +306,14 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
     @Override
     public void showFab() {
         if (!ViewUtil.isViewVisiable(mPlayFAB)) {
-            ViewUtil.setViewVisiable(mPlayFAB);
+            AnimUtil.alphaIn(mPlayFAB, AnimUtil.DURATION_SHORT);
         }
     }
 
     @Override
     public void hideFab() {
         if (ViewUtil.isViewVisiable(mPlayFAB)) {
-            ViewUtil.setViewGone(mPlayFAB);
+            AnimUtil.alphaOut(mPlayFAB, AnimUtil.DURATION_SHORT);
         }
     }
 
@@ -386,7 +417,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
     }
 
     @Override
-    public void goToMusicPlay(LocalSongEntity songEntity) {
+    public void goToMusicPlayWithFab(LocalSongEntity songEntity) {
         Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mBillSongDisplayFragment.getDisplayDataList());
@@ -420,6 +451,20 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
     @Override
     public void updateBillInfo() {
         mCollapsingToolbarLayout.setTitle(mBillEntity.getBillTitle());
+    }
+
+    @Override
+    public boolean isFabVisiable() {
+        return ViewUtil.isViewVisiable(mPlayFAB);
+    }
+
+    @Override
+    public void goToMusicPlayWithoutFab(LocalSongEntity songEntity) {
+        Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mBillSongDisplayFragment.getDisplayDataList());
+
+        goToWithTransition(intent);
     }
 
 

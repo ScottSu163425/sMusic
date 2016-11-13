@@ -206,7 +206,9 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
                     .subscribe(new Action1<Bitmap>() {
                         @Override
                         public void call(Bitmap bitmap) {
-                            mMusicPlayView.loadBlurCover(bitmap);
+                            if (mMusicPlayView != null) {
+                                mMusicPlayView.loadBlurCover(bitmap);
+                            }
                         }
                     });
         }

@@ -12,6 +12,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -139,8 +141,10 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     private void initTransition() {
         if (SdkUtil.isLolipopOrLatter()) {
-            if (getWindow().getSharedElementEnterTransition() != null) {
-                getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
+            getWindow().setEnterTransition(new Fade());
+
+//            if (getWindow().getSharedElementEnterTransition() != null) {
+                getWindow().getEnterTransition().addListener(new Transition.TransitionListener() {
                     @Override
                     public void onTransitionStart(Transition transition) {
                         if (mExisting) {
@@ -176,7 +180,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                     }
                 });
             }
-        }
+//        }
     }
 
     @Override
