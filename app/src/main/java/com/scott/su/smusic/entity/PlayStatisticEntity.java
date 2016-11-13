@@ -10,8 +10,8 @@ import org.xutils.db.annotation.Table;
 /**
  * Created by asus on 2016/11/13.
  */
-@Table(name = "LocalSongStatisticEntity")
-public class LocalSongStatisticEntity implements Parcelable {
+@Table(name = "PlayStatisticEntity")
+public class PlayStatisticEntity implements Parcelable {
 
     @Column(name = "id", isId = true)
     private int id;
@@ -158,7 +158,7 @@ public class LocalSongStatisticEntity implements Parcelable {
         this.lastPlayTime = lastPlayTime;
     }
 
-    public static Creator<LocalSongStatisticEntity> getCREATOR() {
+    public static Creator<PlayStatisticEntity> getCREATOR() {
         return CREATOR;
     }
 
@@ -183,10 +183,10 @@ public class LocalSongStatisticEntity implements Parcelable {
         dest.writeString(this.lastPlayTime);
     }
 
-    public LocalSongStatisticEntity() {
+    public PlayStatisticEntity() {
     }
 
-    protected LocalSongStatisticEntity(Parcel in) {
+    protected PlayStatisticEntity(Parcel in) {
         this.id = in.readInt();
         this.songId = in.readLong();
         this.title = in.readString();
@@ -201,21 +201,21 @@ public class LocalSongStatisticEntity implements Parcelable {
         this.lastPlayTime = in.readString();
     }
 
-    public static final Creator<LocalSongStatisticEntity> CREATOR = new Creator<LocalSongStatisticEntity>() {
+    public static final Creator<PlayStatisticEntity> CREATOR = new Creator<PlayStatisticEntity>() {
         @Override
-        public LocalSongStatisticEntity createFromParcel(Parcel source) {
-            return new LocalSongStatisticEntity(source);
+        public PlayStatisticEntity createFromParcel(Parcel source) {
+            return new PlayStatisticEntity(source);
         }
 
         @Override
-        public LocalSongStatisticEntity[] newArray(int size) {
-            return new LocalSongStatisticEntity[size];
+        public PlayStatisticEntity[] newArray(int size) {
+            return new PlayStatisticEntity[size];
         }
     };
 
     @Override
     public String toString() {
-        return "LocalSongStatisticEntity{" +
+        return "PlayStatisticEntity{" +
                 "id=" + id +
                 ", songId=" + songId +
                 ", title='" + title + '\'' +

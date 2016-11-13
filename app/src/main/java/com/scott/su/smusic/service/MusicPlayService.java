@@ -24,7 +24,9 @@ import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.model.PlayStatisticModel;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
+import com.scott.su.smusic.mvp.model.impl.PlayStatisticModelImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayServiceView;
 import com.scott.su.smusic.ui.activity.MainActivity;
 import com.scott.su.smusic.util.MusicPlayUtil;
@@ -71,6 +73,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             mPlayTimerHandler.postDelayed(this, DURATION_TIMER_DELAY);
         }
     };
+    private PlayStatisticModel mPlayStatisticModel;
 
     @Nullable
     @Override
@@ -107,6 +110,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             }
         });
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        mPlayStatisticModel = new PlayStatisticModelImpl();
     }
 
     @Override
@@ -330,6 +334,9 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
                 notifyAllOnPlaySongChanged(mPreviousPlayingSong, mCurrentPlayingSong);
             }
             updateNotifycation();
+
+            //Save to play statistic;
+            mPlayStatisticModel.saveOrAddPlayRecord(this, mCurrentPlayingSong);
         } catch (IOException e) {
             e.printStackTrace();
         }
