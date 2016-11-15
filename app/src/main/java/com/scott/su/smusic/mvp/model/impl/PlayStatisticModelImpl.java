@@ -7,12 +7,13 @@ import com.scott.su.smusic.entity.PlayStatisticEntity;
 import com.scott.su.smusic.mvp.model.PlayStatisticModel;
 import com.su.scott.slibrary.manager.DbUtilHelper;
 import com.su.scott.slibrary.util.DateUtil;
-import com.su.scott.slibrary.util.TimeUtil;
 
 import org.xutils.DbManager;
 import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ import java.util.List;
 
 public class PlayStatisticModelImpl implements PlayStatisticModel {
     private static final String DIVIDER_DATE = "-";
+
 
     @Override
     public void saveOrAddPlayRecord(Context context, LocalSongEntity songEntity) {
@@ -43,8 +45,6 @@ public class PlayStatisticModelImpl implements PlayStatisticModel {
         } catch (DbException e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Override
@@ -76,6 +76,7 @@ public class PlayStatisticModelImpl implements PlayStatisticModel {
 
         try {
             result = DbUtilHelper.getDefaultDbManager().findAll(PlayStatisticEntity.class);
+            sortDes(result);
         } catch (DbException e) {
             e.printStackTrace();
 
@@ -89,5 +90,15 @@ public class PlayStatisticModelImpl implements PlayStatisticModel {
 
         return result;
     }
+
+    private static void sortDes(List<PlayStatisticEntity> result) {
+        Collections.sort(result, new Comparator<PlayStatisticEntity>() {
+            @Override
+            public int compare(PlayStatisticEntity o1, PlayStatisticEntity o2) {
+                return -(o1.getPlayCount() - o2.getPlayCount());
+            }
+        });
+    }
+
 
 }

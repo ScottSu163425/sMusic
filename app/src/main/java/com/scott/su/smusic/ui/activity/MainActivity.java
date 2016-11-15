@@ -79,6 +79,8 @@ public class MainActivity extends BaseActivity implements MainView {
     private static final String CURRENT_TAB_POSITION = "CURRENT_TAB_POSITION";
 
     private static final int REQUEST_CODE_LOCAL_SONG_SELECTION = 1111;
+    private static final int REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE = 123;
+    private static final int REQUEST_CODE_PERMISSION_WRITE_EXTERNAL_STORAGE = 321;
     private static final int TAB_POSITION_SONG = 0;
     private static final int TAB_POSITION_BILL = 1;
     private static final int TAB_POSITION_ALBUM = 2;
@@ -156,8 +158,8 @@ public class MainActivity extends BaseActivity implements MainView {
             setIntent(getIntent);
         }
 
-        PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE, 123);
-        PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, 321);
+        PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE, REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE);
+        PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_CODE_PERMISSION_WRITE_EXTERNAL_STORAGE);
     }
 
     @Override
@@ -923,5 +925,11 @@ public class MainActivity extends BaseActivity implements MainView {
         mShutDownTimerServiceBinder.setTimerCallback(callback);
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    }
 
 }

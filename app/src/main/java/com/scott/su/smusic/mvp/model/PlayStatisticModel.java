@@ -18,5 +18,10 @@ public interface PlayStatisticModel {
 
     List<PlayStatisticEntity> getRecent7DaysStatistic(Context context);
 
+    /**
+     * Return all play statistic order by play count descending.
+     * @param context
+     * @return
+     */
     List<PlayStatisticEntity> getTotalPlayStatistic(Context context);
 }
