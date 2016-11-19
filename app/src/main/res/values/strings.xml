@@ -85,5 +85,14 @@
     <string name="tab_week_play_statistic">本周</string>
     <string name="tab_history_play_statistic">历史</string>
     <string name="play_statistic_week">本周音乐播放统计</string>
+    <string name="unit_play_count">次</string>
+
+    <string name="label_sunday">周日</string>
+    <string name="label_monday">周一</string>
+    <string name="label_tuesday">周二</string>
+    <string name="label_wednesday">周三</string>
+    <string name="label_thurday">周四</string>
+    <string name="label_friday">周五</string>
+    <string name="label_saturday">周六</string>
 
 </resources>

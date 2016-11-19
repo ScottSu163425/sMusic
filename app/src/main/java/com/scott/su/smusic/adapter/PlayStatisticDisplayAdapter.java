@@ -61,14 +61,14 @@ public class PlayStatisticDisplayAdapter extends BaseDisplayAdapter<RecyclerView
             ViewUtil.setText(holder.getTitleTextView(), entity.getTitle(), "");
             ViewUtil.setText(holder.getArtistTextView(), entity.getArtist(), "");
             ViewUtil.setText(holder.getAlbumTextView(), entity.getAlbum(), "");
-            ViewUtil.setText(holder.getCountTextView(), entity.getPlayCount() + "次", "");
+            ViewUtil.setText(holder.getCountTextView(), entity.getPlayCount() + " " + context.getString(R.string.unit_play_count), "");
         } else {
             PlayStatisticTop3ViewHolder holder = (PlayStatisticTop3ViewHolder) viewHolder;
             ViewUtil.setText(holder.getNumberTextView(), (position + 1) + "", "");
             ViewUtil.setText(holder.getTitleTextView(), entity.getTitle(), "");
             ViewUtil.setText(holder.getArtistTextView(), entity.getArtist(), "");
             ViewUtil.setText(holder.getAlbumTextView(), entity.getAlbum(), "");
-            ViewUtil.setText(holder.getCountTextView(), entity.getPlayCount() + "次", "");
+            ViewUtil.setText(holder.getCountTextView(), entity.getPlayCount() + " " + context.getString(R.string.unit_play_count), "");
 
             if (position == 0) {
                 holder.getNumberTextView().setBackgroundResource(R.drawable.shape_circle_yellow);

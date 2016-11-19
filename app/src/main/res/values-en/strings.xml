@@ -78,4 +78,16 @@
     <string name="clear">clear</string>
     <string name="ask_clear_play_list">Clear the play list?</string>
 
+    <string name="tab_week_play_statistic">Week</string>
+    <string name="tab_history_play_statistic">Histroy</string>
+    <string name="play_statistic_week">Play Statistic Of This Week</string>
+    <string name="unit_play_count">times</string>
+
+    <string name="label_sunday">Sun</string>
+    <string name="label_monday">Mon</string>
+    <string name="label_tuesday">Tues</string>
+    <string name="label_wednesday">Wed</string>
+    <string name="label_thurday">Thur</string>
+    <string name="label_friday">Fri</string>
+    <string name="label_saturday">Sat</string>
 </resources>

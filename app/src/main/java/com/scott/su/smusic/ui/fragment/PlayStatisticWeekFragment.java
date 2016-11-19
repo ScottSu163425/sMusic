@@ -23,14 +23,15 @@ public class PlayStatisticWeekFragment extends BaseFragment {
     private View mRootView;
     private LineChartView mChart;
 
-    private final String[] mLabels = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
+    //    private final String[] mLabels = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
+//    private final String[] mLabels = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
     private final float[] mValues = {13, 18, 26, 25, 30, 27, 29};
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_play_statistic_week,container,false);
+        mRootView = inflater.inflate(R.layout.fragment_play_statistic_week, container, false);
 
         return mRootView;
     }
@@ -39,7 +40,7 @@ public class PlayStatisticWeekFragment extends BaseFragment {
     protected void onFirstTimeCreateView() {
         mChart = (LineChartView) mRootView.findViewById(R.id.chart_fragment_play_statistic_week);
 
-        LineSet dataset = new LineSet(mLabels, mValues);
+        LineSet dataset = new LineSet(getResources().getStringArray(R.array.labels_play_statistic), mValues);
         dataset.setColor(Color.parseColor("#ffc1bd"))
                 .setFill(Color.parseColor("#3dff73"))
                 .setGradientFill(new int[]{getResources().getColor(R.color.colorAccent), getResources().getColor(R.color.colorPrimary)},

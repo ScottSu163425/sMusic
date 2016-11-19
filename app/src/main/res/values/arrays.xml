@@ -12,4 +12,14 @@
         <item>@string/tab_history_play_statistic</item>
     </string-array>
 
+    <string-array name="labels_play_statistic">
+        <item>@string/label_sunday</item>
+        <item>@string/label_monday</item>
+        <item>@string/label_tuesday</item>
+        <item>@string/label_wednesday</item>
+        <item>@string/label_thurday</item>
+        <item>@string/label_friday</item>
+        <item>@string/label_saturday</item>
+    </string-array>
+
 </resources>
