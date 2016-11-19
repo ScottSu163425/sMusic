@@ -411,9 +411,19 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mBillSongDisplayFragment.getDisplayDataList());
 
+        goToWithSharedElement(intent, mCoverImageView, getString(R.string.transition_name_cover));
+    }
+
+    @Override
+    public void goToMusicPlayWithCoverAndFabSharedElement(LocalSongEntity entity) {
+        Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, entity);
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mBillSongDisplayFragment.getDisplayDataList());
+
         goToWithSharedElements(intent,
                 new View[]{mPlayFAB, mCoverImageView},
                 new String[]{getString(R.string.transition_name_fab), getString(R.string.transition_name_cover)});
+
     }
 
     @Override

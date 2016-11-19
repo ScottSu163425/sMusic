@@ -43,7 +43,7 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
 
     @Override
     public void onPlayFabClick() {
-        mBillDetailView.goToMusicPlayWithCoverSharedElement(
+        mBillDetailView.goToMusicPlayWithCoverAndFabSharedElement(
                 mBillModel.getBillSong(mBillDetailView.getViewContext(),
                         mBillDetailView.getBillEntity().getLatestSongId())
         );
@@ -214,11 +214,15 @@ public class LocalBillDetailPresenterImpl implements LocalBillDetailPresenter {
     @Override
     public void onBillSongItemClick(View view, int position, LocalSongEntity entity) {
         if (position == 0) {
-            mBillDetailView.goToMusicPlayWithCoverSharedElement(entity);
+            if (mBillDetailView.isFabVisiable()) {
+                mBillDetailView.goToMusicPlayWithCoverAndFabSharedElement(entity);
+            } else {
+                mBillDetailView.goToMusicPlayWithCoverSharedElement(entity);
+            }
         } else {
             if (mBillDetailView.isFabVisiable()) {
                 mBillDetailView.goToMusicPlayWithFab(entity);
-            }else {
+            } else {
                 mBillDetailView.goToMusicPlayWithoutFab(entity);
             }
         }
