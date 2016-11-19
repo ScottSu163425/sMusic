@@ -12,7 +12,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
 import android.transition.Fade;
 import android.transition.Transition;
 import android.view.Menu;
@@ -185,7 +184,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_music_play);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar_music_play);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

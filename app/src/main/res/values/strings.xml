@@ -82,5 +82,8 @@
     <string name="clear">清空</string>
     <string name="ask_clear_play_list">清空播放列表?</string>
 
+    <string name="tab_week_play_statistic">本周</string>
+    <string name="tab_history_play_statistic">历史</string>
+    <string name="play_statistic_week">本周音乐播放统计</string>
 
 </resources>

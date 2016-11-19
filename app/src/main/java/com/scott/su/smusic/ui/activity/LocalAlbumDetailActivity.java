@@ -63,7 +63,7 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
 
     @Override
     public void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_local_album_detail);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar_local_album_detail);
         toolbar.setTitle(mAlbumEntity.getAlbumTitle());
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

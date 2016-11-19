@@ -77,4 +77,6 @@ public interface MainView extends BaseView, LocalSongBottomSheetView, MusicPlayS
 
     void setFabPlayCurrent();
 
+    void goToPlayStatistic();
+
 }

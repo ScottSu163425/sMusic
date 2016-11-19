@@ -61,7 +61,7 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
 
     @Override
     public void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_local_song_selection);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar_local_song_selection);
         toolbar.setTitle(getResources().getString(R.string.toolbar_title_local_song_selection));
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

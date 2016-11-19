@@ -35,15 +35,12 @@ import com.scott.su.smusic.callback.MusicPlayServiceCallback;
 import com.scott.su.smusic.callback.ShutDownServiceCallback;
 import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.constant.Constants;
-import com.scott.su.smusic.constant.LocalSongDisplayStyle;
-import com.scott.su.smusic.constant.LocalSongDisplayType;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
 import com.scott.su.smusic.constant.TimerStatus;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.model.impl.PlayStatisticModelImpl;
 import com.scott.su.smusic.mvp.presenter.MainPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.MainPresenterImpl;
 import com.scott.su.smusic.mvp.view.MainView;
@@ -60,7 +57,6 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.callback.SimpleCallback;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.DialogUtil;
-import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.PermissionUtil;
 import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.TimeUtil;
@@ -217,7 +213,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        mToolbar = (Toolbar) findViewById(R.id.tool_bar_main);
         mToolbar.setTitle(getResources().getString(R.string.app_name));
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -257,6 +253,7 @@ public class MainActivity extends BaseActivity implements MainView {
                 getResources().getStringArray(R.array.titles_tab_main)));
         mViewPager.setOffscreenPageLimit(pageFragments.size());
         mTabLayout.setupWithViewPager(mViewPager);
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_container_drawer_menu_main, mDrawerMenuFragment).commit();
 
         if (getIntent().getBooleanExtra(NEED_OPEN_DRAWER, false)) {
@@ -326,7 +323,6 @@ public class MainActivity extends BaseActivity implements MainView {
 
             @Override
             public void onDrawerMenuStaticticClick(View v) {
-                T.showShort(getApplicationContext(), "Statistic");
                 mMainPresenter.onDrawerMenuStaticticClick(v);
             }
         });
@@ -832,6 +828,11 @@ public class MainActivity extends BaseActivity implements MainView {
             }
         }, AnimUtil.DURATION_SHORT_HALF);
         mFabPlayRandom = false;
+    }
+
+    @Override
+    public void goToPlayStatistic() {
+        goToWithTransition(PlayStatisticActivity.class);
     }
 
     private void recreateActivity(boolean isForNightMode) {

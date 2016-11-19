@@ -204,7 +204,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onDrawerMenuStaticticClick(View v) {
-
+        mMainView.goToPlayStatistic();
     }
 
 
