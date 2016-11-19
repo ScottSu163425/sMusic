@@ -113,7 +113,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
                 //To keep the order what it is,set Play list songs befor set current play song.
                 if (playingSongs != null) {
-                    addServicePlayListSongs(playingSongs);
+                    setServicePlayListSongs(playingSongs);
                 }
 
                 if (mCurrentPlayingSong != null) {
@@ -537,8 +537,8 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public void addServicePlayListSongs(ArrayList<LocalSongEntity> playSongs) {
-        mMusicPlayServiceBinder.addServicePlayListSongs(playSongs);
+    public void setServicePlayListSongs(ArrayList<LocalSongEntity> playSongs) {
+        mMusicPlayServiceBinder.setServicePlayListSongs(playSongs);
     }
 
     @Override

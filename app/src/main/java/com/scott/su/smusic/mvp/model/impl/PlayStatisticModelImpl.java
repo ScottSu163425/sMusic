@@ -91,6 +91,19 @@ public class PlayStatisticModelImpl implements PlayStatisticModel {
         return result;
     }
 
+    @Override
+    public List<LocalSongEntity> getLocalSongsByPlayStatistic(List<PlayStatisticEntity> playStatisticEntityList) {
+        List<LocalSongEntity> songEntityList = new ArrayList<>();
+
+        for (PlayStatisticEntity statisticEntity : playStatisticEntityList) {
+            songEntityList.add(statisticEntity.toLocalSongEntity());
+        }
+
+//        Collections.reverse(songEntityList);
+
+        return songEntityList;
+    }
+
     private static void sortDes(List<PlayStatisticEntity> result) {
         Collections.sort(result, new Comparator<PlayStatisticEntity>() {
             @Override

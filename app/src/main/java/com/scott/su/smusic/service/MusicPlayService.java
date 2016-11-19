@@ -163,8 +163,9 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     @Override
-    public void addServicePlayListSongs(ArrayList<LocalSongEntity> playSongs) {
-        MusicPlayUtil.addSongsToPlayList(mPlayListSongs, playSongs, mCurrentPlayingSong);
+    public void setServicePlayListSongs(ArrayList<LocalSongEntity> playSongs) {
+//        MusicPlayUtil.addSongsToPlayList(mPlayListSongs, playSongs, mCurrentPlayingSong);
+        mPlayListSongs = playSongs;
     }
 
     @Override
@@ -496,8 +497,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         }
 
         @Override
-        public void addServicePlayListSongs(ArrayList<LocalSongEntity> playSongs) {
-            MusicPlayService.this.addServicePlayListSongs(playSongs);
+        public void setServicePlayListSongs(ArrayList<LocalSongEntity> playSongs) {
+            MusicPlayService.this.setServicePlayListSongs(playSongs);
         }
 
         @Override

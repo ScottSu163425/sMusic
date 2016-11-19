@@ -3,6 +3,7 @@ package com.scott.su.smusic.adapter;
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.scott.su.smusic.R;
@@ -54,7 +55,7 @@ public class PlayStatisticDisplayAdapter extends BaseDisplayAdapter<RecyclerView
     }
 
     @Override
-    protected void bindVH(RecyclerView.ViewHolder viewHolder, PlayStatisticEntity entity, int position) {
+    protected void bindVH(RecyclerView.ViewHolder viewHolder, final PlayStatisticEntity entity, final int position) {
         if (getItemViewType(position) == VIEW_TYPE_NORMAL) {
             PlayStatisticNormalViewHolder holder = (PlayStatisticNormalViewHolder) viewHolder;
             ViewUtil.setText(holder.getNumberTextView(), (position + 1) + "", "");
@@ -62,8 +63,18 @@ public class PlayStatisticDisplayAdapter extends BaseDisplayAdapter<RecyclerView
             ViewUtil.setText(holder.getArtistTextView(), entity.getArtist(), "");
             ViewUtil.setText(holder.getAlbumTextView(), entity.getAlbum(), "");
             ViewUtil.setText(holder.getCountTextView(), entity.getPlayCount() + " " + context.getString(R.string.unit_play_count), "");
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (getItemClickCallback() != null) {
+                        getItemClickCallback().onItemClick(v, entity, position, null, null, null);
+                    }
+                }
+            });
+
         } else {
-            PlayStatisticTop3ViewHolder holder = (PlayStatisticTop3ViewHolder) viewHolder;
+            final PlayStatisticTop3ViewHolder holder = (PlayStatisticTop3ViewHolder) viewHolder;
             ViewUtil.setText(holder.getNumberTextView(), (position + 1) + "", "");
             ViewUtil.setText(holder.getTitleTextView(), entity.getTitle(), "");
             ViewUtil.setText(holder.getArtistTextView(), entity.getArtist(), "");
@@ -80,6 +91,18 @@ public class PlayStatisticDisplayAdapter extends BaseDisplayAdapter<RecyclerView
 
             ImageLoader.load(context, entity.getCoverPath(), holder.getCoverImageView(),
                     R.drawable.ic_cover_default_song_bill, R.drawable.ic_cover_default_song_bill);
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (getItemClickCallback() != null) {
+                        getItemClickCallback().onItemClick(v, entity, position,
+                                new View[]{holder.getCoverImageView()},
+                                new String[]{context.getString(R.string.transition_name_cover)},
+                                null);
+                    }
+                }
+            });
         }
 
 

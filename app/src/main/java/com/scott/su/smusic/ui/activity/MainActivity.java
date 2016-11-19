@@ -495,7 +495,7 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public void addServicePlayListSongs(ArrayList<LocalSongEntity> playSongs) {
+    public void setServicePlayListSongs(ArrayList<LocalSongEntity> playSongs) {
 
     }
 
@@ -610,7 +610,7 @@ public class MainActivity extends BaseActivity implements MainView {
                     goToMusicWithSharedElementInPosition(position);
                 } /*else {
                     if (mMusicPlayServiceBinder.getServicePlayListSongs().isEmpty()) {
-                        mMusicPlayServiceBinder.addServicePlayListSongs(mSongDisplayFragment.getDisplayDataList());
+                        mMusicPlayServiceBinder.setServicePlayListSongs(mSongDisplayFragment.getDisplayDataList());
                     }
                     mMusicPlayServiceBinder.play(position);
                 }*/

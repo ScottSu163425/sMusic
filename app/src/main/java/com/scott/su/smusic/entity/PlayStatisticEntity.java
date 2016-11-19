@@ -62,6 +62,22 @@ public class PlayStatisticEntity implements Parcelable {
         setCoverPath(songEntity.getCoverPath());
     }
 
+    public LocalSongEntity toLocalSongEntity() {
+        LocalSongEntity songEntity = new LocalSongEntity();
+
+        songEntity.setSongId(getSongId());
+        songEntity.setTitle(getTitle());
+        songEntity.setArtist(getArtist());
+        songEntity.setAlbum(getAlbum());
+        songEntity.setAlbumId(getAlbumId());
+        songEntity.setDuration(getDuration());
+        songEntity.setPath(getPath());
+        songEntity.setSize(getSize());
+        songEntity.setCoverPath(getCoverPath());
+
+        return songEntity;
+    }
+
     public int getId() {
         return id;
     }

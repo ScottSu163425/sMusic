@@ -33,7 +33,7 @@ public class PlayStatisticDisplayPresenterImpl implements PlayStatisticDisplayPr
 
     @Override
     public void onSwipRefresh() {
-
+        getAndDisplayData(true);
     }
 
     @Override
@@ -53,11 +53,16 @@ public class PlayStatisticDisplayPresenterImpl implements PlayStatisticDisplayPr
 
     @Override
     public void onItemClick(View itemView, PlayStatisticEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-
+        mPlayStatisticDisplayView.handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
     }
 
     @Override
     public void onViewFirstTimeCreated() {
+        getAndDisplayData(false);
+    }
+
+    private void getAndDisplayData(final boolean isRefresh) {
+
         Observable.create(new Observable.OnSubscribe<List<PlayStatisticEntity>>() {
             @Override
             public void call(Subscriber<? super List<PlayStatisticEntity>> subscriber) {
@@ -69,7 +74,9 @@ public class PlayStatisticDisplayPresenterImpl implements PlayStatisticDisplayPr
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mPlayStatisticDisplayView.showLoading();
+                        if (!isRefresh) {
+                            mPlayStatisticDisplayView.showLoading();
+                        }
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())

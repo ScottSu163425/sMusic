@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_play_statistic"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical"
-    tools:context="com.scott.su.smusic.ui.activity.PlayStatisticActivity">
+    android:background="@color/background">
+
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -18,6 +15,7 @@
             android:id="@+id/tool_bar_play_statistic"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:navigationIcon="?attr/homeAsUpIndicator"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:theme="@style/AppTheme.AppBarOverlay" />
@@ -35,39 +33,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager_play_statistic"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_xl"
-            android:background="@color/colorPrimary"
-            android:orientation="vertical"
-            android:padding="@dimen/margin_s">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="@dimen/margin_xs"
-                android:text="本周音乐播放统计"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_title" />
-
-            <com.db.chart.view.LineChartView
-                android:id="@+id/chart_play_statistic"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginBottom="@dimen/margin_s"
-                android:layout_marginLeft="@dimen/margin_m"
-                android:layout_marginRight="@dimen/margin_m"
-                android:layout_marginTop="@dimen/margin_l" />
-        </LinearLayout>
-    </RelativeLayout>
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

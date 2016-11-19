@@ -1,6 +1,7 @@
 package com.scott.su.smusic.mvp.model;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.entity.PlayStatisticEntity;
@@ -24,4 +25,6 @@ public interface PlayStatisticModel {
      * @return
      */
     List<PlayStatisticEntity> getTotalPlayStatistic(Context context);
+
+    List<LocalSongEntity> getLocalSongsByPlayStatistic(@NonNull List<PlayStatisticEntity> playStatisticEntityList);
 }

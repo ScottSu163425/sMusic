@@ -8,10 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.scott.su.smusic.adapter.PlayStatisticDisplayAdapter;
+import com.scott.su.smusic.callback.PlayStatisticItemClickCallback;
 import com.scott.su.smusic.entity.PlayStatisticEntity;
 import com.scott.su.smusic.mvp.presenter.PlayStatisticDisplayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.PlayStatisticDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.PlayStatisticDisplayView;
+import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 
 import java.util.ArrayList;
@@ -24,13 +26,19 @@ import java.util.List;
 public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatisticEntity, RecyclerView.ViewHolder> implements PlayStatisticDisplayView {
     private PlayStatisticDisplayPresenter mDisplayPresenter;
     private PlayStatisticDisplayAdapter mDisplayAdapter;
-
+    private PlayStatisticItemClickCallback mItemClickCallback;
 
     @NonNull
     @Override
     protected RecyclerView.Adapter getAdapter() {
         if (mDisplayAdapter == null) {
             mDisplayAdapter = new PlayStatisticDisplayAdapter(getActivity());
+            mDisplayAdapter.setItemClickCallback(new ItemClickCallback<PlayStatisticEntity>() {
+                @Override
+                public void onItemClick(View itemView, PlayStatisticEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+                    mDisplayPresenter.onItemClick(itemView, entity, position, sharedElements, transitionNames, data);
+                }
+            });
         }
         return mDisplayAdapter;
     }
@@ -62,7 +70,7 @@ public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatis
 
     @Override
     protected boolean canSwipeRefresh() {
-        return false;
+        return true;
     }
 
     @Override
@@ -72,7 +80,7 @@ public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatis
 
     @Override
     protected void onSwipeRefresh() {
-
+        mDisplayPresenter.onSwipRefresh();
     }
 
     @Override
@@ -120,7 +128,13 @@ public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatis
 
     @Override
     public void handleItemClick(View itemView, PlayStatisticEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-
+        if (mItemClickCallback != null) {
+            if (position < 3) {
+                mItemClickCallback.onPlayStatisticItemClick(position, entity, getDisplayDataList(), sharedElements[0], transitionNames[0]);
+            } else {
+                mItemClickCallback.onPlayStatisticItemClick(position, entity, getDisplayDataList(), null, null);
+            }
+        }
     }
 
     @Override
@@ -128,4 +142,10 @@ public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatis
         mDisplayPresenter.onViewWillDestroy();
         super.onDestroy();
     }
+
+    public void setItemClickCallback(PlayStatisticItemClickCallback mItemClickCallback) {
+        this.mItemClickCallback = mItemClickCallback;
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.scott.su.smusic.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,11 @@ import android.view.View;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.PlayStatisticPagerAdapter;
+import com.scott.su.smusic.callback.PlayStatisticItemClickCallback;
+import com.scott.su.smusic.constant.Constants;
+import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.entity.PlayStatisticEntity;
+import com.scott.su.smusic.mvp.model.PlayStatisticModel;
 import com.scott.su.smusic.mvp.presenter.PlayStatisticPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.PlayStatisticPresenterImpl;
 import com.scott.su.smusic.mvp.view.PlayStatisticView;
@@ -105,7 +111,32 @@ public class PlayStatisticActivity extends BaseActivity implements PlayStatistic
     public PlayStatisticDisplayFragment getPlayStatisticDisplayFragment() {
         if (mPlayStatisticDisplayFragment == null) {
             mPlayStatisticDisplayFragment = new PlayStatisticDisplayFragment();
+
+            mPlayStatisticDisplayFragment.setItemClickCallback(new PlayStatisticItemClickCallback() {
+                @Override
+                public void onPlayStatisticItemClick(int position, PlayStatisticEntity entity, ArrayList<PlayStatisticEntity> statisticEntityList, View sharedElement, String transitionName) {
+                    mPlayStatisticPresenter.onPlayStatisticItemClick(position, entity, statisticEntityList, sharedElement, transitionName);
+                }
+            });
         }
         return mPlayStatisticDisplayFragment;
     }
+
+    @Override
+    public void goToMusicPlay(LocalSongEntity songEntity, ArrayList<LocalSongEntity> songEntityList) {
+        Intent intent = new Intent(PlayStatisticActivity.this, MusicPlayActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
+        intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, songEntityList);
+        goToWithTransition(intent);
+    }
+
+    @Override
+    public void goToMusicPlayWithCover(LocalSongEntity songEntity, ArrayList<LocalSongEntity> songEntityList, View sharedElement, String transitionName) {
+        Intent intent = new Intent(PlayStatisticActivity.this, MusicPlayActivity.class);
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
+        intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, songEntityList);
+        goToWithSharedElement(intent, sharedElement, transitionName);
+    }
+
+
 }
