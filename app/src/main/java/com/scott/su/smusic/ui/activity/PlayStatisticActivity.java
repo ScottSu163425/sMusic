@@ -15,6 +15,7 @@ import com.scott.su.smusic.mvp.presenter.PlayStatisticPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.PlayStatisticPresenterImpl;
 import com.scott.su.smusic.mvp.view.PlayStatisticView;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
+import com.scott.su.smusic.ui.fragment.PlayStatisticDisplayFragment;
 import com.scott.su.smusic.ui.fragment.PlayStatisticWeekFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.SdkUtil;
@@ -25,6 +26,7 @@ import java.util.List;
 public class PlayStatisticActivity extends BaseActivity implements PlayStatisticView {
     private PlayStatisticPresenter mPlayStatisticPresenter;
     private PlayStatisticWeekFragment mPlayStatisticWeekFragment;
+    private PlayStatisticDisplayFragment mPlayStatisticDisplayFragment;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
 
@@ -78,7 +80,7 @@ public class PlayStatisticActivity extends BaseActivity implements PlayStatistic
     public void initData() {
         List<Fragment> pageFragments = new ArrayList<>();
         pageFragments.add(getPlayStatisticWeekFragment());
-        pageFragments.add(new LocalSongDisplayFragment());
+        pageFragments.add(getPlayStatisticDisplayFragment());
 
         mViewPager.setAdapter(new PlayStatisticPagerAdapter(getSupportFragmentManager(),
                 pageFragments,
@@ -93,10 +95,17 @@ public class PlayStatisticActivity extends BaseActivity implements PlayStatistic
 
     }
 
-    public PlayStatisticWeekFragment getPlayStatisticWeekFragment() {
+    private PlayStatisticWeekFragment getPlayStatisticWeekFragment() {
         if (mPlayStatisticWeekFragment == null) {
             mPlayStatisticWeekFragment = new PlayStatisticWeekFragment();
         }
         return mPlayStatisticWeekFragment;
+    }
+
+    public PlayStatisticDisplayFragment getPlayStatisticDisplayFragment() {
+        if (mPlayStatisticDisplayFragment == null) {
+            mPlayStatisticDisplayFragment = new PlayStatisticDisplayFragment();
+        }
+        return mPlayStatisticDisplayFragment;
     }
 }

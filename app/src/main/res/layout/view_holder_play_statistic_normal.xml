@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/backgroundContent"
+    android:clickable="true"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="horizontal"
+    android:stateListAnimator="@drawable/selector_card_elevation_s">
+
+    <TextView
+        android:id="@+id/tv_number_view_holder_play_statistic"
+        android:layout_width="@dimen/size_image_view_holder_local_song"
+        android:layout_height="@dimen/size_image_view_holder_local_song"
+        android:gravity="center"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/text_size_subhead" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/margin_xs">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_count_view_holder_play_statistic"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title_view_holder_play_statistic"
+                style="@style/TextAppearanceSubhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/margin_xxs">
+
+                <TextView
+                    android:id="@+id/tv_artist_view_holder_play_statistic"
+                    style="@style/TextAppearanceCaptionSecondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
+
+                <TextView
+                    style="@style/TextAppearanceCaptionSecondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_xxs"
+                    android:layout_marginRight="@dimen/margin_xxs"
+                    android:maxLines="1"
+                    android:text="@string/divider_artist_album_view_holder_local_song" />
+
+                <TextView
+                    android:id="@+id/tv_ablum_view_holder_play_statistic"
+                    style="@style/TextAppearanceCaptionSecondary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_count_view_holder_play_statistic"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:padding="@dimen/margin_xs"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/text_size_caption" />
+
+    </RelativeLayout>
+
+</LinearLayout>
