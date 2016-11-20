@@ -2,6 +2,7 @@ package com.scott.su.smusic.mvp.presenter;
 
 import android.view.View;
 
+import com.scott.su.smusic.callback.MusicPlayMainFragmentCallback;
 import com.scott.su.smusic.callback.MusicPlayServiceCallback;
 import com.scott.su.smusic.callback.PlayListBottomSheetCallback;
 import com.scott.su.smusic.entity.LocalBillEntity;
@@ -11,9 +12,7 @@ import com.su.scott.slibrary.presenter.BasePresenter;
 /**
  * Created by asus on 2016/9/4.
  */
-public interface MusicPlayMainPresenter extends BasePresenter, MusicPlayServiceCallback ,PlayListBottomSheetCallback{
-    void onAddToBillMenuItemClick();
-
+public interface MusicPlayMainPresenter extends BasePresenter, MusicPlayServiceCallback ,PlayListBottomSheetCallback,MusicPlayMainFragmentCallback{
     void onAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity);
 
     void onPlayClick(View view);

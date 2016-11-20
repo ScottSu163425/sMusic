@@ -1,5 +1,7 @@
 package com.scott.su.smusic.mvp.view;
 
+import android.graphics.Bitmap;
+
 import com.su.scott.slibrary.view.BaseView;
 
 /**
@@ -7,4 +9,5 @@ import com.su.scott.slibrary.view.BaseView;
  */
 public interface MusicPlayView extends BaseView {
     void showBillSelectionDialog();
+    void loadBlurCover(Bitmap bitmap);
 }

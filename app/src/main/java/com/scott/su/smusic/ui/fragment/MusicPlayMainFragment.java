@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.ActivityBackPressCallback;
+import com.scott.su.smusic.callback.MusicPlayMainFragmentCallback;
 import com.scott.su.smusic.callback.MusicPlayServiceCallback;
 import com.scott.su.smusic.callback.PlayListBottomSheetCallback;
 import com.scott.su.smusic.constant.Constants;
@@ -56,7 +57,7 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
     private MusicPlayMainPresenter mMusicPlayPresenter;
     private View mRootView;
     private TextView mMusicTitleTextView, mMusicArtistTextView, mCurrentTimeTextView, mTotalTimeTextView;
-    private ImageView mCoverImageView ;
+    private ImageView mCoverImageView;
     private CardView mPlayControlCard;
     private FloatingActionButton mPlayButton;
     private ImageButton mRepeatButton, mSkipPreviousButton, mSkipNextButton, mPlayListButton;
@@ -69,7 +70,7 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
     private boolean mSeeking;  //Is Seekbar seeking.
     boolean mExisting = false; //Is activity existing.
-    private BlurCoverChangeCallback mBlurCoverChangeCallback;
+    private MusicPlayMainFragmentCallback mMusicPlayMainFragmentCallback;
 
 
     public static MusicPlayMainFragment newInstance(LocalSongEntity songEntity, ArrayList<LocalSongEntity> songEntities) {
@@ -208,6 +209,7 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
 
     @Override
     public void initListener() {
+        mCoverImageView.setOnClickListener(this);
         mPlayButton.setOnClickListener(this);
         mSkipPreviousButton.setOnClickListener(this);
         mSkipNextButton.setOnClickListener(this);
@@ -255,6 +257,8 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
             mMusicPlayPresenter.onRepeatClick(view);
         } else if (id == mPlayListButton.getId()) {
             showPlayListBottomSheet();
+        } else if (id == mCoverImageView.getId()) {
+            mMusicPlayPresenter.onCoverClick(view);
         }
     }
 
@@ -368,10 +372,7 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
             return;
         }
 
-        if (mBlurCoverChangeCallback != null) {
-            mBlurCoverChangeCallback.onBlurCoverChanged(bitmap);
-        }
-
+        mMusicPlayPresenter.onBlurCoverChanged(bitmap);
     }
 
     @Override
@@ -504,6 +505,11 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
         if (mPlayListBottomSheetDisplayFragment != null && mPlayListBottomSheetDisplayFragment.isResumed()) {
             mPlayListBottomSheetDisplayFragment.updatePlayList(playListSongs, currentSong);
         }
+    }
+
+    @Override
+    public MusicPlayMainFragmentCallback getMusicPlayMainFragmentCallback() {
+        return mMusicPlayMainFragmentCallback;
     }
 
     @Override
@@ -651,12 +657,8 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
         super.onDestroy();
     }
 
-    public void setBlurCoverChangeCallback(BlurCoverChangeCallback mBlurCoverChangeCallback) {
-        this.mBlurCoverChangeCallback = mBlurCoverChangeCallback;
-    }
-
-    public interface BlurCoverChangeCallback {
-        void onBlurCoverChanged(Bitmap bitmap);
+    public void setMusicPlayMainFragmentCallback(MusicPlayMainFragmentCallback mMusicPlayMainFragmentCallback) {
+        this.mMusicPlayMainFragmentCallback = mMusicPlayMainFragmentCallback;
     }
 
 

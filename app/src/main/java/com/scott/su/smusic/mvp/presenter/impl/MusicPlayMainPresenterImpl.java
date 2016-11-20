@@ -12,8 +12,6 @@ import com.scott.su.smusic.mvp.model.LocalBillModel;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.MusicPlayMainPresenter;
-import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
-import com.scott.su.smusic.mvp.view.MusicPlayMainView;
 import com.scott.su.smusic.mvp.view.MusicPlayMainView;
 import com.su.scott.slibrary.util.TimeUtil;
 
@@ -74,11 +72,6 @@ public class MusicPlayMainPresenterImpl implements MusicPlayMainPresenter {
         if (mMusicPlayMainView != null) {
             mMusicPlayMainView = null;
         }
-    }
-
-    @Override
-    public void onAddToBillMenuItemClick() {
-        mMusicPlayMainView.showBillSelectionDialog(mMusicPlayMainView.getCurrentPlayingSong());
     }
 
     @Override
@@ -237,4 +230,20 @@ public class MusicPlayMainPresenterImpl implements MusicPlayMainPresenter {
     public void onPlayListClearClick(View view) {
         mMusicPlayMainView.clearServiceSongs();
     }
+
+    @Override
+    public void onBlurCoverChanged(Bitmap bitmap) {
+        if (mMusicPlayMainView.getMusicPlayMainFragmentCallback() != null) {
+            mMusicPlayMainView.getMusicPlayMainFragmentCallback().onBlurCoverChanged(bitmap);
+        }
+    }
+
+    @Override
+    public void onCoverClick(View view) {
+        if (mMusicPlayMainView.getMusicPlayMainFragmentCallback() != null) {
+            mMusicPlayMainView.getMusicPlayMainFragmentCallback().onCoverClick(view);
+        }
+    }
+
+
 }

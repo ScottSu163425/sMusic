@@ -3,6 +3,7 @@ package com.scott.su.smusic.mvp.view;
 import android.graphics.Bitmap;
 import android.view.View;
 
+import com.scott.su.smusic.callback.MusicPlayMainFragmentCallback;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.view.BaseView;
@@ -61,5 +62,7 @@ public interface MusicPlayMainView extends BaseView, MusicPlayServiceView, View.
     void showPlayListBottomSheet();
 
     void updatePlayListBottomSheet(List<LocalSongEntity> playListSongs, LocalSongEntity currentSong);
+
+    MusicPlayMainFragmentCallback getMusicPlayMainFragmentCallback();
 
 }

@@ -9,12 +9,14 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.callback.MusicPlayMainFragmentCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.MusicPlayPresenterImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
 import com.scott.su.smusic.ui.fragment.MusicPlayMainFragment;
+import com.scott.su.smusic.ui.fragment.MusicPlaySecondFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.SdkUtil;
@@ -25,10 +27,13 @@ import java.util.ArrayList;
  * 2016-09-07 22:01:51
  */
 public class MusicPlayActivity extends BaseActivity implements MusicPlayView, View.OnClickListener {
+    private final int ID_CONTAINER = R.id.fl_container_music_play_main;
+
     private MusicPlayPresenter mMusicPlayPresenter;
     private Toolbar mToolbar;
     private ImageView mBlurCoverImageView;
     private MusicPlayMainFragment mMusicPlayMainFragment;
+    private MusicPlaySecondFragment mMusicPlaySecondFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +88,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     public void initData() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fl_container_music_play_main, getMusicPlayMainFragment())
+                .replace(ID_CONTAINER, getMusicPlayMainFragment())
                 .commit();
     }
 
@@ -102,6 +107,21 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         getMusicPlayMainFragment().showBillSelectionDialog(getMusicPlayMainFragment().getCurrentPlayingSong());
     }
 
+    @Override
+    public void loadBlurCover(final Bitmap bitmap) {
+        AnimUtil.alpha(mBlurCoverImageView, AnimUtil.ACTION.IN, 0, 1.0f, AnimUtil.DURATION_XLONG, null, new AnimUtil.SimpleAnimListener() {
+            @Override
+            public void onAnimStart() {
+                mBlurCoverImageView.setImageBitmap(bitmap);
+            }
+
+            @Override
+            public void onAnimEnd() {
+
+            }
+        });
+    }
+
     public MusicPlayMainFragment getMusicPlayMainFragment() {
         if (mMusicPlayMainFragment == null) {
             LocalSongEntity songEntity = getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG);
@@ -109,25 +129,35 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
             mMusicPlayMainFragment = MusicPlayMainFragment.newInstance(songEntity, playingSongs);
 
-            mMusicPlayMainFragment.setBlurCoverChangeCallback(new MusicPlayMainFragment.BlurCoverChangeCallback() {
+            mMusicPlayMainFragment.setMusicPlayMainFragmentCallback(new MusicPlayMainFragmentCallback() {
                 @Override
                 public void onBlurCoverChanged(final Bitmap bitmap) {
-                    AnimUtil.alpha(mBlurCoverImageView, AnimUtil.ACTION.IN, 0, 1.0f, AnimUtil.DURATION_XLONG, null, new AnimUtil.SimpleAnimListener() {
-                        @Override
-                        public void onAnimStart() {
-                            mBlurCoverImageView.setImageBitmap(bitmap);
-                        }
+                    mMusicPlayPresenter.onBlurCoverChanged(bitmap);
+                }
 
-                        @Override
-                        public void onAnimEnd() {
+                @Override
+                public void onCoverClick(View view) {
+                    mMusicPlayPresenter.onCoverClick(view);
 
-                        }
-                    });
+                    getSupportFragmentManager().beginTransaction()
+                            .hide(getMusicPlayMainFragment())
+                            .commit();
+
+                    getSupportFragmentManager().beginTransaction()
+                            .add(ID_CONTAINER, getMusicPlaySecondFragment())
+                            .commit();
                 }
             });
 
         }
         return mMusicPlayMainFragment;
+    }
+
+    public MusicPlaySecondFragment getMusicPlaySecondFragment() {
+        if (mMusicPlaySecondFragment == null) {
+            mMusicPlaySecondFragment = new MusicPlaySecondFragment();
+        }
+        return mMusicPlaySecondFragment;
     }
 
     @Override

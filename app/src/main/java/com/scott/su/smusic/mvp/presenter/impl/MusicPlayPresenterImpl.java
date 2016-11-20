@@ -1,5 +1,8 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
+import android.graphics.Bitmap;
+import android.view.View;
+
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
@@ -46,6 +49,17 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     @Override
     public void onAddToBillMenuItemClick() {
         mMusicPlayView.showBillSelectionDialog();
+    }
+
+
+    @Override
+    public void onBlurCoverChanged(Bitmap bitmap) {
+        mMusicPlayView.loadBlurCover(bitmap);
+    }
+
+    @Override
+    public void onCoverClick(View view) {
+
     }
 
 
