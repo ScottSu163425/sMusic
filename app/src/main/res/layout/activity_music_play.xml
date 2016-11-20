@@ -14,7 +14,6 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
 
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,13 +21,10 @@
         android:clipToPadding="false"
         android:fitsSystemWindows="true">
 
-
         <FrameLayout
             android:id="@+id/fl_container_music_play_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical" />
+            android:layout_height="match_parent" />
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/tool_bar_music_play"

@@ -54,8 +54,9 @@ import java.util.List;
 
 public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMainView, ActivityBackPressCallback {
     private MusicPlayMainPresenter mMusicPlayPresenter;
+    private View mRootView;
     private TextView mMusicTitleTextView, mMusicArtistTextView, mCurrentTimeTextView, mTotalTimeTextView;
-    private ImageView mCoverImageView, mBlurCoverImageView;
+    private ImageView mCoverImageView ;
     private CardView mPlayControlCard;
     private FloatingActionButton mPlayButton;
     private ImageButton mRepeatButton, mSkipPreviousButton, mSkipNextButton, mPlayListButton;
@@ -68,7 +69,7 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
     private boolean mSeeking;  //Is Seekbar seeking.
     boolean mExisting = false; //Is activity existing.
-    private View mRootView;
+    private BlurCoverChangeCallback mBlurCoverChangeCallback;
 
 
     public static MusicPlayMainFragment newInstance(LocalSongEntity songEntity, ArrayList<LocalSongEntity> songEntities) {
@@ -191,7 +192,6 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
         mCurrentTimeTextView = (TextView) mRootView.findViewById(R.id.tv_current_time_music_play);
         mTotalTimeTextView = (TextView) mRootView.findViewById(R.id.tv_total_time_music_play);
         mCoverImageView = (ImageView) mRootView.findViewById(R.id.iv_cover_music_play);
-        mBlurCoverImageView = (ImageView) mRootView.findViewById(R.id.iv_cover_blur_music_play);
         mPlayControlCard = (CardView) mRootView.findViewById(R.id.card_view_play_control_music_play);
         mPlayButton = (FloatingActionButton) mRootView.findViewById(R.id.fab_play_music_play);
         mPlayProgressSeekBar = (AppCompatSeekBar) mRootView.findViewById(R.id.seek_bar_progress_music_play);
@@ -368,17 +368,10 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
             return;
         }
 
-        AnimUtil.alpha(mBlurCoverImageView, AnimUtil.ACTION.IN, 0, 1.0f, AnimUtil.DURATION_XLONG, null, new AnimUtil.SimpleAnimListener() {
-            @Override
-            public void onAnimStart() {
-                mBlurCoverImageView.setImageBitmap(bitmap);
-            }
+        if (mBlurCoverChangeCallback != null) {
+            mBlurCoverChangeCallback.onBlurCoverChanged(bitmap);
+        }
 
-            @Override
-            public void onAnimEnd() {
-
-            }
-        });
     }
 
     @Override
@@ -656,6 +649,14 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
             mMusicPlayPresenter.onViewWillDestroy();
         }
         super.onDestroy();
+    }
+
+    public void setBlurCoverChangeCallback(BlurCoverChangeCallback mBlurCoverChangeCallback) {
+        this.mBlurCoverChangeCallback = mBlurCoverChangeCallback;
+    }
+
+    public interface BlurCoverChangeCallback {
+        void onBlurCoverChanged(Bitmap bitmap);
     }
 
 

@@ -29,7 +29,6 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
         mMusicPlayView.initView();
         mMusicPlayView.initData();
         mMusicPlayView.initListener();
-
     }
 
     @Override

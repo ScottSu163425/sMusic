@@ -1,10 +1,12 @@
 package com.scott.su.smusic.ui.activity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.constant.Constants;
@@ -14,6 +16,7 @@ import com.scott.su.smusic.mvp.presenter.impl.MusicPlayPresenterImpl;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
 import com.scott.su.smusic.ui.fragment.MusicPlayMainFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.SdkUtil;
 
 import java.util.ArrayList;
@@ -24,9 +27,8 @@ import java.util.ArrayList;
 public class MusicPlayActivity extends BaseActivity implements MusicPlayView, View.OnClickListener {
     private MusicPlayPresenter mMusicPlayPresenter;
     private Toolbar mToolbar;
-
+    private ImageView mBlurCoverImageView;
     private MusicPlayMainFragment mMusicPlayMainFragment;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +77,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public void initView() {
-
+        mBlurCoverImageView = (ImageView) findViewById(R.id.iv_cover_blur_music_play);
     }
 
     @Override
@@ -106,6 +108,24 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
             final ArrayList<LocalSongEntity> playingSongs = getIntent().getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS);
 
             mMusicPlayMainFragment = MusicPlayMainFragment.newInstance(songEntity, playingSongs);
+
+            mMusicPlayMainFragment.setBlurCoverChangeCallback(new MusicPlayMainFragment.BlurCoverChangeCallback() {
+                @Override
+                public void onBlurCoverChanged(final Bitmap bitmap) {
+                    AnimUtil.alpha(mBlurCoverImageView, AnimUtil.ACTION.IN, 0, 1.0f, AnimUtil.DURATION_XLONG, null, new AnimUtil.SimpleAnimListener() {
+                        @Override
+                        public void onAnimStart() {
+                            mBlurCoverImageView.setImageBitmap(bitmap);
+                        }
+
+                        @Override
+                        public void onAnimEnd() {
+
+                        }
+                    });
+                }
+            });
+
         }
         return mMusicPlayMainFragment;
     }

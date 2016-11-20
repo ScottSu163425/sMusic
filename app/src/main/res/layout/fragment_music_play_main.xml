@@ -4,16 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/background_music_play"
     android:clipChildren="false"
     android:clipToPadding="false">
-
-    <ImageView
-        android:id="@+id/iv_cover_blur_music_play"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
-
 
     <android.support.percent.PercentRelativeLayout
         android:layout_width="match_parent"
