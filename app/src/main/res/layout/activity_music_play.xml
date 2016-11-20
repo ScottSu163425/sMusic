@@ -15,12 +15,20 @@
         android:scaleType="centerCrop" />
 
 
-    <android.support.percent.PercentRelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:fitsSystemWindows="true">
+
+
+        <FrameLayout
+            android:id="@+id/fl_container_music_play_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical" />
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/tool_bar_music_play"
@@ -29,172 +37,7 @@
             app:navigationIcon="?attr/homeAsUpIndicator"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:theme="@style/AppTheme.AppBarOverlay" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tool_bar_music_play"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/iv_cover_music_play"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="@dimen/margin_l"
-                android:layout_marginRight="@dimen/margin_l"
-                android:layout_marginTop="@dimen/margin_l"
-                android:layout_weight="1"
-                android:elevation="20dp"
-                android:scaleType="fitXY"
-                android:transitionName="@string/transition_name_cover"
-                android:translationZ="20dp" />
-
-            <TextView
-                android:id="@+id/tv_music_title_music_play"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_l"
-                android:layout_marginRight="@dimen/margin_l"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:paddingTop="@dimen/margin_s"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_headline" />
-
-            <TextView
-                android:id="@+id/tv_music_artist_music_play"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_music_title_music_play"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="@dimen/margin_xl"
-                android:layout_marginRight="@dimen/margin_xl"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:paddingBottom="@dimen/margin_m"
-                android:paddingTop="@dimen/margin_xxs"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_body" />
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/card_view_play_control_music_play"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/margin_s"
-                android:layout_marginLeft="@dimen/margin_s"
-                android:layout_marginRight="@dimen/margin_s"
-                app:cardBackgroundColor="@color/background_card_music_play"
-                app:cardElevation="@dimen/cardview_default_elevation">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_xs"
-                        android:layout_marginRight="@dimen/margin_xs"
-                        android:layout_marginTop="@dimen/margin_s"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/tv_current_time_music_play"
-                            style="@style/TextAppearanceCaptionSecondary"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <android.support.v7.widget.AppCompatSeekBar
-                            android:id="@+id/seek_bar_progress_music_play"
-                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/tv_total_time_music_play"
-                            style="@style/TextAppearanceCaptionSecondary"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_xs"
-                        android:animateLayoutChanges="true"
-                        android:clipChildren="false"
-                        android:clipToPadding="false">
-
-                        <ImageButton
-                            android:id="@+id/imgbtn_repeat_music_play"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:background="@null"
-                            android:padding="@dimen/margin_xs"
-                            android:src="@drawable/ic_repeat_all_selected_24dp" />
-
-                        <ImageButton
-                            android:id="@+id/imgbtn_skip_previous_music_play"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toLeftOf="@+id/fab_play_music_play"
-                            android:background="@null"
-                            android:foreground="?attr/selectableItemBackground"
-                            android:padding="@dimen/margin_xs"
-                            android:src="@drawable/ic_skip_previous_36dp" />
-
-                        <android.support.design.widget.FloatingActionButton
-                            android:id="@+id/fab_play_music_play"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_margin="@dimen/margin_xs"
-                            android:src="@drawable/ic_play_arrow__white_24dp"
-                            android:transitionName="@string/transition_name_fab"
-                            app:backgroundTint="@color/colorImpact"
-                            app:elevation="@dimen/elevation_fab_normal"
-                            app:fabSize="normal"
-                            app:pressedTranslationZ="@dimen/elevation_fab_pressed"
-                            app:rippleColor="@color/colorImpactDark" />
-
-                        <ImageButton
-                            android:id="@+id/imgbtn_skip_next_music_play"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/fab_play_music_play"
-                            android:background="@null"
-                            android:foreground="?attr/selectableItemBackground"
-                            android:padding="@dimen/margin_xs"
-                            android:src="@drawable/ic_skip_next_36dp" />
-
-                        <ImageButton
-                            android:id="@+id/imgbtn_play_list_music_play"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:background="@null"
-                            android:foreground="?attr/selectableItemBackground"
-                            android:padding="@dimen/margin_xs"
-                            android:src="@drawable/ic_queue_music_24dp" />
-                    </RelativeLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
-    </android.support.percent.PercentRelativeLayout>
+    </FrameLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

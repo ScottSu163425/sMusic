@@ -24,6 +24,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     private ProgressDialog mLoadingDialog;
     private String mNetworkErrorTip;
     private boolean mIsFirstTimeCreateView = true;
+    private boolean mDestroyed;
 
     protected abstract void onFirstTimeCreateView();
 
@@ -154,4 +155,13 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         startActivity(intent, options.toBundle());
     }
 
+    protected boolean isDestroyed() {
+        return mDestroyed;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mDestroyed = true;
+    }
 }
