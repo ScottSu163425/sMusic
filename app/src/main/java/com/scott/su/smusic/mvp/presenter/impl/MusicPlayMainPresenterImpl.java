@@ -122,7 +122,7 @@ public class MusicPlayMainPresenterImpl implements MusicPlayMainPresenter {
     }
 
     @Override
-    public void onServiceConnected() {
+    public void onMusicPlayServiceConnected() {
         if (mMusicPlayMainView.isMusicPlaying()) {
             mMusicPlayMainView.setPlayButtonPlaying();
         } else {
@@ -133,7 +133,7 @@ public class MusicPlayMainPresenterImpl implements MusicPlayMainPresenter {
     }
 
     @Override
-    public void onServiceDisconnected() {
+    public void onMusicPlayServiceDisconnected() {
 
     }
 

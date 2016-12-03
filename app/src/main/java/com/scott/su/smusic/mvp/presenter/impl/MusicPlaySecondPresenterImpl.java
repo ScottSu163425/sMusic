@@ -17,9 +17,7 @@ public class MusicPlaySecondPresenterImpl implements MusicPlaySecondPresenter {
 
     @Override
     public void onViewFirstTimeCreated() {
-        mMusicPlaySecondView.initView();
-        mMusicPlaySecondView.initData();
-        mMusicPlaySecondView.initListener();
+        mMusicPlaySecondView.initPreData();
     }
 
     @Override
@@ -29,6 +27,18 @@ public class MusicPlaySecondPresenterImpl implements MusicPlaySecondPresenter {
 
     @Override
     public void onViewWillDestroy() {
+
+    }
+
+    @Override
+    public void onMusicPlayServiceConnected() {
+        mMusicPlaySecondView.initView();
+        mMusicPlaySecondView.initData();
+        mMusicPlaySecondView.initListener();
+    }
+
+    @Override
+    public void onMusicPlayServiceDisconnected() {
 
     }
 }

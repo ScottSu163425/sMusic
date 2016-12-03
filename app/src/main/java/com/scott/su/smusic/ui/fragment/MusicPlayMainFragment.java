@@ -127,12 +127,12 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
                 setServicePlayMode(mCurrentPlayMode);
                 registerServicePlayCallback(mMusicPlayServiceCallback);
                 mCurrentPlayStatus = mMusicPlayServiceBinder.getServiceCurrentPlayStatus();
-                mMusicPlayPresenter.onServiceConnected();
+                mMusicPlayPresenter.onMusicPlayServiceConnected();
             }
 
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
-                mMusicPlayPresenter.onServiceDisconnected();
+                mMusicPlayPresenter.onMusicPlayServiceDisconnected();
                 mMusicPlayServiceBinder = null;
             }
         };

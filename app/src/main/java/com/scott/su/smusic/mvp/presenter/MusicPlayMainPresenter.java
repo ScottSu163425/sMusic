@@ -23,9 +23,9 @@ public interface MusicPlayMainPresenter extends BasePresenter, MusicPlayServiceC
 
     void onRepeatClick(View view);
 
-    void onServiceConnected();
+    void onMusicPlayServiceConnected();
 
-    void onServiceDisconnected();
+    void onMusicPlayServiceDisconnected();
 
     void onSeekStart();
 

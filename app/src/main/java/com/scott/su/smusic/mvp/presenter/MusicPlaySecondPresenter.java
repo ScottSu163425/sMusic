@@ -7,4 +7,7 @@ import com.su.scott.slibrary.presenter.BasePresenter;
  */
 
 public interface MusicPlaySecondPresenter extends BasePresenter {
+    void onMusicPlayServiceConnected();
+
+    void onMusicPlayServiceDisconnected();
 }

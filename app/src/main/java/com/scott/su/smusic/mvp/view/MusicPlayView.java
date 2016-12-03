@@ -9,5 +9,14 @@ import com.su.scott.slibrary.view.BaseView;
  */
 public interface MusicPlayView extends BaseView {
     void showBillSelectionDialog();
+
     void loadBlurCover(Bitmap bitmap);
+
+    void showMusicPlayMainFragment();
+
+    void hideMusicPlayMainFragment();
+
+    void showMusicPlaySecondFragment();
+
+    void hideMusicPlaySecondFragment();
 }

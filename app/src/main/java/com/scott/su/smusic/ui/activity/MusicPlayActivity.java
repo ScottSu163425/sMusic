@@ -122,6 +122,55 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         });
     }
 
+    @Override
+    public void showMusicPlayMainFragment() {
+        if (!getMusicPlayMainFragment().isAdded()) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(ID_CONTAINER, getMusicPlayMainFragment())
+                    .commit();
+        } else if (!getMusicPlayMainFragment().isVisible()) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .show(getMusicPlayMainFragment())
+                    .commit();
+        }
+    }
+
+    @Override
+    public void hideMusicPlayMainFragment() {
+        if (getMusicPlayMainFragment().isAdded() && getMusicPlayMainFragment().isVisible()) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .hide(getMusicPlayMainFragment())
+                    .commit();
+        }
+    }
+
+    @Override
+    public void showMusicPlaySecondFragment() {
+        if (!getMusicPlaySecondFragment().isAdded()) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(ID_CONTAINER, getMusicPlaySecondFragment())
+                    .commit();
+        } else if (!getMusicPlaySecondFragment().isVisible()) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .show(getMusicPlaySecondFragment())
+                    .commit();
+        }
+    }
+
+    @Override
+    public void hideMusicPlaySecondFragment() {
+        if (getMusicPlaySecondFragment().isAdded() && getMusicPlaySecondFragment().isVisible()) {
+            getSupportFragmentManager().beginTransaction()
+                    .hide(getMusicPlaySecondFragment())
+                    .commit();
+        }
+    }
+
     public MusicPlayMainFragment getMusicPlayMainFragment() {
         if (mMusicPlayMainFragment == null) {
             LocalSongEntity songEntity = getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG);
@@ -138,14 +187,6 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                 @Override
                 public void onCoverClick(View view) {
                     mMusicPlayPresenter.onCoverClick(view);
-
-                    getSupportFragmentManager().beginTransaction()
-                            .hide(getMusicPlayMainFragment())
-                            .commit();
-
-                    getSupportFragmentManager().beginTransaction()
-                            .add(ID_CONTAINER, getMusicPlaySecondFragment())
-                            .commit();
                 }
             });
 
@@ -162,17 +203,22 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public void onBackPressed() {
-        getMusicPlayMainFragment().onActivityBackPressed();
+        hideMusicPlaySecondFragment();
+        showMusicPlayMainFragment();
 
-        if (!mMusicPlayMainFragment.isSameSong()) {
-            finish();
-            overridePendingTransition(R.anim.in_alpha, R.anim.out_east);
-        } else {
-            if (SdkUtil.isLolipopOrLatter()) {
-                finishAfterTransition();
-            } else {
+        if (getMusicPlayMainFragment().isAdded() && getMusicPlayMainFragment().isVisible()) {
+            getMusicPlayMainFragment().onActivityBackPressed();
+
+            if (!mMusicPlayMainFragment.isSameSong()) {
                 finish();
                 overridePendingTransition(R.anim.in_alpha, R.anim.out_east);
+            } else {
+                if (SdkUtil.isLolipopOrLatter()) {
+                    finishAfterTransition();
+                } else {
+                    finish();
+                    overridePendingTransition(R.anim.in_alpha, R.anim.out_east);
+                }
             }
         }
     }

@@ -59,7 +59,8 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
 
     @Override
     public void onCoverClick(View view) {
-
+        mMusicPlayView.hideMusicPlayMainFragment();
+        mMusicPlayView.showMusicPlaySecondFragment();
     }
 
 
