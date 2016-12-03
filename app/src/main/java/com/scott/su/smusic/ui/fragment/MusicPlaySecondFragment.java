@@ -17,10 +17,13 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.callback.MusicPlayServiceCallback;
+import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.MusicPlaySecondPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.MusicPlaySecondPresenterImpl;
 import com.scott.su.smusic.mvp.view.MusicPlaySecondView;
 import com.scott.su.smusic.service.MusicPlayService;
+import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseFragment;
 
 /**
@@ -39,8 +42,9 @@ public class MusicPlaySecondFragment extends BaseFragment implements MusicPlaySe
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_music_play_second, container, false);
-
+        if (mRootView == null) {
+            mRootView = inflater.inflate(R.layout.fragment_music_play_second, container, false);
+        }
         return mRootView;
     }
 
@@ -57,8 +61,7 @@ public class MusicPlaySecondFragment extends BaseFragment implements MusicPlaySe
 
     @Override
     public void initPreData() {
-        Intent intent = new Intent(getActivity(), MusicPlayService.class);
-        getActivity().bindService(intent, mMusicPlayServiceConnection, getActivity().BIND_AUTO_CREATE);
+        bindMusicPlayService();
     }
 
     @Override
@@ -77,6 +80,7 @@ public class MusicPlaySecondFragment extends BaseFragment implements MusicPlaySe
         mVolumeSeekBar.setProgress(current);
 
         if (mMusicPlayServiceBinder != null) {
+            getPlayListSecondDisplayFragment().setCurrentPosition(mMusicPlayServiceBinder.getCurrentPositon());
             getPlayListSecondDisplayFragment().setPlayingSongEntityList(mMusicPlayServiceBinder.getServicePlayListSongs());
         }
 
@@ -109,6 +113,19 @@ public class MusicPlaySecondFragment extends BaseFragment implements MusicPlaySe
             }
         });
 
+        registerMusicPlayCallback();
+    }
+
+    private void registerMusicPlayCallback() {
+        if (mMusicPlayServiceBinder != null) {
+            mMusicPlayServiceBinder.registerServicePlayCallback(mMusicPlayServiceCallback);
+        }
+    }
+
+    private void unregisterMusicPlayCallback() {
+        if (mMusicPlayServiceBinder != null) {
+            mMusicPlayServiceBinder.unregisterServicePlayCallback(mMusicPlayServiceCallback);
+        }
     }
 
     private void registerVolumeReceiver() {
@@ -140,12 +157,75 @@ public class MusicPlaySecondFragment extends BaseFragment implements MusicPlaySe
         }
     };
 
+    private void bindMusicPlayService() {
+        Intent intent = new Intent(getActivity(), MusicPlayService.class);
+        getActivity().bindService(intent, mMusicPlayServiceConnection, getActivity().BIND_AUTO_CREATE);
+    }
+
+    private void unbindMusicPlayService() {
+        if (mMusicPlayServiceConnection != null) {
+            getActivity().unbindService(mMusicPlayServiceConnection);
+        }
+    }
+
     private PlayListSecondDisplayFragment getPlayListSecondDisplayFragment() {
         if (mPlayListSecondDisplayFragment == null) {
             mPlayListSecondDisplayFragment = new PlayListSecondDisplayFragment();
+            mPlayListSecondDisplayFragment.setItemClickCallback(new ItemClickCallback<LocalSongEntity>() {
+                @Override
+                public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+                    mMusicPlayServiceBinder.setServiceCurrentPlaySong(entity);
+                    mMusicPlayServiceBinder.playSkip();
+                }
+            });
         }
         return mPlayListSecondDisplayFragment;
     }
 
+    private MusicPlayServiceCallback mMusicPlayServiceCallback = new MusicPlayServiceCallback() {
+        @Override
+        public void onPlayStart() {
+
+        }
+
+        @Override
+        public void onPlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong, int currentPosition) {
+            getPlayListSecondDisplayFragment().setCurrentPosition(currentPosition);
+        }
+
+        @Override
+        public void onPlayProgressUpdate(long currentPositionMillSec) {
+
+        }
+
+        @Override
+        public void onPlayPause(long currentPositionMillSec) {
+
+        }
+
+        @Override
+        public void onPlayResume() {
+
+        }
+
+        @Override
+        public void onPlayStop() {
+
+        }
+
+        @Override
+        public void onPlayComplete() {
+
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        getActivity().unregisterReceiver(mVolumeReceiver);
+        unbindMusicPlayService();
+        unregisterMusicPlayCallback();
+
+        super.onDestroy();
+    }
 
 }

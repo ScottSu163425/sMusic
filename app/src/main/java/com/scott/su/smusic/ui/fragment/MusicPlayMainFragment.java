@@ -513,6 +513,11 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
     }
 
     @Override
+    public int getCurrentPositon() {
+        return 0;
+    }
+
+    @Override
     public PlayStatus getServiceCurrentPlayStatus() {
         return null;
     }
@@ -602,8 +607,8 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
         }
 
         @Override
-        public void onPlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong) {
-            mMusicPlayPresenter.onPlaySongChanged(previousPlaySong, currentPlayingSong);
+        public void onPlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong,int currentPosition) {
+            mMusicPlayPresenter.onPlaySongChanged(previousPlaySong, currentPlayingSong,currentPosition);
             mCurrentPlayingSong = currentPlayingSong;
         }
 

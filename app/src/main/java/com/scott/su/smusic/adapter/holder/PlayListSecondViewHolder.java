@@ -11,14 +11,15 @@ import com.scott.su.smusic.R;
  * Created by asus on 2016/11/27.
  */
 
-public class PlayListSecondViewHolder extends RecyclerView.ViewHolder{
+public class PlayListSecondViewHolder extends RecyclerView.ViewHolder {
     private ImageView coverImageView;
-    private TextView titleTextView,artistTextView;
-
+    private TextView titleTextView, artistTextView;
+    private View coverMask;
 
     public PlayListSecondViewHolder(View itemView) {
         super(itemView);
         coverImageView = (ImageView) itemView.findViewById(R.id.iv_cover_view_holder_play_list_second);
+        coverMask = itemView.findViewById(R.id.mask_cover_view_holder_play_list_second);
         titleTextView = (TextView) itemView.findViewById(R.id.tv_title_view_holder_play_list_second);
         artistTextView = (TextView) itemView.findViewById(R.id.tv_artist_view_holder_play_list_second);
     }
@@ -33,5 +34,9 @@ public class PlayListSecondViewHolder extends RecyclerView.ViewHolder{
 
     public ImageView getCoverImageView() {
         return coverImageView;
+    }
+
+    public View getCoverMask() {
+        return coverMask;
     }
 }

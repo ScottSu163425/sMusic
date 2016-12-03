@@ -2,6 +2,7 @@ package com.scott.su.smusic.adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.scott.su.smusic.R;
@@ -34,7 +35,13 @@ public class PlayListSecondDisplayAdapter extends BaseDisplayAdapter<PlayListSec
     }
 
     @Override
-    protected void bindVH(PlayListSecondViewHolder viewHolder, LocalSongEntity entity, int position) {
+    protected void bindVH(PlayListSecondViewHolder viewHolder, final LocalSongEntity entity, final int position) {
+        if (getSelectedPosition() == position) {
+            ViewUtil.setViewInVisiable(viewHolder.getCoverMask());
+        } else {
+            ViewUtil.setViewVisiable(viewHolder.getCoverMask());
+        }
+
         ImageLoader.load(context,
                 entity.getCoverPath(),
                 viewHolder.getCoverImageView(),
@@ -43,6 +50,15 @@ public class PlayListSecondDisplayAdapter extends BaseDisplayAdapter<PlayListSec
 
         ViewUtil.setText(viewHolder.getTitleTextView(), entity.getTitle(), "");
         ViewUtil.setText(viewHolder.getArtistTextView(), entity.getArtist(), "");
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getItemClickCallback() != null) {
+                    getItemClickCallback().onItemClick(v, entity, position, null, null, null);
+                }
+            }
+        });
     }
 
     @Override

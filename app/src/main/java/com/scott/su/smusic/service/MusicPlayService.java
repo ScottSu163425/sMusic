@@ -332,7 +332,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             //Only by skip next or previous should notify playing song changed;
             if (isSkipping && mPreviousPlayingSong != null && isRegisterCallback()) {
 //                mMusicPlayServiceCallback.onPlaySongChanged(mPreviousPlayingSong, mCurrentPlayingSong);
-                notifyAllOnPlaySongChanged(mPreviousPlayingSong, mCurrentPlayingSong);
+                notifyAllOnPlaySongChanged(mPreviousPlayingSong, mCurrentPlayingSong, MusicPlayUtil.getSongPosition(mCurrentPlayingSong, mPlayListSongs));
             }
             updateNotifycation();
 
@@ -442,6 +442,15 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     @Override
+    public int getCurrentPositon() {
+        if (mPlayListSongs == null || mPlayListSongs.isEmpty() || mCurrentPlayingSong == null) {
+            return -1;
+        }
+
+        return MusicPlayUtil.getSongPosition(mCurrentPlayingSong, mPlayListSongs);
+    }
+
+    @Override
     public PlayStatus getServiceCurrentPlayStatus() {
         return mCurrentPlayStatus;
     }
@@ -475,6 +484,11 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     public class MusicPlayServiceBinder extends Binder implements MusicPlayServiceView {
+
+        @Override
+        public int getCurrentPositon() {
+            return MusicPlayService.this.getCurrentPositon();
+        }
 
         @Override
         public PlayStatus getServiceCurrentPlayStatus() {
@@ -597,13 +611,13 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         }
     }
 
-    private void notifyAllOnPlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong) {
+    private void notifyAllOnPlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong, int currentPositon) {
         if (mCallbacks.isEmpty()) {
             return;
         }
 
         for (MusicPlayServiceCallback callback : mCallbacks) {
-            callback.onPlaySongChanged(previousPlaySong, currentPlayingSong);
+            callback.onPlaySongChanged(previousPlaySong, currentPlayingSong, currentPositon);
         }
     }
 

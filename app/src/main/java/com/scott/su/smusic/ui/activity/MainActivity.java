@@ -476,6 +476,11 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
+    public int getCurrentPositon() {
+        return mMusicPlayServiceBinder.getCurrentPositon();
+    }
+
+    @Override
     public PlayStatus getServiceCurrentPlayStatus() {
         return mMusicPlayServiceBinder.getServiceCurrentPlayStatus();
     }

@@ -30,9 +30,10 @@
                 android:scaleType="centerCrop" />
 
             <View
+                android:id="@+id/mask_cover_view_holder_play_list_second"
                 android:layout_width="230dp"
                 android:layout_height="250dp"
-                android:background="#80000000" />
+                android:background="#90000000" />
         </FrameLayout>
 
         <LinearLayout

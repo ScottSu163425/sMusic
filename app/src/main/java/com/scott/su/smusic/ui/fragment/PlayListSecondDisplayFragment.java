@@ -12,6 +12,7 @@ import com.scott.su.smusic.adapter.holder.PlayListSecondViewHolder;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.PlayListSecondDisplayPresenter;
 import com.scott.su.smusic.mvp.view.PlayListSecondDisplayView;
+import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 
 import java.util.ArrayList;
@@ -25,7 +26,8 @@ public class PlayListSecondDisplayFragment extends BaseDisplayFragment<LocalSong
     private PlayListSecondDisplayPresenter mDisplayPresenter;
     private PlayListSecondDisplayAdapter mDisplayAdapter;
     private List<LocalSongEntity> mPlayingSongEntityList;
-
+    private int mCurrentPosition = -1;
+    private ItemClickCallback<LocalSongEntity> mItemClickCallback;
 
     @Override
     public void onResume() {
@@ -35,6 +37,11 @@ public class PlayListSecondDisplayFragment extends BaseDisplayFragment<LocalSong
             mDisplayAdapter.setDataList(mPlayingSongEntityList);
             mDisplayAdapter.notifyDataSetChanged();
         }
+//
+        if (mDisplayAdapter.getSelectedPosition() != mCurrentPosition) {
+            mDisplayAdapter.setSelectedPosition(mCurrentPosition, true);
+            getRecyclerView().scrollToPosition(mCurrentPosition);
+        }
 
     }
 
@@ -43,6 +50,14 @@ public class PlayListSecondDisplayFragment extends BaseDisplayFragment<LocalSong
     protected RecyclerView.Adapter getAdapter() {
         if (mDisplayAdapter == null) {
             mDisplayAdapter = new PlayListSecondDisplayAdapter(getActivity());
+            mDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalSongEntity>() {
+                @Override
+                public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+                    if (mItemClickCallback != null) {
+                        mItemClickCallback.onItemClick(itemView, entity, position, sharedElements, transitionNames, data);
+                    }
+                }
+            });
         }
         return mDisplayAdapter;
     }
@@ -135,5 +150,16 @@ public class PlayListSecondDisplayFragment extends BaseDisplayFragment<LocalSong
         this.mPlayingSongEntityList = songEntityList;
     }
 
+    public void setCurrentPosition(int positon) {
+        mCurrentPosition = positon;
 
+        if (isAdded() && isVisible()) {
+            mDisplayAdapter.setSelectedPosition(mCurrentPosition, true);
+            getRecyclerView().scrollToPosition(mCurrentPosition);
+        }
+    }
+
+    public void setItemClickCallback(ItemClickCallback<LocalSongEntity> callback) {
+        this.mItemClickCallback = callback;
+    }
 }

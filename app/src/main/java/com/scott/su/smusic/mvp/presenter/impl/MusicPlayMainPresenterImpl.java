@@ -143,7 +143,7 @@ public class MusicPlayMainPresenterImpl implements MusicPlayMainPresenter {
     }
 
     @Override
-    public void onPlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong) {
+    public void onPlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong,int currentPosition) {
         mMusicPlayMainView.setCurrentPlayingSong(currentPlayingSong);
         updateCurrentPlayingSongInfo(true);
     }
