@@ -2,6 +2,7 @@ package com.scott.su.smusic.ui.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -137,11 +138,13 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         if (!getMusicPlayMainFragment().isAdded()) {
             getSupportFragmentManager()
                     .beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .add(ID_CONTAINER, getMusicPlayMainFragment())
                     .commit();
         } else if (!getMusicPlayMainFragment().isVisible()) {
             getSupportFragmentManager()
                     .beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .show(getMusicPlayMainFragment())
                     .commit();
         }
@@ -152,6 +155,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         if (getMusicPlayMainFragment().isAdded() && getMusicPlayMainFragment().isVisible()) {
             getSupportFragmentManager()
                     .beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .hide(getMusicPlayMainFragment())
                     .commit();
         }
@@ -162,11 +166,13 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         if (!getMusicPlaySecondFragment().isAdded()) {
             getSupportFragmentManager()
                     .beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .add(ID_CONTAINER, getMusicPlaySecondFragment())
                     .commit();
         } else if (!getMusicPlaySecondFragment().isVisible()) {
             getSupportFragmentManager()
                     .beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .show(getMusicPlaySecondFragment())
                     .commit();
         }
@@ -175,7 +181,9 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     @Override
     public void hideMusicPlaySecondFragment() {
         if (getMusicPlaySecondFragment().isAdded() && getMusicPlaySecondFragment().isVisible()) {
-            getSupportFragmentManager().beginTransaction()
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .hide(getMusicPlaySecondFragment())
                     .commit();
         }
