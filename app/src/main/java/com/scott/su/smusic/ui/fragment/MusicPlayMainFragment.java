@@ -31,7 +31,6 @@ import com.scott.su.smusic.callback.PlayListBottomSheetCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
-import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.MusicPlayMainPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.MusicPlayMainPresenterImpl;
@@ -260,19 +259,6 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
         } else if (id == mCoverImageView.getId()) {
             mMusicPlayPresenter.onCoverClick(view);
         }
-    }
-
-    @Override
-    public void showBillSelectionDialog(final LocalSongEntity songEntity) {
-        final LocalBillSelectionDialogFragment billSelectionDialogFragment = new LocalBillSelectionDialogFragment();
-        billSelectionDialogFragment.setCallback(new LocalBillSelectionDialogFragment.BillSelectionCallback() {
-            @Override
-            public void onBillSelected(LocalBillEntity billEntity) {
-                mMusicPlayPresenter.onAddToBillConfirmed(billEntity, songEntity);
-                billSelectionDialogFragment.dismissAllowingStateLoss();
-            }
-        });
-        billSelectionDialogFragment.show(getChildFragmentManager(), "");
     }
 
     @Override
@@ -607,8 +593,8 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
         }
 
         @Override
-        public void onPlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong,int currentPosition) {
-            mMusicPlayPresenter.onPlaySongChanged(previousPlaySong, currentPlayingSong,currentPosition);
+        public void onPlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong, int currentPosition) {
+            mMusicPlayPresenter.onPlaySongChanged(previousPlaySong, currentPlayingSong, currentPosition);
             mCurrentPlayingSong = currentPlayingSong;
         }
 

@@ -13,84 +13,92 @@
     android:orientation="vertical"
     android:stateListAnimator="@drawable/selector_card_elevation_m">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/backgroundContent"
-        android:orientation="vertical">
-
-        <FrameLayout
-            android:layout_width="230dp"
-            android:layout_height="250dp">
-
-            <ImageView
-                android:id="@+id/iv_cover_view_holder_play_list_second"
-                android:layout_width="230dp"
-                android:layout_height="250dp"
-                android:scaleType="centerCrop" />
-
-            <View
-                android:id="@+id/mask_cover_view_holder_play_list_second"
-                android:layout_width="230dp"
-                android:layout_height="250dp"
-                android:background="#90000000" />
-        </FrameLayout>
+    <FrameLayout
+        android:layout_width="230dp"
+        android:layout_height="320dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:background="@color/backgroundContent"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/iv_cover_view_holder_play_list_second"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_title_view_holder_play_list_second"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:paddingLeft="@dimen/margin_s"
-                    android:paddingRight="@dimen/margin_xs"
-                    android:paddingTop="@dimen/margin_s"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="@dimen/text_size_subhead" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_artist_view_holder_play_list_second"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:paddingBottom="@dimen/margin_s"
-                    android:paddingLeft="@dimen/margin_s"
-                    android:paddingRight="@dimen/margin_s"
-                    android:paddingTop="@dimen/margin_xxs"
-                    android:textColor="@color/textColorSecondary"
-                    android:textSize="@dimen/text_size_body" />
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_title_view_holder_play_list_second"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/margin_s"
+                        android:paddingRight="@dimen/margin_xs"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="@dimen/text_size_subhead" />
+
+                    <TextView
+                        android:id="@+id/tv_artist_view_holder_play_list_second"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/margin_s"
+                        android:paddingRight="@dimen/margin_s"
+                        android:paddingTop="@dimen/margin_xxs"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/text_size_body" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/ic_more_vert_grey_600_24dp" />
+                </RelativeLayout>
             </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/ic_more_vert_grey_600_24dp" />
-            </RelativeLayout>
         </LinearLayout>
 
-
-    </LinearLayout>
+        <View
+            android:id="@+id/mask_cover_view_holder_play_list_second"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#99000000"
+            android:visibility="invisible" />
+    </FrameLayout>
 
 </android.support.v7.widget.CardView>

@@ -29,6 +29,7 @@ public class PlayListSecondDisplayFragment extends BaseDisplayFragment<LocalSong
     private int mCurrentPosition = -1;
     private ItemClickCallback<LocalSongEntity> mItemClickCallback;
 
+
     @Override
     public void onResume() {
         super.onResume();
@@ -37,12 +38,11 @@ public class PlayListSecondDisplayFragment extends BaseDisplayFragment<LocalSong
             mDisplayAdapter.setDataList(mPlayingSongEntityList);
             mDisplayAdapter.notifyDataSetChanged();
         }
-//
+
         if (mDisplayAdapter.getSelectedPosition() != mCurrentPosition) {
             mDisplayAdapter.setSelectedPosition(mCurrentPosition, true);
             getRecyclerView().scrollToPosition(mCurrentPosition);
         }
-
     }
 
     @NonNull

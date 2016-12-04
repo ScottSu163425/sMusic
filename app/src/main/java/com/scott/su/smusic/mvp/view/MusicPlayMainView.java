@@ -15,8 +15,6 @@ import java.util.List;
  */
 public interface MusicPlayMainView extends BaseView, MusicPlayServiceView, View.OnClickListener {
 
-    void showBillSelectionDialog(LocalSongEntity songEntity);
-
     void setCurrentPlayingSong(LocalSongEntity songEntity);
 
     LocalSongEntity getCurrentPlayingSong();

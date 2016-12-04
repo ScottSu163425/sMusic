@@ -45,7 +45,7 @@ public class PlayListSecondDisplayAdapter extends BaseDisplayAdapter<PlayListSec
         ImageLoader.load(context,
                 entity.getCoverPath(),
                 viewHolder.getCoverImageView(),
-                R.drawable.ic_cover_default_song_bill,
+                R.color.place_holder_loading,
                 R.drawable.ic_cover_default_song_bill);
 
         ViewUtil.setText(viewHolder.getTitleTextView(), entity.getTitle(), "");

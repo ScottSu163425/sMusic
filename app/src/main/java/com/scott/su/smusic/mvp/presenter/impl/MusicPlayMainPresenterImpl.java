@@ -3,9 +3,7 @@ package com.scott.su.smusic.mvp.presenter.impl;
 import android.graphics.Bitmap;
 import android.view.View;
 
-import com.scott.su.smusic.R;
 import com.scott.su.smusic.config.AppConfig;
-import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
@@ -72,19 +70,6 @@ public class MusicPlayMainPresenterImpl implements MusicPlayMainPresenter {
         if (mMusicPlayMainView != null) {
             mMusicPlayMainView = null;
         }
-    }
-
-    @Override
-    public void onAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity) {
-        if (mBillModel.isBillContainsSong(billEntity, songEntity)) {
-            mMusicPlayMainView.showSnackbarShort(mMusicPlayMainView.getSnackbarParent(),
-                    mMusicPlayMainView.getViewContext().getString(R.string.already_exist_in_bill));
-            return;
-        }
-
-        mBillModel.addSongToBill(mMusicPlayMainView.getViewContext(), songEntity, billEntity);
-        AppConfig.setNeedToRefreshLocalBillDisplay(mMusicPlayMainView.getViewContext(), true);
-        mMusicPlayMainView.showSnackbarShort(mMusicPlayMainView.getSnackbarParent(), mMusicPlayMainView.getViewContext().getString(R.string.add_successfully));
     }
 
     @Override

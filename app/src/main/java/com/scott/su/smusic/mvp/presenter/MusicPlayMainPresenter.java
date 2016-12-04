@@ -12,9 +12,7 @@ import com.su.scott.slibrary.presenter.BasePresenter;
 /**
  * Created by asus on 2016/9/4.
  */
-public interface MusicPlayMainPresenter extends BasePresenter, MusicPlayServiceCallback ,PlayListBottomSheetCallback,MusicPlayMainFragmentCallback{
-    void onAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity);
-
+public interface MusicPlayMainPresenter extends BasePresenter, MusicPlayServiceCallback, PlayListBottomSheetCallback, MusicPlayMainFragmentCallback {
     void onPlayClick(View view);
 
     void onSkipPreviousClick(View view);
