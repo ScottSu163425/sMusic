@@ -33,6 +33,7 @@ public class PlayListBottomSheetDisplayFragment extends BottomSheetDialogFragmen
     private PlayListBottomSheetCallback mItemCallback;
     private int mCurrentPlayPosition = -1;
 
+
     public static PlayListBottomSheetDisplayFragment newInstance() {
         PlayListBottomSheetDisplayFragment instance = new PlayListBottomSheetDisplayFragment();
         return instance;

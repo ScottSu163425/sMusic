@@ -8,10 +8,15 @@ public interface HttpCallback<E> {
 
     /**
      * Running on main thread.
+     */
+    void onPrepare();
+
+    /**
+     * Running on main thread.
      *
      * @param response
      */
-    void onSuccess(E response);
+    void onResponse(E response);
 
 
     /**

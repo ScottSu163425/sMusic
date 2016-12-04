@@ -12,6 +12,7 @@ import com.scott.su.smusic.adapter.holder.PlayListSecondViewHolder;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.PlayListSecondDisplayPresenter;
 import com.scott.su.smusic.mvp.view.PlayListSecondDisplayView;
+import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 
@@ -47,7 +48,7 @@ public class PlayListSecondDisplayFragment extends BaseDisplayFragment<LocalSong
 
     @NonNull
     @Override
-    protected RecyclerView.Adapter getAdapter() {
+    protected BaseDisplayAdapter<PlayListSecondViewHolder, LocalSongEntity> getAdapter() {
         if (mDisplayAdapter == null) {
             mDisplayAdapter = new PlayListSecondDisplayAdapter(getActivity());
             mDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalSongEntity>() {

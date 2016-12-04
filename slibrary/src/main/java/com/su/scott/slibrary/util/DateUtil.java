@@ -12,7 +12,7 @@ public class DateUtil {
     }
 
     public static int getCurrentMonth() {
-        return (Calendar.getInstance().get(Calendar.MONTH)+1);
+        return (Calendar.getInstance().get(Calendar.MONTH) + 1);
     }
 
     public static int getCurrentDay() {
@@ -39,6 +39,14 @@ public class DateUtil {
         }
 
         return "0" + numberStr;
+    }
+
+    public static String getYYYYMMDD() {
+        return new StringBuilder()
+                .append(getCurrentYear())
+                .append(getCurrentMonth())
+                .append(getCurrentDay())
+                .toString();
     }
 
 

@@ -12,10 +12,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitClient {
-    public static final String URL_BASE = "http://www.baidu.com/";
+    public static final String URL_BASE = "http://192.168.1.18/RtpService.asmx/";
     public static final int TIMEOUT_SECOND_CONNECT = 10;
     public static final int TIMEOUT_SECOND_READ = 10;
-    public static final int TIMEOUT_SECOND_WRITE = 20;
+    public static final int TIMEOUT_SECOND_WRITE = 30;
 
     private static RetrofitClient mRetrofitClient;
     private static Retrofit mRetrofit;

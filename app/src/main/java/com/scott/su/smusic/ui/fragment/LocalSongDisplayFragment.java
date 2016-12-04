@@ -15,9 +15,9 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.LocalSongDisplayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalSongDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
+import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
-import com.su.scott.slibrary.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,24 +48,27 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
         mSongDisplayPresenter.onViewFirstTimeCreated();
     }
 
+
+    @NonNull
     @Override
-    protected RecyclerView.Adapter getAdapter() {
-        mSongDisplayAdapter = new LocalSongDisplayAdapter(getActivity()) {
-            @Override
-            public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
-                if (mDisplayCallback != null) {
-                    mDisplayCallback.onItemMoreClick(view, position, entity);
+    protected BaseDisplayAdapter<LocalSongViewHolder, LocalSongEntity> getAdapter() {
+        if (mSongDisplayAdapter == null) {
+            mSongDisplayAdapter = new LocalSongDisplayAdapter(getActivity()) {
+                @Override
+                public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
+                    if (mDisplayCallback != null) {
+                        mDisplayCallback.onItemMoreClick(view, position, entity);
+                    }
                 }
-            }
-        };
+            };
 
-        mSongDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalSongEntity>() {
-            @Override
-            public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-                mSongDisplayPresenter.onItemClick(itemView, entity, position, sharedElements, transitionNames, data);
-            }
-        });
-
+            mSongDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalSongEntity>() {
+                @Override
+                public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+                    mSongDisplayPresenter.onItemClick(itemView, entity, position, sharedElements, transitionNames, data);
+                }
+            });
+        }
         return mSongDisplayAdapter;
     }
 

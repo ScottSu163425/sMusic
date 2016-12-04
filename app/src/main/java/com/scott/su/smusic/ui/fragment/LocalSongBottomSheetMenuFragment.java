@@ -16,7 +16,6 @@ public class LocalSongBottomSheetMenuFragment extends BaseBottomSheetMenuFragmen
     private static final int INDEX_MENU_ITEM_ADD_TO_BILL = 0;
     private static final int INDEX_MENU_ITEM_ALBUM = 1;
     private static final int INDEX_MENU_ITEM_DELETE = 4;
-
     private LocalSongEntity mSongEntity;
     private LocalSongBottomSheetCallback mLocalSongBottomSheetCallback;
 

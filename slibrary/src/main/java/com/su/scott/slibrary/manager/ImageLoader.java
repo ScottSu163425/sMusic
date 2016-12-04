@@ -1,6 +1,8 @@
 package com.su.scott.slibrary.manager;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +20,12 @@ public class ImageLoader {
                 .into(imageView);
     }
 
+    public static void load(Context context, @DrawableRes int resId, ImageView imageView) {
+        Glide.with(context)
+                .load(resId)
+                .into(imageView);
+    }
+
     public static void load(Context context, String path, ImageView imageView, int placeholder, int errorholder) {
         Glide.with(context)
                 .load(path)
@@ -26,5 +34,13 @@ public class ImageLoader {
                 .into(imageView);
     }
 
+
+    public static void load(Context context, @DrawableRes int resId, ImageView imageView, int placeholder, int errorholder) {
+        Glide.with(context)
+                .load(resId)
+                .placeholder(placeholder)
+                .error(errorholder)
+                .into(imageView);
+    }
 
 }

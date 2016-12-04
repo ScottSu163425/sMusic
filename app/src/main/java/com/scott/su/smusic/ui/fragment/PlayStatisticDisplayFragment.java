@@ -13,6 +13,7 @@ import com.scott.su.smusic.entity.PlayStatisticEntity;
 import com.scott.su.smusic.mvp.presenter.PlayStatisticDisplayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.PlayStatisticDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.PlayStatisticDisplayView;
+import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 
@@ -30,7 +31,7 @@ public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatis
 
     @NonNull
     @Override
-    protected RecyclerView.Adapter getAdapter() {
+    protected BaseDisplayAdapter<RecyclerView.ViewHolder, PlayStatisticEntity> getAdapter() {
         if (mDisplayAdapter == null) {
             mDisplayAdapter = new PlayStatisticDisplayAdapter(getActivity());
             mDisplayAdapter.setItemClickCallback(new ItemClickCallback<PlayStatisticEntity>() {

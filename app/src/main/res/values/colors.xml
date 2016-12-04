@@ -13,6 +13,5 @@
 
     <color name="place_holder_loading">#e0e0e0e0</color>
 
-    <color name="background_music_play">#222222</color>
-    <color name="background_card_music_play">#fefefe</color>
+    <color name="background_music_play">#151515</color>
 </resources>

@@ -27,13 +27,13 @@ import com.su.scott.slibrary.util.ViewUtil;
  * Created by Administrator on 2016/9/8.
  */
 public class DrawerMenuFragment extends BaseFragment implements View.OnClickListener {
+    public static final float PERCENTAGE_OF_SCREEN_WIDTH = 0.82f;
     private View mRootView;
     private View mStatisticMenuItem, mTimerMenuItem, mLanguageMenuItem, mUpdateMenuItem, mAboutMenuItem;
     private TextView mTimerTimeTextView;
     private SwitchCompat mNightModeSwitch;
     private DrawerMenuCallback mMenuCallback;
 
-    public static final float PERCENTAGE_OF_SCREEN_WIDTH = 0.82f;
 
     @Nullable
     @Override

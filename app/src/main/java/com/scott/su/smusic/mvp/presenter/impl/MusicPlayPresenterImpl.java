@@ -7,9 +7,7 @@ import com.scott.su.smusic.R;
 import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
-import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
 import com.scott.su.smusic.mvp.view.MusicPlayView;
@@ -57,14 +55,13 @@ public class MusicPlayPresenterImpl implements MusicPlayPresenter {
     @Override
     public void onAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity) {
         if (mBillModel.isBillContainsSong(billEntity, songEntity)) {
-            mMusicPlayView.showSnackbarShort(mMusicPlayView.getSnackbarParent(),
-                    mMusicPlayView.getViewContext().getString(R.string.already_exist_in_bill));
+            mMusicPlayView.showSnackbarShort(mMusicPlayView.getViewContext().getString(R.string.already_exist_in_bill));
             return;
         }
 
         mBillModel.addSongToBill(mMusicPlayView.getViewContext(), songEntity, billEntity);
         AppConfig.setNeedToRefreshLocalBillDisplay(mMusicPlayView.getViewContext(), true);
-        mMusicPlayView.showSnackbarShort(mMusicPlayView.getSnackbarParent(), mMusicPlayView.getViewContext().getString(R.string.add_successfully));
+        mMusicPlayView.showSnackbarShort(mMusicPlayView.getViewContext().getString(R.string.add_successfully));
     }
 
 

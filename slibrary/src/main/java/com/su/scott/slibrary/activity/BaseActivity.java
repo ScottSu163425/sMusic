@@ -12,6 +12,7 @@ import android.util.Pair;
 import android.view.View;
 
 import com.su.scott.slibrary.R;
+import com.su.scott.slibrary.util.NetworkUtil;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.Snack;
 import com.su.scott.slibrary.util.T;
@@ -22,15 +23,23 @@ import com.su.scott.slibrary.view.BaseView;
  */
 public abstract class BaseActivity extends AppCompatActivity implements BaseView {
     private ProgressDialog mLoadingDialog;
-    private String mNetworkErrorTip;
     private boolean mDestroyed;
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-        mNetworkErrorTip = getString(R.string.network_error);
 
         mLoadingDialog = new ProgressDialog(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
+            mLoadingDialog = null;
+        }
+        mDestroyed = true;
     }
 
     @Override
@@ -67,6 +76,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     @Override
+    public View getSnackbarParent() {
+        return getWindow().getDecorView().findViewById(android.R.id.content);
+    }
+
+    @Override
     public void showToastShort(String msg) {
         T.showShort(this, msg);
     }
@@ -77,32 +91,28 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     @Override
-    public void showSnackbarShort(View parent, String msg) {
-        Snack.showShort(parent, msg);
+    public void showSnackbarShort(String msg) {
+        Snack.showShort(getSnackbarParent(), msg);
     }
 
     @Override
-    public void showSnackbarLong(View parent, String msg) {
-        Snack.showLong(parent, msg);
+    public void showSnackbarLong(String msg) {
+        Snack.showLong(getSnackbarParent(), msg);
     }
 
     @Override
-    public void showSnackbarShort(View parent, String msg, String action, View.OnClickListener actionListener) {
-        Snack.showShort(parent, msg, action, actionListener);
+    public void showSnackbarShort(String msg, String action, View.OnClickListener actionListener) {
+        Snack.showShort(getSnackbarParent(), msg, action, actionListener);
     }
 
     @Override
-    public void showSnackbarLong(View parent, String msg, String action, View.OnClickListener actionListener) {
-        Snack.showLong(parent, msg, action, actionListener);
+    public void showSnackbarLong(String msg, String action, View.OnClickListener actionListener) {
+        Snack.showLong(getSnackbarParent(), msg, action, actionListener);
     }
 
     @Override
-    public void showNetworkError(View parent) {
-        showSnackbarShort(parent, mNetworkErrorTip);
-    }
-
-    protected void setNetworkErrorTip(String mNetworkErrorTip) {
-        this.mNetworkErrorTip = mNetworkErrorTip;
+    public void showNetworkErrorSnack() {
+        showSnackbarShort(getString(R.string.network_error));
     }
 
     protected void goTo(Class destination) {
@@ -181,8 +191,31 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mDestroyed = true;
+    public boolean isNetworkConnected() {
+        return NetworkUtil.isNetworkConnected(this);
     }
+
+    @Override
+    public boolean checkNetworkSnack() {
+        if (isNetworkConnected()) {
+            return true;
+        }
+        showNetworkErrorSnack();
+        return false;
+    }
+
+    @Override
+    public boolean checkNetworkToast() {
+        if (isNetworkConnected()) {
+            return true;
+        }
+        showNetworkErrorToast();
+        return false;
+    }
+
+    @Override
+    public void showNetworkErrorToast() {
+        showToastShort(getString(R.string.network_error));
+    }
+
 }

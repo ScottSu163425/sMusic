@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.holder.AlbumSongViewHolder;
-import com.scott.su.smusic.adapter.holder.BillSongViewHolder;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.util.ViewUtil;

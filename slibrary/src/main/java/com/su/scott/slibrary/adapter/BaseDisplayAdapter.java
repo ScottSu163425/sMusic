@@ -20,7 +20,7 @@ public abstract class BaseDisplayAdapter<VH extends RecyclerView.ViewHolder, E> 
     protected Activity context;
     private RecyclerView recyclerView;
     private List<E> dataList = new ArrayList<>();
-    private int selectedPosition = POSITION_NONE;
+    private int selectedPosition = -1;
     private ItemClickCallback<E> itemClickCallback;
 
 

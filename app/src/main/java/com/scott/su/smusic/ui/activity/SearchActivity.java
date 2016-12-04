@@ -30,8 +30,6 @@ import com.su.scott.slibrary.util.ViewUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
-
 public class SearchActivity extends BaseActivity implements SearchView {
     private SearchPresenter mSearchPresenter;
     private View mLoadingLayout, mEmptyLayout;
@@ -53,11 +51,6 @@ public class SearchActivity extends BaseActivity implements SearchView {
     protected void onResume() {
         super.onResume();
         mSearchPresenter.onViewResume();
-    }
-
-    @Override
-    public View getSnackbarParent() {
-        return mSpeakButton;
     }
 
     @Override

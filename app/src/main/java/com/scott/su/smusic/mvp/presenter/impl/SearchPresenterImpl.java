@@ -1,6 +1,5 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
-import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -179,14 +178,14 @@ public class SearchPresenterImpl implements SearchPresenter {
     @Override
     public void onBottomSheetAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity) {
         if (mBillModel.isBillContainsSong(billEntity, songEntity)) {
-            mSearchView.showSnackbarShort(mSearchView.getSnackbarParent(), mSearchView.getViewContext().getString(R.string.already_exist_in_bill));
+            mSearchView.showSnackbarShort( mSearchView.getViewContext().getString(R.string.already_exist_in_bill));
             return;
         }
 
         mBillModel.addSongToBill(mSearchView.getViewContext(), songEntity, billEntity);
         AppConfig.setNeedToRefreshLocalBillDisplay(mSearchView.getViewContext(), true);
         searchAndSetResult(mSearchView.getCurrentKeyword());
-        mSearchView.showSnackbarShort(mSearchView.getSnackbarParent(), mSearchView.getViewContext().getString(R.string.add_successfully));
+        mSearchView.showSnackbarShort(  mSearchView.getViewContext().getString(R.string.add_successfully));
     }
 
     @Override

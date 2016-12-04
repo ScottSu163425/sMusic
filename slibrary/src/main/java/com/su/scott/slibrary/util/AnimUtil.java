@@ -28,7 +28,7 @@ public class AnimUtil {
     public static final long ROTATION_DEGREE_ROUND_ZERO = 0;
     public static final long ROTATION_DEGREE_ROUND = 360;
     public static final long ROTATION_DEGREE_ROUND_HALF = ROTATION_DEGREE_ROUND / 2;
-    public static final long ROTATION_DEGREE_ROUND_QUARTER = ROTATION_DEGREE_ROUND/4;
+    public static final long ROTATION_DEGREE_ROUND_QUARTER = ROTATION_DEGREE_ROUND / 4;
 
 
     public interface SimpleAnimListener {
@@ -164,6 +164,30 @@ public class AnimUtil {
         rotate3D(view, true, 0, -Math.abs(to), duration, null, null);
     }
 
+    public static void rotateX3DPositive(@NonNull final View view, float to, long duration, @Nullable TimeInterpolator interpolator) {
+        rotate3D(view, true, 0, Math.abs(to), duration, interpolator, null);
+    }
+
+    public static void rotateX3DNegative(@NonNull final View view, float to, long duration, @Nullable TimeInterpolator interpolator) {
+        rotate3D(view, true, 0, -Math.abs(to), duration, interpolator, null);
+    }
+
+    public static void rotateX3DPositive(@NonNull final View view, float to, long duration, @Nullable TimeInterpolator interpolator, @Nullable SimpleAnimListener listener) {
+        rotate3D(view, true, 0, Math.abs(to), duration, interpolator, listener);
+    }
+
+    public static void rotateX3DNegative(@NonNull final View view, float to, long duration, @Nullable TimeInterpolator interpolator, @Nullable SimpleAnimListener listener) {
+        rotate3D(view, true, 0, -Math.abs(to), duration, interpolator, listener);
+    }
+
+    public static void rotateX3DPositive(@NonNull final View view, float from, float to, long duration, @Nullable TimeInterpolator interpolator, @Nullable SimpleAnimListener listener) {
+        rotate3D(view, true, from, Math.abs(to), duration, interpolator, listener);
+    }
+
+    public static void rotateX3DNegative(@NonNull final View view, float from, float to, long duration, @Nullable TimeInterpolator interpolator, @Nullable SimpleAnimListener listener) {
+        rotate3D(view, true, from, -Math.abs(to), duration, interpolator, listener);
+    }
+
     public static void rotateY3DPositive(@NonNull final View view, float to, long duration) {
         rotate3D(view, false, 0, Math.abs(to), duration, null, null);
     }
@@ -171,6 +195,31 @@ public class AnimUtil {
     public static void rotateY3DNegative(@NonNull final View view, float to, long duration) {
         rotate3D(view, false, 0, -Math.abs(to), duration, null, null);
     }
+
+    public static void rotateY3DPositive(@NonNull final View view, float to, long duration, @Nullable TimeInterpolator interpolator) {
+        rotate3D(view, false, 0, Math.abs(to), duration, interpolator, null);
+    }
+
+    public static void rotateY3DNegative(@NonNull final View view, float to, long duration, @Nullable TimeInterpolator interpolator) {
+        rotate3D(view, false, 0, -Math.abs(to), duration, interpolator, null);
+    }
+
+    public static void rotateY3DPositive(@NonNull final View view, float to, long duration, @Nullable TimeInterpolator interpolator, @Nullable SimpleAnimListener listener) {
+        rotate3D(view, false, 0, Math.abs(to), duration, interpolator, listener);
+    }
+
+    public static void rotateY3DNegative(@NonNull final View view, float to, long duration, @Nullable TimeInterpolator interpolator, @Nullable SimpleAnimListener listener) {
+        rotate3D(view, false, 0, -Math.abs(to), duration, interpolator, listener);
+    }
+
+    public static void rotateY3DPositive(@NonNull final View view, float from, float to, long duration, @Nullable TimeInterpolator interpolator, @Nullable SimpleAnimListener listener) {
+        rotate3D(view, false, from, Math.abs(to), duration, interpolator, listener);
+    }
+
+    public static void rotateY3DNegative(@NonNull final View view, float from, float to, long duration, @Nullable TimeInterpolator interpolator, @Nullable SimpleAnimListener listener) {
+        rotate3D(view, false, from, -Math.abs(to), duration, interpolator, listener);
+    }
+
 
     public static void rotate2D(@NonNull final View view, float from, float to, long duration, @Nullable TimeInterpolator interpolator, @Nullable final SimpleAnimListener listener) {
         ObjectAnimator animator = ObjectAnimator.ofFloat(view, "rotation", from, to);

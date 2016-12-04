@@ -1,6 +1,5 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;

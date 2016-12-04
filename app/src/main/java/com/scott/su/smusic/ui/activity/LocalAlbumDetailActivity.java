@@ -48,11 +48,6 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
     }
 
     @Override
-    public View getSnackbarParent() {
-        return mAlbumInfoCard;
-    }
-
-    @Override
     public void initPreData() {
         mAlbumEntity = getIntent().getParcelableExtra(Constants.KEY_EXTRA_ALBUM);
 

@@ -7,7 +7,6 @@ import android.view.View;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.PlayListSecondDisplayPresenter;
 import com.scott.su.smusic.mvp.view.PlayListSecondDisplayView;
-import com.scott.su.smusic.mvp.view.PlayStatisticDisplayView;
 
 /**
  * Created by asus on 2016/12/3.

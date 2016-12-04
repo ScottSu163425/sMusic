@@ -317,7 +317,7 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
 
     @Override
     public void loadCover(final String path, boolean needReveal) {
-        if (isDestroyed()) {
+        if (isFragmentDestroyed()) {
             return;
         }
 

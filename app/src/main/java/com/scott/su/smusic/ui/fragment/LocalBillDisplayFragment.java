@@ -7,13 +7,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalBillDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.LocalBillViewHolder;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.mvp.presenter.LocalBillDisplayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalBillDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalBillDisplayView;
+import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 
@@ -45,17 +45,18 @@ public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntit
         mSongBillDisplayPresenter.onViewFirstTimeCreated();
     }
 
+    @NonNull
     @Override
-    protected RecyclerView.Adapter getAdapter() {
-        mSongBillDisplayAdapter = new LocalBillDisplayAdapter(getActivity());
-
-        mSongBillDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalBillEntity>() {
-            @Override
-            public void onItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-                mSongBillDisplayPresenter.onItemClick(itemView, entity, position, sharedElements, transitionNames, data);
-            }
-        });
-
+    protected BaseDisplayAdapter<LocalBillViewHolder, LocalBillEntity> getAdapter() {
+        if (mSongBillDisplayAdapter == null) {
+            mSongBillDisplayAdapter = new LocalBillDisplayAdapter(getActivity());
+            mSongBillDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalBillEntity>() {
+                @Override
+                public void onItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+                    mSongBillDisplayPresenter.onItemClick(itemView, entity, position, sharedElements, transitionNames, data);
+                }
+            });
+        }
         return mSongBillDisplayAdapter;
     }
 

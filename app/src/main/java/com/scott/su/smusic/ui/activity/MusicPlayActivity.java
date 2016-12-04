@@ -61,11 +61,6 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     }
 
     @Override
-    public View getSnackbarParent() {
-        return mToolbar;
-    }
-
-    @Override
     public void initPreData() {
     }
 
@@ -119,7 +114,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public LocalSongEntity getCurrentPlayingSong() {
-        return getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG);
+        return getMusicPlayMainFragment().getCurrentPlayingSong();
     }
 
     @Override

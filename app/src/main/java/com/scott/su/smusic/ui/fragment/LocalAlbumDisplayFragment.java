@@ -13,13 +13,12 @@ import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.mvp.presenter.LocalAlbumDisplayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalAlbumDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalAlbumDisplayView;
+import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 
 /**
  * Created by asus on 2016/8/19.
@@ -46,18 +45,21 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
         mLocalAlbumDisplayPresenter.onViewFirstTimeCreated();
     }
 
+
+    @NonNull
     @Override
-    protected RecyclerView.Adapter getAdapter() {
-        mLocalAlbumDisplayAdapter = new LocalAlbumDisplayAdapter(getActivity());
+    protected BaseDisplayAdapter<LocalAlbumViewHolder, LocalAlbumEntity> getAdapter() {
+        if (mLocalAlbumDisplayAdapter == null) {
+            mLocalAlbumDisplayAdapter = new LocalAlbumDisplayAdapter(getActivity());
 
-        mLocalAlbumDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalAlbumEntity>() {
-            @Override
-            public void onItemClick(View itemView, LocalAlbumEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-                mLocalAlbumDisplayPresenter.onItemClick(itemView, entity, position, sharedElements, transitionNames, data);
-            }
-        });
-
-        return new SlideInBottomAnimationAdapter(mLocalAlbumDisplayAdapter);
+            mLocalAlbumDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalAlbumEntity>() {
+                @Override
+                public void onItemClick(View itemView, LocalAlbumEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+                    mLocalAlbumDisplayPresenter.onItemClick(itemView, entity, position, sharedElements, transitionNames, data);
+                }
+            });
+        }
+        return mLocalAlbumDisplayAdapter;
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface LocalBillDetailView extends BaseView, LocalSongBottomSheetView 
 
     ImageView getCoverImageView();
 
-    void showEnterBillEmpty();
+    void onEnterBillEmpty();
 
     void setBillEntity(LocalBillEntity billEntity);
 
@@ -27,7 +27,7 @@ public interface LocalBillDetailView extends BaseView, LocalSongBottomSheetView 
 
     void goToLocalSongSelectionActivity();
 
-    void showAddSongsToBillSuccessfully();
+    void onAddSongsToBillSuccessfully();
 
     void refreshBillSongDisplay(LocalBillEntity billEntity);
 
@@ -37,7 +37,7 @@ public interface LocalBillDetailView extends BaseView, LocalSongBottomSheetView 
 
     void showDeleteBillConfirmDialog();
 
-    void showDeleteBillSuccessfully();
+    void onDeleteBillSuccessfully();
 
     void goToMusicPlayWithCoverSharedElement(LocalSongEntity entity);
 

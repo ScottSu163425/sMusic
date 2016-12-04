@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.BillSongDisplayAdapter;
-import com.scott.su.smusic.adapter.holder.LocalSongViewHolder;
+import com.scott.su.smusic.adapter.holder.BillSongViewHolder;
 import com.scott.su.smusic.callback.LocalSongDisplayCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalBillEntity;
@@ -17,16 +17,16 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.BillSongDisplayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.BillSongDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.BillSongDisplayView;
+import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by asus on 2016/11/05.
  */
-public class BillSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity, LocalSongViewHolder> implements BillSongDisplayView {
+public class BillSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity, BillSongViewHolder> implements BillSongDisplayView {
     private BillSongDisplayPresenter mSongDisplayPresenter;
     private BillSongDisplayAdapter mSongDisplayAdapter;
 
@@ -34,7 +34,7 @@ public class BillSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity
     private LocalSongDisplayCallback mDisplayCallback;
 
 
-    public static BillSongDisplayFragment newInstance (@NonNull LocalBillEntity entity) {
+    public static BillSongDisplayFragment newInstance(@NonNull LocalBillEntity entity) {
         BillSongDisplayFragment instance = new BillSongDisplayFragment();
         Bundle arguments = new Bundle();
         arguments.putParcelable(Constants.KEY_EXTRA_BILL, entity);
@@ -54,24 +54,26 @@ public class BillSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity
         mSongDisplayPresenter.onViewFirstTimeCreated();
     }
 
+    @NonNull
     @Override
-    protected RecyclerView.Adapter getAdapter() {
-        mSongDisplayAdapter = new BillSongDisplayAdapter(getActivity()) {
-            @Override
-            public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
-                if (mDisplayCallback != null) {
-                    mDisplayCallback.onItemMoreClick(view, position, entity);
+    protected BaseDisplayAdapter<BillSongViewHolder, LocalSongEntity> getAdapter() {
+        if (mSongDisplayAdapter == null) {
+            mSongDisplayAdapter = new BillSongDisplayAdapter(getActivity()) {
+                @Override
+                public void onItemMoreClick(View view, int position, LocalSongEntity entity) {
+                    if (mDisplayCallback != null) {
+                        mDisplayCallback.onItemMoreClick(view, position, entity);
+                    }
                 }
-            }
-        };
+            };
 
-        mSongDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalSongEntity>() {
-            @Override
-            public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-                mSongDisplayPresenter.onItemClick(itemView, entity, position, sharedElements, transitionNames, data);
-            }
-        });
-
+            mSongDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalSongEntity>() {
+                @Override
+                public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+                    mSongDisplayPresenter.onItemClick(itemView, entity, position, sharedElements, transitionNames, data);
+                }
+            });
+        }
         return mSongDisplayAdapter;
     }
 
@@ -128,11 +130,6 @@ public class BillSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity
     @Override
     protected void onErrorClick() {
 
-    }
-
-    @Override
-    public ArrayList<LocalSongEntity> getDisplayDataList() {
-        return (ArrayList<LocalSongEntity>) mSongDisplayAdapter.getDataList();
     }
 
     @Override

@@ -129,11 +129,6 @@ public class MainActivity extends BaseActivity implements MainView {
     }
 
     @Override
-    public View getSnackbarParent() {
-        return mToolbar;
-    }
-
-    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
     }
@@ -690,9 +685,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void showCreateBillSuccessfully(final LocalBillEntity billEntity) {
-        showSnackbarLong(mToolbar,
-                getString(R.string.success_create_bill),
-                getString(R.string.ok),
+        showSnackbarLong(getString(R.string.success_create_bill), getString(R.string.ok),
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -883,9 +876,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     public void onBackPressed() {
-        showSnackbarShort(mToolbar,
-                getString(R.string.ask_exit_app),
-                getString(R.string.confirm_positive),
+        showSnackbarShort(getString(R.string.ask_exit_app), getString(R.string.confirm_positive),
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

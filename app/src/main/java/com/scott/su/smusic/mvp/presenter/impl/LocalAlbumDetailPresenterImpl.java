@@ -68,14 +68,14 @@ public class LocalAlbumDetailPresenterImpl implements LocalAlbumDetailPresenter 
     @Override
     public void onBottomSheetAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity) {
         if (mBillModel.isBillContainsSong(billEntity, songEntity)) {
-            mAlbumDetailView.showSnackbarShort(mAlbumDetailView.getSnackbarParent(), mAlbumDetailView.getViewContext().getString(R.string.already_exist_in_bill));
+            mAlbumDetailView.showSnackbarShort(mAlbumDetailView.getViewContext().getString(R.string.already_exist_in_bill));
             return;
         }
 
         mBillModel.addSongToBill(mAlbumDetailView.getViewContext(), songEntity, billEntity);
         AppConfig.setNeedToRefreshLocalBillDisplay(mAlbumDetailView.getViewContext(), true);
         AppConfig.setNeedToRefreshSearchResult(mAlbumDetailView.getViewContext(), true);
-        mAlbumDetailView.showSnackbarShort(mAlbumDetailView.getSnackbarParent(), mAlbumDetailView.getViewContext().getString(R.string.add_successfully));
+        mAlbumDetailView.showSnackbarShort( mAlbumDetailView.getViewContext().getString(R.string.add_successfully));
     }
 
     @Override

@@ -59,7 +59,7 @@ public class MainPresenterImpl implements MainPresenter {
     public void onFabClick() {
         if (mMainView.isCurrentTabSong()) {
             if (mMainView.getDisplaySongs() == null || mMainView.getDisplaySongs().isEmpty()) {
-                mMainView.showSnackbarShort(mMainView.getSnackbarParent(), mMainView.getViewContext().getString(R.string.empty_local_song));
+                mMainView.showSnackbarShort(mMainView.getViewContext().getString(R.string.empty_local_song));
                 return;
             }
 
@@ -93,7 +93,7 @@ public class MainPresenterImpl implements MainPresenter {
         LocalBillEntity billEntity = new LocalBillEntity(text);
 
         if (mBillModel.isBillTitleExist(mMainView.getViewContext(), billEntity)) {
-            mMainView.showSnackbarShort(mMainView.getSnackbarParent(), mMainView.getViewContext().getString(R.string.error_already_exist));
+            mMainView.showSnackbarShort(mMainView.getViewContext().getString(R.string.error_already_exist));
             return;
         }
 
@@ -269,15 +269,14 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onBottomSheetAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity) {
         if (mBillModel.isBillContainsSong(billEntity, songEntity)) {
-            mMainView.showSnackbarShort(mMainView.getSnackbarParent(),
-                    mMainView.getViewContext().getString(R.string.already_exist_in_bill));
+            mMainView.showSnackbarShort(mMainView.getViewContext().getString(R.string.already_exist_in_bill));
             return;
         }
 
         mBillModel.addSongToBill(mMainView.getViewContext(), songEntity, billEntity);
 //        mAppConfigModel.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), true);
         mMainView.updateBillDisplay();
-        mMainView.showSnackbarShort(mMainView.getSnackbarParent(), mMainView.getViewContext().getString(R.string.add_successfully));
+        mMainView.showSnackbarShort(mMainView.getViewContext().getString(R.string.add_successfully));
     }
 
     @Override

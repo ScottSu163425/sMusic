@@ -74,7 +74,7 @@
                 android:layout_marginBottom="@dimen/margin_s"
                 android:layout_marginLeft="@dimen/margin_s"
                 android:layout_marginRight="@dimen/margin_s"
-                app:cardBackgroundColor="@color/background_card_music_play"
+                app:cardBackgroundColor="@color/backgroundContent"
                 app:cardElevation="@dimen/cardview_default_elevation">
 
                 <LinearLayout

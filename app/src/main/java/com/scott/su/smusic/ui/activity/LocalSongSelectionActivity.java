@@ -48,11 +48,6 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
     }
 
     @Override
-    public View getSnackbarParent() {
-        return mFinishSelectionButton;
-    }
-
-    @Override
     public void initPreData() {
         if (SdkUtil.isLolipopOrLatter()){
             getWindow().setEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.slide_right));

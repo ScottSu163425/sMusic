@@ -13,9 +13,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.su.scott.slibrary.R;
+import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.util.AnimUtil;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.ViewUtil;
 import com.su.scott.slibrary.view.BaseDisplayView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @类名 BaseDisplayFragment
@@ -31,7 +36,7 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
 
     private View mRootView;
     private RecyclerView mDisplayRecyclerView;
-    private RecyclerView.Adapter mDisplayAdapter;
+    private BaseDisplayAdapter<VH, E> mDisplayAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FrameLayout mLoadingLayout;
     private FrameLayout mEmptyLayout;
@@ -40,7 +45,7 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
 
     protected abstract
     @NonNull
-    RecyclerView.Adapter getAdapter();
+    BaseDisplayAdapter<VH, E> getAdapter();
 
     protected abstract RecyclerView.LayoutManager getLayoutManager();
 
@@ -152,19 +157,26 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
 
                     LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
                     if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+                        int firstVisibleItem = manager.findFirstVisibleItemPosition();
+                        int lastVisibleItem = manager.findLastVisibleItemPosition();
                         int totalItemCount = manager.getItemCount();
 
                         if (lastVisibleItem == (totalItemCount - 1)) {
-                            int itemHeight = getViewHolder(getFirstVisibleItemPosition()).itemView.getHeight();
-                            int itemCount = mDisplayAdapter.getItemCount();
-                            int totalItemHeight = itemHeight * itemCount;
-                            int recyclerViewHeight = getRecyclerView().getHeight();
-
-                            //If the items could not fill a recycler view height,then disable load more even if user pull up the items;
-                            if (totalItemHeight < recyclerViewHeight) {
-                                return;
-                            }
+//                            int itemHeight = getViewHolder(getFirstVisibleItemPosition()).itemView.getMeasuredHeight();
+//                            int itemCount = mDisplayAdapter.getItemCount();
+//                            int totalItemHeight = 0;
+//                            int recyclerViewHeight = getRecyclerView().getMeasuredHeight();
+//
+//                            for (int i = firstVisibleItem; i <= lastVisibleItem; i++) {
+//                                totalItemHeight += getViewHolder(i).itemView.getMeasuredHeight();
+//                            }
+//
+//                            L.e("===>totalItemHeight",totalItemHeight+"");
+//                            L.e("===>recyclerViewHeight",recyclerViewHeight+"");
+////                            If the items could not fill a recycler view height,then disable load more even if user pull up the items;
+//                            if (totalItemHeight < recyclerViewHeight) {
+//                                return;
+//                            }
 
                             if (mSwipeRefreshLayout.isRefreshing()) {
                                 return;
@@ -230,7 +242,17 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
         ViewUtil.setViewGone(mLoadingLayout);
         ViewUtil.setViewGone(mEmptyLayout);
         ViewUtil.setViewGone(mFooterLayout);
-//        hideLoadMoreFooter();
+    }
+
+    @Override
+    public boolean checkNetworkSnack() {
+        if (isNetworkConnected()) {
+            return true;
+        }
+        stopSwipeRefresh();
+        ViewUtil.setViewGone(mFooterLayout);
+        showSnackbarShort(getString(R.string.network_error));
+        return false;
     }
 
     private void showLoadMoreFooter() {
@@ -296,11 +318,6 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
 
     }
 
-    @Override
-    public View getSnackbarParent() {
-        return mDisplayRecyclerView;
-    }
-
     protected RecyclerView getDisplayRecyclerView() {
         return mDisplayRecyclerView;
     }
@@ -325,6 +342,23 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
             }
         }
         return null;
+    }
+
+    @Override
+    public ArrayList<E> getDisplayDataList() {
+        return (ArrayList<E>) mDisplayAdapter.getDataList();
+    }
+
+    @Override
+    public void setDisplayData(@NonNull List<E> dataList) {
+        mDisplayAdapter.setDataList(dataList);
+        mDisplayAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void addLoadMoreData(@NonNull List<E> dataList) {
+        mDisplayAdapter.addDataList(dataList);
+        mDisplayAdapter.notifyDataSetChanged();
     }
 
     public void scrollToPosition(int positon) {

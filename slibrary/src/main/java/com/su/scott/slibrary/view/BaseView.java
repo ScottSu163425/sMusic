@@ -10,6 +10,12 @@ import com.su.scott.slibrary.presenter.BasePresenter;
  */
 public interface BaseView {
 
+    boolean isNetworkConnected();
+
+    boolean checkNetworkSnack();
+
+    boolean checkNetworkToast();
+
     Activity getViewContext();
 
     View getSnackbarParent();
@@ -36,14 +42,15 @@ public interface BaseView {
 
     void showToastLong(String msg);
 
-    void showSnackbarShort(View parent, String msg);
+    void showSnackbarShort(String msg);
 
-    void showSnackbarLong(View parent, String msg);
+    void showSnackbarLong(String msg);
 
-    void showSnackbarShort(View parent, String msg, String action, View.OnClickListener actionListener);
+    void showSnackbarShort(String msg, String action, View.OnClickListener actionListener);
 
-    void showSnackbarLong(View parent, String msg, String action, View.OnClickListener actionListener);
+    void showSnackbarLong(String msg, String action, View.OnClickListener actionListener);
 
-    void showNetworkError(View parent);
+    void showNetworkErrorSnack( );
 
+    void showNetworkErrorToast( );
 }

@@ -97,12 +97,6 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
         } else {
             mBillDetailPresenter.onTransitionEnd();
         }
-        CollapsingToolbarLayout collapsingToolbarLayout;
-    }
-
-    @Override
-    public View getSnackbarParent() {
-        return mCollapsingToolbarLayout;
     }
 
     @Override
@@ -247,8 +241,8 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
     }
 
     @Override
-    public void showEnterBillEmpty() {
-        showSnackbarShort(getSnackbarParent(), getString(R.string.ask_add_song_to_empty_bill), getString(R.string.ok),
+    public void onEnterBillEmpty() {
+        showSnackbarShort(getString(R.string.ask_add_song_to_empty_bill), getString(R.string.ok),
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -322,7 +316,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
     }
 
     @Override
-    public void showAddSongsToBillSuccessfully() {
+    public void onAddSongsToBillSuccessfully() {
 //        showSnackbarShort(mCoverImageView, msg);
     }
 
@@ -397,7 +391,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
     }
 
     @Override
-    public void showDeleteBillSuccessfully() {
+    public void onDeleteBillSuccessfully() {
         finish();
     }
 

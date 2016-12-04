@@ -1,12 +1,10 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.scott.su.smusic.entity.LocalBillEntity;
-import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalBillDisplayPresenter;
 import com.scott.su.smusic.mvp.view.LocalBillDisplayView;

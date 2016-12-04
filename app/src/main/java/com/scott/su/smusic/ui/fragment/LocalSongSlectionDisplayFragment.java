@@ -7,13 +7,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalSongSelectionDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.LocalSongSelectionViewHolder;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.LocalSongSelectionDisplayPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.LocalSongSelectionDisplayPresenterImpl;
 import com.scott.su.smusic.mvp.view.LocalSongSelectionDisplayView;
+import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 
@@ -35,18 +35,20 @@ public class LocalSongSlectionDisplayFragment extends BaseDisplayFragment<LocalS
         mSongSelectionDisplayPresenter.onViewFirstTimeCreated();
     }
 
+    @NonNull
     @Override
-    protected RecyclerView.Adapter getAdapter() {
-        mSongSelectionDisplayAdapter = new LocalSongSelectionDisplayAdapter(getActivity());
-        mSongSelectionDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalSongEntity>() {
-            @Override
-            public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-                if (mOnSelectedSongChangedListener != null) {
-                    mOnSelectedSongChangedListener.onSelectedCountChanged(mSongSelectionDisplayAdapter.getSelectedSongsCount() == 0);
+    protected BaseDisplayAdapter<LocalSongSelectionViewHolder, LocalSongEntity> getAdapter() {
+        if (mSongSelectionDisplayAdapter == null) {
+            mSongSelectionDisplayAdapter = new LocalSongSelectionDisplayAdapter(getActivity());
+            mSongSelectionDisplayAdapter.setItemClickCallback(new ItemClickCallback<LocalSongEntity>() {
+                @Override
+                public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+                    if (mOnSelectedSongChangedListener != null) {
+                        mOnSelectedSongChangedListener.onSelectedCountChanged(mSongSelectionDisplayAdapter.getSelectedSongsCount() == 0);
+                    }
                 }
-            }
-        });
-
+            });
+        }
         return mSongSelectionDisplayAdapter;
     }
 

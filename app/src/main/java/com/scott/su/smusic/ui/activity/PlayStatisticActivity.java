@@ -6,7 +6,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
 import android.transition.TransitionInflater;
 import android.view.View;
 
@@ -16,11 +15,9 @@ import com.scott.su.smusic.callback.PlayStatisticItemClickCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.entity.PlayStatisticEntity;
-import com.scott.su.smusic.mvp.model.PlayStatisticModel;
 import com.scott.su.smusic.mvp.presenter.PlayStatisticPresenter;
 import com.scott.su.smusic.mvp.presenter.impl.PlayStatisticPresenterImpl;
 import com.scott.su.smusic.mvp.view.PlayStatisticView;
-import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.scott.su.smusic.ui.fragment.PlayStatisticDisplayFragment;
 import com.scott.su.smusic.ui.fragment.PlayStatisticWeekFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
@@ -49,11 +46,6 @@ public class PlayStatisticActivity extends BaseActivity implements PlayStatistic
     protected void onDestroy() {
         mPlayStatisticPresenter.onViewWillDestroy();
         super.onDestroy();
-    }
-
-    @Override
-    public View getSnackbarParent() {
-        return null;
     }
 
     @Override

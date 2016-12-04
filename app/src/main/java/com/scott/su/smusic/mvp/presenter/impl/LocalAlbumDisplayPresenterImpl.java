@@ -1,7 +1,5 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
-import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -11,7 +9,6 @@ import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.presenter.LocalAlbumDisplayPresenter;
 import com.scott.su.smusic.mvp.view.LocalAlbumDisplayView;
-import com.su.scott.slibrary.manager.AsyncTaskHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +17,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 

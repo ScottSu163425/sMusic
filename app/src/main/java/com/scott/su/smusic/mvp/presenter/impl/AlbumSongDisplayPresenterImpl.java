@@ -1,6 +1,5 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -9,7 +8,6 @@ import com.scott.su.smusic.cache.LocalSongEntityCache;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.mvp.presenter.AlbumSongDisplayPresenter;
-import com.scott.su.smusic.mvp.presenter.BillSongDisplayPresenter;
 import com.scott.su.smusic.mvp.view.AlbumSongDisplayView;
 
 import java.util.ArrayList;
