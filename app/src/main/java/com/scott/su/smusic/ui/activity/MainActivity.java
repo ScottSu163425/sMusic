@@ -249,7 +249,7 @@ public class MainActivity extends BaseActivity implements MainView {
         mViewPager.setOffscreenPageLimit(pageFragments.size());
         mTabLayout.setupWithViewPager(mViewPager);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fl_container_drawer_menu_main, mDrawerMenuFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_container_drawer_menu_main, mDrawerMenuFragment).commitNow();
 
         if (getIntent().getBooleanExtra(NEED_OPEN_DRAWER, false)) {
             mDrawerLayout.openDrawer(Gravity.LEFT);

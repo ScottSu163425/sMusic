@@ -87,7 +87,7 @@ public class MusicPlaySecondFragment extends BaseFragment implements MusicPlaySe
         getChildFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fl_container_display_play_list_fragment_music_play_second, getPlayListSecondDisplayFragment())
-                .commit();
+                .commitNow();
     }
 
     @Override

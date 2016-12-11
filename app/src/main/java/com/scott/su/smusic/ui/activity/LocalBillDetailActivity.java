@@ -136,7 +136,7 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fl_container_display_songs_local_bill_detail, mBillSongDisplayFragment)
-                .commit();
+                .commitNow();
     }
 
     @Override

@@ -86,7 +86,7 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
         getSupportFragmentManager().
                 beginTransaction().
                 replace(R.id.fl_container_display_local_song_selection, mLocalSongSlectionDisplayFragment)
-                .commit();
+                .commitNow();
     }
 
     @Override

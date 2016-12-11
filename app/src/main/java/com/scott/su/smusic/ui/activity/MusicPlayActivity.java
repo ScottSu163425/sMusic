@@ -87,7 +87,7 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
     public void initData() {
         getSupportFragmentManager().beginTransaction()
                 .replace(ID_CONTAINER, getMusicPlayMainFragment())
-                .commit();
+                .commitNow();
     }
 
     @Override
@@ -140,13 +140,13 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                     .beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .add(ID_CONTAINER, getMusicPlayMainFragment())
-                    .commit();
+                    .commitNow();
         } else if (!getMusicPlayMainFragment().isVisible()) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .show(getMusicPlayMainFragment())
-                    .commit();
+                    .commitNow();
         }
     }
 
@@ -155,9 +155,9 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         if (getMusicPlayMainFragment().isAdded() && getMusicPlayMainFragment().isVisible()) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     .hide(getMusicPlayMainFragment())
-                    .commit();
+                    .commitNow();
         }
     }
 
@@ -168,13 +168,13 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
                     .beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .add(ID_CONTAINER, getMusicPlaySecondFragment())
-                    .commit();
+                    .commitNow();
         } else if (!getMusicPlaySecondFragment().isVisible()) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .show(getMusicPlaySecondFragment())
-                    .commit();
+                    .commitNow();
         }
     }
 
@@ -183,9 +183,9 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
         if (getMusicPlaySecondFragment().isAdded() && getMusicPlaySecondFragment().isVisible()) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     .hide(getMusicPlaySecondFragment())
-                    .commit();
+                    .commitNow();
         }
     }
 
@@ -221,10 +221,11 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayView, Vi
 
     @Override
     public void onBackPressed() {
-        hideMusicPlaySecondFragment();
-        showMusicPlayMainFragment();
-
-        if (getMusicPlayMainFragment().isAdded() && getMusicPlayMainFragment().isVisible()) {
+        if (getMusicPlaySecondFragment().isAdded() && getMusicPlaySecondFragment().isVisible()) {
+            hideMusicPlaySecondFragment();
+            showMusicPlayMainFragment();
+        } else {
+//        if (getMusicPlayMainFragment().isAdded() && getMusicPlayMainFragment().isVisible()) {
             getMusicPlayMainFragment().onActivityBackPressed();
 
             if (!mMusicPlayMainFragment.isSameSong()) {

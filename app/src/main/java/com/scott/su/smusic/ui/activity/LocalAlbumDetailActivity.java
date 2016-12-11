@@ -89,7 +89,7 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fl_container_display_songs_local_album_detail, mSongDisplayFragment)
-                .commit();
+                .commitNow();
     }
 
     @Override
