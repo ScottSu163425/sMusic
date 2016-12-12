@@ -6,7 +6,7 @@ import android.view.View;
 import com.scott.su.smusic.callback.MusicPlayMainFragmentCallback;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.su.scott.slibrary.view.BaseView;
+import com.su.scott.slibrary.mvp.view.BaseView;
 
 import java.util.List;
 

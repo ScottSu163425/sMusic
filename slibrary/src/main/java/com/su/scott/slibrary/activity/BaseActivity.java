@@ -3,27 +3,33 @@ package com.su.scott.slibrary.activity;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Pair;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.su.scott.slibrary.R;
+import com.su.scott.slibrary.mvp.presenter.IPresenter;
+import com.su.scott.slibrary.mvp.view.BaseView;
 import com.su.scott.slibrary.util.NetworkUtil;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.Snack;
 import com.su.scott.slibrary.util.T;
-import com.su.scott.slibrary.view.BaseView;
+
 
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseActivity extends AppCompatActivity implements BaseView {
+public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements BaseView {
     private ProgressDialog mLoadingDialog;
     private boolean mDestroyed;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
@@ -40,6 +46,41 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             mLoadingDialog = null;
         }
         mDestroyed = true;
+    }
+
+    @Override
+    public void finishView(boolean hasTransition) {
+        if (hasTransition) {
+            if (SdkUtil.isLolipopOrLatter()) {
+                finishAfterTransition();
+            } else {
+                finish();
+            }
+        } else {
+            finish();
+
+            if (SdkUtil.isLolipopOrLatter()) {
+                overridePendingTransition(R.anim.in_alpha, R.anim.out_east);
+            }
+        }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+
+        if (!SdkUtil.isLolipopOrLatter()) {
+            overridePendingTransition(R.anim.in_alpha, R.anim.out_east);
+        }
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+
+        if (!SdkUtil.isLolipopOrLatter()) {
+            overridePendingTransition(R.anim.in_east, R.anim.out_alpha);
+        }
     }
 
     @Override
@@ -73,6 +114,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
         }
+    }
+
+    protected View getContentView() {
+        return getWindow().getDecorView().findViewById(android.R.id.content);
     }
 
     @Override
@@ -155,7 +200,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             startActivity(intent, options.toBundle());
         } else {
             startActivity(intent);
-            overridePendingTransition(R.anim.in_alpha, R.anim.out_alpha);
         }
     }
 
@@ -166,7 +210,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             startActivity(intent, options.toBundle());
         } else {
             startActivity(intent);
-            overridePendingTransition(R.anim.in_alpha, R.anim.out_alpha);
         }
     }
 
@@ -182,7 +225,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
             startActivity(intent, options.toBundle());
         } else {
             startActivity(intent);
-            overridePendingTransition(R.anim.in_alpha, R.anim.out_alpha);
         }
     }
 
@@ -217,5 +259,20 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     public void showNetworkErrorToast() {
         showToastShort(getString(R.string.network_error));
     }
+
+    @Override
+    public String getStringByResId(@StringRes int id) {
+        return getString(id);
+    }
+
+    @Override
+    public void closeKeyboard() {
+        View view = getWindow().peekDecorView();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
 
 }

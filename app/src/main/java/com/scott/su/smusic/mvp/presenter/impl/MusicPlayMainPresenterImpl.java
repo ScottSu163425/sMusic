@@ -169,6 +169,10 @@ public class MusicPlayMainPresenterImpl implements MusicPlayMainPresenter {
     }
 
     private void updateCurrentPlayingSongInfo(boolean needReveal) {
+        if (mMusicPlayMainView==null){
+            return;
+        }
+
         String path = mAlbumModel.getAlbumCoverPathByAlbumId(mMusicPlayMainView.getViewContext(), mMusicPlayMainView.getCurrentPlayingSong().getAlbumId());
         mMusicPlayMainView.loadCover(path, needReveal);
 

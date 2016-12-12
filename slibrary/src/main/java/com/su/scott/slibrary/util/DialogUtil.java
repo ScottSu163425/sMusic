@@ -42,4 +42,31 @@ public class DialogUtil {
         return dialog;
     }
 
+    public static AlertDialog showDialogUncancelable(@NonNull Activity activity, @Nullable CharSequence title, @NonNull CharSequence msg, @Nullable CharSequence textPos, @Nullable DialogInterface.OnClickListener listenerPos, @Nullable CharSequence textNeg, @Nullable DialogInterface.OnClickListener listenerNeg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        if (title != null) {
+            builder.setTitle(title);
+        }/*else {
+            builder.setTitle("");
+        }*/
+        builder.setCancelable(false);
+        builder.setMessage((msg == null ? "" : msg));
+        builder.setPositiveButton((textPos == null ? activity.getString(R.string.confirm) : textPos), (listenerPos == null ? new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        } : listenerPos));
+        builder.setNegativeButton((textNeg == null ?  activity.getString(R.string.cancel) : textNeg), (listenerNeg == null ? new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        } : listenerNeg));
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        return dialog;
+    }
+
 }

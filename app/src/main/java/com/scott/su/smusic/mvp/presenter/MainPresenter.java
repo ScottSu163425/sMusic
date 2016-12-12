@@ -8,14 +8,14 @@ import com.scott.su.smusic.callback.DrawerMenuCallback;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.su.scott.slibrary.presenter.BasePresenter;
+import com.su.scott.slibrary.mvp.presenter.IPresenter;
 
 import java.util.List;
 
 /**
  * Created by asus on 2016/8/19.
  */
-public interface MainPresenter extends BasePresenter, LocalSongBottomSheetPresenter, DrawerMenuCallback {
+public interface MainPresenter extends IPresenter, LocalSongBottomSheetPresenter, DrawerMenuCallback {
 
     void onInitDataComplete();
 

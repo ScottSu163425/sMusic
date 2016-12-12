@@ -5,14 +5,12 @@ import android.view.View;
 import com.scott.su.smusic.callback.MusicPlayMainFragmentCallback;
 import com.scott.su.smusic.callback.MusicPlayServiceCallback;
 import com.scott.su.smusic.callback.PlayListBottomSheetCallback;
-import com.scott.su.smusic.entity.LocalBillEntity;
-import com.scott.su.smusic.entity.LocalSongEntity;
-import com.su.scott.slibrary.presenter.BasePresenter;
+import com.su.scott.slibrary.mvp.presenter.IPresenter;
 
 /**
  * Created by asus on 2016/9/4.
  */
-public interface MusicPlayMainPresenter extends BasePresenter, MusicPlayServiceCallback, PlayListBottomSheetCallback, MusicPlayMainFragmentCallback {
+public interface MusicPlayMainPresenter extends IPresenter, MusicPlayServiceCallback, PlayListBottomSheetCallback, MusicPlayMainFragmentCallback {
     void onPlayClick(View view);
 
     void onSkipPreviousClick(View view);

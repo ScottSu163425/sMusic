@@ -4,7 +4,7 @@ import android.widget.ImageView;
 
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.su.scott.slibrary.view.BaseView;
+import com.su.scott.slibrary.mvp.view.BaseView;
 
 /**
  * Created by asus on 2016/8/29.

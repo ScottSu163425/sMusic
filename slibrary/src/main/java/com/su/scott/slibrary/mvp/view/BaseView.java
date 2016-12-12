@@ -1,14 +1,13 @@
-package com.su.scott.slibrary.view;
+package com.su.scott.slibrary.mvp.view;
 
 import android.app.Activity;
+import android.support.annotation.StringRes;
 import android.view.View;
-
-import com.su.scott.slibrary.presenter.BasePresenter;
 
 /**
  * Created by Administrator on 2016/8/1.
  */
-public interface BaseView {
+public interface BaseView extends IView{
 
     boolean isNetworkConnected();
 
@@ -50,7 +49,13 @@ public interface BaseView {
 
     void showSnackbarLong(String msg, String action, View.OnClickListener actionListener);
 
-    void showNetworkErrorSnack( );
+    void showNetworkErrorSnack();
 
-    void showNetworkErrorToast( );
+    void showNetworkErrorToast();
+
+    String getStringByResId(@StringRes int id);
+
+    void finishView(boolean hasTransition);
+
+    void closeKeyboard();
 }

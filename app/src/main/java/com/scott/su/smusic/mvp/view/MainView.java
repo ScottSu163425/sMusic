@@ -6,7 +6,7 @@ import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.su.scott.slibrary.callback.SimpleCallback;
-import com.su.scott.slibrary.view.BaseView;
+import com.su.scott.slibrary.mvp.view.BaseView;
 
 import java.util.ArrayList;
 

@@ -270,6 +270,16 @@ public class AnimUtil {
         });
         animator.start();
     }
+    /**
+     * 左右晃动
+     *
+     * @return
+     */
+    public static void shake(View target) {
+        ObjectAnimator oa = ObjectAnimator.ofFloat(target, "translationX", 0, 25, -25, 25, -25, 15, -15, 6, -6, 0);
+        oa.setDuration(DURATION_NORMAL);
+        oa.start();
+    }
 
     /**
      * 橡皮筋

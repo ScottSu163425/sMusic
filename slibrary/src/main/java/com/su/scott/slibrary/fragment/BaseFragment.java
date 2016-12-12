@@ -4,19 +4,23 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.su.scott.slibrary.R;
 import com.su.scott.slibrary.util.NetworkUtil;
+import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.Snack;
 import com.su.scott.slibrary.util.T;
-import com.su.scott.slibrary.view.BaseView;
+import com.su.scott.slibrary.mvp.view.BaseView;
 
 /**
  * Created by Administrator on 2016/8/4.
@@ -25,7 +29,6 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     private ProgressDialog mLoadingDialog;
     private String mNetworkErrorTip;
     private boolean mIsFirstTimeCreateView = true;
-    private boolean mFragmentDestroyed;
 
     protected abstract void onFirstTimeCreateView();
 
@@ -45,17 +48,29 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     }
 
     @Override
+    public void finishView(boolean hasTransition) {
+        if (hasTransition) {
+            if (SdkUtil.isLolipopOrLatter()) {
+                getActivity().finishAfterTransition();
+            } else {
+                getActivity().finish();
+            }
+        } else {
+            getActivity().finish();
+
+            if (SdkUtil.isLolipopOrLatter()) {
+                getActivity().overridePendingTransition(R.anim.in_alpha, R.anim.out_east);
+            }
+        }
+    }
+
+    @Override
     public void onDestroy() {
         if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
             mLoadingDialog = null;
         }
-        mFragmentDestroyed = true;
         super.onDestroy();
-    }
-
-    protected boolean isFragmentDestroyed() {
-        return mFragmentDestroyed;
     }
 
     @Override
@@ -202,6 +217,20 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         }
         showNetworkErrorToast();
         return false;
+    }
+
+    @Override
+    public String getStringByResId(@StringRes int id) {
+        return getString(id);
+    }
+
+    @Override
+    public void closeKeyboard() {
+        View view = getActivity().getWindow().peekDecorView();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
 }

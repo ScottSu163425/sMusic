@@ -1,9 +1,8 @@
 package com.scott.su.smusic.mvp.view;
 
-import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.su.scott.slibrary.view.BaseDisplayView;
+import com.su.scott.slibrary.mvp.view.BaseDisplayView;
 
 /**
  * Created by asus on 2016/8/19.

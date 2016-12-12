@@ -15,9 +15,8 @@ import android.widget.FrameLayout;
 import com.su.scott.slibrary.R;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.util.AnimUtil;
-import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.ViewUtil;
-import com.su.scott.slibrary.view.BaseDisplayView;
+import com.su.scott.slibrary.mvp.view.BaseDisplayView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -361,12 +360,27 @@ public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder>
         mDisplayAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void notifyItemChanged(int position) {
+        if (position < 0
+                || mDisplayAdapter.getItemCount() == 0
+                || mDisplayAdapter.getItemCount() <= position) {
+            return;
+        }
+
+        mDisplayAdapter.notifyItemChanged(position);
+    }
+
     public void scrollToPosition(int positon) {
-        getDisplayRecyclerView().scrollToPosition(positon);
+        if (mDisplayAdapter.getItemCount() != 0) {
+            getDisplayRecyclerView().scrollToPosition(positon);
+        }
     }
 
     public void smoothScrollToPosition(int positon) {
-        getDisplayRecyclerView().smoothScrollToPosition(positon);
+        if (mDisplayAdapter.getItemCount() != 0) {
+            getDisplayRecyclerView().smoothScrollToPosition(positon);
+        }
     }
 
     public RecyclerView getRecyclerView() {

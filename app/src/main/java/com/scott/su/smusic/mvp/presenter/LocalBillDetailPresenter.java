@@ -4,14 +4,14 @@ import android.view.View;
 
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.su.scott.slibrary.presenter.BasePresenter;
+import com.su.scott.slibrary.mvp.presenter.IPresenter;
 
 import java.util.List;
 
 /**
  * Created by asus on 2016/8/29.
  */
-public interface LocalBillDetailPresenter extends BasePresenter, LocalSongBottomSheetPresenter {
+public interface LocalBillDetailPresenter extends IPresenter, LocalSongBottomSheetPresenter {
 
     void onTransitionEnd();
 

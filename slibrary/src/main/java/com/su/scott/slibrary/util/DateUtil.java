@@ -50,4 +50,63 @@ public class DateUtil {
     }
 
 
+    public static boolean isDateLegal(int y, int m, int d) {
+        if (y <= 0 || m <= 0 || d <= 0) {
+            return false;
+        }
+
+        if (m > 12) {
+            return false;
+        }
+
+        if (d > 31) {
+            return false;
+        }
+
+        if (m == 2 && d > 29) {
+            return false;
+        }
+
+        if (m == 4 || m == 6 || m == 9 || m == 11) {
+            if (d != 30) {
+                return false;
+            }
+        }
+
+        if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) {
+            if (d != 31) {
+                return false;
+            }
+        }
+
+        if (m == 2) {
+            if (isLeapYear(y)) {
+                if (d != 29) {
+                    return false;
+                }
+            } else {
+                if (d != 28) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean isLeapYear(int year) {
+        if (year < 0) {
+            return false;
+        }
+
+        if (year % 100 == 0) {
+            if (year % 400 == 0) {
+                return true;
+            }
+        } else {
+            if (year % 4 == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

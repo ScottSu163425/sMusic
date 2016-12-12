@@ -1,12 +1,9 @@
-package com.su.scott.slibrary.view;
+package com.su.scott.slibrary.mvp.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
-
-import com.su.scott.slibrary.presenter.BaseDisplayPresenter;
-import com.su.scott.slibrary.presenter.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,4 +35,5 @@ public interface BaseDisplayView<E> extends BaseView {
 
     void handleItemClick(View itemView, E entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
 
+    void notifyItemChanged(int position);
 }
