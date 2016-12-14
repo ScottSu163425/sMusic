@@ -69,7 +69,8 @@ import java.util.Random;
 /**
  * 2016-8-18
  */
-public class MainActivity extends BaseActivity implements MainContract.MainView {
+public class MainActivity extends BaseActivity<MainContract.MainView, MainContract.MainPresenter>
+        implements MainContract.MainView {
     private static final String NEED_OPEN_DRAWER = "NEED_OPEN_DRAWE";
     private static final String CURRENT_TAB_POSITION = "CURRENT_TAB_POSITION";
 
@@ -103,8 +104,16 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mMainPresenter = new MainPresenterImpl(this);
+
         mMainPresenter.onViewFirstTimeCreated();
+    }
+
+    @Override
+    protected MainContract.MainPresenter getPresenter() {
+        if (mMainPresenter == null) {
+            mMainPresenter = new MainPresenterImpl(this);
+        }
+        return mMainPresenter;
     }
 
     @Override
@@ -894,9 +903,6 @@ public class MainActivity extends BaseActivity implements MainContract.MainView 
             unbindService(mShutDownTimerServiceConnection);
         }
 
-        if (mMainPresenter != null) {
-            mMainPresenter.onViewWillDestroy();
-        }
         super.onDestroy();
     }
 

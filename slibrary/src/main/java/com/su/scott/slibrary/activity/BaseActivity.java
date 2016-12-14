@@ -28,18 +28,19 @@ import com.su.scott.slibrary.util.T;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseActivity<V extends IView, P extends BasePresenter<V>> extends AppCompatActivity implements IBaseView {
-//    private P mPresenter;
+public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> extends AppCompatActivity
+        implements IBaseView {
+    private P mPresenter;
     private ProgressDialog mLoadingDialog;
-    private boolean mDestroyed;
 
-//    protected abstract P getPresenter();
+
+    protected abstract P getPresenter();
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
 
-//        mPresenter = getPresenter();
+        mPresenter = getPresenter();
         mLoadingDialog = new ProgressDialog(this);
     }
 
@@ -51,10 +52,8 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter<V>> 
             mLoadingDialog = null;
         }
 
-//        getPresenter().detachView();
-//        mPresenter = null;
-
-        mDestroyed = true;
+        getPresenter().detachView();
+        mPresenter = null;
     }
 
     @Override
@@ -235,10 +234,6 @@ public abstract class BaseActivity<V extends IView, P extends BasePresenter<V>> 
         } else {
             startActivity(intent);
         }
-    }
-
-    protected boolean isActivityDestroyed() {
-        return mDestroyed;
     }
 
     @Override

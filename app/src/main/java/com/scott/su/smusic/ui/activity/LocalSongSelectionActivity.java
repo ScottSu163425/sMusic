@@ -22,7 +22,8 @@ import com.su.scott.slibrary.util.SdkUtil;
 /**
  * 2016-8-27
  */
-public class LocalSongSelectionActivity extends BaseActivity implements LocalSongSelectionContract.LocalSongSelectionView {
+public class LocalSongSelectionActivity extends BaseActivity<LocalSongSelectionContract.LocalSongSelectionView, LocalSongSelectionContract.LocalSongSelectionPresenter>
+        implements LocalSongSelectionContract.LocalSongSelectionView {
     private LinearLayout mRootLayout;
     private Button mFinishSelectionButton;
     private LocalSongSelectionContract.LocalSongSelectionPresenter mSongSelectionPresenter;
@@ -34,8 +35,15 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_song_selection);
 
-        mSongSelectionPresenter = new LocalSongSelectionPresenterImp(this);
         mSongSelectionPresenter.onViewFirstTimeCreated();
+    }
+
+    @Override
+    protected LocalSongSelectionContract.LocalSongSelectionPresenter getPresenter() {
+        if (mSongSelectionPresenter == null) {
+            mSongSelectionPresenter = new LocalSongSelectionPresenterImp(this);
+        }
+        return mSongSelectionPresenter;
     }
 
     @Override
@@ -48,7 +56,7 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
 
     @Override
     public void initPreData() {
-        if (SdkUtil.isLolipopOrLatter()){
+        if (SdkUtil.isLolipopOrLatter()) {
             getWindow().setEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.slide_right));
         }
     }
@@ -146,11 +154,5 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
         return true;
     }
 
-    @Override
-    protected void onDestroy() {
-        if (mSongSelectionPresenter!=null){
-            mSongSelectionPresenter.onViewWillDestroy();
-        }
-        super.onDestroy();
-    }
+
 }

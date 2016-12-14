@@ -24,11 +24,13 @@ import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.manager.ImageLoader;
+import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 import com.su.scott.slibrary.util.SdkUtil;
 
 import java.util.List;
 
-public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbumDetailContract.LocalAlbumDetailView {
+public class LocalAlbumDetailActivity extends BaseActivity<LocalAlbumDetailContract.LocalAlbumDetailView, LocalAlbumDetailContract.LocalAlbumDetailPresenter>
+        implements LocalAlbumDetailContract.LocalAlbumDetailView {
     private LocalAlbumDetailContract.LocalAlbumDetailPresenter mPresenter;
     private LocalAlbumEntity mAlbumEntity;
     private CardView mAlbumInfoCard;
@@ -42,8 +44,15 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_album_detail);
 
-        mPresenter = new LocalAlbumDetailPresenterImpl(this);
         mPresenter.onViewFirstTimeCreated();
+    }
+
+    @Override
+    protected LocalAlbumDetailContract.LocalAlbumDetailPresenter getPresenter() {
+        if (mPresenter == null) {
+            mPresenter = new LocalAlbumDetailPresenterImpl(this);
+        }
+        return mPresenter;
     }
 
     @Override
@@ -201,11 +210,5 @@ public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbum
 
     }
 
-    @Override
-    protected void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.onViewWillDestroy();
-        }
-        super.onDestroy();
-    }
+
 }

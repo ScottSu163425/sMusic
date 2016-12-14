@@ -29,7 +29,8 @@ import com.su.scott.slibrary.util.ViewUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends BaseActivity implements SearchContract.SearchView {
+public class SearchActivity extends BaseActivity<SearchContract.SearchView,SearchContract.SearchPresenter>
+        implements SearchContract.SearchView {
     private SearchContract.SearchPresenter mSearchPresenter;
     private View mLoadingLayout, mEmptyLayout;
     private EditText mInputEditText;
@@ -42,8 +43,15 @@ public class SearchActivity extends BaseActivity implements SearchContract.Searc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        mSearchPresenter = new SearchPresenterImpl(this);
         mSearchPresenter.onViewFirstTimeCreated();
+    }
+
+    @Override
+    protected SearchContract.SearchPresenter getPresenter() {
+        if (mSearchPresenter == null) {
+            mSearchPresenter = new SearchPresenterImpl(this);
+        }
+        return mSearchPresenter;
     }
 
     @Override
@@ -248,11 +256,5 @@ public class SearchActivity extends BaseActivity implements SearchContract.Searc
                 .show(getSupportFragmentManager(), "");
     }
 
-    @Override
-    protected void onDestroy() {
-        if (mSearchPresenter != null) {
-            mSearchPresenter.onViewWillDestroy();
-        }
-        super.onDestroy();
-    }
+
 }

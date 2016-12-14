@@ -28,7 +28,8 @@ import java.util.ArrayList;
 /**
  * 2016-09-07 22:01:51
  */
-public class MusicPlayActivity extends BaseActivity implements MusicPlayContract.MusicPlayView, View.OnClickListener {
+public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayView, MusicPlayContract.MusicPlayPresenter>
+        implements MusicPlayContract.MusicPlayView, View.OnClickListener {
     private final int ID_CONTAINER = R.id.fl_container_music_play_main;
 
     private MusicPlayContract.MusicPlayPresenter mMusicPlayPresenter;
@@ -42,8 +43,15 @@ public class MusicPlayActivity extends BaseActivity implements MusicPlayContract
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_play);
 
-        mMusicPlayPresenter = new MusicPlayPresenterImpl(this);
         mMusicPlayPresenter.onViewFirstTimeCreated();
+    }
+
+    @Override
+    protected MusicPlayContract.MusicPlayPresenter getPresenter() {
+        if (mMusicPlayPresenter == null) {
+            mMusicPlayPresenter = new MusicPlayPresenterImpl(this);
+        }
+        return mMusicPlayPresenter;
     }
 
     @Override

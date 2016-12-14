@@ -25,7 +25,8 @@ import com.su.scott.slibrary.util.SdkUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayStatisticActivity extends BaseActivity implements PlayStatisticContract.PlayStatisticView {
+public class PlayStatisticActivity extends BaseActivity<PlayStatisticContract.PlayStatisticView,PlayStatisticContract.PlayStatisticPresenter>
+        implements PlayStatisticContract.PlayStatisticView {
     private PlayStatisticContract.PlayStatisticPresenter mPlayStatisticPresenter;
     private PlayStatisticWeekFragment mPlayStatisticWeekFragment;
     private PlayStatisticDisplayFragment mPlayStatisticDisplayFragment;
@@ -37,14 +38,15 @@ public class PlayStatisticActivity extends BaseActivity implements PlayStatistic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_statistic);
 
-        mPlayStatisticPresenter = new PlayStatisticPresenterImpl(this);
         mPlayStatisticPresenter.onViewFirstTimeCreated();
     }
 
     @Override
-    protected void onDestroy() {
-        mPlayStatisticPresenter.onViewWillDestroy();
-        super.onDestroy();
+    protected PlayStatisticContract.PlayStatisticPresenter getPresenter() {
+        if (mPlayStatisticPresenter == null) {
+            mPlayStatisticPresenter = new PlayStatisticPresenterImpl(this);
+        }
+        return mPlayStatisticPresenter;
     }
 
     @Override

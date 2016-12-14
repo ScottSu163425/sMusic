@@ -41,7 +41,8 @@ import java.util.List;
 /**
  * 2016-8-28
  */
-public class LocalBillDetailActivity extends BaseActivity implements LocalBillDetailContract.LocalBillDetailView {
+public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContract.LocalBillDetailView, LocalBillDetailContract.LocalBillDetailPresenter>
+        implements LocalBillDetailContract.LocalBillDetailView {
     private LocalBillDetailContract.LocalBillDetailPresenter mBillDetailPresenter;
     private LocalBillEntity mBillEntity;
     private AppBarLayout mAppBarLayout;
@@ -59,7 +60,6 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_bill_detail);
 
-        mBillDetailPresenter = new LocalBillDetailPresenterImpl(this);
         mBillDetailPresenter.onViewFirstTimeCreated();
 
         if (SdkUtil.isLolipopOrLatter()) {
@@ -96,6 +96,14 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
         } else {
             mBillDetailPresenter.onTransitionEnd();
         }
+    }
+
+    @Override
+    protected LocalBillDetailContract.LocalBillDetailPresenter getPresenter() {
+        if (mBillDetailPresenter == null) {
+            mBillDetailPresenter = new LocalBillDetailPresenterImpl(this);
+        }
+        return mBillDetailPresenter;
     }
 
     @Override
@@ -510,11 +518,5 @@ public class LocalBillDetailActivity extends BaseActivity implements LocalBillDe
                 }, null, null);
     }
 
-    @Override
-    protected void onDestroy() {
-        if (mBillDetailPresenter != null) {
-            mBillDetailPresenter.onViewWillDestroy();
-        }
-        super.onDestroy();
-    }
+
 }
