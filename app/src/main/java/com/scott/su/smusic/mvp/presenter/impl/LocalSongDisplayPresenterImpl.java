@@ -6,9 +6,9 @@ import android.view.View;
 
 import com.scott.su.smusic.cache.LocalSongEntityCache;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.contract.LocalSongDisplayContract;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
-import com.scott.su.smusic.mvp.presenter.LocalSongDisplayPresenter;
-import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
+import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +23,12 @@ import rx.schedulers.Schedulers;
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter {
-    private LocalSongDisplayView mSongDisplayView;
+public class LocalSongDisplayPresenterImpl extends BasePresenter<LocalSongDisplayContract.LocalSongDisplayView>
+        implements LocalSongDisplayContract.LocalSongDisplayPresenter {
     private LocalSongModelImpl mSongModel;
 
-    public LocalSongDisplayPresenterImpl(LocalSongDisplayView localSongDisplayView) {
-        this.mSongDisplayView = localSongDisplayView;
+    public LocalSongDisplayPresenterImpl(LocalSongDisplayContract.LocalSongDisplayView view) {
+        super(view);
         this.mSongModel = new LocalSongModelImpl();
     }
 
@@ -54,7 +54,7 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
 
     @Override
     public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        mSongDisplayView.handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
+        getView().handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
     }
 
     @Override
@@ -67,19 +67,15 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
 
     }
 
-    @Override
-    public void onViewWillDestroy() {
-    }
-
     private void getAndDisplayLocalSongs(boolean isRefresh) {
         if (!isRefresh) {
-            mSongDisplayView.showLoading();
+            getView().showLoading();
         }
 
         Observable.create(new Observable.OnSubscribe<List<LocalSongEntity>>() {
             @Override
             public void call(Subscriber<? super List<LocalSongEntity>> subscriber) {
-                subscriber.onNext(mSongModel.getLocalSongs(mSongDisplayView.getViewContext()));
+                subscriber.onNext(mSongModel.getLocalSongs(getView().getViewContext()));
             }
         })
                 .subscribeOn(Schedulers.io())
@@ -93,12 +89,12 @@ public class LocalSongDisplayPresenterImpl implements LocalSongDisplayPresenter 
                             result = new ArrayList<LocalSongEntity>();
                         }
 
-                        mSongDisplayView.setDisplayData(result);
+                        getView().setDisplayData(result);
 
                         if (result.size() == 0) {
-                            mSongDisplayView.showEmpty();
+                            getView().showEmpty();
                         } else {
-                            mSongDisplayView.display();
+                            getView().display();
                         }
                     }
                 });

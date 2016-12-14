@@ -32,9 +32,8 @@ import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.constant.PlayMode;
 import com.scott.su.smusic.constant.PlayStatus;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.MusicPlayMainPresenter;
+import com.scott.su.smusic.mvp.contract.MusicPlayMainContract;
 import com.scott.su.smusic.mvp.presenter.impl.MusicPlayMainPresenterImpl;
-import com.scott.su.smusic.mvp.view.MusicPlayMainView;
 import com.scott.su.smusic.service.MusicPlayService;
 import com.su.scott.slibrary.fragment.BaseFragment;
 import com.su.scott.slibrary.manager.ImageLoader;
@@ -52,8 +51,8 @@ import java.util.List;
  * Created by asus on 2016/11/20.
  */
 
-public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMainView, ActivityBackPressCallback {
-    private MusicPlayMainPresenter mMusicPlayPresenter;
+public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMainContract.MusicPlayMainView, ActivityBackPressCallback {
+    private MusicPlayMainContract.MusicPlayMainPresenter mMusicPlayPresenter;
     private View mRootView;
     private TextView mMusicTitleTextView, mMusicArtistTextView, mCurrentTimeTextView, mTotalTimeTextView;
     private ImageView mCoverImageView;

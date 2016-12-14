@@ -5,19 +5,20 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.PlayListSecondDisplayPresenter;
-import com.scott.su.smusic.mvp.view.PlayListSecondDisplayView;
+import com.scott.su.smusic.mvp.contract.PlayListSecondDisplayContract;
+import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 
 /**
  * Created by asus on 2016/12/3.
  */
 
-public class PlayListSecondDisplayPresenterImpl implements PlayListSecondDisplayPresenter {
-    private PlayListSecondDisplayView mDisplayView;
+public class PlayListSecondDisplayPresenterImpl extends BasePresenter<PlayListSecondDisplayContract.PlayListSecondDisplayView>
+
+        implements PlayListSecondDisplayContract.PlayListSecondDisplayPresenter {
 
 
-    public PlayListSecondDisplayPresenterImpl(PlayListSecondDisplayView mDisplayView) {
-        this.mDisplayView = mDisplayView;
+    public PlayListSecondDisplayPresenterImpl(PlayListSecondDisplayContract.PlayListSecondDisplayView view) {
+        super(view);
     }
 
     @Override
@@ -52,11 +53,6 @@ public class PlayListSecondDisplayPresenterImpl implements PlayListSecondDisplay
     @Override
     public void onViewResume() {
 
-    }
-
-    @Override
-    public void onViewWillDestroy() {
-        mDisplayView = null;
     }
 
 

@@ -6,9 +6,9 @@ import android.view.View;
 
 import com.scott.su.smusic.cache.LocalSongEntityCache;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.contract.BillSongDisplayContract;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
-import com.scott.su.smusic.mvp.presenter.BillSongDisplayPresenter;
-import com.scott.su.smusic.mvp.view.BillSongDisplayView;
+import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +23,13 @@ import rx.schedulers.Schedulers;
 /**
  * Created by asus on 2016/8/19.
  */
-public class BillSongDisplayPresenterImpl implements BillSongDisplayPresenter {
-    private BillSongDisplayView mSongDisplayView;
+public class BillSongDisplayPresenterImpl extends BasePresenter<BillSongDisplayContract.BillSongDisplayView>
+        implements BillSongDisplayContract.BillSongDisplayPresenter {
     private LocalSongModelImpl mSongModel;
 
-    public BillSongDisplayPresenterImpl(BillSongDisplayView billSongDisplayView) {
-        this.mSongDisplayView = billSongDisplayView;
+    
+    public BillSongDisplayPresenterImpl(BillSongDisplayContract.BillSongDisplayView billSongDisplayView) {
+        super(billSongDisplayView);
         this.mSongModel = new LocalSongModelImpl();
     }
 
@@ -54,7 +55,7 @@ public class BillSongDisplayPresenterImpl implements BillSongDisplayPresenter {
 
     @Override
     public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        mSongDisplayView.handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
+        getView().handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
     }
 
     @Override
@@ -67,18 +68,14 @@ public class BillSongDisplayPresenterImpl implements BillSongDisplayPresenter {
 
     }
 
-    @Override
-    public void onViewWillDestroy() {
-    }
-
     private void getAndDisplayLocalSongs() {
-        mSongDisplayView.showLoading();
+        getView().showLoading();
 
-        Observable.just(mSongDisplayView.getSongBillEntity().getBillSongIdsLongArray())
+        Observable.just(getView().getSongBillEntity().getBillSongIdsLongArray())
                 .map(new Func1<long[], List<LocalSongEntity>>() {
                     @Override
                     public List<LocalSongEntity> call(long[] songIds) {
-                        return mSongModel.getLocalSongsBySongIds(mSongDisplayView.getViewContext(), songIds);
+                        return mSongModel.getLocalSongsBySongIds(getView().getViewContext(), songIds);
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -92,12 +89,12 @@ public class BillSongDisplayPresenterImpl implements BillSongDisplayPresenter {
                             result = new ArrayList<LocalSongEntity>();
                         }
 
-                        mSongDisplayView.setDisplayData(result);
+                        getView().setDisplayData(result);
 
                         if (result.size() == 0) {
-                            mSongDisplayView.showEmpty();
+                            getView().showEmpty();
                         } else {
-                            mSongDisplayView.display();
+                            getView().display();
                         }
                     }
                 });

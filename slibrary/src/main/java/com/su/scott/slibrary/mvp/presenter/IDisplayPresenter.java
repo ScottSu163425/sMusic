@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.su.scott.slibrary.mvp.view.IView;
+
 /**
  * Created by Administrator on 2016/8/2.
  */
-public interface IDisplayPresenter<E> extends IPresenter {
+public interface IDisplayPresenter<V extends IView,E> extends IPresenter<V> {
 
     void onSwipRefresh();
 

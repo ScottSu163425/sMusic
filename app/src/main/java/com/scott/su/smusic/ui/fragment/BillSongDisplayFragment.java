@@ -14,9 +14,8 @@ import com.scott.su.smusic.callback.LocalSongDisplayCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.BillSongDisplayPresenter;
+import com.scott.su.smusic.mvp.contract.BillSongDisplayContract;
 import com.scott.su.smusic.mvp.presenter.impl.BillSongDisplayPresenterImpl;
-import com.scott.su.smusic.mvp.view.BillSongDisplayView;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
@@ -26,8 +25,8 @@ import java.util.List;
 /**
  * Created by asus on 2016/11/05.
  */
-public class BillSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity, BillSongViewHolder> implements BillSongDisplayView {
-    private BillSongDisplayPresenter mSongDisplayPresenter;
+public class BillSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity, BillSongViewHolder> implements BillSongDisplayContract.BillSongDisplayView {
+    private BillSongDisplayContract.BillSongDisplayPresenter mSongDisplayPresenter;
     private BillSongDisplayAdapter mSongDisplayAdapter;
 
     private LocalBillEntity mSongsBillEntity;

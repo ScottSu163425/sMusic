@@ -14,9 +14,8 @@ import com.scott.su.smusic.callback.MusicPlayMainFragmentCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.MusicPlayPresenter;
+import com.scott.su.smusic.mvp.contract.MusicPlayContract;
 import com.scott.su.smusic.mvp.presenter.impl.MusicPlayPresenterImpl;
-import com.scott.su.smusic.mvp.view.MusicPlayView;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.MusicPlayMainFragment;
 import com.scott.su.smusic.ui.fragment.MusicPlaySecondFragment;
@@ -29,10 +28,10 @@ import java.util.ArrayList;
 /**
  * 2016-09-07 22:01:51
  */
-public class MusicPlayActivity extends BaseActivity implements MusicPlayView, View.OnClickListener {
+public class MusicPlayActivity extends BaseActivity implements MusicPlayContract.MusicPlayView, View.OnClickListener {
     private final int ID_CONTAINER = R.id.fl_container_music_play_main;
 
-    private MusicPlayPresenter mMusicPlayPresenter;
+    private MusicPlayContract.MusicPlayPresenter mMusicPlayPresenter;
     private Toolbar mToolbar;
     private ImageView mBlurCoverImageView;
     private MusicPlayMainFragment mMusicPlayMainFragment;

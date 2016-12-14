@@ -5,10 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.scott.su.smusic.entity.PlayStatisticEntity;
+import com.scott.su.smusic.mvp.contract.PlayStatisticDisplayContract;
 import com.scott.su.smusic.mvp.model.PlayStatisticModel;
 import com.scott.su.smusic.mvp.model.impl.PlayStatisticModelImpl;
-import com.scott.su.smusic.mvp.presenter.PlayStatisticDisplayPresenter;
-import com.scott.su.smusic.mvp.view.PlayStatisticDisplayView;
+import com.su.scott.slibrary.mvp.presenter.BasePresenter;
+import com.su.scott.slibrary.mvp.presenter.IDisplayPresenter;
 
 import java.util.List;
 
@@ -22,12 +23,12 @@ import rx.schedulers.Schedulers;
  * Created by asus on 2016/11/19.
  */
 
-public class PlayStatisticDisplayPresenterImpl implements PlayStatisticDisplayPresenter {
-    private PlayStatisticDisplayView mPlayStatisticDisplayView;
+public class PlayStatisticDisplayPresenterImpl extends BasePresenter<PlayStatisticDisplayContract.PlayStatisticDisplayView>
+        implements PlayStatisticDisplayContract.PlayStatisticDisplayPresenter {
     private PlayStatisticModel mPlayStatisticModel;
 
-    public PlayStatisticDisplayPresenterImpl(PlayStatisticDisplayView mPlayStatisticDisplayView) {
-        this.mPlayStatisticDisplayView = mPlayStatisticDisplayView;
+    public PlayStatisticDisplayPresenterImpl(PlayStatisticDisplayContract.PlayStatisticDisplayView view) {
+        super(view);
         this.mPlayStatisticModel = new PlayStatisticModelImpl();
     }
 
@@ -53,7 +54,7 @@ public class PlayStatisticDisplayPresenterImpl implements PlayStatisticDisplayPr
 
     @Override
     public void onItemClick(View itemView, PlayStatisticEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        mPlayStatisticDisplayView.handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
+        getView().handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
     }
 
     @Override
@@ -66,7 +67,7 @@ public class PlayStatisticDisplayPresenterImpl implements PlayStatisticDisplayPr
         Observable.create(new Observable.OnSubscribe<List<PlayStatisticEntity>>() {
             @Override
             public void call(Subscriber<? super List<PlayStatisticEntity>> subscriber) {
-                subscriber.onNext(mPlayStatisticModel.getTotalPlayStatistic(mPlayStatisticDisplayView.getViewContext()));
+                subscriber.onNext(mPlayStatisticModel.getTotalPlayStatistic(getView().getViewContext()));
             }
         })
                 .subscribeOn(Schedulers.io())
@@ -75,7 +76,7 @@ public class PlayStatisticDisplayPresenterImpl implements PlayStatisticDisplayPr
                     @Override
                     public void call() {
                         if (!isRefresh) {
-                            mPlayStatisticDisplayView.showLoading();
+                            getView().showLoading();
                         }
                     }
                 })
@@ -88,16 +89,16 @@ public class PlayStatisticDisplayPresenterImpl implements PlayStatisticDisplayPr
 
                     @Override
                     public void onError(Throwable e) {
-                        mPlayStatisticDisplayView.showError();
+                        getView().showError();
                     }
 
                     @Override
                     public void onNext(List<PlayStatisticEntity> playStatisticEntities) {
                         if (playStatisticEntities.isEmpty()) {
-                            mPlayStatisticDisplayView.showEmpty();
+                            getView().showEmpty();
                         } else {
-                            mPlayStatisticDisplayView.setDisplayData(playStatisticEntities);
-                            mPlayStatisticDisplayView.display();
+                            getView().setDisplayData(playStatisticEntities);
+                            getView().display();
                         }
                     }
                 });
@@ -108,8 +109,4 @@ public class PlayStatisticDisplayPresenterImpl implements PlayStatisticDisplayPr
 
     }
 
-    @Override
-    public void onViewWillDestroy() {
-        mPlayStatisticDisplayView = null;
-    }
 }

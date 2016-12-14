@@ -13,9 +13,8 @@ import android.widget.LinearLayout;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalBillEntity;
-import com.scott.su.smusic.mvp.presenter.LocalSongSelectionPresenter;
+import com.scott.su.smusic.mvp.contract.LocalSongSelectionContract;
 import com.scott.su.smusic.mvp.presenter.impl.LocalSongSelectionPresenterImp;
-import com.scott.su.smusic.mvp.view.LocalSongSelectionView;
 import com.scott.su.smusic.ui.fragment.LocalSongSlectionDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.SdkUtil;
@@ -23,10 +22,10 @@ import com.su.scott.slibrary.util.SdkUtil;
 /**
  * 2016-8-27
  */
-public class LocalSongSelectionActivity extends BaseActivity implements LocalSongSelectionView {
+public class LocalSongSelectionActivity extends BaseActivity implements LocalSongSelectionContract.LocalSongSelectionView {
     private LinearLayout mRootLayout;
     private Button mFinishSelectionButton;
-    private LocalSongSelectionPresenter mSongSelectionPresenter;
+    private LocalSongSelectionContract.LocalSongSelectionPresenter mSongSelectionPresenter;
     private LocalSongSlectionDisplayFragment mLocalSongSlectionDisplayFragment;
 
 
@@ -119,7 +118,7 @@ public class LocalSongSelectionActivity extends BaseActivity implements LocalSon
     }
 
     @Override
-    public void showOrHideFinishSelectionButtn(boolean isShow) {
+    public void showOrHideFinishSelectionButton(boolean isShow) {
 //        if (SdkUtil.isLolipopOrLatter()) {
 //            TransitionManager.beginDelayedTransition(mRootLayout);
 //        }

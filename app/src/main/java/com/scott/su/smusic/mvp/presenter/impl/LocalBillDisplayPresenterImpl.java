@@ -5,9 +5,9 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.scott.su.smusic.entity.LocalBillEntity;
+import com.scott.su.smusic.mvp.contract.LocalBillDisplayContract;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
-import com.scott.su.smusic.mvp.presenter.LocalBillDisplayPresenter;
-import com.scott.su.smusic.mvp.view.LocalBillDisplayView;
+import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +22,13 @@ import rx.schedulers.Schedulers;
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalBillDisplayPresenterImpl implements LocalBillDisplayPresenter {
-    private LocalBillDisplayView mBillDisplayView;
+public class LocalBillDisplayPresenterImpl extends BasePresenter<LocalBillDisplayContract.LocalBillDisplayView>
+        implements LocalBillDisplayContract.LocalBillDisplayPresenter {
     private LocalBillModelImpl mBillModel;
 
-    public LocalBillDisplayPresenterImpl(LocalBillDisplayView localBillDisplayView) {
-        this.mBillDisplayView = localBillDisplayView;
+    
+    public LocalBillDisplayPresenterImpl(LocalBillDisplayContract.LocalBillDisplayView localBillDisplayView) {
+        super(localBillDisplayView);
         this.mBillModel = new LocalBillModelImpl();
     }
 
@@ -52,12 +53,12 @@ public class LocalBillDisplayPresenterImpl implements LocalBillDisplayPresenter 
 
     @Override
     public void onItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        mBillDisplayView.handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
+        getView().handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
     }
 
     @Override
     public void onViewFirstTimeCreated() {
-        mBillDisplayView.showLoading();
+        getView().showLoading();
         getAndDisplayLocalSongBills(false);
     }
 
@@ -73,13 +74,13 @@ public class LocalBillDisplayPresenterImpl implements LocalBillDisplayPresenter 
 
     private void getAndDisplayLocalSongBills(boolean isRefresh) {
         if (!isRefresh) {
-            mBillDisplayView.showLoading();
+            getView().showLoading();
         }
 
         Observable.create(new Observable.OnSubscribe<List<LocalBillEntity>>() {
             @Override
             public void call(Subscriber<? super List<LocalBillEntity>> subscriber) {
-                subscriber.onNext(mBillModel.getBills(mBillDisplayView.getViewContext()));
+                subscriber.onNext(mBillModel.getBills(getView().getViewContext()));
             }
         })
                 .subscribeOn(Schedulers.io())
@@ -94,12 +95,12 @@ public class LocalBillDisplayPresenterImpl implements LocalBillDisplayPresenter 
                             result = new ArrayList<LocalBillEntity>();
                         }
 
-                        mBillDisplayView.setDisplayData(result);
+                        getView().setDisplayData(result);
 
                         if (result.size() == 0) {
-                            mBillDisplayView.showEmpty();
+                            getView().showEmpty();
                         } else {
-                            mBillDisplayView.display();
+                            getView().display();
                         }
                     }
                 });

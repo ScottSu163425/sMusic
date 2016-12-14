@@ -10,9 +10,8 @@ import android.view.View;
 import com.scott.su.smusic.adapter.LocalSongSelectionDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.LocalSongSelectionViewHolder;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.LocalSongSelectionDisplayPresenter;
+import com.scott.su.smusic.mvp.contract.LocalSongSelectionDisplayContract;
 import com.scott.su.smusic.mvp.presenter.impl.LocalSongSelectionDisplayPresenterImpl;
-import com.scott.su.smusic.mvp.view.LocalSongSelectionDisplayView;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
@@ -23,9 +22,9 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/27.
  */
-public class LocalSongSlectionDisplayFragment extends BaseDisplayFragment<LocalSongEntity, LocalSongSelectionViewHolder> implements LocalSongSelectionDisplayView {
+public class LocalSongSlectionDisplayFragment extends BaseDisplayFragment<LocalSongEntity, LocalSongSelectionViewHolder> implements LocalSongSelectionDisplayContract.LocalSongSelectionDisplayView {
     private LocalSongSelectionDisplayAdapter mSongSelectionDisplayAdapter;
-    private LocalSongSelectionDisplayPresenter mSongSelectionDisplayPresenter;
+    private LocalSongSelectionDisplayContract.LocalSongSelectionDisplayPresenter mSongSelectionDisplayPresenter;
     private OnSelectedSongChangedListener mOnSelectedSongChangedListener;
 
 

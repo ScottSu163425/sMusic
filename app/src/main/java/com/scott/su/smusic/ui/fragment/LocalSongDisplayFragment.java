@@ -12,9 +12,8 @@ import com.scott.su.smusic.adapter.LocalSongDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.LocalSongViewHolder;
 import com.scott.su.smusic.callback.LocalSongDisplayCallback;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.LocalSongDisplayPresenter;
+import com.scott.su.smusic.mvp.contract.LocalSongDisplayContract;
 import com.scott.su.smusic.mvp.presenter.impl.LocalSongDisplayPresenterImpl;
-import com.scott.su.smusic.mvp.view.LocalSongDisplayView;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
@@ -25,8 +24,8 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity, LocalSongViewHolder> implements LocalSongDisplayView {
-    private LocalSongDisplayPresenter mSongDisplayPresenter;
+public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity, LocalSongViewHolder> implements LocalSongDisplayContract.LocalSongDisplayView {
+    private LocalSongDisplayContract.LocalSongDisplayPresenter mSongDisplayPresenter;
     private LocalSongDisplayAdapter mSongDisplayAdapter;
 
     private LocalSongDisplayCallback mDisplayCallback;

@@ -15,8 +15,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.su.scott.slibrary.R;
+import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 import com.su.scott.slibrary.mvp.presenter.IPresenter;
-import com.su.scott.slibrary.mvp.view.BaseView;
+import com.su.scott.slibrary.mvp.view.IBaseView;
+import com.su.scott.slibrary.mvp.view.IView;
 import com.su.scott.slibrary.util.NetworkUtil;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.Snack;
@@ -26,15 +28,18 @@ import com.su.scott.slibrary.util.T;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements BaseView {
+public abstract class BaseActivity<V extends IView, P extends BasePresenter<V>> extends AppCompatActivity implements IBaseView {
+//    private P mPresenter;
     private ProgressDialog mLoadingDialog;
     private boolean mDestroyed;
 
+//    protected abstract P getPresenter();
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
 
+//        mPresenter = getPresenter();
         mLoadingDialog = new ProgressDialog(this);
     }
 
@@ -45,6 +50,10 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
             mLoadingDialog.dismiss();
             mLoadingDialog = null;
         }
+
+//        getPresenter().detachView();
+//        mPresenter = null;
+
         mDestroyed = true;
     }
 

@@ -10,12 +10,12 @@ import android.view.View;
 import com.scott.su.smusic.adapter.LocalAlbumDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.LocalAlbumViewHolder;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
-import com.scott.su.smusic.mvp.presenter.LocalAlbumDisplayPresenter;
+import com.scott.su.smusic.mvp.contract.LocalAlbumDisplayContract;
 import com.scott.su.smusic.mvp.presenter.impl.LocalAlbumDisplayPresenterImpl;
-import com.scott.su.smusic.mvp.view.LocalAlbumDisplayView;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
+import com.su.scott.slibrary.mvp.view.IBaseDisplayView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEntity, LocalAlbumViewHolder> implements LocalAlbumDisplayView {
-    private LocalAlbumDisplayPresenter mLocalAlbumDisplayPresenter;
+public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEntity, LocalAlbumViewHolder> implements LocalAlbumDisplayContract.LocalAlbumDisplayView {
+    private LocalAlbumDisplayContract.LocalAlbumDisplayPresenter mLocalAlbumDisplayPresenter;
     private LocalAlbumDisplayAdapter mLocalAlbumDisplayAdapter;
     private AlbumItemClickCallback mAlbumItemClickCallback;
 

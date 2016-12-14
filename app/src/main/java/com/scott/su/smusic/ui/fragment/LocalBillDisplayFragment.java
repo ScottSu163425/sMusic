@@ -10,12 +10,12 @@ import android.view.View;
 import com.scott.su.smusic.adapter.LocalBillDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.LocalBillViewHolder;
 import com.scott.su.smusic.entity.LocalBillEntity;
-import com.scott.su.smusic.mvp.presenter.LocalBillDisplayPresenter;
+import com.scott.su.smusic.mvp.contract.LocalBillDisplayContract;
 import com.scott.su.smusic.mvp.presenter.impl.LocalBillDisplayPresenterImpl;
-import com.scott.su.smusic.mvp.view.LocalBillDisplayView;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
+import com.su.scott.slibrary.mvp.view.IBaseDisplayView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntity, LocalBillViewHolder> implements LocalBillDisplayView {
-    private LocalBillDisplayPresenter mSongBillDisplayPresenter;
+public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntity, LocalBillViewHolder> implements LocalBillDisplayContract.LocalBillDisplayView {
+    private LocalBillDisplayContract.LocalBillDisplayPresenter mSongBillDisplayPresenter;
     private LocalBillDisplayAdapter mSongBillDisplayAdapter;
 
     private BillItemClickCallback mBillItemClickCallback;

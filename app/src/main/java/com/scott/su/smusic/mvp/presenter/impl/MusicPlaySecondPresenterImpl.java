@@ -1,23 +1,23 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
-import com.scott.su.smusic.mvp.presenter.MusicPlaySecondPresenter;
-import com.scott.su.smusic.mvp.view.MusicPlaySecondView;
+import com.scott.su.smusic.mvp.contract.MusicPlaySecondContract;
+import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 
 /**
  * Created by asus on 2016/11/20.
  */
 
-public class MusicPlaySecondPresenterImpl implements MusicPlaySecondPresenter {
-    private MusicPlaySecondView mMusicPlaySecondView;
+public class MusicPlaySecondPresenterImpl extends BasePresenter<MusicPlaySecondContract.MusicPlaySecondView>
+        implements MusicPlaySecondContract.MusicPlaySecondPresenter {
 
 
-    public MusicPlaySecondPresenterImpl(MusicPlaySecondView mMusicPlaySecondView) {
-        this.mMusicPlaySecondView = mMusicPlaySecondView;
+    public MusicPlaySecondPresenterImpl(MusicPlaySecondContract.MusicPlaySecondView view) {
+    super(view);
     }
 
     @Override
     public void onViewFirstTimeCreated() {
-        mMusicPlaySecondView.initPreData();
+        getView().initPreData();
     }
 
     @Override
@@ -26,15 +26,10 @@ public class MusicPlaySecondPresenterImpl implements MusicPlaySecondPresenter {
     }
 
     @Override
-    public void onViewWillDestroy() {
-
-    }
-
-    @Override
     public void onMusicPlayServiceConnected() {
-        mMusicPlaySecondView.initView();
-        mMusicPlaySecondView.initData();
-        mMusicPlaySecondView.initListener();
+        getView().initView();
+        getView().initData();
+        getView().initListener();
     }
 
     @Override

@@ -26,15 +26,15 @@ public class CommonInputDialogFragment extends DialogFragment {
     private Button mConfirmButton;
     private CommonInputDialogCallback mCallback;
 
-    private String mTitle="";
-    private String mHint="";
+    private String mTitle = "";
+    private String mHint = "";
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
             mRootView = inflater.inflate(R.layout.fragment_dialog_common_input, container, false);
-            mTitleTextView= (TextView) mRootView.findViewById(R.id.tv_title_fragment_dialog_common_input);
+            mTitleTextView = (TextView) mRootView.findViewById(R.id.tv_title_fragment_dialog_common_input);
             mInputLayout = (TextInputLayout) mRootView.findViewById(R.id.input_layout_fragment_dialog_common_input);
             mConfirmButton = (Button) mRootView.findViewById(R.id.btn_confirm_fragment_dialog_common_input);
             mTitleTextView.setText(mTitle);
@@ -74,7 +74,7 @@ public class CommonInputDialogFragment extends DialogFragment {
                         return;
                     }
 
-                    if (input.length()> mInputLayout.getCounterMaxLength()) {
+                    if (input.length() > mInputLayout.getCounterMaxLength()) {
                         mInputLayout.setErrorEnabled(true);
                         mInputLayout.setError(getResources().getString(R.string.error_text_length_overflow));
                         return;

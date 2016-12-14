@@ -17,5 +17,4 @@ public interface LocalSongBottomSheetPresenter {
 
     void onBottomSheetDeleteConfirmed(LocalSongEntity songEntity);
 
-
 }

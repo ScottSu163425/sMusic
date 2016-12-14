@@ -22,9 +22,8 @@ import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.LocalBillDetailPresenter;
+import com.scott.su.smusic.mvp.contract.LocalBillDetailContract;
 import com.scott.su.smusic.mvp.presenter.impl.LocalBillDetailPresenterImpl;
-import com.scott.su.smusic.mvp.view.LocalBillDetailView;
 import com.scott.su.smusic.ui.fragment.BillSongDisplayFragment;
 import com.scott.su.smusic.ui.fragment.CommonInputDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
@@ -42,8 +41,8 @@ import java.util.List;
 /**
  * 2016-8-28
  */
-public class LocalBillDetailActivity extends BaseActivity implements LocalBillDetailView {
-    private LocalBillDetailPresenter mBillDetailPresenter;
+public class LocalBillDetailActivity extends BaseActivity implements LocalBillDetailContract.LocalBillDetailView {
+    private LocalBillDetailContract.LocalBillDetailPresenter mBillDetailPresenter;
     private LocalBillEntity mBillEntity;
     private AppBarLayout mAppBarLayout;
     private ImageView mCoverImageView;

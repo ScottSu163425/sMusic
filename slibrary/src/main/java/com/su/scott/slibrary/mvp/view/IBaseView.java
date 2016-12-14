@@ -7,7 +7,7 @@ import android.view.View;
 /**
  * Created by Administrator on 2016/8/1.
  */
-public interface BaseView extends IView{
+public interface IBaseView extends IView{
 
     boolean isNetworkConnected();
 

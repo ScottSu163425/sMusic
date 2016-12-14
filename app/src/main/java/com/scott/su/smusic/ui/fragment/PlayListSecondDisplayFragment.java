@@ -10,11 +10,11 @@ import android.view.View;
 import com.scott.su.smusic.adapter.PlayListSecondDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.PlayListSecondViewHolder;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.PlayListSecondDisplayPresenter;
-import com.scott.su.smusic.mvp.view.PlayListSecondDisplayView;
+import com.scott.su.smusic.mvp.contract.PlayListSecondDisplayContract;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
+import com.su.scott.slibrary.mvp.view.IBaseDisplayView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +23,8 @@ import java.util.List;
  * Created by asus on 2016/12/3.
  */
 
-public class PlayListSecondDisplayFragment extends BaseDisplayFragment<LocalSongEntity, PlayListSecondViewHolder> implements PlayListSecondDisplayView {
-    private PlayListSecondDisplayPresenter mDisplayPresenter;
+public class PlayListSecondDisplayFragment extends BaseDisplayFragment<LocalSongEntity, PlayListSecondViewHolder> implements PlayListSecondDisplayContract.PlayListSecondDisplayView {
+    private PlayListSecondDisplayContract.PlayListSecondDisplayPresenter mDisplayPresenter;
     private PlayListSecondDisplayAdapter mDisplayAdapter;
     private List<LocalSongEntity> mPlayingSongEntityList;
     private int mCurrentPosition = -1;

@@ -17,9 +17,8 @@ import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.LocalAlbumDetailPresenter;
+import com.scott.su.smusic.mvp.contract.LocalAlbumDetailContract;
 import com.scott.su.smusic.mvp.presenter.impl.LocalAlbumDetailPresenterImpl;
-import com.scott.su.smusic.mvp.view.LocalAlbumDetailView;
 import com.scott.su.smusic.ui.fragment.AlbumSongDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
@@ -29,8 +28,8 @@ import com.su.scott.slibrary.util.SdkUtil;
 
 import java.util.List;
 
-public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbumDetailView {
-    private LocalAlbumDetailPresenter mPresenter;
+public class LocalAlbumDetailActivity extends BaseActivity implements LocalAlbumDetailContract.LocalAlbumDetailView {
+    private LocalAlbumDetailContract.LocalAlbumDetailPresenter mPresenter;
     private LocalAlbumEntity mAlbumEntity;
     private CardView mAlbumInfoCard;
     private ImageView mAlbumCoverImageView;

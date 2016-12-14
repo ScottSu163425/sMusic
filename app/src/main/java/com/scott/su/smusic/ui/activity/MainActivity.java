@@ -41,9 +41,8 @@ import com.scott.su.smusic.constant.TimerStatus;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.MainPresenter;
+import com.scott.su.smusic.mvp.contract.MainContract;
 import com.scott.su.smusic.mvp.presenter.impl.MainPresenterImpl;
-import com.scott.su.smusic.mvp.view.MainView;
 import com.scott.su.smusic.service.MusicPlayService;
 import com.scott.su.smusic.service.ShutDownTimerService;
 import com.scott.su.smusic.ui.fragment.CreateBillDialogFragment;
@@ -70,7 +69,7 @@ import java.util.Random;
 /**
  * 2016-8-18
  */
-public class MainActivity extends BaseActivity implements MainView {
+public class MainActivity extends BaseActivity implements MainContract.MainView {
     private static final String NEED_OPEN_DRAWER = "NEED_OPEN_DRAWE";
     private static final String CURRENT_TAB_POSITION = "CURRENT_TAB_POSITION";
 
@@ -81,7 +80,7 @@ public class MainActivity extends BaseActivity implements MainView {
     private static final int TAB_POSITION_BILL = 1;
     private static final int TAB_POSITION_ALBUM = 2;
 
-    private MainPresenter mMainPresenter; //Presenter of mvp;
+    private MainContract.MainPresenter mMainPresenter; //Presenter of mvp;
     private Toolbar mToolbar;   //Title bar;
     private DrawerLayout mDrawerLayout;     //Content drawer;
     private ViewPager mViewPager;   //Content ViewPager;

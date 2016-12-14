@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/8/1.
  */
-public interface BaseDisplayView<E> extends BaseView {
+public interface IBaseDisplayView<E> extends IBaseView {
 
     ArrayList<E> getDisplayDataList();
 

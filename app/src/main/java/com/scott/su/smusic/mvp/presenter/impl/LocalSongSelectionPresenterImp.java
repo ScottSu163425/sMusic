@@ -1,40 +1,40 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
-import com.scott.su.smusic.mvp.presenter.LocalSongSelectionPresenter;
-import com.scott.su.smusic.mvp.view.LocalSongSelectionView;
+import com.scott.su.smusic.mvp.contract.LocalSongSelectionContract;
+import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 
 /**
  * Created by asus on 2016/8/28.
  */
-public class LocalSongSelectionPresenterImp implements LocalSongSelectionPresenter {
-    private LocalSongSelectionView mSongSelectionView;
+public class LocalSongSelectionPresenterImp extends BasePresenter<LocalSongSelectionContract.LocalSongSelectionView>
+        implements LocalSongSelectionContract.LocalSongSelectionPresenter {
 
-    public LocalSongSelectionPresenterImp(LocalSongSelectionView mSongSelectionView) {
-        this.mSongSelectionView = mSongSelectionView;
+    public LocalSongSelectionPresenterImp(LocalSongSelectionContract.LocalSongSelectionView view) {
+        super(view);
     }
 
     @Override
     public void onSelectedCountChanged(boolean isEmpty) {
-        mSongSelectionView.showOrHideFinishSelectionButtn(!isEmpty);
+        getView().showOrHideFinishSelectionButton(!isEmpty);
     }
 
     @Override
     public void onSelectAllClick() {
-        mSongSelectionView.selectAll();
+        getView().selectAll();
     }
 
     @Override
     public void onFinishSelectionClick() {
-        mSongSelectionView.finishSelection();
+        getView().finishSelection();
     }
 
     @Override
     public void onViewFirstTimeCreated() {
-        mSongSelectionView.initPreData();
-        mSongSelectionView.initToolbar();
-        mSongSelectionView.initView();
-        mSongSelectionView.initData();
-        mSongSelectionView.initListener();
+        getView().initPreData();
+        getView().initToolbar();
+        getView().initView();
+        getView().initData();
+        getView().initListener();
     }
 
     @Override
@@ -42,11 +42,5 @@ public class LocalSongSelectionPresenterImp implements LocalSongSelectionPresent
 
     }
 
-    @Override
-    public void onViewWillDestroy() {
-        if (mSongSelectionView != null) {
-            mSongSelectionView = null;
-        }
-    }
 
 }

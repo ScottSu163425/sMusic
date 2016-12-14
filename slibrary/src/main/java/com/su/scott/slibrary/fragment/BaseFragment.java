@@ -16,16 +16,16 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.su.scott.slibrary.R;
+import com.su.scott.slibrary.mvp.view.IBaseView;
 import com.su.scott.slibrary.util.NetworkUtil;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.Snack;
 import com.su.scott.slibrary.util.T;
-import com.su.scott.slibrary.mvp.view.BaseView;
 
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseFragment extends Fragment implements BaseView {
+public abstract class BaseFragment extends Fragment implements IBaseView {
     private ProgressDialog mLoadingDialog;
     private String mNetworkErrorTip;
     private boolean mIsFirstTimeCreateView = true;

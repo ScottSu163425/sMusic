@@ -4,10 +4,10 @@ import android.view.View;
 
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.entity.PlayStatisticEntity;
+import com.scott.su.smusic.mvp.contract.PlayStatisticContract;
 import com.scott.su.smusic.mvp.model.PlayStatisticModel;
 import com.scott.su.smusic.mvp.model.impl.PlayStatisticModelImpl;
-import com.scott.su.smusic.mvp.presenter.PlayStatisticPresenter;
-import com.scott.su.smusic.mvp.view.PlayStatisticView;
+import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 
 import java.util.ArrayList;
 
@@ -15,23 +15,23 @@ import java.util.ArrayList;
  * Created by asus on 2016/11/19.
  */
 
-public class PlayStatisticPresenterImpl implements PlayStatisticPresenter {
-    private PlayStatisticView mPlayStatisticView;
+public class PlayStatisticPresenterImpl extends BasePresenter<PlayStatisticContract.PlayStatisticView>
+        implements PlayStatisticContract.PlayStatisticPresenter{
     private PlayStatisticModel mPlayStatisticModel;
 
 
-    public PlayStatisticPresenterImpl(PlayStatisticView mPlayStatisticView) {
-        this.mPlayStatisticView = mPlayStatisticView;
+    public PlayStatisticPresenterImpl(PlayStatisticContract.PlayStatisticView view) {
+    super(view);
         this.mPlayStatisticModel = new PlayStatisticModelImpl();
     }
 
     @Override
     public void onViewFirstTimeCreated() {
-        mPlayStatisticView.initPreData();
-        mPlayStatisticView.initToolbar();
-        mPlayStatisticView.initView();
-        mPlayStatisticView.initData();
-        mPlayStatisticView.initListener();
+        getView().initPreData();
+        getView().initToolbar();
+        getView().initView();
+        getView().initData();
+        getView().initListener();
 
     }
 
@@ -41,19 +41,14 @@ public class PlayStatisticPresenterImpl implements PlayStatisticPresenter {
     }
 
     @Override
-    public void onViewWillDestroy() {
-        mPlayStatisticView = null;
-    }
-
-    @Override
     public void onPlayStatisticItemClick(int position, PlayStatisticEntity entity, ArrayList<PlayStatisticEntity> statisticEntityList, View sharedElement, String transitionName) {
         if (position < 3) {
             //Top 3 with cover.
-            mPlayStatisticView.goToMusicPlayWithCover(entity.toLocalSongEntity(),
+            getView().goToMusicPlayWithCover(entity.toLocalSongEntity(),
                     (ArrayList<LocalSongEntity>) mPlayStatisticModel.getLocalSongsByPlayStatistic(statisticEntityList),
                     sharedElement, transitionName);
         } else {
-            mPlayStatisticView.goToMusicPlay(entity.toLocalSongEntity(),
+            getView().goToMusicPlay(entity.toLocalSongEntity(),
                     (ArrayList<LocalSongEntity>) mPlayStatisticModel.getLocalSongsByPlayStatistic(statisticEntityList));
         }
 

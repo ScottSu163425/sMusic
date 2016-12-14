@@ -10,15 +10,15 @@ import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.contract.MainContract;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
 import com.scott.su.smusic.mvp.model.LocalSongModel;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
-import com.scott.su.smusic.mvp.presenter.MainPresenter;
-import com.scott.su.smusic.mvp.view.MainView;
 import com.scott.su.smusic.util.MusicPlayUtil;
+import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 import com.su.scott.slibrary.util.TimeUtil;
 
 import java.util.List;
@@ -26,14 +26,14 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public class MainPresenterImpl implements MainPresenter {
-    private MainView mMainView;
+public class MainPresenterImpl  extends BasePresenter<MainContract.MainView>
+        implements MainContract.MainPresenter {
     private LocalSongModel mSongModel;
     private LocalBillModel mBillModel;
     private LocalAlbumModel mAlbumModel;
 
-    public MainPresenterImpl(MainView mView) {
-        this.mMainView = mView;
+    public MainPresenterImpl(MainContract.MainView mView) {
+        super(mView);
         this.mSongModel = new LocalSongModelImpl();
         this.mBillModel = new LocalBillModelImpl();
         this.mAlbumModel = new LocalAlbumModelImpl();
@@ -41,49 +41,49 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onInitDataComplete() {
-        mMainView.bindMusicPlayService();
-        mMainView.bindShutDownTimerService();
+        getView().bindMusicPlayService();
+        getView().bindShutDownTimerService();
     }
 
     @Override
     public void onLocalSongItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        mMainView.goToMusicWithSharedElement(entity, sharedElements[0], transitionNames[0]);
+        getView().goToMusicWithSharedElement(entity, sharedElements[0], transitionNames[0]);
     }
 
     @Override
     public void onLocalSongItemMoreClick(LocalSongEntity songEntity) {
-        mMainView.showLocalSongBottomSheet(songEntity);
+        getView().showLocalSongBottomSheet(songEntity);
     }
 
     @Override
     public void onFabClick() {
-        if (mMainView.isCurrentTabSong()) {
-            if (mMainView.getDisplaySongs() == null || mMainView.getDisplaySongs().isEmpty()) {
-                mMainView.showSnackbarShort(mMainView.getViewContext().getString(R.string.empty_local_song));
+        if (getView().isCurrentTabSong()) {
+            if (getView().getDisplaySongs() == null || getView().getDisplaySongs().isEmpty()) {
+                getView().showSnackbarShort(getView().getViewContext().getString(R.string.empty_local_song));
                 return;
             }
 
-            if (mMainView.getServiceCurrentPlayingSong() == null || mMainView.isFabPlayRandom()) {
+            if (getView().getServiceCurrentPlayingSong() == null || getView().isFabPlayRandom()) {
                 //Has not played any song,play random;
-                mMainView.playRandomSong();
+                getView().playRandomSong();
             } else {
                 //A song is playing or paused;
-                final int currentPlayingSongPositon = MusicPlayUtil.getSongPosition(mMainView.getServiceCurrentPlayingSong(), mMainView.getDisplaySongs());
-                mMainView.playSongInPosition(currentPlayingSongPositon, true);
+                final int currentPlayingSongPositon = MusicPlayUtil.getSongPosition(getView().getServiceCurrentPlayingSong(), getView().getDisplaySongs());
+                getView().playSongInPosition(currentPlayingSongPositon, true);
             }
-        } else if (mMainView.isCurrentTabBill()) {
-            mMainView.showCreateBillDialog();
+        } else if (getView().isCurrentTabBill()) {
+            getView().showCreateBillDialog();
         }
 
     }
 
     @Override
     public void onFabLongClick() {
-        if (mMainView.isCurrentTabSong()) {
-            if (mMainView.isFabPlayRandom()) {
-                mMainView.setFabPlayCurrent();
+        if (getView().isCurrentTabSong()) {
+            if (getView().isFabPlayRandom()) {
+                getView().setFabPlayCurrent();
             } else {
-                mMainView.setFabPlayRandom();
+                getView().setFabPlayRandom();
             }
         }
     }
@@ -92,28 +92,28 @@ public class MainPresenterImpl implements MainPresenter {
     public void onCreateBillConfirm(String text) {
         LocalBillEntity billEntity = new LocalBillEntity(text);
 
-        if (mBillModel.isBillTitleExist(mMainView.getViewContext(), billEntity)) {
-            mMainView.showSnackbarShort(mMainView.getViewContext().getString(R.string.error_already_exist));
+        if (mBillModel.isBillTitleExist(getView().getViewContext(), billEntity)) {
+            getView().showSnackbarShort(getView().getViewContext().getString(R.string.error_already_exist));
             return;
         }
 
-        mBillModel.saveOrUpdateBill(mMainView.getViewContext(), billEntity);
-        mMainView.updateBillDisplay();
-        AppConfig.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), false);
-        mMainView.dismissCreateBillDialog();
-        mMainView.showCreateBillSuccessfully(billEntity);
+        mBillModel.saveOrUpdateBill(getView().getViewContext(), billEntity);
+        getView().updateBillDisplay();
+        AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), false);
+        getView().dismissCreateBillDialog();
+        getView().showCreateBillSuccessfully(billEntity);
     }
 
     @Override
     public void onBillItemClick(View itemView, LocalBillEntity entity, int position,
                                 @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        mMainView.goToBillDetailWithSharedElement(entity, sharedElements[0], transitionNames[0]);
+        getView().goToBillDetailWithSharedElement(entity, sharedElements[0], transitionNames[0]);
     }
 
     @Override
     public void onAlbumItemClick(View itemView, LocalAlbumEntity entity, int position,
                                  @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-        mMainView.goToAlbumDetailWithSharedElement(entity, sharedElements[0], transitionNames[0]);
+        getView().goToAlbumDetailWithSharedElement(entity, sharedElements[0], transitionNames[0]);
     }
 
     @Override
@@ -123,22 +123,22 @@ public class MainPresenterImpl implements MainPresenter {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                mMainView.showLoadingDialog(mMainView.getViewContext(), mMainView.getViewContext().getString(R.string.please_waiting), false);
+                getView().showLoadingDialog(getView().getViewContext(), getView().getViewContext().getString(R.string.please_waiting), false);
             }
 
             @Override
             protected Void doInBackground(Void... voids) {
-                mBillModel.addSongsToBill(mMainView.getViewContext(), songsToAdd, billToAddSong);
+                mBillModel.addSongsToBill(getView().getViewContext(), songsToAdd, billToAddSong);
                 return null;
             }
 
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                mMainView.updateBillDisplay();
-                mMainView.dismissLoadingDialog();
-                mMainView.showToastShort(mMainView.getViewContext().getString(R.string.add_successfully));
-                mMainView.goToBillDetail(mBillModel.getBill(mMainView.getViewContext(), billToAddSong.getBillId()));
+                getView().updateBillDisplay();
+                getView().dismissLoadingDialog();
+                getView().showToastShort(getView().getViewContext().getString(R.string.add_successfully));
+                getView().goToBillDetail(mBillModel.getBill(getView().getViewContext(), billToAddSong.getBillId()));
             }
         }.execute();
 
@@ -146,39 +146,39 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onDrawerMenuNightModeOn() {
-        if (AppConfig.isNightModeOn(mMainView.getViewContext())) {
+        if (AppConfig.isNightModeOn(getView().getViewContext())) {
             return;
         }
-        AppConfig.setNightMode(mMainView.getViewContext(), true);
-        mMainView.turnOnNightMode();
+        AppConfig.setNightMode(getView().getViewContext(), true);
+        getView().turnOnNightMode();
     }
 
     @Override
     public void onDrawerMenuNightModeOff() {
-        if (!AppConfig.isNightModeOn(mMainView.getViewContext())) {
+        if (!AppConfig.isNightModeOn(getView().getViewContext())) {
             return;
         }
-        AppConfig.setNightMode(mMainView.getViewContext(), false);
-        mMainView.turnOffNightMode();
+        AppConfig.setNightMode(getView().getViewContext(), false);
+        getView().turnOffNightMode();
     }
 
     @Override
     public void onDrawerMenuLanguageModeOn() {
-        if (AppConfig.isLanguageModeOn(mMainView.getViewContext())) {
+        if (AppConfig.isLanguageModeOn(getView().getViewContext())) {
             return;
         }
-        AppConfig.setLanguageMode(mMainView.getViewContext(), true);
-        mMainView.turnOnLanguageMode();
+        AppConfig.setLanguageMode(getView().getViewContext(), true);
+        getView().turnOnLanguageMode();
         updateDefaultBillName();
     }
 
     @Override
     public void onDrawerMenuLanguageModeOff() {
-        if (!AppConfig.isLanguageModeOn(mMainView.getViewContext())) {
+        if (!AppConfig.isLanguageModeOn(getView().getViewContext())) {
             return;
         }
-        AppConfig.setLanguageMode(mMainView.getViewContext(), false);
-        mMainView.turnOffLanguageMode();
+        AppConfig.setLanguageMode(getView().getViewContext(), false);
+        getView().turnOffLanguageMode();
         updateDefaultBillName();
     }
 
@@ -194,108 +194,100 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onDrawerMenuTimerCancelClick() {
-        mMainView.cancelShutDownTimer();
+        getView().cancelShutDownTimer();
     }
 
     @Override
     public void onDrawerMenuTimerMinutesClick(long millisOfmin) {
-        mMainView.startShutDownTimer(millisOfmin, TimeUtil.MILLISECONDS_OF_SECOND);
+        getView().startShutDownTimer(millisOfmin, TimeUtil.MILLISECONDS_OF_SECOND);
     }
 
     @Override
     public void onDrawerMenuStaticticClick(View v) {
-        mMainView.goToPlayStatistic();
+        getView().goToPlayStatistic();
     }
 
 
     private void updateDefaultBillName() {
-        LocalBillEntity defaultBill = mBillModel.getDefaultBill(mMainView.getViewContext());
-        defaultBill.setBillTitle(mMainView.getViewContext().getString(R.string.my_favourite));
-        mBillModel.saveOrUpdateBill(mMainView.getViewContext(), defaultBill);
+        LocalBillEntity defaultBill = mBillModel.getDefaultBill(getView().getViewContext());
+        defaultBill.setBillTitle(getView().getViewContext().getString(R.string.my_favourite));
+        mBillModel.saveOrUpdateBill(getView().getViewContext(), defaultBill);
     }
 
     @Override
     public void onViewFirstTimeCreated() {
-        mMainView.initPreData();
-        mMainView.initToolbar();
-        mMainView.initView();
-        mMainView.initData();
-        mMainView.initListener();
+        getView().initPreData();
+        getView().initToolbar();
+        getView().initView();
+        getView().initData();
+        getView().initListener();
     }
 
     @Override
     public void onViewResume() {
-        if (mMainView.isInitDataComplete()) {
-            if (AppConfig.isNeedToRefreshLocalSongDisplay(mMainView.getViewContext())) {
-                mMainView.updateSongDisplay();
-                AppConfig.setNeedToRefreshLocalSongDisplay(mMainView.getViewContext(), false);
+        if (getView().isInitDataComplete()) {
+            if (AppConfig.isNeedToRefreshLocalSongDisplay(getView().getViewContext())) {
+                getView().updateSongDisplay();
+                AppConfig.setNeedToRefreshLocalSongDisplay(getView().getViewContext(), false);
             }
 
-            if (AppConfig.isNeedToRefreshLocalBillDisplay(mMainView.getViewContext())) {
-                mMainView.updateBillDisplay();
-                AppConfig.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), false);
+            if (AppConfig.isNeedToRefreshLocalBillDisplay(getView().getViewContext())) {
+                getView().updateBillDisplay();
+                AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), false);
             }
 
-            if (AppConfig.isNeedToRefreshLocalAlbumDisplay(mMainView.getViewContext())) {
-                mMainView.updateAlbumDisplay();
-                AppConfig.setNeedToRefreshLocalAlbumDisplay(mMainView.getViewContext(), false);
+            if (AppConfig.isNeedToRefreshLocalAlbumDisplay(getView().getViewContext())) {
+                getView().updateAlbumDisplay();
+                AppConfig.setNeedToRefreshLocalAlbumDisplay(getView().getViewContext(), false);
             }
         }
     }
-
-    @Override
-    public void onViewWillDestroy() {
-        if (mMainView != null) {
-            mMainView = null;
-        }
-    }
-
 
     @Override
     public void onBottomSheetAddToBillClick(LocalSongEntity songEntity) {
-        mMainView.showBillSelectionDialog(songEntity);
+        getView().showBillSelectionDialog(songEntity);
     }
 
     @Override
     public void onBottomSheetAlbumClick(LocalSongEntity songEntity) {
-        mMainView.goToAlbumDetail(mAlbumModel.getLocalAlbum(mMainView.getViewContext(), songEntity.getAlbumId()));
+        getView().goToAlbumDetail(mAlbumModel.getLocalAlbum(getView().getViewContext(), songEntity.getAlbumId()));
     }
 
     @Override
     public void onBottomSheetDeleteClick(LocalSongEntity songEntity) {
-        mMainView.showDeleteDialog(songEntity);
+        getView().showDeleteDialog(songEntity);
     }
 
     @Override
     public void onBottomSheetAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity) {
         if (mBillModel.isBillContainsSong(billEntity, songEntity)) {
-            mMainView.showSnackbarShort(mMainView.getViewContext().getString(R.string.already_exist_in_bill));
+            getView().showSnackbarShort(getView().getViewContext().getString(R.string.already_exist_in_bill));
             return;
         }
 
-        mBillModel.addSongToBill(mMainView.getViewContext(), songEntity, billEntity);
-//        mAppConfigModel.setNeedToRefreshLocalBillDisplay(mMainView.getViewContext(), true);
-        mMainView.updateBillDisplay();
-        mMainView.showSnackbarShort(mMainView.getViewContext().getString(R.string.add_successfully));
+        mBillModel.addSongToBill(getView().getViewContext(), songEntity, billEntity);
+//        mAppConfigModel.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
+        getView().updateBillDisplay();
+        getView().showSnackbarShort(getView().getViewContext().getString(R.string.add_successfully));
     }
 
     @Override
     public void onBottomSheetDeleteConfirmed(LocalSongEntity songEntity) {
-        mMainView.showLoadingDialog(mMainView.getViewContext(), false);
+        getView().showLoadingDialog(getView().getViewContext(), false);
 
-        if (mSongModel.deleteLocalSong(mMainView.getViewContext(), songEntity.getSongId())) {
+        if (mSongModel.deleteLocalSong(getView().getViewContext(), songEntity.getSongId())) {
             //To update info of music play service;
-            mMainView.removeServiceSong(songEntity);
+            getView().removeServiceSong(songEntity);
             //To update info of bill;
-            mBillModel.deleteSong(mMainView.getViewContext(), songEntity);
-            mMainView.dismissLoadingDialog();
-            mMainView.showToastShort(mMainView.getViewContext().getString(R.string.delete_local_song_successfully));
-            mMainView.updateSongDisplay();
-            mMainView.updateBillDisplay();
-            mMainView.updateAlbumDisplay();
+            mBillModel.deleteSong(getView().getViewContext(), songEntity);
+            getView().dismissLoadingDialog();
+            getView().showToastShort(getView().getViewContext().getString(R.string.delete_local_song_successfully));
+            getView().updateSongDisplay();
+            getView().updateBillDisplay();
+            getView().updateAlbumDisplay();
         } else {
-            mMainView.showToastShort(mMainView.getViewContext().getString(R.string.delete_local_song_unsuccessfully));
-            mMainView.dismissLoadingDialog();
+            getView().showToastShort(getView().getViewContext().getString(R.string.delete_local_song_unsuccessfully));
+            getView().dismissLoadingDialog();
         }
     }
 }

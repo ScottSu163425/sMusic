@@ -14,9 +14,8 @@ import com.scott.su.smusic.callback.LocalSongDisplayCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.AlbumSongDisplayPresenter;
+import com.scott.su.smusic.mvp.contract.AlbumSongDisplayContract;
 import com.scott.su.smusic.mvp.presenter.impl.AlbumSongDisplayPresenterImpl;
-import com.scott.su.smusic.mvp.view.AlbumSongDisplayView;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
@@ -27,8 +26,8 @@ import java.util.List;
 /**
  * Created by asus on 2016/11/05.
  */
-public class AlbumSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity, AlbumSongViewHolder> implements AlbumSongDisplayView {
-    private AlbumSongDisplayPresenter mSongDisplayPresenter;
+public class AlbumSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity, AlbumSongViewHolder> implements AlbumSongDisplayContract.AlbumSongDisplayView {
+    private AlbumSongDisplayContract.AlbumSongDisplayPresenter mSongDisplayPresenter;
     private AlbumSongDisplayAdapter mSongDisplayAdapter;
 
     private LocalAlbumEntity mAlbumEntity;

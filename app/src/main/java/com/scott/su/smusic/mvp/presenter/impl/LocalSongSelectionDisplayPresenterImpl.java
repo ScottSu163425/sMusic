@@ -5,10 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.contract.LocalSongSelectionDisplayContract;
 import com.scott.su.smusic.mvp.model.LocalSongModel;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
-import com.scott.su.smusic.mvp.presenter.LocalSongSelectionDisplayPresenter;
-import com.scott.su.smusic.mvp.view.LocalSongSelectionDisplayView;
+import com.su.scott.slibrary.mvp.presenter.BasePresenter;
+import com.su.scott.slibrary.mvp.presenter.IDisplayPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +23,12 @@ import rx.schedulers.Schedulers;
 /**
  * Created by asus on 2016/8/27.
  */
-public class LocalSongSelectionDisplayPresenterImpl implements LocalSongSelectionDisplayPresenter {
-    private LocalSongSelectionDisplayView mDisplayView;
+public class LocalSongSelectionDisplayPresenterImpl extends BasePresenter<LocalSongSelectionDisplayContract.LocalSongSelectionDisplayView>
+        implements LocalSongSelectionDisplayContract.LocalSongSelectionDisplayPresenter {
     private LocalSongModel mLocalSongModel;
 
-    public LocalSongSelectionDisplayPresenterImpl(LocalSongSelectionDisplayView mDisplayView) {
-        this.mDisplayView = mDisplayView;
+    public LocalSongSelectionDisplayPresenterImpl(LocalSongSelectionDisplayContract.LocalSongSelectionDisplayView view) {
+        super(view);
         mLocalSongModel = new LocalSongModelImpl();
     }
 
@@ -58,7 +59,7 @@ public class LocalSongSelectionDisplayPresenterImpl implements LocalSongSelectio
 
     @Override
     public void onViewFirstTimeCreated() {
-        mDisplayView.showLoading();
+        getView().showLoading();
         getAndDisplayLocalSongs();
     }
 
@@ -73,12 +74,12 @@ public class LocalSongSelectionDisplayPresenterImpl implements LocalSongSelectio
     }
 
     private void getAndDisplayLocalSongs() {
-        mDisplayView.showLoading();
+        getView().showLoading();
 
         Observable.create(new Observable.OnSubscribe<List<LocalSongEntity>>() {
             @Override
             public void call(Subscriber<? super List<LocalSongEntity>> subscriber) {
-                subscriber.onNext(mLocalSongModel.getLocalSongs(mDisplayView.getViewContext()));
+                subscriber.onNext(mLocalSongModel.getLocalSongs(getView().getViewContext()));
             }
         })
                 .subscribeOn(Schedulers.io())
@@ -93,12 +94,12 @@ public class LocalSongSelectionDisplayPresenterImpl implements LocalSongSelectio
                             result = new ArrayList<LocalSongEntity>();
                         }
 
-                        mDisplayView.setDisplayData(result);
+                        getView().setDisplayData(result);
 
                         if (result.size() == 0) {
-                            mDisplayView.showEmpty();
+                            getView().showEmpty();
                         } else {
-                            mDisplayView.display();
+                            getView().display();
                         }
                     }
                 });

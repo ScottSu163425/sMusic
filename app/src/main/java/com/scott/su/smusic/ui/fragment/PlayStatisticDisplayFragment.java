@@ -10,12 +10,12 @@ import android.view.View;
 import com.scott.su.smusic.adapter.PlayStatisticDisplayAdapter;
 import com.scott.su.smusic.callback.PlayStatisticItemClickCallback;
 import com.scott.su.smusic.entity.PlayStatisticEntity;
-import com.scott.su.smusic.mvp.presenter.PlayStatisticDisplayPresenter;
+import com.scott.su.smusic.mvp.contract.PlayStatisticDisplayContract;
 import com.scott.su.smusic.mvp.presenter.impl.PlayStatisticDisplayPresenterImpl;
-import com.scott.su.smusic.mvp.view.PlayStatisticDisplayView;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
+import com.su.scott.slibrary.mvp.view.IBaseDisplayView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +24,8 @@ import java.util.List;
  * Created by asus on 2016/11/19.
  */
 
-public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatisticEntity, RecyclerView.ViewHolder> implements PlayStatisticDisplayView {
-    private PlayStatisticDisplayPresenter mDisplayPresenter;
+public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatisticEntity, RecyclerView.ViewHolder> implements PlayStatisticDisplayContract.PlayStatisticDisplayView {
+    private PlayStatisticDisplayContract.PlayStatisticDisplayPresenter mDisplayPresenter;
     private PlayStatisticDisplayAdapter mDisplayAdapter;
     private PlayStatisticItemClickCallback mItemClickCallback;
 

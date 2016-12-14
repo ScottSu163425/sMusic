@@ -19,20 +19,20 @@ import android.widget.SeekBar;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.MusicPlayServiceCallback;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.MusicPlaySecondPresenter;
+import com.scott.su.smusic.mvp.contract.MusicPlaySecondContract;
 import com.scott.su.smusic.mvp.presenter.impl.MusicPlaySecondPresenterImpl;
-import com.scott.su.smusic.mvp.view.MusicPlaySecondView;
 import com.scott.su.smusic.service.MusicPlayService;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseFragment;
+import com.su.scott.slibrary.mvp.view.IBaseView;
 
 /**
  * Created by asus on 2016/11/20.
  */
 
-public class MusicPlaySecondFragment extends BaseFragment implements MusicPlaySecondView {
+public class MusicPlaySecondFragment extends BaseFragment implements MusicPlaySecondContract.MusicPlaySecondView {
     private static final int STEP_TIMES = 5;
-    private MusicPlaySecondPresenter mMusicPlaySecondPresenter;
+    private MusicPlaySecondContract.MusicPlaySecondPresenter mMusicPlaySecondPresenter;
     private AudioManager mAudioManager;
     private View mRootView;
     private AppCompatSeekBar mVolumeSeekBar;

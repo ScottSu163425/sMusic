@@ -18,9 +18,8 @@ import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.SearchPresenter;
+import com.scott.su.smusic.mvp.contract.SearchContract;
 import com.scott.su.smusic.mvp.presenter.impl.SearchPresenterImpl;
-import com.scott.su.smusic.mvp.view.SearchView;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
@@ -30,8 +29,8 @@ import com.su.scott.slibrary.util.ViewUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends BaseActivity implements SearchView {
-    private SearchPresenter mSearchPresenter;
+public class SearchActivity extends BaseActivity implements SearchContract.SearchView {
+    private SearchContract.SearchPresenter mSearchPresenter;
     private View mLoadingLayout, mEmptyLayout;
     private EditText mInputEditText;
     private AppCompatImageButton mSpeakButton, mBackButton;
@@ -251,7 +250,7 @@ public class SearchActivity extends BaseActivity implements SearchView {
 
     @Override
     protected void onDestroy() {
-        if (mSearchPresenter!=null){
+        if (mSearchPresenter != null) {
             mSearchPresenter.onViewWillDestroy();
         }
         super.onDestroy();

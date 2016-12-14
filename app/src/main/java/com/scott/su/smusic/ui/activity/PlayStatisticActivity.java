@@ -15,9 +15,8 @@ import com.scott.su.smusic.callback.PlayStatisticItemClickCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.entity.PlayStatisticEntity;
-import com.scott.su.smusic.mvp.presenter.PlayStatisticPresenter;
+import com.scott.su.smusic.mvp.contract.PlayStatisticContract;
 import com.scott.su.smusic.mvp.presenter.impl.PlayStatisticPresenterImpl;
-import com.scott.su.smusic.mvp.view.PlayStatisticView;
 import com.scott.su.smusic.ui.fragment.PlayStatisticDisplayFragment;
 import com.scott.su.smusic.ui.fragment.PlayStatisticWeekFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
@@ -26,8 +25,8 @@ import com.su.scott.slibrary.util.SdkUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayStatisticActivity extends BaseActivity implements PlayStatisticView {
-    private PlayStatisticPresenter mPlayStatisticPresenter;
+public class PlayStatisticActivity extends BaseActivity implements PlayStatisticContract.PlayStatisticView {
+    private PlayStatisticContract.PlayStatisticPresenter mPlayStatisticPresenter;
     private PlayStatisticWeekFragment mPlayStatisticWeekFragment;
     private PlayStatisticDisplayFragment mPlayStatisticDisplayFragment;
     private ViewPager mViewPager;
