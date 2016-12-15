@@ -43,10 +43,9 @@
         android:transitionName="@string/transition_name_fab"
         android:visibility="gone"
         app:backgroundTint="@color/colorImpact"
-        app:elevation="@dimen/elevation_fab_normal"
+        app:elevation="@dimen/elevation_fab_pressed"
         app:fabSize="normal"
-        app:pressedTranslationZ="@dimen/elevation_fab_pressed"
-        app:rippleColor="@color/colorImpactDark" />
+        app:pressedTranslationZ="@dimen/elevation_fab_pressed" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager_main"
