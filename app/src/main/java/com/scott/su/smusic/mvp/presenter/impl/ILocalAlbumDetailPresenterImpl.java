@@ -16,12 +16,12 @@ import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 /**
  * Created by Administrator on 2016/9/19.
  */
-public class LocalAlbumDetailPresenterImpl extends BasePresenter<LocalAlbumDetailContract.LocalAlbumDetailView>
-        implements LocalAlbumDetailContract.LocalAlbumDetailPresenter {
+public class ILocalAlbumDetailPresenterImpl extends BasePresenter<LocalAlbumDetailContract.LocalAlbumDetailView>
+        implements LocalAlbumDetailContract.ILocalAlbumDetailPresenter {
     private LocalAlbumModel mAlbumModel;
     private LocalBillModel mBillModel;
 
-    public LocalAlbumDetailPresenterImpl(LocalAlbumDetailContract.LocalAlbumDetailView view) {
+    public ILocalAlbumDetailPresenterImpl(LocalAlbumDetailContract.LocalAlbumDetailView view) {
         super(view);
         this.mAlbumModel = new LocalAlbumModelImpl();
         this.mBillModel = new LocalBillModelImpl();

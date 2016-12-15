@@ -19,7 +19,7 @@ import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.SearchContract;
-import com.scott.su.smusic.mvp.presenter.impl.SearchPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.SearchPresenterImplI;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
@@ -29,9 +29,9 @@ import com.su.scott.slibrary.util.ViewUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends BaseActivity<SearchContract.SearchView,SearchContract.SearchPresenter>
+public class SearchActivity extends BaseActivity<SearchContract.SearchView,SearchContract.SearchPresenterI>
         implements SearchContract.SearchView {
-    private SearchContract.SearchPresenter mSearchPresenter;
+    private SearchContract.SearchPresenterI mSearchPresenter;
     private View mLoadingLayout, mEmptyLayout;
     private EditText mInputEditText;
     private AppCompatImageButton mSpeakButton, mBackButton;
@@ -47,9 +47,9 @@ public class SearchActivity extends BaseActivity<SearchContract.SearchView,Searc
     }
 
     @Override
-    protected SearchContract.SearchPresenter getPresenter() {
+    protected SearchContract.SearchPresenterI getPresenter() {
         if (mSearchPresenter == null) {
-            mSearchPresenter = new SearchPresenterImpl(this);
+            mSearchPresenter = new SearchPresenterImplI(this);
         }
         return mSearchPresenter;
     }

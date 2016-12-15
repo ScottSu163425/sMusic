@@ -26,13 +26,13 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public class MainPresenterImpl  extends BasePresenter<MainContract.MainView>
-        implements MainContract.MainPresenter {
+public class MainPresenterImplI extends BasePresenter<MainContract.MainView>
+        implements MainContract.MainPresenterI {
     private LocalSongModel mSongModel;
     private LocalBillModel mBillModel;
     private LocalAlbumModel mAlbumModel;
 
-    public MainPresenterImpl(MainContract.MainView mView) {
+    public MainPresenterImplI(MainContract.MainView mView) {
         super(mView);
         this.mSongModel = new LocalSongModelImpl();
         this.mBillModel = new LocalBillModelImpl();
@@ -73,6 +73,8 @@ public class MainPresenterImpl  extends BasePresenter<MainContract.MainView>
             }
         } else if (getView().isCurrentTabBill()) {
             getView().showCreateBillDialog();
+        }else if (getView().isCurrentTabAlbum()) {
+//            getView().showCreateBillDialog();
         }
 
     }
@@ -135,6 +137,10 @@ public class MainPresenterImpl  extends BasePresenter<MainContract.MainView>
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
+                if (!isViewAttaching()) {
+                    return;
+                }
+
                 getView().updateBillDisplay();
                 getView().dismissLoadingDialog();
                 getView().showToastShort(getView().getViewContext().getString(R.string.add_successfully));

@@ -232,7 +232,6 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
             hideMusicPlaySecondFragment();
             showMusicPlayMainFragment();
         } else {
-//        if (getMusicPlayMainFragment().isAdded() && getMusicPlayMainFragment().isVisible()) {
             getMusicPlayMainFragment().onActivityBackPressed();
 
             if (!mMusicPlayMainFragment.isSameSong()) {

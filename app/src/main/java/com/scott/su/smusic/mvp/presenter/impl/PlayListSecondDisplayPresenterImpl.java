@@ -13,7 +13,6 @@ import com.su.scott.slibrary.mvp.presenter.BasePresenter;
  */
 
 public class PlayListSecondDisplayPresenterImpl extends BasePresenter<PlayListSecondDisplayContract.PlayListSecondDisplayView>
-
         implements PlayListSecondDisplayContract.PlayListSecondDisplayPresenter {
 
 

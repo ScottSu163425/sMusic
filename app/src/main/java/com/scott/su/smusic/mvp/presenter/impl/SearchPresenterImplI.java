@@ -31,13 +31,13 @@ import rx.schedulers.Schedulers;
  * Created by Administrator on 2016/9/27.
  */
 
-public class SearchPresenterImpl extends BasePresenter<SearchContract.SearchView>
-        implements SearchContract.SearchPresenter {
+public class SearchPresenterImplI extends BasePresenter<SearchContract.SearchView>
+        implements SearchContract.SearchPresenterI {
     private LocalSongModel mSongModel;
     private LocalBillModel mBillModel;
     private LocalAlbumModel mAlbumModel;
 
-    public SearchPresenterImpl(SearchContract.SearchView view) {
+    public SearchPresenterImplI(SearchContract.SearchView view) {
        super(view);
         this.mSongModel = new LocalSongModelImpl();
         this.mBillModel = new LocalBillModelImpl();
@@ -102,6 +102,10 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.SearchView
                 .subscribe(new Action1<List[]>() {
                     @Override
                     public void call(List[] lists) {
+                        if (!isViewAttaching()){
+                            return;
+                        }
+
                         List<LocalSongEntity> localSongEntities = lists[0];
                         List<LocalBillEntity> localBillEntities = lists[1];
                         List<LocalAlbumEntity> localAlbumEntities = lists[2];

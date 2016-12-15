@@ -6,7 +6,7 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 /**
  * Created by Administrator on 2016/8/31.
  */
-public interface LocalSongBottomSheetPresenter {
+public interface ILocalSongBottomSheetPresenter {
     void onBottomSheetAddToBillClick(LocalSongEntity songEntity);
 
     void onBottomSheetAlbumClick(LocalSongEntity songEntity);

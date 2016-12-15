@@ -17,6 +17,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -63,7 +64,6 @@ public class PlayStatisticDisplayPresenterImpl extends BasePresenter<PlayStatist
     }
 
     private void getAndDisplayData(final boolean isRefresh) {
-
         Observable.create(new Observable.OnSubscribe<List<PlayStatisticEntity>>() {
             @Override
             public void call(Subscriber<? super List<PlayStatisticEntity>> subscriber) {
@@ -81,23 +81,17 @@ public class PlayStatisticDisplayPresenterImpl extends BasePresenter<PlayStatist
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<PlayStatisticEntity>>() {
+                .subscribe(new Action1<List<PlayStatisticEntity>>() {
                     @Override
-                    public void onCompleted() {
+                    public void call(List<PlayStatisticEntity> playStatisticEntityList) {
+                        if (!isViewAttaching()) {
+                            return;
+                        }
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getView().showError();
-                    }
-
-                    @Override
-                    public void onNext(List<PlayStatisticEntity> playStatisticEntities) {
-                        if (playStatisticEntities.isEmpty()) {
+                        if (playStatisticEntityList.isEmpty()) {
                             getView().showEmpty();
                         } else {
-                            getView().setDisplayData(playStatisticEntities);
+                            getView().setDisplayData(playStatisticEntityList);
                             getView().display();
                         }
                     }

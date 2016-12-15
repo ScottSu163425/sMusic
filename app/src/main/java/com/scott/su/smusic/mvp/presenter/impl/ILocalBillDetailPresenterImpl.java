@@ -19,12 +19,12 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/29.
  */
-public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailContract.LocalBillDetailView>
-        implements LocalBillDetailContract.LocalBillDetailPresenter {
+public class ILocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailContract.LocalBillDetailView>
+        implements LocalBillDetailContract.ILocalBillDetailPresenter {
     private LocalBillModel mBillModel;
     private LocalAlbumModel mAlbumModel;
 
-    public LocalBillDetailPresenterImpl(LocalBillDetailContract.LocalBillDetailView view) {
+    public ILocalBillDetailPresenterImpl(LocalBillDetailContract.LocalBillDetailView view) {
         super(view);
         this.mBillModel = new LocalBillModelImpl();
         this.mAlbumModel = new LocalAlbumModelImpl();
@@ -129,6 +129,10 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
 
                 @Override
                 public void onPostExecute() {
+                    if (!isViewAttaching()) {
+                        return;
+                    }
+
                     getView().dismissLoadingDialog();
                     LocalBillEntity billAfterAddSong = mBillModel.getBill(getView().getViewContext(), billToAddSong.getBillId());
                     //Update the bill entitiy of the activity;
@@ -176,6 +180,10 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
 
             @Override
             public void onPostExecute() {
+                if (!isViewAttaching()) {
+                    return;
+                }
+
                 getView().dismissLoadingDialog();
                 LocalBillEntity billAfterClear = mBillModel.getBill(getView().getViewContext(), getView().getBillEntity().getBillId());
                 getView().refreshBillSongDisplay(billAfterClear);
@@ -203,6 +211,10 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
 
             @Override
             public void onPostExecute() {
+                if (!isViewAttaching()) {
+                    return;
+                }
+
                 AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
                 getView().onDeleteBillSuccessfully();
             }

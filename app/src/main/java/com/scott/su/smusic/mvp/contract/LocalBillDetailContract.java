@@ -5,7 +5,7 @@ import android.widget.ImageView;
 
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.LocalSongBottomSheetPresenter;
+import com.scott.su.smusic.mvp.presenter.ILocalSongBottomSheetPresenter;
 import com.scott.su.smusic.mvp.view.LocalSongBottomSheetView;
 import com.su.scott.slibrary.mvp.presenter.IPresenter;
 import com.su.scott.slibrary.mvp.view.IBaseView;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 public interface LocalBillDetailContract {
-    interface LocalBillDetailPresenter extends IPresenter<LocalBillDetailView>, LocalSongBottomSheetPresenter {
+    interface ILocalBillDetailPresenter extends IPresenter<LocalBillDetailView>, ILocalSongBottomSheetPresenter {
 
         void onTransitionEnd();
 

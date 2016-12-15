@@ -88,6 +88,9 @@ public class LocalBillDisplayPresenterImpl extends BasePresenter<LocalBillDispla
                 .subscribe(new Action1<List<LocalBillEntity>>() {
                     @Override
                     public void call(List<LocalBillEntity> localBillEntities) {
+                        if (!isViewAttaching()) {
+                            return;
+                        }
 
                         List<LocalBillEntity> result = localBillEntities;
 

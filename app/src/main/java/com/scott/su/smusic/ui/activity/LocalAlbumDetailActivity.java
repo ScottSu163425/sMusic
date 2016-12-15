@@ -18,20 +18,19 @@ import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.LocalAlbumDetailContract;
-import com.scott.su.smusic.mvp.presenter.impl.LocalAlbumDetailPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.ILocalAlbumDetailPresenterImpl;
 import com.scott.su.smusic.ui.fragment.AlbumSongDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.manager.ImageLoader;
-import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 import com.su.scott.slibrary.util.SdkUtil;
 
 import java.util.List;
 
-public class LocalAlbumDetailActivity extends BaseActivity<LocalAlbumDetailContract.LocalAlbumDetailView, LocalAlbumDetailContract.LocalAlbumDetailPresenter>
+public class LocalAlbumDetailActivity extends BaseActivity<LocalAlbumDetailContract.LocalAlbumDetailView, LocalAlbumDetailContract.ILocalAlbumDetailPresenter>
         implements LocalAlbumDetailContract.LocalAlbumDetailView {
-    private LocalAlbumDetailContract.LocalAlbumDetailPresenter mPresenter;
+    private LocalAlbumDetailContract.ILocalAlbumDetailPresenter mPresenter;
     private LocalAlbumEntity mAlbumEntity;
     private CardView mAlbumInfoCard;
     private ImageView mAlbumCoverImageView;
@@ -48,9 +47,9 @@ public class LocalAlbumDetailActivity extends BaseActivity<LocalAlbumDetailContr
     }
 
     @Override
-    protected LocalAlbumDetailContract.LocalAlbumDetailPresenter getPresenter() {
+    protected LocalAlbumDetailContract.ILocalAlbumDetailPresenter getPresenter() {
         if (mPresenter == null) {
-            mPresenter = new LocalAlbumDetailPresenterImpl(this);
+            mPresenter = new ILocalAlbumDetailPresenterImpl(this);
         }
         return mPresenter;
     }

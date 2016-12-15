@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.LocalSongBottomSheetPresenter;
+import com.scott.su.smusic.mvp.presenter.ILocalSongBottomSheetPresenter;
 import com.scott.su.smusic.mvp.view.LocalSongBottomSheetView;
 import com.su.scott.slibrary.mvp.presenter.IPresenter;
 import com.su.scott.slibrary.mvp.view.IBaseView;
@@ -14,7 +14,7 @@ import com.su.scott.slibrary.mvp.view.IBaseView;
  */
 
 public interface LocalAlbumDetailContract {
-    interface LocalAlbumDetailPresenter extends IPresenter<LocalAlbumDetailView>,LocalSongBottomSheetPresenter {
+    interface ILocalAlbumDetailPresenter extends IPresenter<LocalAlbumDetailView>,ILocalSongBottomSheetPresenter {
         void onAlbumSongItemClick(View view, int position, LocalSongEntity entity);
 
         void onAlbumSongItemMoreClick(View view, int position, LocalSongEntity entity);

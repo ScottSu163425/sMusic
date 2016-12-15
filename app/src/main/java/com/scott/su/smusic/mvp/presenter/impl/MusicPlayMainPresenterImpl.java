@@ -182,9 +182,11 @@ public class MusicPlayMainPresenterImpl extends BasePresenter<MusicPlayMainContr
                     .subscribe(new Action1<Bitmap>() {
                         @Override
                         public void call(Bitmap bitmap) {
-                            if (getView() != null) {
-                                getView().loadBlurCover(bitmap);
+                            if (!isViewAttaching()) {
+                                return;
                             }
+
+                            getView().loadBlurCover(bitmap);
                         }
                     });
         }

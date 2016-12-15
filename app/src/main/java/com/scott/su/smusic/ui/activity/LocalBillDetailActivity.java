@@ -23,7 +23,7 @@ import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.LocalBillDetailContract;
-import com.scott.su.smusic.mvp.presenter.impl.LocalBillDetailPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.ILocalBillDetailPresenterImpl;
 import com.scott.su.smusic.ui.fragment.BillSongDisplayFragment;
 import com.scott.su.smusic.ui.fragment.CommonInputDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
@@ -41,9 +41,9 @@ import java.util.List;
 /**
  * 2016-8-28
  */
-public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContract.LocalBillDetailView, LocalBillDetailContract.LocalBillDetailPresenter>
+public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContract.LocalBillDetailView, LocalBillDetailContract.ILocalBillDetailPresenter>
         implements LocalBillDetailContract.LocalBillDetailView {
-    private LocalBillDetailContract.LocalBillDetailPresenter mBillDetailPresenter;
+    private LocalBillDetailContract.ILocalBillDetailPresenter mBillDetailPresenter;
     private LocalBillEntity mBillEntity;
     private AppBarLayout mAppBarLayout;
     private ImageView mCoverImageView;
@@ -99,9 +99,9 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
     }
 
     @Override
-    protected LocalBillDetailContract.LocalBillDetailPresenter getPresenter() {
+    protected LocalBillDetailContract.ILocalBillDetailPresenter getPresenter() {
         if (mBillDetailPresenter == null) {
-            mBillDetailPresenter = new LocalBillDetailPresenterImpl(this);
+            mBillDetailPresenter = new ILocalBillDetailPresenterImpl(this);
         }
         return mBillDetailPresenter;
     }

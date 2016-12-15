@@ -83,6 +83,10 @@ public class LocalSongDisplayPresenterImpl extends BasePresenter<LocalSongDispla
                 .subscribe(new Action1<List<LocalSongEntity>>() {
                     @Override
                     public void call(List<LocalSongEntity> songEntities) {
+                        if (!isViewAttaching()) {
+                            return;
+                        }
+
                         List<LocalSongEntity> result = songEntities;
 
                         if (result == null) {

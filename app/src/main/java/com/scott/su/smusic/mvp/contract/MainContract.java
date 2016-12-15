@@ -8,7 +8,7 @@ import com.scott.su.smusic.callback.DrawerMenuCallback;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.presenter.LocalSongBottomSheetPresenter;
+import com.scott.su.smusic.mvp.presenter.ILocalSongBottomSheetPresenter;
 import com.scott.su.smusic.mvp.view.LocalSongBottomSheetView;
 import com.scott.su.smusic.mvp.view.MusicPlayServiceView;
 import com.scott.su.smusic.mvp.view.ShutDownTimerServiceView;
@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 public interface MainContract {
-    interface MainPresenter extends IPresenter<MainView>, LocalSongBottomSheetPresenter, DrawerMenuCallback {
+    interface MainPresenterI extends IPresenter<MainView>, ILocalSongBottomSheetPresenter, DrawerMenuCallback {
 
         void onInitDataComplete();
 

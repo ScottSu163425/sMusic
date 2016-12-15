@@ -83,6 +83,10 @@ public class LocalAlbumDisplayPresenterImpl extends BasePresenter<LocalAlbumDisp
                 .subscribe(new Action1<List<LocalAlbumEntity>>() {
                     @Override
                     public void call(List<LocalAlbumEntity> localAlbumEntities) {
+                        if (!isViewAttaching()) {
+                            return;
+                        }
+
                         List<LocalAlbumEntity> result = localAlbumEntities;
 
                         if (result == null) {
