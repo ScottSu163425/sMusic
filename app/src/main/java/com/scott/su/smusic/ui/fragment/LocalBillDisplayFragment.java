@@ -115,25 +115,9 @@ public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntit
 
     }
 
-
-    @Override
-    public ArrayList<LocalBillEntity> getDisplayDataList() {
-        return (ArrayList<LocalBillEntity>) mSongBillDisplayAdapter.getDataList();
-    }
-
     @Override
     public void reInitialize() {
         mSongBillDisplayPresenter.onViewFirstTimeCreated();
-    }
-
-    @Override
-    public void setDisplayData(@NonNull List<LocalBillEntity> dataList) {
-        mSongBillDisplayAdapter.setDataList(dataList);
-        mSongBillDisplayAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void addLoadMoreData(@NonNull List<LocalBillEntity> dataList) {
     }
 
     @Override

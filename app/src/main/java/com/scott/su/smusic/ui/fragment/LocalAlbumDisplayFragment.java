@@ -117,23 +117,8 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
     }
 
     @Override
-    public ArrayList<LocalAlbumEntity> getDisplayDataList() {
-        return (ArrayList<LocalAlbumEntity>) mLocalAlbumDisplayAdapter.getDataList();
-    }
-
-    @Override
     public void reInitialize() {
         mLocalAlbumDisplayPresenter.onViewFirstTimeCreated();
-    }
-
-    @Override
-    public void setDisplayData(@NonNull List<LocalAlbumEntity> dataList) {
-        mLocalAlbumDisplayAdapter.setDataList(dataList);
-        mLocalAlbumDisplayAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void addLoadMoreData(@NonNull List<LocalAlbumEntity> dataList) {
     }
 
     @Override

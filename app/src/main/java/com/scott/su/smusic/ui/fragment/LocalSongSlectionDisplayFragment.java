@@ -107,23 +107,7 @@ public class LocalSongSlectionDisplayFragment extends BaseDisplayFragment<LocalS
     }
 
     @Override
-    public ArrayList<LocalSongEntity> getDisplayDataList() {
-        return (ArrayList<LocalSongEntity>) mSongSelectionDisplayAdapter.getDataList();
-    }
-
-    @Override
     public void reInitialize() {
-
-    }
-
-    @Override
-    public void setDisplayData(@NonNull List<LocalSongEntity> dataList) {
-        mSongSelectionDisplayAdapter.setDataList(dataList);
-        mSongSelectionDisplayAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void addLoadMoreData(@NonNull List<LocalSongEntity> dataList) {
 
     }
 

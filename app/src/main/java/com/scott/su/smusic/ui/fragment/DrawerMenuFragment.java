@@ -51,11 +51,6 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
     }
 
     @Override
-    public View getSnackbarParent() {
-        return null;
-    }
-
-    @Override
     public void initPreData() {
 
     }

@@ -124,21 +124,7 @@ public class PlayListSecondDisplayFragment extends BaseDisplayFragment<LocalSong
     }
 
     @Override
-    public ArrayList<LocalSongEntity> getDisplayDataList() {
-        return null;
-    }
-
-    @Override
     public void reInitialize() {
-
-    }
-
-    @Override
-    public void setDisplayData(@NonNull List<LocalSongEntity> dataList) {
-    }
-
-    @Override
-    public void addLoadMoreData(@NonNull List<LocalSongEntity> dataList) {
 
     }
 

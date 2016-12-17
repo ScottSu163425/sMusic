@@ -134,11 +134,6 @@ public class AlbumSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     }
 
     @Override
-    public ArrayList<LocalSongEntity> getDisplayDataList() {
-        return (ArrayList<LocalSongEntity>) mSongDisplayAdapter.getDataList();
-    }
-
-    @Override
     public void reInitialize() {
         mSongDisplayPresenter.onViewFirstTimeCreated();
     }

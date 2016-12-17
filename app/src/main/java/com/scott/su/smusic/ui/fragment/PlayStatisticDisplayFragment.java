@@ -106,25 +106,8 @@ public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatis
     }
 
     @Override
-    public ArrayList<PlayStatisticEntity> getDisplayDataList() {
-        return (ArrayList<PlayStatisticEntity>) mDisplayAdapter.getDataList();
-    }
-
-    @Override
     public void reInitialize() {
 
-    }
-
-    @Override
-    public void setDisplayData(@NonNull List<PlayStatisticEntity> dataList) {
-        mDisplayAdapter.setDataList(dataList);
-        mDisplayAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void addLoadMoreData(@NonNull List<PlayStatisticEntity> dataList) {
-        mDisplayAdapter.addDataList(dataList);
-        mDisplayAdapter.notifyDataSetChanged();
     }
 
     @Override
