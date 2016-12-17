@@ -27,6 +27,7 @@
             <ImageView
                 android:id="@+id/iv_cover_view_holder_play_list_second"
                 android:layout_width="match_parent"
+                android:transitionName="@string/transition_name_cover"
                 android:layout_height="250dp"
                 android:scaleType="centerCrop" />
 
@@ -51,7 +52,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:gravity="center_vertical"
+                        android:gravity="center"
                         android:maxLines="1"
                         android:paddingLeft="@dimen/margin_s"
                         android:paddingRight="@dimen/margin_xs"
@@ -63,7 +64,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
-                        android:gravity="center_vertical"
+                        android:gravity="center"
                         android:maxLines="1"
                         android:paddingLeft="@dimen/margin_s"
                         android:paddingRight="@dimen/margin_s"
@@ -76,20 +77,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1" />
                 </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/ic_more_vert_grey_600_24dp" />
-                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
 

@@ -95,11 +95,6 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
     }
 
     @Override
-    public View getSnackbarParent() {
-        return mPlayControlCard;
-    }
-
-    @Override
     public void initPreData() {
         initTransition();
 
