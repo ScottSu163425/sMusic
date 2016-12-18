@@ -11,20 +11,17 @@ import com.scott.su.smusic.adapter.LocalAlbumDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.LocalAlbumViewHolder;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.mvp.contract.LocalAlbumDisplayContract;
-import com.scott.su.smusic.mvp.presenter.impl.LocalAlbumDisplayPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.LocalAlbumBaseDisplayPresenterImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
-import com.su.scott.slibrary.mvp.view.IBaseDisplayView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEntity, LocalAlbumViewHolder> implements LocalAlbumDisplayContract.LocalAlbumDisplayView {
-    private LocalAlbumDisplayContract.LocalAlbumDisplayPresenter mLocalAlbumDisplayPresenter;
+public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumDisplayContract.LocalAlbumDisplayView, LocalAlbumDisplayContract.LocalAlbumBaseDisplayPresenter, LocalAlbumEntity, LocalAlbumViewHolder>
+        implements LocalAlbumDisplayContract.LocalAlbumDisplayView {
+    private LocalAlbumDisplayContract.LocalAlbumBaseDisplayPresenter mLocalAlbumDisplayPresenter;
     private LocalAlbumDisplayAdapter mLocalAlbumDisplayAdapter;
     private AlbumItemClickCallback mAlbumItemClickCallback;
 
@@ -40,8 +37,15 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumEnt
     }
 
     @Override
+    protected LocalAlbumDisplayContract.LocalAlbumBaseDisplayPresenter getPresenter() {
+        if (mLocalAlbumDisplayPresenter == null) {
+            mLocalAlbumDisplayPresenter = new LocalAlbumBaseDisplayPresenterImpl(this);
+        }
+        return mLocalAlbumDisplayPresenter;
+    }
+
+    @Override
     protected void onFirstTimeCreateView() {
-        mLocalAlbumDisplayPresenter = new LocalAlbumDisplayPresenterImpl(this);
         mLocalAlbumDisplayPresenter.onViewFirstTimeCreated();
     }
 

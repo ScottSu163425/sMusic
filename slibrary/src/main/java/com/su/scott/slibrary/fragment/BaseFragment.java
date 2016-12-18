@@ -12,11 +12,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.su.scott.slibrary.R;
+import com.su.scott.slibrary.mvp.presenter.IPresenter;
 import com.su.scott.slibrary.mvp.view.IBaseView;
+import com.su.scott.slibrary.mvp.view.IView;
 import com.su.scott.slibrary.util.NetworkUtil;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.Snack;
@@ -25,26 +29,47 @@ import com.su.scott.slibrary.util.T;
 /**
  * Created by Administrator on 2016/8/4.
  */
-public abstract class BaseFragment extends Fragment implements IBaseView {
+public abstract class BaseFragment<V extends IView, P extends IPresenter<V>> extends Fragment
+        implements IBaseView {
+    private P mPresenter;
     private ProgressDialog mLoadingDialog;
     private String mNetworkErrorTip;
-    private boolean mIsFirstTimeCreateView = true;
+    private boolean mFirstTimeCreateView = true;
+
+    protected abstract P getPresenter();
 
     protected abstract void onFirstTimeCreateView();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mPresenter = getPresenter();
         mNetworkErrorTip = getString(R.string.network_error);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (mIsFirstTimeCreateView) {
+        if (mFirstTimeCreateView) {
             onFirstTimeCreateView();
-            mIsFirstTimeCreateView = false;
+            mFirstTimeCreateView = false;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
+            mLoadingDialog = null;
+        }
+
+        if (mPresenter != null) {
+            getPresenter().detachView();
+            mPresenter = null;
+        }
+
+        super.onDestroy();
     }
 
     @Override
@@ -62,15 +87,6 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
                 getActivity().overridePendingTransition(R.anim.in_alpha, R.anim.out_east);
             }
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
-            mLoadingDialog.dismiss();
-            mLoadingDialog = null;
-        }
-        super.onDestroy();
     }
 
     @Override
@@ -144,10 +160,6 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     @Override
     public void showNetworkErrorSnack() {
         showSnackbarShort(mNetworkErrorTip);
-    }
-
-    protected void setNetworkErrorTip(String mNetworkErrorTip) {
-        this.mNetworkErrorTip = mNetworkErrorTip;
     }
 
     protected void goTo(Class destination) {

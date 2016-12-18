@@ -4,42 +4,42 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.scott.su.smusic.cache.LocalSongEntityCache;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.contract.LocalSongSelectionDisplayContract;
-import com.scott.su.smusic.mvp.model.LocalSongModel;
+import com.scott.su.smusic.mvp.contract.AlbumSongDisplayContract;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.su.scott.slibrary.mvp.presenter.BasePresenter;
-import com.su.scott.slibrary.mvp.presenter.IDisplayPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by asus on 2016/8/27.
- */
-public class LocalSongSelectionDisplayPresenterImpl extends BasePresenter<LocalSongSelectionDisplayContract.LocalSongSelectionDisplayView>
-        implements LocalSongSelectionDisplayContract.LocalSongSelectionDisplayPresenter {
-    private LocalSongModel mLocalSongModel;
 
-    public LocalSongSelectionDisplayPresenterImpl(LocalSongSelectionDisplayContract.LocalSongSelectionDisplayView view) {
+/**
+ * Created by asus on 2016/8/19.
+ */
+public class AlbumSongBaseDisplayPresenterImpl extends BasePresenter<AlbumSongDisplayContract.AlbumSongDisplayView>
+        implements AlbumSongDisplayContract.AlbumSongBaseDisplayPresenter {
+    private LocalSongModelImpl mSongModel;
+
+    public AlbumSongBaseDisplayPresenterImpl(AlbumSongDisplayContract.AlbumSongDisplayView view) {
         super(view);
-        mLocalSongModel = new LocalSongModelImpl();
+        this.mSongModel = new LocalSongModelImpl();
     }
 
     @Override
     public void onSwipRefresh() {
-
+        LocalSongEntityCache.getInstance().release();
+        getAndDisplayLocalSongs();
     }
 
     @Override
     public void onLoadMore() {
-
     }
 
     @Override
@@ -54,12 +54,11 @@ public class LocalSongSelectionDisplayPresenterImpl extends BasePresenter<LocalS
 
     @Override
     public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-
+        getView().handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
     }
 
     @Override
     public void onViewFirstTimeCreated() {
-        getView().showLoading();
         getAndDisplayLocalSongs();
     }
 
@@ -75,13 +74,13 @@ public class LocalSongSelectionDisplayPresenterImpl extends BasePresenter<LocalS
 
     private void getAndDisplayLocalSongs() {
         getView().showLoading();
-
-        Observable.create(new Observable.OnSubscribe<List<LocalSongEntity>>() {
-            @Override
-            public void call(Subscriber<? super List<LocalSongEntity>> subscriber) {
-                subscriber.onNext(mLocalSongModel.getLocalSongs(getView().getViewContext()));
-            }
-        })
+        Observable.just(getView().getSongAlbumEntity().getAlbumSongIdsLongArray())
+                .map(new Func1<long[], List<LocalSongEntity>>() {
+                    @Override
+                    public List<LocalSongEntity> call(long[] songIds) {
+                        return mSongModel.getLocalSongsBySongIds(getView().getViewContext(), songIds);
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<LocalSongEntity>>() {
@@ -107,5 +106,6 @@ public class LocalSongSelectionDisplayPresenterImpl extends BasePresenter<LocalS
                     }
                 });
     }
+
 
 }

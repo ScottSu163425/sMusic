@@ -14,13 +14,14 @@ import java.util.ArrayList;
  */
 
 public interface PlayStatisticContract {
-    interface PlayStatisticPresenter extends IPresenter<PlayStatisticView>,PlayStatisticItemClickCallback {
-    }
 
     interface PlayStatisticView extends IBaseView {
         void goToMusicPlay(LocalSongEntity songEntity, ArrayList<LocalSongEntity> songEntityList);
 
         void goToMusicPlayWithCover(LocalSongEntity songEntity, ArrayList<LocalSongEntity> songEntityList, View sharedElement, String transitionName);
+    }
+
+    interface PlayStatisticPresenter extends IPresenter<PlayStatisticView>,PlayStatisticItemClickCallback {
     }
 
 }

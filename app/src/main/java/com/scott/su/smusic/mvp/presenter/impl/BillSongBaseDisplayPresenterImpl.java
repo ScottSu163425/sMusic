@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.scott.su.smusic.cache.LocalSongEntityCache;
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.contract.AlbumSongDisplayContract;
+import com.scott.su.smusic.mvp.contract.BillSongDisplayContract;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 
@@ -23,12 +23,13 @@ import rx.schedulers.Schedulers;
 /**
  * Created by asus on 2016/8/19.
  */
-public class AlbumSongDisplayPresenterImpl extends BasePresenter<AlbumSongDisplayContract.AlbumSongDisplayView>
-        implements AlbumSongDisplayContract.AlbumSongDisplayPresenter {
+public class BillSongBaseDisplayPresenterImpl extends BasePresenter<BillSongDisplayContract.BillSongDisplayView>
+        implements BillSongDisplayContract.BillSongBaseDisplayPresenter {
     private LocalSongModelImpl mSongModel;
 
-    public AlbumSongDisplayPresenterImpl(AlbumSongDisplayContract.AlbumSongDisplayView view) {
-        super(view);
+    
+    public BillSongBaseDisplayPresenterImpl(BillSongDisplayContract.BillSongDisplayView billSongDisplayView) {
+        super(billSongDisplayView);
         this.mSongModel = new LocalSongModelImpl();
     }
 
@@ -67,9 +68,15 @@ public class AlbumSongDisplayPresenterImpl extends BasePresenter<AlbumSongDispla
 
     }
 
+    @Override
+    public void onViewWillDestroy() {
+
+    }
+
     private void getAndDisplayLocalSongs() {
         getView().showLoading();
-        Observable.just(getView().getSongAlbumEntity().getAlbumSongIdsLongArray())
+
+        Observable.just(getView().getSongBillEntity().getBillSongIdsLongArray())
                 .map(new Func1<long[], List<LocalSongEntity>>() {
                     @Override
                     public List<LocalSongEntity> call(long[] songIds) {

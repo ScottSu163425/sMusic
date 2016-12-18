@@ -13,13 +13,14 @@ import com.db.chart.model.LineSet;
 import com.db.chart.renderer.AxisRenderer;
 import com.db.chart.view.LineChartView;
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.mvp.contract.PlayStatisticWeekContract;
 import com.su.scott.slibrary.fragment.BaseFragment;
 
 /**
  * Created by asus on 2016/11/19.
  */
 
-public class PlayStatisticWeekFragment extends BaseFragment {
+public class PlayStatisticWeekFragment extends BaseFragment<PlayStatisticWeekContract.PlayStatisticWeekView, PlayStatisticWeekContract.PlayStatisticWeekPresenter> {
     private View mRootView;
     private LineChartView mChart;
 
@@ -34,6 +35,11 @@ public class PlayStatisticWeekFragment extends BaseFragment {
         mRootView = inflater.inflate(R.layout.fragment_play_statistic_week, container, false);
 
         return mRootView;
+    }
+
+    @Override
+    protected PlayStatisticWeekContract.PlayStatisticWeekPresenter getPresenter() {
+        return null;
     }
 
     @Override

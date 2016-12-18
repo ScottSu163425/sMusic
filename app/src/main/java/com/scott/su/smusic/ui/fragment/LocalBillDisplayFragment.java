@@ -11,20 +11,17 @@ import com.scott.su.smusic.adapter.LocalBillDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.LocalBillViewHolder;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.mvp.contract.LocalBillDisplayContract;
-import com.scott.su.smusic.mvp.presenter.impl.LocalBillDisplayPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.LocalBillBaseDisplayPresenterImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
-import com.su.scott.slibrary.mvp.view.IBaseDisplayView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntity, LocalBillViewHolder> implements LocalBillDisplayContract.LocalBillDisplayView {
-    private LocalBillDisplayContract.LocalBillDisplayPresenter mSongBillDisplayPresenter;
+public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillDisplayContract.LocalBillDisplayView ,LocalBillDisplayContract.LocalBillBaseDisplayPresenter ,LocalBillEntity, LocalBillViewHolder>
+        implements LocalBillDisplayContract.LocalBillDisplayView {
+    private LocalBillDisplayContract.LocalBillBaseDisplayPresenter mSongBillDisplayPresenter;
     private LocalBillDisplayAdapter mSongBillDisplayAdapter;
 
     private BillItemClickCallback mBillItemClickCallback;
@@ -40,8 +37,15 @@ public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillEntit
     }
 
     @Override
+    protected LocalBillDisplayContract.LocalBillBaseDisplayPresenter getPresenter() {
+        if (mSongBillDisplayPresenter == null) {
+            mSongBillDisplayPresenter = new LocalBillBaseDisplayPresenterImpl(this);
+        }
+        return mSongBillDisplayPresenter;
+    }
+
+    @Override
     protected void onFirstTimeCreateView() {
-        mSongBillDisplayPresenter = new LocalBillDisplayPresenterImpl(this);
         mSongBillDisplayPresenter.onViewFirstTimeCreated();
     }
 

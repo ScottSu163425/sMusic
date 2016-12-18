@@ -17,32 +17,6 @@ import java.util.List;
  */
 
 public interface LocalBillDetailContract {
-    interface ILocalBillDetailPresenter extends IPresenter<LocalBillDetailView>, ILocalSongBottomSheetPresenter {
-
-        void onTransitionEnd();
-
-        void onPlayFabClick();
-
-        void onEditBillMenuItemClick();
-
-        void onAddSongsMenuItemClick();
-
-        void onClearBillMenuItemClick();
-
-        void onDeleteBillMenuItemClick();
-
-        void onClearBillConfirmed();
-
-        void onDeleteBillMenuItemConfirmed();
-
-        void onBillSongItemClick(View view, int position, LocalSongEntity entity);
-
-        void onBillSongItemMoreClick(View view, int position, LocalSongEntity entity);
-
-        void onSelectedLocalSongsResult(LocalBillEntity billToAddSong, List<LocalSongEntity> songsToAdd);
-
-        void onEditBillNameConfiemed(String text);
-    }
 
     interface LocalBillDetailView extends IBaseView, LocalSongBottomSheetView {
 
@@ -91,4 +65,32 @@ public interface LocalBillDetailContract {
         void goToMusicPlayWithoutFab(LocalSongEntity entity);
 
     }
+
+    interface ILocalBillDetailPresenter extends IPresenter<LocalBillDetailView>, ILocalSongBottomSheetPresenter {
+
+        void onTransitionEnd();
+
+        void onPlayFabClick();
+
+        void onEditBillMenuItemClick();
+
+        void onAddSongsMenuItemClick();
+
+        void onClearBillMenuItemClick();
+
+        void onDeleteBillMenuItemClick();
+
+        void onClearBillConfirmed();
+
+        void onDeleteBillMenuItemConfirmed();
+
+        void onBillSongItemClick(View view, int position, LocalSongEntity entity);
+
+        void onBillSongItemMoreClick(View view, int position, LocalSongEntity entity);
+
+        void onSelectedLocalSongsResult(LocalBillEntity billToAddSong, List<LocalSongEntity> songsToAdd);
+
+        void onEditBillNameConfiemed(String text);
+    }
+
 }

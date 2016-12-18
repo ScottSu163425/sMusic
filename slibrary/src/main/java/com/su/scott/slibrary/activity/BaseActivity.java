@@ -33,6 +33,7 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
         implements IBaseView {
     private P mPresenter;
     private ProgressDialog mLoadingDialog;
+    private String mNetworkErrorTip;
 
 
     protected abstract P getPresenter();
@@ -42,19 +43,22 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
         super.onCreate(savedInstanceState);
 
         mPresenter = getPresenter();
-        mLoadingDialog = new ProgressDialog(this);
+        mNetworkErrorTip = getString(R.string.network_error);
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
             mLoadingDialog = null;
         }
 
-        getPresenter().detachView();
-        mPresenter = null;
+        if (mPresenter != null) {
+            getPresenter().detachView();
+            mPresenter = null;
+        }
+
+        super.onDestroy();
     }
 
     @Override
@@ -166,7 +170,7 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
 
     @Override
     public void showNetworkErrorSnack() {
-        showSnackbarShort(getString(R.string.network_error));
+        showSnackbarShort(mNetworkErrorTip);
     }
 
     protected void goTo(Class destination) {

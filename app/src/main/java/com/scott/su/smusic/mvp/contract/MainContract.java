@@ -24,27 +24,6 @@ import java.util.List;
  */
 
 public interface MainContract {
-    interface MainPresenterI extends IPresenter<MainView>, ILocalSongBottomSheetPresenter, DrawerMenuCallback {
-
-        void onInitDataComplete();
-
-        void onLocalSongItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
-
-        void onLocalSongItemMoreClick(LocalSongEntity songEntity);
-
-        void onFabClick();
-
-        void onFabLongClick();
-
-        void onCreateBillConfirm(String text);
-
-        void onBillItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
-
-        void onAlbumItemClick(View itemView, LocalAlbumEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
-
-        void onSelectedLocalSongsResult(LocalBillEntity billToAddSong, List<LocalSongEntity> songsToAdd);
-
-    }
 
     interface MainView extends IBaseView, LocalSongBottomSheetView, MusicPlayServiceView, ShutDownTimerServiceView {
 
@@ -113,4 +92,27 @@ public interface MainContract {
         void goToPlayStatistic();
 
     }
+
+    interface MainPresenterI extends IPresenter<MainView>, ILocalSongBottomSheetPresenter, DrawerMenuCallback {
+
+        void onInitDataComplete();
+
+        void onLocalSongItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
+
+        void onLocalSongItemMoreClick(LocalSongEntity songEntity);
+
+        void onFabClick();
+
+        void onFabLongClick();
+
+        void onCreateBillConfirm(String text);
+
+        void onBillItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
+
+        void onAlbumItemClick(View itemView, LocalAlbumEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
+
+        void onSelectedLocalSongsResult(LocalBillEntity billToAddSong, List<LocalSongEntity> songsToAdd);
+
+    }
+
 }

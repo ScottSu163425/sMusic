@@ -11,17 +11,6 @@ import com.su.scott.slibrary.mvp.view.IBaseView;
  */
 
 public interface MusicPlaySecondContract {
-    interface MusicPlaySecondPresenter extends IPresenter<MusicPlaySecondView> {
-        void onMusicPlayServiceConnected();
-
-        void onMusicPlayServiceDisconnected();
-
-        void onPlayListItemClick(View itemView, LocalSongEntity entity, int position);
-
-       void onServicePlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong, int currentPosition);
-
-        void onUserSeekVolume(int realVolume);
-    }
 
     interface MusicPlaySecondView extends IBaseView {
         LocalSongEntity getCurrentPlayingSong();
@@ -45,6 +34,18 @@ public interface MusicPlaySecondContract {
         void registerVolumeReceiver();
 
         void unregisterVolumeReceiver();
+    }
+
+    interface MusicPlaySecondPresenter extends IPresenter<MusicPlaySecondView> {
+        void onMusicPlayServiceConnected();
+
+        void onMusicPlayServiceDisconnected();
+
+        void onPlayListItemClick(View itemView, LocalSongEntity entity, int position);
+
+        void onServicePlaySongChanged(LocalSongEntity previousPlaySong, LocalSongEntity currentPlayingSong, int currentPosition);
+
+        void onUserSeekVolume(int realVolume);
     }
 
 }

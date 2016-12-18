@@ -11,21 +11,18 @@ import com.scott.su.smusic.adapter.PlayStatisticDisplayAdapter;
 import com.scott.su.smusic.callback.PlayStatisticItemClickCallback;
 import com.scott.su.smusic.entity.PlayStatisticEntity;
 import com.scott.su.smusic.mvp.contract.PlayStatisticDisplayContract;
-import com.scott.su.smusic.mvp.presenter.impl.PlayStatisticDisplayPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.PlayStatisticBaseDisplayPresenterImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
-import com.su.scott.slibrary.mvp.view.IBaseDisplayView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by asus on 2016/11/19.
  */
 
-public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatisticEntity, RecyclerView.ViewHolder> implements PlayStatisticDisplayContract.PlayStatisticDisplayView {
-    private PlayStatisticDisplayContract.PlayStatisticDisplayPresenter mDisplayPresenter;
+public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatisticDisplayContract.PlayStatisticDisplayView ,PlayStatisticDisplayContract.PlayStatisticBaseDisplayPresenter, PlayStatisticEntity, RecyclerView.ViewHolder>
+        implements PlayStatisticDisplayContract.PlayStatisticDisplayView {
+    private PlayStatisticDisplayContract.PlayStatisticBaseDisplayPresenter mDisplayPresenter;
     private PlayStatisticDisplayAdapter mDisplayAdapter;
     private PlayStatisticItemClickCallback mItemClickCallback;
 
@@ -100,8 +97,15 @@ public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatis
     }
 
     @Override
+    protected PlayStatisticDisplayContract.PlayStatisticBaseDisplayPresenter getPresenter() {
+        if (mDisplayPresenter == null) {
+            mDisplayPresenter = new PlayStatisticBaseDisplayPresenterImpl(this);
+        }
+        return mDisplayPresenter;
+    }
+
+    @Override
     protected void onFirstTimeCreateView() {
-        mDisplayPresenter = new PlayStatisticDisplayPresenterImpl(this);
         mDisplayPresenter.onViewFirstTimeCreated();
     }
 

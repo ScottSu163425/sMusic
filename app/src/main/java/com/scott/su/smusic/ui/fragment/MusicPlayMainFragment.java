@@ -37,6 +37,7 @@ import com.scott.su.smusic.mvp.presenter.impl.MusicPlayMainPresenterImpl;
 import com.scott.su.smusic.service.MusicPlayService;
 import com.su.scott.slibrary.fragment.BaseFragment;
 import com.su.scott.slibrary.manager.ImageLoader;
+import com.su.scott.slibrary.mvp.presenter.IPresenter;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.DialogUtil;
@@ -89,8 +90,15 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
     }
 
     @Override
+    protected IPresenter getPresenter() {
+        if (mMusicPlayPresenter == null) {
+            mMusicPlayPresenter = new MusicPlayMainPresenterImpl(this);
+        }
+        return mMusicPlayPresenter;
+    }
+
+    @Override
     protected void onFirstTimeCreateView() {
-        mMusicPlayPresenter = new MusicPlayMainPresenterImpl(this);
         mMusicPlayPresenter.onViewFirstTimeCreated();
     }
 
@@ -636,9 +644,6 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
         mMusicPlayServiceBinder.unregisterServicePlayCallback(mMusicPlayServiceCallback);
         getActivity().unbindService(mMusicPlayServiceConnection);
 
-        if (mMusicPlayPresenter != null) {
-            mMusicPlayPresenter.onViewWillDestroy();
-        }
         super.onDestroy();
     }
 

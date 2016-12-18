@@ -24,6 +24,7 @@ import com.scott.su.smusic.mvp.presenter.impl.MusicPlaySecondPresenterImpl;
 import com.scott.su.smusic.service.MusicPlayService;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseFragment;
+import com.su.scott.slibrary.mvp.presenter.IPresenter;
 
 /**
  * Created by asus on 2016/11/20.
@@ -50,8 +51,15 @@ public class MusicPlaySecondFragment extends BaseFragment
     }
 
     @Override
+    protected IPresenter getPresenter() {
+        if (mMusicPlaySecondPresenter == null) {
+            mMusicPlaySecondPresenter = new MusicPlaySecondPresenterImpl(this);
+        }
+        return mMusicPlaySecondPresenter;
+    }
+
+    @Override
     protected void onFirstTimeCreateView() {
-        mMusicPlaySecondPresenter = new MusicPlaySecondPresenterImpl(this);
         mMusicPlaySecondPresenter.onViewFirstTimeCreated();
     }
 

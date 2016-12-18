@@ -9,7 +9,6 @@ import com.scott.su.smusic.mvp.contract.PlayStatisticDisplayContract;
 import com.scott.su.smusic.mvp.model.PlayStatisticModel;
 import com.scott.su.smusic.mvp.model.impl.PlayStatisticModelImpl;
 import com.su.scott.slibrary.mvp.presenter.BasePresenter;
-import com.su.scott.slibrary.mvp.presenter.IDisplayPresenter;
 
 import java.util.List;
 
@@ -24,11 +23,11 @@ import rx.schedulers.Schedulers;
  * Created by asus on 2016/11/19.
  */
 
-public class PlayStatisticDisplayPresenterImpl extends BasePresenter<PlayStatisticDisplayContract.PlayStatisticDisplayView>
-        implements PlayStatisticDisplayContract.PlayStatisticDisplayPresenter {
+public class PlayStatisticBaseDisplayPresenterImpl extends BasePresenter<PlayStatisticDisplayContract.PlayStatisticDisplayView>
+        implements PlayStatisticDisplayContract.PlayStatisticBaseDisplayPresenter {
     private PlayStatisticModel mPlayStatisticModel;
 
-    public PlayStatisticDisplayPresenterImpl(PlayStatisticDisplayContract.PlayStatisticDisplayView view) {
+    public PlayStatisticBaseDisplayPresenterImpl(PlayStatisticDisplayContract.PlayStatisticDisplayView view) {
         super(view);
         this.mPlayStatisticModel = new PlayStatisticModelImpl();
     }
@@ -100,6 +99,11 @@ public class PlayStatisticDisplayPresenterImpl extends BasePresenter<PlayStatist
 
     @Override
     public void onViewResume() {
+
+    }
+
+    @Override
+    public void onViewWillDestroy() {
 
     }
 

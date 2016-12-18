@@ -14,6 +14,9 @@ import android.widget.FrameLayout;
 
 import com.su.scott.slibrary.R;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
+import com.su.scott.slibrary.mvp.presenter.IBaseDisplayPresenter;
+import com.su.scott.slibrary.mvp.presenter.IPresenter;
+import com.su.scott.slibrary.mvp.view.IView;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 import com.su.scott.slibrary.mvp.view.IBaseDisplayView;
@@ -27,7 +30,8 @@ import java.util.List;
  * @作者 Su
  * @时间 2016年7月
  */
-public abstract class BaseDisplayFragment<E, VH extends RecyclerView.ViewHolder> extends BaseFragment implements IBaseDisplayView<E> {
+public abstract class BaseDisplayFragment<V extends IView, P extends IBaseDisplayPresenter<V, E>, E, VH extends RecyclerView.ViewHolder> extends BaseFragment<V,P>
+        implements IBaseDisplayView<E> {
     private static final int LAYOUT_ID_DISPLAY_DEFAULT_LOADING = R.layout.display_loading_default;
     private static final int LAYOUT_ID_DISPLAY_DEFAULT_EMPTY = R.layout.display_empty_default;
     private static final int LAYOUT_ID_DISPLAY_DEFAULT_ERROR = R.layout.display_error_default;

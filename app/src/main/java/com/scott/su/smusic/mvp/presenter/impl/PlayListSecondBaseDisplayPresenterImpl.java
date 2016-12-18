@@ -12,11 +12,11 @@ import com.su.scott.slibrary.mvp.presenter.BasePresenter;
  * Created by asus on 2016/12/3.
  */
 
-public class PlayListSecondDisplayPresenterImpl extends BasePresenter<PlayListSecondDisplayContract.PlayListSecondDisplayView>
-        implements PlayListSecondDisplayContract.PlayListSecondDisplayPresenter {
+public class PlayListSecondBaseDisplayPresenterImpl extends BasePresenter<PlayListSecondDisplayContract.PlayListSecondDisplayView>
+        implements PlayListSecondDisplayContract.PlayListSecondBaseDisplayPresenter {
 
 
-    public PlayListSecondDisplayPresenterImpl(PlayListSecondDisplayContract.PlayListSecondDisplayView view) {
+    public PlayListSecondBaseDisplayPresenterImpl(PlayListSecondDisplayContract.PlayListSecondDisplayView view) {
         super(view);
     }
 
@@ -51,6 +51,11 @@ public class PlayListSecondDisplayPresenterImpl extends BasePresenter<PlayListSe
 
     @Override
     public void onViewResume() {
+
+    }
+
+    @Override
+    public void onViewWillDestroy() {
 
     }
 

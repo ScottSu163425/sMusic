@@ -44,8 +44,4 @@ public abstract class BasePresenter<V extends IView> implements IPresenter<V> {
         return null;
     }
 
-    @Override
-    public void onViewWillDestroy() {
-    }
-
 }

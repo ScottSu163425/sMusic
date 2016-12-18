@@ -40,6 +40,11 @@ public class MusicPlayPresenterImpl extends BasePresenter<MusicPlayContract.Musi
     }
 
     @Override
+    public void onViewWillDestroy() {
+
+    }
+
+    @Override
     public void onAddToBillMenuItemClick() {
         getView().showBillSelectionDialog(getView().getCurrentPlayingSong());
     }

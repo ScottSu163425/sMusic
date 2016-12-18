@@ -15,19 +15,20 @@ import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.AlbumSongDisplayContract;
-import com.scott.su.smusic.mvp.presenter.impl.AlbumSongDisplayPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.AlbumSongBaseDisplayPresenterImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
+import com.su.scott.slibrary.mvp.presenter.IPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by asus on 2016/11/05.
  */
-public class AlbumSongDisplayFragment extends BaseDisplayFragment<LocalSongEntity, AlbumSongViewHolder> implements AlbumSongDisplayContract.AlbumSongDisplayView {
-    private AlbumSongDisplayContract.AlbumSongDisplayPresenter mSongDisplayPresenter;
+public class AlbumSongDisplayFragment extends BaseDisplayFragment<AlbumSongDisplayContract.AlbumSongDisplayView, AlbumSongDisplayContract.AlbumSongBaseDisplayPresenter, LocalSongEntity, AlbumSongViewHolder>
+        implements AlbumSongDisplayContract.AlbumSongDisplayView {
+    private AlbumSongDisplayContract.AlbumSongBaseDisplayPresenter mSongDisplayPresenter;
     private AlbumSongDisplayAdapter mSongDisplayAdapter;
 
     private LocalAlbumEntity mAlbumEntity;
@@ -49,11 +50,17 @@ public class AlbumSongDisplayFragment extends BaseDisplayFragment<LocalSongEntit
     }
 
     @Override
-    protected void onFirstTimeCreateView() {
-        mSongDisplayPresenter = new AlbumSongDisplayPresenterImpl(this);
-        mSongDisplayPresenter.onViewFirstTimeCreated();
+    protected AlbumSongDisplayContract.AlbumSongBaseDisplayPresenter getPresenter() {
+        if (mSongDisplayPresenter == null) {
+            mSongDisplayPresenter = new AlbumSongBaseDisplayPresenterImpl(this);
+        }
+        return mSongDisplayPresenter;
     }
 
+    @Override
+    protected void onFirstTimeCreateView() {
+        mSongDisplayPresenter.onViewFirstTimeCreated();
+    }
 
     @NonNull
     @Override

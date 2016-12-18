@@ -66,6 +66,11 @@ public class MusicPlayMainPresenterImpl extends BasePresenter<MusicPlayMainContr
     }
 
     @Override
+    public void onViewWillDestroy() {
+
+    }
+
+    @Override
     public void onPlayClick(View view) {
         if (getView().isMusicPlaying()) {
             getView().pause();

@@ -1,7 +1,7 @@
 package com.scott.su.smusic.mvp.contract;
 
 import com.scott.su.smusic.entity.LocalBillEntity;
-import com.su.scott.slibrary.mvp.presenter.IDisplayPresenter;
+import com.su.scott.slibrary.mvp.presenter.IBaseDisplayPresenter;
 import com.su.scott.slibrary.mvp.view.IBaseDisplayView;
 
 /**
@@ -9,10 +9,11 @@ import com.su.scott.slibrary.mvp.view.IBaseDisplayView;
  */
 
 public interface LocalBillDisplayContract {
-    interface LocalBillDisplayPresenter extends IDisplayPresenter<LocalBillDisplayView, LocalBillEntity> {
-    }
 
     interface LocalBillDisplayView extends IBaseDisplayView<LocalBillEntity> {
+    }
+
+    interface LocalBillBaseDisplayPresenter extends IBaseDisplayPresenter<LocalBillDisplayView, LocalBillEntity> {
     }
 
 }

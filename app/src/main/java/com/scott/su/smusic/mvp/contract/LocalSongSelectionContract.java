@@ -8,14 +8,6 @@ import com.su.scott.slibrary.mvp.view.IBaseView;
  */
 
 public interface LocalSongSelectionContract {
-    interface LocalSongSelectionPresenter extends IPresenter<LocalSongSelectionView> {
-
-        void onSelectedCountChanged(boolean isEmpty);
-
-        void onSelectAllClick();
-
-        void onFinishSelectionClick();
-    }
 
     interface LocalSongSelectionView extends IBaseView {
 
@@ -26,4 +18,14 @@ public interface LocalSongSelectionContract {
         void finishSelection();
 
     }
+
+    interface LocalSongSelectionPresenter extends IPresenter<LocalSongSelectionView> {
+
+        void onSelectedCountChanged(boolean isEmpty);
+
+        void onSelectAllClick();
+
+        void onFinishSelectionClick();
+    }
+
 }

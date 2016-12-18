@@ -42,5 +42,10 @@ public class LocalSongSelectionPresenterImp extends BasePresenter<LocalSongSelec
 
     }
 
+    @Override
+    public void onViewWillDestroy() {
+
+    }
+
 
 }

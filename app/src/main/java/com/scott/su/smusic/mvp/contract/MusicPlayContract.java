@@ -13,11 +13,6 @@ import com.su.scott.slibrary.mvp.view.IBaseView;
  */
 
 public interface MusicPlayContract {
-    interface MusicPlayPresenter extends IPresenter<MusicPlayView>, MusicPlayMainFragmentCallback {
-        void onAddToBillMenuItemClick();
-
-        void onAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity);
-    }
 
     interface MusicPlayView extends IBaseView {
         void showBillSelectionDialog(LocalSongEntity songEntity);
@@ -34,5 +29,12 @@ public interface MusicPlayContract {
 
         void hideMusicPlaySecondFragment();
     }
+
+    interface MusicPlayPresenter extends IPresenter<MusicPlayView>, MusicPlayMainFragmentCallback {
+        void onAddToBillMenuItemClick();
+
+        void onAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity);
+    }
+
 
 }

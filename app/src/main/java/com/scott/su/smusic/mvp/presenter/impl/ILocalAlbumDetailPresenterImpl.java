@@ -45,6 +45,11 @@ public class ILocalAlbumDetailPresenterImpl extends BasePresenter<LocalAlbumDeta
     }
 
     @Override
+    public void onViewWillDestroy() {
+
+    }
+
+    @Override
     public void onBottomSheetAddToBillClick(LocalSongEntity songEntity) {
         getView().showBillSelectionDialog(songEntity);
     }

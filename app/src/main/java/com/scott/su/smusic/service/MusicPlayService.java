@@ -67,7 +67,6 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         @Override
         public void run() {
             if (isRegisterCallback()) {
-//                mMusicPlayServiceCallback.onPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
                 notifyAllOnPlayProgressUpdate(mMediaPlayer.getCurrentPosition());
             }
             mPlayTimerHandler.postDelayed(this, DURATION_TIMER_DELAY);
@@ -103,7 +102,6 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 if (isRegisterCallback()) {
-//                    mMusicPlayServiceCallback.onPlayComplete();
                     notifyAllOnPlayComplete();
                 }
                 playNext();
@@ -164,7 +162,6 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
 
     @Override
     public void setServicePlayListSongs(ArrayList<LocalSongEntity> playSongs) {
-//        MusicPlayUtil.addSongsToPlayList(mPlayListSongs, playSongs, mCurrentPlayingSong);
         mPlayListSongs = playSongs;
     }
 
@@ -356,7 +353,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         intentGoToMusicPlay.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntentGoToMusicPlay = PendingIntent.getActivity(this, mCurrentRequestCode, intentGoToMusicPlay, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setSmallIcon(R.drawable.ic_notification);
         builder.setContentIntent(pendingIntentGoToMusicPlay);
         builder.setContent(generateContentRemoteView());
         builder.setCustomBigContentView(generateBigContentRemoteView());
@@ -410,7 +407,6 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         startPlayTimer();
         mCurrentPlayStatus = PlayStatus.Playing;
         if (isRegisterCallback()) {
-//            mMusicPlayServiceCallback.onPlayStart();
             notifyAllOnPlayStart();
         }
     }
@@ -425,7 +421,6 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     private boolean isRegisterCallback() {
-//        return mMusicPlayServiceCallback != null;
         return !mCallbacks.isEmpty();
     }
 
@@ -471,12 +466,10 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     @Override
     public void registerServicePlayCallback(@NonNull MusicPlayServiceCallback callback) {
         this.mCallbacks.add(callback);
-//        this.mMusicPlayServiceCallback = callback;
     }
 
     @Override
     public void unregisterServicePlayCallback(@NonNull MusicPlayServiceCallback callback) {
-//        this.mMusicPlayServiceCallback = null;
         if (mCallbacks.isEmpty()) {
             return;
         }

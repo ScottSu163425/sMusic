@@ -14,13 +14,6 @@ import com.su.scott.slibrary.mvp.view.IBaseView;
  */
 
 public interface LocalAlbumDetailContract {
-    interface ILocalAlbumDetailPresenter extends IPresenter<LocalAlbumDetailView>,ILocalSongBottomSheetPresenter {
-        void onAlbumSongItemClick(View view, int position, LocalSongEntity entity);
-
-        void onAlbumSongItemMoreClick(View view, int position, LocalSongEntity entity);
-
-        void onPlayFabClick();
-    }
 
     interface LocalAlbumDetailView extends IBaseView,LocalSongBottomSheetView {
         LocalAlbumEntity getCurrentAlbumEntity();
@@ -32,6 +25,14 @@ public interface LocalAlbumDetailContract {
         void goToMusicPlayWithCover(LocalSongEntity songEntity);
 
         void showAlbumSongBottomSheet(LocalSongEntity songEntity);
+    }
+
+    interface ILocalAlbumDetailPresenter extends IPresenter<LocalAlbumDetailView>,ILocalSongBottomSheetPresenter {
+        void onAlbumSongItemClick(View view, int position, LocalSongEntity entity);
+
+        void onAlbumSongItemMoreClick(View view, int position, LocalSongEntity entity);
+
+        void onPlayFabClick();
     }
 
 }

@@ -30,7 +30,6 @@ public class MusicPlaySecondPresenterImpl extends BasePresenter<MusicPlaySecondC
 
     @Override
     public void onViewWillDestroy() {
-        super.onViewWillDestroy();
         getView().unregisterVolumeReceiver();
         getView().unbindMusicPlayService();
         getView().unregisterMusicPlayCallback();

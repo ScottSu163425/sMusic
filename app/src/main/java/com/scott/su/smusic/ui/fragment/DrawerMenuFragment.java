@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.DrawerMenuCallback;
 import com.scott.su.smusic.config.AppConfig;
+import com.scott.su.smusic.mvp.contract.DrawerMenuContract;
 import com.su.scott.slibrary.fragment.BaseFragment;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.PopupMenuUtil;
@@ -26,7 +27,8 @@ import com.su.scott.slibrary.util.ViewUtil;
 /**
  * Created by Administrator on 2016/9/8.
  */
-public class DrawerMenuFragment extends BaseFragment implements View.OnClickListener {
+public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMenuView, DrawerMenuContract.DrawerMenuPresenter>
+        implements View.OnClickListener {
     public static final float PERCENTAGE_OF_SCREEN_WIDTH = 0.82f;
     private View mRootView;
     private View mStatisticMenuItem, mTimerMenuItem, mLanguageMenuItem, mUpdateMenuItem, mAboutMenuItem;
@@ -179,6 +181,11 @@ public class DrawerMenuFragment extends BaseFragment implements View.OnClickList
                 mTimerTimeTextView.setText(TimeUtil.millisecondToMMSS(millis));
             }
         }
+    }
+
+    @Override
+    protected DrawerMenuContract.DrawerMenuPresenter getPresenter() {
+        return null;
     }
 
     @Override

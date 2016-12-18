@@ -9,7 +9,7 @@ import com.su.scott.slibrary.mvp.view.IView;
 /**
  * Created by Administrator on 2016/8/2.
  */
-public interface IDisplayPresenter<V extends IView,E> extends IPresenter<V> {
+public interface IBaseDisplayPresenter<V extends IView,E> extends IPresenter<V> {
 
     void onSwipRefresh();
 

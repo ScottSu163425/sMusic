@@ -19,24 +19,6 @@ import java.util.List;
  */
 
 public interface MusicPlayMainContract {
-    interface MusicPlayMainPresenter extends IPresenter<MusicPlayMainView>, MusicPlayServiceCallback, PlayListBottomSheetCallback, MusicPlayMainFragmentCallback {
-        void onPlayClick(View view);
-
-        void onSkipPreviousClick(View view);
-
-        void onSkipNextClick(View view);
-
-        void onRepeatClick(View view);
-
-        void onMusicPlayServiceConnected();
-
-        void onMusicPlayServiceDisconnected();
-
-        void onSeekStart();
-
-        void onSeekStop(int progress);
-
-    }
 
     interface MusicPlayMainView extends IBaseView, MusicPlayServiceView, View.OnClickListener {
 
@@ -89,4 +71,24 @@ public interface MusicPlayMainContract {
         MusicPlayMainFragmentCallback getMusicPlayMainFragmentCallback();
 
     }
+
+    interface MusicPlayMainPresenter extends IPresenter<MusicPlayMainView>, MusicPlayServiceCallback, PlayListBottomSheetCallback, MusicPlayMainFragmentCallback {
+        void onPlayClick(View view);
+
+        void onSkipPreviousClick(View view);
+
+        void onSkipNextClick(View view);
+
+        void onRepeatClick(View view);
+
+        void onMusicPlayServiceConnected();
+
+        void onMusicPlayServiceDisconnected();
+
+        void onSeekStart();
+
+        void onSeekStop(int progress);
+
+    }
+
 }

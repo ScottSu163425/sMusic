@@ -1,7 +1,7 @@
 package com.scott.su.smusic.mvp.contract;
 
 import com.scott.su.smusic.entity.LocalSongEntity;
-import com.su.scott.slibrary.mvp.presenter.IDisplayPresenter;
+import com.su.scott.slibrary.mvp.presenter.IBaseDisplayPresenter;
 import com.su.scott.slibrary.mvp.view.IBaseDisplayView;
 
 import java.util.ArrayList;
@@ -11,14 +11,15 @@ import java.util.ArrayList;
  */
 
 public interface LocalSongSelectionDisplayContract {
-    interface LocalSongSelectionDisplayPresenter extends IDisplayPresenter<LocalSongSelectionDisplayView, LocalSongEntity> {
-    }
 
     interface LocalSongSelectionDisplayView extends IBaseDisplayView<LocalSongEntity> {
 
         void selectAll();
 
         ArrayList<LocalSongEntity> getSelectedSongs();
+    }
+
+    interface LocalSongSelectionBaseDisplayPresenter extends IBaseDisplayPresenter<LocalSongSelectionDisplayView, LocalSongEntity> {
     }
 
 }

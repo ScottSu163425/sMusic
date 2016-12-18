@@ -23,11 +23,11 @@ import rx.schedulers.Schedulers;
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalAlbumDisplayPresenterImpl extends BasePresenter<LocalAlbumDisplayContract.LocalAlbumDisplayView>
-        implements LocalAlbumDisplayContract.LocalAlbumDisplayPresenter {
+public class LocalAlbumBaseDisplayPresenterImpl extends BasePresenter<LocalAlbumDisplayContract.LocalAlbumDisplayView>
+        implements LocalAlbumDisplayContract.LocalAlbumBaseDisplayPresenter {
     private LocalAlbumModel mLocalAlbumModel;
 
-    public LocalAlbumDisplayPresenterImpl(LocalAlbumDisplayContract.LocalAlbumDisplayView localAlbumDisplayView) {
+    public LocalAlbumBaseDisplayPresenterImpl(LocalAlbumDisplayContract.LocalAlbumDisplayView localAlbumDisplayView) {
        super(localAlbumDisplayView);
         this.mLocalAlbumModel = new LocalAlbumModelImpl();
     }
@@ -64,6 +64,11 @@ public class LocalAlbumDisplayPresenterImpl extends BasePresenter<LocalAlbumDisp
 
     @Override
     public void onViewResume() {
+
+    }
+
+    @Override
+    public void onViewWillDestroy() {
 
     }
 

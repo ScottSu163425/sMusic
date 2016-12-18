@@ -250,6 +250,11 @@ public class MainPresenterImplI extends BasePresenter<MainContract.MainView>
     }
 
     @Override
+    public void onViewWillDestroy() {
+
+    }
+
+    @Override
     public void onBottomSheetAddToBillClick(LocalSongEntity songEntity) {
         getView().showBillSelectionDialog(songEntity);
     }

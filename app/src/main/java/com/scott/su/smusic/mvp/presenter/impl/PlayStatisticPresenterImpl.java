@@ -41,6 +41,11 @@ public class PlayStatisticPresenterImpl extends BasePresenter<PlayStatisticContr
     }
 
     @Override
+    public void onViewWillDestroy() {
+
+    }
+
+    @Override
     public void onPlayStatisticItemClick(int position, PlayStatisticEntity entity, ArrayList<PlayStatisticEntity> statisticEntityList, View sharedElement, String transitionName) {
         if (position < 3) {
             //Top 3 with cover.

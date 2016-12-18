@@ -11,26 +11,33 @@ import com.scott.su.smusic.adapter.LocalSongSelectionDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.LocalSongSelectionViewHolder;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.LocalSongSelectionDisplayContract;
-import com.scott.su.smusic.mvp.presenter.impl.LocalSongSelectionDisplayPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.LocalSongSelectionBaseDisplayPresenterImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by asus on 2016/8/27.
  */
-public class LocalSongSlectionDisplayFragment extends BaseDisplayFragment<LocalSongEntity, LocalSongSelectionViewHolder> implements LocalSongSelectionDisplayContract.LocalSongSelectionDisplayView {
+public class LocalSongSlectionDisplayFragment extends BaseDisplayFragment<LocalSongSelectionDisplayContract.LocalSongSelectionDisplayView ,LocalSongSelectionDisplayContract.LocalSongSelectionBaseDisplayPresenter ,LocalSongEntity, LocalSongSelectionViewHolder>
+        implements LocalSongSelectionDisplayContract.LocalSongSelectionDisplayView {
+    private LocalSongSelectionDisplayContract.LocalSongSelectionBaseDisplayPresenter mSongSelectionDisplayPresenter;
     private LocalSongSelectionDisplayAdapter mSongSelectionDisplayAdapter;
-    private LocalSongSelectionDisplayContract.LocalSongSelectionDisplayPresenter mSongSelectionDisplayPresenter;
     private OnSelectedSongChangedListener mOnSelectedSongChangedListener;
 
 
     @Override
+    protected LocalSongSelectionDisplayContract.LocalSongSelectionBaseDisplayPresenter getPresenter() {
+        if (mSongSelectionDisplayPresenter == null) {
+            mSongSelectionDisplayPresenter = new LocalSongSelectionBaseDisplayPresenterImpl(this);
+        }
+        return mSongSelectionDisplayPresenter;
+    }
+
+    @Override
     protected void onFirstTimeCreateView() {
-        mSongSelectionDisplayPresenter = new LocalSongSelectionDisplayPresenterImpl(this);
         mSongSelectionDisplayPresenter.onViewFirstTimeCreated();
     }
 

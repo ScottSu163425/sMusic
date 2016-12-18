@@ -11,20 +11,20 @@ import com.scott.su.smusic.adapter.PlayListSecondDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.PlayListSecondViewHolder;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.PlayListSecondDisplayContract;
+import com.scott.su.smusic.mvp.presenter.impl.PlayListSecondBaseDisplayPresenterImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
-import com.su.scott.slibrary.mvp.view.IBaseDisplayView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by asus on 2016/12/3.
  */
 
-public class PlayListSecondDisplayFragment extends BaseDisplayFragment<LocalSongEntity, PlayListSecondViewHolder> implements PlayListSecondDisplayContract.PlayListSecondDisplayView {
-    private PlayListSecondDisplayContract.PlayListSecondDisplayPresenter mDisplayPresenter;
+public class PlayListSecondDisplayFragment extends BaseDisplayFragment<PlayListSecondDisplayContract.PlayListSecondDisplayView,PlayListSecondDisplayContract.PlayListSecondBaseDisplayPresenter,LocalSongEntity, PlayListSecondViewHolder>
+        implements PlayListSecondDisplayContract.PlayListSecondDisplayView {
+    private PlayListSecondDisplayContract.PlayListSecondBaseDisplayPresenter mDisplayPresenter;
     private PlayListSecondDisplayAdapter mDisplayAdapter;
     private List<LocalSongEntity> mPlayingSongEntityList;
     private int mCurrentPosition = -1;
@@ -116,6 +116,14 @@ public class PlayListSecondDisplayFragment extends BaseDisplayFragment<LocalSong
     @Override
     protected void onErrorClick() {
 
+    }
+
+    @Override
+    protected PlayListSecondDisplayContract.PlayListSecondBaseDisplayPresenter getPresenter() {
+        if (mDisplayPresenter == null) {
+            mDisplayPresenter = new PlayListSecondBaseDisplayPresenterImpl(this);
+        }
+        return mDisplayPresenter;
     }
 
     @Override
