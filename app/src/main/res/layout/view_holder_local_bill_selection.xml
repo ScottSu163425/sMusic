@@ -20,7 +20,7 @@
         android:layout_marginLeft="@dimen/margin_xs"
         android:layout_marginRight="@dimen/margin_xs"
         android:layout_marginTop="@dimen/margin_xs"
-        android:src="@drawable/ic_menu_item_bill_selection_36dp" />
+        android:scaleType="centerCrop" />
 
     <RelativeLayout
         android:layout_width="match_parent"

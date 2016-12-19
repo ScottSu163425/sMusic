@@ -23,6 +23,7 @@
         <ImageView
             android:id="@+id/iv_cover_view_holder_local_album"
             android:layout_width="@dimen/size_image_view_holder_local_album"
+            android:scaleType="centerCrop"
             android:layout_height="@dimen/size_image_view_holder_local_album" />
 
         <LinearLayout

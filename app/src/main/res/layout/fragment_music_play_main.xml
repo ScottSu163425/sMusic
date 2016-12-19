@@ -24,7 +24,7 @@
                 android:layout_marginTop="@dimen/margin_l"
                 android:layout_above="@+id/tv_music_title_music_play"
                 android:elevation="20dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:transitionName="@string/transition_name_cover"
                 android:translationZ="20dp" />
 

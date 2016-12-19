@@ -16,6 +16,7 @@
         android:layout_height="@dimen/size_image_view_holder_local_song"
         android:layout_marginBottom="@dimen/margin_xxs"
         android:layout_marginLeft="@dimen/margin_xs"
+        android:scaleType="centerCrop"
         android:layout_marginRight="@dimen/margin_xxs"
         android:layout_marginTop="@dimen/margin_xxs"
         android:transitionName="@string/transition_name_cover" />
