@@ -159,12 +159,16 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
                 if (scrollDistance > 0) {
                     //Scrolling down.
                     if (Math.abs(verticalOffset) < (totalScrollRange / 3)) {
-                        showFab();
+                        if (!mBillSongDisplayFragment.getDisplayDataList().isEmpty()) {
+                            showFab();
+                        }
                     }
                 } else {
                     //Scrolling up.
-                    if (Math.abs(verticalOffset) > (totalScrollRange / 3)) {
-                        hideFab();
+                    if (!mBillSongDisplayFragment.getDisplayDataList().isEmpty()) {
+                        if (Math.abs(verticalOffset) > (totalScrollRange / 3)) {
+                            hideFab();
+                        }
                     }
                 }
 

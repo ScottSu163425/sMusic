@@ -20,12 +20,6 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:fitsSystemWindows="true">
-
-        <FrameLayout
-            android:id="@+id/fl_container_music_play_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
         <android.support.v7.widget.Toolbar
             android:id="@+id/tool_bar_music_play"
             android:layout_width="match_parent"
@@ -34,6 +28,12 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:theme="@style/AppTheme.AppBarOverlay" />
     </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_container_music_play_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"/>
 
 
 </android.support.design.widget.CoordinatorLayout>

@@ -14,27 +14,15 @@
         android:clipToPadding="false"
         android:fitsSystemWindows="true">
 
-        <View
-            android:id="@+id/anchor"
-            android:layout_width="wrap_content"
-            android:layout_height="?attr/actionBarSize" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/anchor"
-            android:gravity="center"
-            android:orientation="vertical">
-
             <ImageView
                 android:id="@+id/iv_cover_music_play"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="@dimen/margin_l"
-                android:layout_marginRight="@dimen/margin_l"
+                app:layout_widthPercent="70%"
+                app:layout_aspectRatio="100%"
                 android:layout_marginTop="@dimen/margin_l"
-                android:layout_weight="1"
+                android:layout_above="@+id/tv_music_title_music_play"
                 android:elevation="20dp"
                 android:scaleType="fitXY"
                 android:transitionName="@string/transition_name_cover"
@@ -49,20 +37,21 @@
                 android:maxLines="1"
                 android:padding="@dimen/margin_s"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_headline" />
+                android:textSize="@dimen/text_size_headline"
+                android:layout_above="@+id/tv_music_artist_music_play"/>
 
             <TextView
                 android:id="@+id/tv_music_artist_music_play"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_music_title_music_play"
                 android:layout_centerHorizontal="true"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"
-                android:paddingBottom="@dimen/margin_m"
                 android:paddingLeft="@dimen/margin_m"
                 android:paddingRight="@dimen/margin_m"
+                android:paddingBottom="@dimen/margin_m"
+                android:layout_above="@+id/card_view_play_control_music_play"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_body" />
 
@@ -179,7 +168,6 @@
                     </RelativeLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
-        </LinearLayout>
     </android.support.percent.PercentRelativeLayout>
 
 

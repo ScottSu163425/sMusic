@@ -25,7 +25,7 @@
             app:expandedTitleGravity="left|bottom"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <FrameLayout
+            <android.support.percent.PercentFrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/background"
@@ -34,12 +34,14 @@
 
                 <ImageView
                     android:id="@+id/iv_cover_local_bill_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_top_area"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_widthPercent="100%"
+                    app:layout_aspectRatio="100%"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_cover_default_song_bill"
                     android:transitionName="@string/transition_name_cover" />
-            </FrameLayout>
+            </android.support.percent.PercentFrameLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/tool_bar_local_bill_detail"
