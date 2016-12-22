@@ -75,6 +75,7 @@ public class MusicPlaySecondFragment extends BaseFragment
     @Override
     public void initData() {
         mAudioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+        mPlayListSecondDisplayFragment = new PlayListSecondDisplayFragment();
 
         int max = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * STEP_TIMES;
         int current = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC) * STEP_TIMES;
@@ -83,18 +84,25 @@ public class MusicPlaySecondFragment extends BaseFragment
         mVolumeSeekBar.setProgress(current);
 
         if (mMusicPlayServiceBinder != null) {
-            getPlayListSecondDisplayFragment().setCurrentPosition(mMusicPlayServiceBinder.getCurrentPositon());
-            getPlayListSecondDisplayFragment().setPlayingSongEntityList(mMusicPlayServiceBinder.getServicePlayListSongs());
+            mPlayListSecondDisplayFragment.setCurrentPosition(mMusicPlayServiceBinder.getCurrentPositon());
+            mPlayListSecondDisplayFragment.setPlayingSongEntityList(mMusicPlayServiceBinder.getServicePlayListSongs());
         }
 
         getChildFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fl_container_display_play_list_fragment_music_play_second, getPlayListSecondDisplayFragment())
+                .replace(R.id.fl_container_display_play_list_fragment_music_play_second, mPlayListSecondDisplayFragment)
                 .commitNow();
     }
 
     @Override
     public void initListener() {
+        mPlayListSecondDisplayFragment.setItemClickCallback(new ItemClickCallback<LocalSongEntity>() {
+            @Override
+            public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+                mMusicPlaySecondPresenter.onPlayListItemClick(itemView, entity, position);
+            }
+        });
+        
         mVolumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -135,7 +143,7 @@ public class MusicPlaySecondFragment extends BaseFragment
 
     @Override
     public void updatePlayList(int currentPosition) {
-        getPlayListSecondDisplayFragment().setCurrentPosition(currentPosition);
+       mPlayListSecondDisplayFragment.setCurrentPosition(currentPosition);
     }
 
     @Override
@@ -209,19 +217,6 @@ public class MusicPlaySecondFragment extends BaseFragment
             mMusicPlaySecondPresenter.onMusicPlayServiceDisconnected();
         }
     };
-
-    private PlayListSecondDisplayFragment getPlayListSecondDisplayFragment() {
-        if (mPlayListSecondDisplayFragment == null) {
-            mPlayListSecondDisplayFragment = new PlayListSecondDisplayFragment();
-            mPlayListSecondDisplayFragment.setItemClickCallback(new ItemClickCallback<LocalSongEntity>() {
-                @Override
-                public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
-                    mMusicPlaySecondPresenter.onPlayListItemClick(itemView, entity, position);
-                }
-            });
-        }
-        return mPlayListSecondDisplayFragment;
-    }
 
     private MusicPlayServiceCallback mMusicPlayServiceCallback = new MusicPlayServiceCallback() {
         @Override

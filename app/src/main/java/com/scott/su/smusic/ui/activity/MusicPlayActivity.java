@@ -92,14 +92,30 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
 
     @Override
     public void initData() {
+        LocalSongEntity songEntity = getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG);
+        final ArrayList<LocalSongEntity> playingSongs = getIntent().getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS);
+        mMusicPlayMainFragment = MusicPlayMainFragment.newInstance(songEntity, playingSongs);
+
+        mMusicPlaySecondFragment = new MusicPlaySecondFragment();
+
         getSupportFragmentManager().beginTransaction()
-                .replace(ID_CONTAINER, getMusicPlayMainFragment())
+                .replace(ID_CONTAINER, mMusicPlayMainFragment)
                 .commitNow();
     }
 
     @Override
     public void initListener() {
+        mMusicPlayMainFragment.setMusicPlayMainFragmentCallback(new MusicPlayMainFragmentCallback() {
+            @Override
+            public void onBlurCoverChanged(final Bitmap bitmap) {
+                mMusicPlayPresenter.onBlurCoverChanged(bitmap);
+            }
 
+            @Override
+            public void onCoverClick(View view) {
+                mMusicPlayPresenter.onCoverClick(view);
+            }
+        });
     }
 
     @Override
@@ -122,7 +138,7 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
 
     @Override
     public LocalSongEntity getCurrentPlayingSong() {
-        return getMusicPlayMainFragment().getCurrentPlayingSong();
+        return mMusicPlayMainFragment.getCurrentPlayingSong();
     }
 
     @Override
@@ -142,97 +158,67 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
 
     @Override
     public void showMusicPlayMainFragment() {
-        if (!getMusicPlayMainFragment().isAdded()) {
+        if (!mMusicPlayMainFragment.isAdded()) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    .add(ID_CONTAINER, getMusicPlayMainFragment())
+                    .add(ID_CONTAINER, mMusicPlayMainFragment)
                     .commitNow();
-        } else if (!getMusicPlayMainFragment().isVisible()) {
+        } else if (!mMusicPlayMainFragment.isVisible()) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .show(getMusicPlayMainFragment())
+                    .show(mMusicPlayMainFragment)
                     .commitNow();
         }
     }
 
     @Override
     public void hideMusicPlayMainFragment() {
-        if (getMusicPlayMainFragment().isAdded() && getMusicPlayMainFragment().isVisible()) {
+        if (mMusicPlayMainFragment.isAdded() && mMusicPlayMainFragment.isVisible()) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    .hide(getMusicPlayMainFragment())
+                    .hide(mMusicPlayMainFragment)
                     .commitNow();
         }
     }
 
     @Override
     public void showMusicPlaySecondFragment() {
-        if (!getMusicPlaySecondFragment().isAdded()) {
+        if (!mMusicPlaySecondFragment.isAdded()) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .add(ID_CONTAINER, getMusicPlaySecondFragment())
+                    .add(ID_CONTAINER, mMusicPlaySecondFragment)
                     .commitNow();
-        } else if (!getMusicPlaySecondFragment().isVisible()) {
+        } else if (!mMusicPlaySecondFragment.isVisible()) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .show(getMusicPlaySecondFragment())
+                    .show(mMusicPlaySecondFragment)
                     .commitNow();
         }
     }
 
     @Override
     public void hideMusicPlaySecondFragment() {
-        if (getMusicPlaySecondFragment().isAdded() && getMusicPlaySecondFragment().isVisible()) {
+        if (mMusicPlaySecondFragment.isAdded() && mMusicPlaySecondFragment.isVisible()) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    .hide(getMusicPlaySecondFragment())
+                    .hide(mMusicPlaySecondFragment)
                     .commitNow();
         }
     }
 
-    public MusicPlayMainFragment getMusicPlayMainFragment() {
-        if (mMusicPlayMainFragment == null) {
-            LocalSongEntity songEntity = getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG);
-            final ArrayList<LocalSongEntity> playingSongs = getIntent().getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS);
-
-            mMusicPlayMainFragment = MusicPlayMainFragment.newInstance(songEntity, playingSongs);
-
-            mMusicPlayMainFragment.setMusicPlayMainFragmentCallback(new MusicPlayMainFragmentCallback() {
-                @Override
-                public void onBlurCoverChanged(final Bitmap bitmap) {
-                    mMusicPlayPresenter.onBlurCoverChanged(bitmap);
-                }
-
-                @Override
-                public void onCoverClick(View view) {
-                    mMusicPlayPresenter.onCoverClick(view);
-                }
-            });
-
-        }
-        return mMusicPlayMainFragment;
-    }
-
-    public MusicPlaySecondFragment getMusicPlaySecondFragment() {
-        if (mMusicPlaySecondFragment == null) {
-            mMusicPlaySecondFragment = new MusicPlaySecondFragment();
-        }
-        return mMusicPlaySecondFragment;
-    }
-
     @Override
     public void onBackPressed() {
-        if (getMusicPlaySecondFragment().isAdded() && getMusicPlaySecondFragment().isVisible()) {
+        if (mMusicPlaySecondFragment.isAdded() && mMusicPlaySecondFragment.isVisible()) {
             hideMusicPlaySecondFragment();
             showMusicPlayMainFragment();
         } else {
-            getMusicPlayMainFragment().onActivityBackPressed();
+            mMusicPlayMainFragment.onActivityBackPressed();
 
             if (!mMusicPlayMainFragment.isSameSong()) {
                 finish();
