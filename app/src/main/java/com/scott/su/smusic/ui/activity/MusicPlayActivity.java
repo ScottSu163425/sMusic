@@ -2,6 +2,7 @@ package com.scott.su.smusic.ui.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.internal.BottomNavigationPresenter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
