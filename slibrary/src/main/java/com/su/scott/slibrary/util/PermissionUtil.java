@@ -14,18 +14,24 @@ import android.support.v4.content.ContextCompat;
 public class PermissionUtil {
 
     /**
-     *
      * @param context
      * @param permission eg.Manifest.permission.READ_EXTERNAL_STORAGE
      */
-    public static void checkPermission(Context context,String  permission,int requestCode){
+    public static void requestPermission(Context context, String permission, int requestCode) {
+        if (isPermissionGranted(context, permission)) {
+            return;
+        }
+
         if (Build.VERSION.SDK_INT >= 23) {
             int checkCallPhonePermission = ContextCompat.checkSelfPermission(context, permission);
             if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions((Activity) context, new String[]{permission}, requestCode);
-                return;
             }
         }
+    }
+
+    public static boolean isPermissionGranted(Context context, String permission) {
+        return (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED);
     }
 
 }

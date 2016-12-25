@@ -6,11 +6,17 @@ import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.BounceInterpolator;
+import android.view.animation.Interpolator;
+
+import com.su.scott.slibrary.R;
 
 /**
  * Created by Administrator on 2016/8/12.
@@ -270,6 +276,7 @@ public class AnimUtil {
         });
         animator.start();
     }
+
     /**
      * 左右晃动
      *
@@ -340,6 +347,7 @@ public class AnimUtil {
         animator.setInterpolator(new BounceInterpolator());
         animator.start();
     }
+
 
 
 }

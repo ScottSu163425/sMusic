@@ -1,6 +1,5 @@
 package com.scott.su.smusic.ui.activity;
 
-import android.Manifest;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -56,7 +55,6 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.callback.SimpleCallback;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.DialogUtil;
-import com.su.scott.slibrary.util.PermissionUtil;
 import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.TimeUtil;
 import com.su.scott.slibrary.util.ViewUtil;
@@ -104,6 +102,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         mMainPresenter.onViewFirstTimeCreated();
     }
@@ -156,9 +155,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
             getIntent.putExtra(Constants.KEY_IS_FROM_NOTIFICATION, false);
             setIntent(getIntent);
         }
-
-        PermissionUtil.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE, REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE);
-        PermissionUtil.checkPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, REQUEST_CODE_PERMISSION_WRITE_EXTERNAL_STORAGE);
     }
 
     @Override
@@ -210,7 +206,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
             }
         };
         Intent intent = new Intent(MainActivity.this, ShutDownTimerService.class);
-//        startService(intent);
+        startService(intent);
         bindService(intent, mShutDownTimerServiceConnection, BIND_AUTO_CREATE);
     }
 
