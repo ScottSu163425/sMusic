@@ -104,6 +104,10 @@ public class AnimUtil {
         return alpha(view, ACTION.OUT, 1.0f, 0, duration, null, null);
     }
 
+    public static ObjectAnimator alphaOut(@NonNull View view, long duration, @Nullable TimeInterpolator interpolator, @Nullable SimpleAnimListener listener) {
+        return alpha(view, ACTION.OUT, 1.0f, 0, duration, interpolator, listener);
+    }
+
     public static ObjectAnimator rotate2DPositive(@NonNull final View view, float to, long duration) {
         return rotate2D(view, 0, Math.abs(to), duration, null, null);
     }
