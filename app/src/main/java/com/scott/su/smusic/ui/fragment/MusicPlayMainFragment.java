@@ -381,7 +381,7 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
     @Override
     public void setPlayRepeatAll(boolean needAnim) {
         if (needAnim) {
-            AnimUtil.rotate2DPositive(mRepeatButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT);
+            AnimUtil.rotate2DPositive(mRepeatButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT).start();
             mRepeatButton.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -397,7 +397,7 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
     @Override
     public void setPlayRepeatOne(boolean needAnim) {
         if (needAnim) {
-            AnimUtil.rotate2DPositive(mRepeatButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT);
+            AnimUtil.rotate2DPositive(mRepeatButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT).start();
             mRepeatButton.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -413,7 +413,7 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
     @Override
     public void setPlayRepeatShuffle(boolean needAnim) {
         if (needAnim) {
-            AnimUtil.rotate2DPositive(mRepeatButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT);
+            AnimUtil.rotate2DPositive(mRepeatButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT).start();
             mRepeatButton.postDelayed(new Runnable() {
                 @Override
                 public void run() {

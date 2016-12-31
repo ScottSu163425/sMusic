@@ -260,7 +260,7 @@ public abstract class BaseDisplayFragment<V extends IView, P extends IBaseDispla
 
     private void showLoadMoreFooter() {
         if (!ViewUtil.isViewVisiable(mFooterLayout)) {
-            AnimUtil.alphaIn(mFooterLayout);
+            AnimUtil.alphaIn(mFooterLayout).start();
         }
     }
 

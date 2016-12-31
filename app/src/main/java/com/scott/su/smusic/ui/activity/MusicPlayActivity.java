@@ -144,7 +144,7 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
 
     @Override
     public void loadBlurCover(final Bitmap bitmap) {
-        AnimUtil.alpha(mBlurCoverImageView, AnimUtil.ACTION.IN, 0, 1.0f, AnimUtil.DURATION_XLONG, null, new AnimUtil.SimpleAnimListener() {
+        AnimUtil.alphaIn(mBlurCoverImageView, AnimUtil.DURATION_XLONG, null, new AnimUtil.SimpleAnimListener() {
             @Override
             public void onAnimStart() {
                 mBlurCoverImageView.setImageBitmap(bitmap);
@@ -154,7 +154,7 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
             public void onAnimEnd() {
 
             }
-        });
+        }).start();
     }
 
     @Override

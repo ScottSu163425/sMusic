@@ -1,23 +1,27 @@
 package com.scott.su.smusic.ui.activity;
 
-import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.view.View;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
 import com.scott.su.smusic.R;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.mvp.presenter.IPresenter;
 import com.su.scott.slibrary.util.AnimUtil;
-import com.su.scott.slibrary.util.CirclarRevealUtil;
-import com.su.scott.slibrary.util.PermissionUtil;
+import com.su.scott.slibrary.util.ScreenUtil;
+import com.su.scott.slibrary.util.ViewUtil;
 
 public class SplashActivity extends BaseActivity {
-    private View mBackgroundLayout;
     private TextView mAppNameTextView;
+    private Animator mAppNameInAnimator, mAppNameOutAnimator, mCopyRightInAnimator, mCopyRightOutAnimator;
+
 
     @Override
     protected IPresenter getPresenter() {
@@ -29,32 +33,10 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        mBackgroundLayout = findViewById(R.id.view_background_root_activity_splash);
-        mAppNameTextView = (TextView) findViewById(R.id.tv_app_name_activity_splash);
+        initView();
+        initData();
 
-        final Animation animation = AnimationUtils.loadAnimation(this, R.anim.in_east);
-        animation.setInterpolator(new OvershootInterpolator());
-        animation.setDuration(AnimUtil.DURATION_SHORT);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                mBackgroundLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                CirclarRevealUtil.revealIn(mBackgroundLayout, CirclarRevealUtil.DIRECTION.CENTER);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        mAppNameTextView.startAnimation(animation);
-
+        mAppNameInAnimator.start();
     }
 
     @Override
@@ -69,16 +51,45 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        mAppNameTextView = (TextView) findViewById(R.id.tv_app_name_activity_splash);
 
+        ViewUtil.setViewInVisiable(mAppNameTextView);
     }
 
     @Override
     public void initData() {
+        mAppNameInAnimator = AnimUtil.translateX(mAppNameTextView, ScreenUtil.getScreenWidth(this), 0,
+                AnimUtil.DURATION_NORMAL, new LinearOutSlowInInterpolator(), new AnimUtil.SimpleAnimListener() {
+                    @Override
+                    public void onAnimStart() {
+                        ViewUtil.setViewVisiable(mAppNameTextView);
+                    }
 
+                    @Override
+                    public void onAnimEnd() {
+                        mAppNameOutAnimator.start();
+                    }
+                });
+
+        mAppNameOutAnimator = AnimUtil.translateX(mAppNameTextView, 0, -ScreenUtil.getScreenWidth(this),
+                AnimUtil.DURATION_NORMAL, new FastOutSlowInInterpolator(), new AnimUtil.SimpleAnimListener() {
+                    @Override
+                    public void onAnimStart() {
+                    }
+
+                    @Override
+                    public void onAnimEnd() {
+                        goTo(MainActivity.class);
+                        finish();
+                        overridePendingTransition(R.anim.in_east, R.anim.out_west);
+                    }
+                });
     }
 
     @Override
     public void initListener() {
 
     }
+
+
 }

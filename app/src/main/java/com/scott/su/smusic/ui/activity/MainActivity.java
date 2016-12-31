@@ -392,7 +392,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
                     }
                 } else if (position == TAB_POSITION_BILL) {
                     showFab(true);
-                    AnimUtil.rotate2DPositive(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT);
+                    AnimUtil.rotate2DPositive(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT).start();
                     mFloatingActionButton.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -659,7 +659,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
         if (ViewUtil.isViewVisiable(mFloatingActionButton)) {
             if (needAnim) {
                 AnimUtil.scaleOut(mFloatingActionButton, AnimUtil.DURATION_SHORT);
-                AnimUtil.rotate2DNegative(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT);
+                AnimUtil.rotate2DNegative(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT).start();
             } else {
                 ViewUtil.setViewGone(mFloatingActionButton);
             }
@@ -810,7 +810,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
     @Override
     public void setFabPlayRandom() {
-        AnimUtil.rotate2DPositive(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT);
+        AnimUtil.rotate2DPositive(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT).start();
         mFloatingActionButton.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -822,7 +822,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
     @Override
     public void setFabPlayCurrent() {
-        AnimUtil.rotate2DPositive(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT);
+        AnimUtil.rotate2DPositive(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT).start();
         mFloatingActionButton.postDelayed(new Runnable() {
             @Override
             public void run() {

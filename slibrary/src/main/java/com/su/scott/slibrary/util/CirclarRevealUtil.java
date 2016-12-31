@@ -43,7 +43,7 @@ public class CirclarRevealUtil {
     public static Animator createReveal(@NonNull View view, DIRECTION direction, ACTION action) {
         return createCirclarReveal(view, direction, action);
     }
-    
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealIn(@NonNull View view, DIRECTION direction) {
         revealIn(view, direction, DURATION_REVEAL_SHORT, null, null);

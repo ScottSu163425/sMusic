@@ -308,7 +308,7 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
     @Override
     public void showFab() {
         if (!ViewUtil.isViewVisiable(mPlayFAB)) {
-            AnimUtil.alphaIn(mPlayFAB, AnimUtil.DURATION_SHORT);
+            AnimUtil.alphaIn(mPlayFAB, AnimUtil.DURATION_SHORT).start();
         }
     }
 
