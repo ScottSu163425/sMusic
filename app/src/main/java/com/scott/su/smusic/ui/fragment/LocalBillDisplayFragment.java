@@ -11,7 +11,7 @@ import com.scott.su.smusic.adapter.LocalBillDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.LocalBillViewHolder;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.mvp.contract.LocalBillDisplayContract;
-import com.scott.su.smusic.mvp.presenter.impl.LocalBillBaseDisplayPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.LocalBillDisplayPresenterImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
@@ -39,7 +39,7 @@ public class LocalBillDisplayFragment extends BaseDisplayFragment<LocalBillDispl
     @Override
     protected LocalBillDisplayContract.LocalBillBaseDisplayPresenter getPresenter() {
         if (mSongBillDisplayPresenter == null) {
-            mSongBillDisplayPresenter = new LocalBillBaseDisplayPresenterImpl(this);
+            mSongBillDisplayPresenter = new LocalBillDisplayPresenterImpl(this);
         }
         return mSongBillDisplayPresenter;
     }

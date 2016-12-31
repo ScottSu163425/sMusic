@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.scott.su.smusic.cache.LocalSongEntityCache;
-import com.scott.su.smusic.entity.LocalSongEntity;
-import com.scott.su.smusic.mvp.contract.LocalSongDisplayContract;
-import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
+import com.scott.su.smusic.entity.LocalAlbumEntity;
+import com.scott.su.smusic.mvp.contract.LocalAlbumDisplayContract;
+import com.scott.su.smusic.mvp.model.LocalAlbumModel;
+import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 
 import java.util.ArrayList;
@@ -23,23 +23,23 @@ import rx.schedulers.Schedulers;
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalSongBaseDisplayPresenterImpl extends BasePresenter<LocalSongDisplayContract.LocalSongDisplayView>
-        implements LocalSongDisplayContract.LocalSongBaseDisplayPresenter {
-    private LocalSongModelImpl mSongModel;
+public class LocalAlbumDisplayPresenterImpl extends BasePresenter<LocalAlbumDisplayContract.LocalAlbumDisplayView>
+        implements LocalAlbumDisplayContract.LocalAlbumBaseDisplayPresenter {
+    private LocalAlbumModel mLocalAlbumModel;
 
-    public LocalSongBaseDisplayPresenterImpl(LocalSongDisplayContract.LocalSongDisplayView view) {
-        super(view);
-        this.mSongModel = new LocalSongModelImpl();
+    public LocalAlbumDisplayPresenterImpl(LocalAlbumDisplayContract.LocalAlbumDisplayView localAlbumDisplayView) {
+       super(localAlbumDisplayView);
+        this.mLocalAlbumModel = new LocalAlbumModelImpl();
     }
 
     @Override
     public void onSwipRefresh() {
-        LocalSongEntityCache.getInstance().release();
         getAndDisplayLocalSongs(true);
     }
 
     @Override
     public void onLoadMore() {
+
     }
 
     @Override
@@ -53,7 +53,7 @@ public class LocalSongBaseDisplayPresenterImpl extends BasePresenter<LocalSongDi
     }
 
     @Override
-    public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
+    public void onItemClick(View itemView, LocalAlbumEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
         getView().handleItemClick(itemView, entity, position, sharedElements, transitionNames, data);
     }
 
@@ -77,25 +77,25 @@ public class LocalSongBaseDisplayPresenterImpl extends BasePresenter<LocalSongDi
             getView().showLoading();
         }
 
-        Observable.create(new Observable.OnSubscribe<List<LocalSongEntity>>() {
+        Observable.create(new Observable.OnSubscribe<List<LocalAlbumEntity>>() {
             @Override
-            public void call(Subscriber<? super List<LocalSongEntity>> subscriber) {
-                subscriber.onNext(mSongModel.getLocalSongs(getView().getViewContext()));
+            public void call(Subscriber<? super List<LocalAlbumEntity>> subscriber) {
+                subscriber.onNext(mLocalAlbumModel.getLocalAlbums(getView().getViewContext()));
             }
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<LocalSongEntity>>() {
+                .subscribe(new Action1<List<LocalAlbumEntity>>() {
                     @Override
-                    public void call(List<LocalSongEntity> songEntities) {
+                    public void call(List<LocalAlbumEntity> localAlbumEntities) {
                         if (!isViewAttaching()) {
                             return;
                         }
 
-                        List<LocalSongEntity> result = songEntities;
+                        List<LocalAlbumEntity> result = localAlbumEntities;
 
                         if (result == null) {
-                            result = new ArrayList<LocalSongEntity>();
+                            result = new ArrayList<LocalAlbumEntity>();
                         }
 
                         getView().setDisplayData(result);

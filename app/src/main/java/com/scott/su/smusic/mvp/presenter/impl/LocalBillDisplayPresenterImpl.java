@@ -22,12 +22,12 @@ import rx.schedulers.Schedulers;
 /**
  * Created by asus on 2016/8/19.
  */
-public class LocalBillBaseDisplayPresenterImpl extends BasePresenter<LocalBillDisplayContract.LocalBillDisplayView>
+public class LocalBillDisplayPresenterImpl extends BasePresenter<LocalBillDisplayContract.LocalBillDisplayView>
         implements LocalBillDisplayContract.LocalBillBaseDisplayPresenter {
     private LocalBillModelImpl mBillModel;
 
     
-    public LocalBillBaseDisplayPresenterImpl(LocalBillDisplayContract.LocalBillDisplayView localBillDisplayView) {
+    public LocalBillDisplayPresenterImpl(LocalBillDisplayContract.LocalBillDisplayView localBillDisplayView) {
         super(localBillDisplayView);
         this.mBillModel = new LocalBillModelImpl();
     }

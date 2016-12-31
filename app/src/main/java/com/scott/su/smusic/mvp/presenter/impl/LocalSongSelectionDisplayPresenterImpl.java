@@ -22,11 +22,11 @@ import rx.schedulers.Schedulers;
 /**
  * Created by asus on 2016/8/27.
  */
-public class LocalSongSelectionBaseDisplayPresenterImpl extends BasePresenter<LocalSongSelectionDisplayContract.LocalSongSelectionDisplayView>
+public class LocalSongSelectionDisplayPresenterImpl extends BasePresenter<LocalSongSelectionDisplayContract.LocalSongSelectionDisplayView>
         implements LocalSongSelectionDisplayContract.LocalSongSelectionBaseDisplayPresenter {
     private LocalSongModel mLocalSongModel;
 
-    public LocalSongSelectionBaseDisplayPresenterImpl(LocalSongSelectionDisplayContract.LocalSongSelectionDisplayView view) {
+    public LocalSongSelectionDisplayPresenterImpl(LocalSongSelectionDisplayContract.LocalSongSelectionDisplayView view) {
         super(view);
         mLocalSongModel = new LocalSongModelImpl();
     }

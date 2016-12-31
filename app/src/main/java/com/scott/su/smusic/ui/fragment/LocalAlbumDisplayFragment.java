@@ -11,7 +11,7 @@ import com.scott.su.smusic.adapter.LocalAlbumDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.LocalAlbumViewHolder;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.mvp.contract.LocalAlbumDisplayContract;
-import com.scott.su.smusic.mvp.presenter.impl.LocalAlbumBaseDisplayPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.LocalAlbumDisplayPresenterImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
@@ -39,7 +39,7 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumDis
     @Override
     protected LocalAlbumDisplayContract.LocalAlbumBaseDisplayPresenter getPresenter() {
         if (mLocalAlbumDisplayPresenter == null) {
-            mLocalAlbumDisplayPresenter = new LocalAlbumBaseDisplayPresenterImpl(this);
+            mLocalAlbumDisplayPresenter = new LocalAlbumDisplayPresenterImpl(this);
         }
         return mLocalAlbumDisplayPresenter;
     }

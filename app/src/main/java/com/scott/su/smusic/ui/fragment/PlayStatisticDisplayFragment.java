@@ -11,7 +11,7 @@ import com.scott.su.smusic.adapter.PlayStatisticDisplayAdapter;
 import com.scott.su.smusic.callback.PlayStatisticItemClickCallback;
 import com.scott.su.smusic.entity.PlayStatisticEntity;
 import com.scott.su.smusic.mvp.contract.PlayStatisticDisplayContract;
-import com.scott.su.smusic.mvp.presenter.impl.PlayStatisticBaseDisplayPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.PlayStatisticDisplayPresenterImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
@@ -99,7 +99,7 @@ public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatis
     @Override
     protected PlayStatisticDisplayContract.PlayStatisticBaseDisplayPresenter getPresenter() {
         if (mDisplayPresenter == null) {
-            mDisplayPresenter = new PlayStatisticBaseDisplayPresenterImpl(this);
+            mDisplayPresenter = new PlayStatisticDisplayPresenterImpl(this);
         }
         return mDisplayPresenter;
     }

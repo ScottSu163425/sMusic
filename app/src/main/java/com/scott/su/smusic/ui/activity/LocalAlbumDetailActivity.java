@@ -18,7 +18,7 @@ import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.LocalAlbumDetailContract;
-import com.scott.su.smusic.mvp.presenter.impl.ILocalAlbumDetailPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.LocalAlbumDetailPresenterImpl;
 import com.scott.su.smusic.ui.fragment.AlbumSongDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
@@ -49,7 +49,7 @@ public class LocalAlbumDetailActivity extends BaseActivity<LocalAlbumDetailContr
     @Override
     protected LocalAlbumDetailContract.ILocalAlbumDetailPresenter getPresenter() {
         if (mPresenter == null) {
-            mPresenter = new ILocalAlbumDetailPresenterImpl(this);
+            mPresenter = new LocalAlbumDetailPresenterImpl(this);
         }
         return mPresenter;
     }

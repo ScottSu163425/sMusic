@@ -23,11 +23,11 @@ import rx.schedulers.Schedulers;
  * Created by asus on 2016/11/19.
  */
 
-public class PlayStatisticBaseDisplayPresenterImpl extends BasePresenter<PlayStatisticDisplayContract.PlayStatisticDisplayView>
+public class PlayStatisticDisplayPresenterImpl extends BasePresenter<PlayStatisticDisplayContract.PlayStatisticDisplayView>
         implements PlayStatisticDisplayContract.PlayStatisticBaseDisplayPresenter {
     private PlayStatisticModel mPlayStatisticModel;
 
-    public PlayStatisticBaseDisplayPresenterImpl(PlayStatisticDisplayContract.PlayStatisticDisplayView view) {
+    public PlayStatisticDisplayPresenterImpl(PlayStatisticDisplayContract.PlayStatisticDisplayView view) {
         super(view);
         this.mPlayStatisticModel = new PlayStatisticModelImpl();
     }

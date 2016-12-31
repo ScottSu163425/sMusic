@@ -19,12 +19,12 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/29.
  */
-public class ILocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailContract.LocalBillDetailView>
+public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailContract.LocalBillDetailView>
         implements LocalBillDetailContract.ILocalBillDetailPresenter {
     private LocalBillModel mBillModel;
     private LocalAlbumModel mAlbumModel;
 
-    public ILocalBillDetailPresenterImpl(LocalBillDetailContract.LocalBillDetailView view) {
+    public LocalBillDetailPresenterImpl(LocalBillDetailContract.LocalBillDetailView view) {
         super(view);
         this.mBillModel = new LocalBillModelImpl();
         this.mAlbumModel = new LocalAlbumModelImpl();
@@ -32,7 +32,6 @@ public class ILocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetail
 
     @Override
     public void onTransitionEnd() {
-
         if (getView().getBillEntity().isBillEmpty()) {
             getView().hideFab();
             getView().onEnterBillEmpty();
@@ -239,7 +238,6 @@ public class ILocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetail
 
     }
 
-
     @Override
     public void onViewFirstTimeCreated() {
         getView().initPreData();
@@ -257,7 +255,6 @@ public class ILocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetail
                         mBillModel.getBillPosition(getView().getViewContext(), getView().getBillEntity()));
             }
         }, null);
-
 
     }
 

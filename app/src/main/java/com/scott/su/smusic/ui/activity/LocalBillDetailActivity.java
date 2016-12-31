@@ -23,7 +23,7 @@ import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.LocalBillDetailContract;
-import com.scott.su.smusic.mvp.presenter.impl.ILocalBillDetailPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.LocalBillDetailPresenterImpl;
 import com.scott.su.smusic.ui.fragment.BillSongDisplayFragment;
 import com.scott.su.smusic.ui.fragment.CommonInputDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
@@ -101,7 +101,7 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
     @Override
     protected LocalBillDetailContract.ILocalBillDetailPresenter getPresenter() {
         if (mBillDetailPresenter == null) {
-            mBillDetailPresenter = new ILocalBillDetailPresenterImpl(this);
+            mBillDetailPresenter = new LocalBillDetailPresenterImpl(this);
         }
         return mBillDetailPresenter;
     }

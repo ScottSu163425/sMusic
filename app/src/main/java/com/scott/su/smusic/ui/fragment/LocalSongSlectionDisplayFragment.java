@@ -11,7 +11,7 @@ import com.scott.su.smusic.adapter.LocalSongSelectionDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.LocalSongSelectionViewHolder;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.LocalSongSelectionDisplayContract;
-import com.scott.su.smusic.mvp.presenter.impl.LocalSongSelectionBaseDisplayPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.LocalSongSelectionDisplayPresenterImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
@@ -31,7 +31,7 @@ public class LocalSongSlectionDisplayFragment extends BaseDisplayFragment<LocalS
     @Override
     protected LocalSongSelectionDisplayContract.LocalSongSelectionBaseDisplayPresenter getPresenter() {
         if (mSongSelectionDisplayPresenter == null) {
-            mSongSelectionDisplayPresenter = new LocalSongSelectionBaseDisplayPresenterImpl(this);
+            mSongSelectionDisplayPresenter = new LocalSongSelectionDisplayPresenterImpl(this);
         }
         return mSongSelectionDisplayPresenter;
     }

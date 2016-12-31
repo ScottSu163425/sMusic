@@ -15,11 +15,10 @@ import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.AlbumSongDisplayContract;
-import com.scott.su.smusic.mvp.presenter.impl.AlbumSongBaseDisplayPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.LocalAlbumSongDisplayPresenterImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
-import com.su.scott.slibrary.mvp.presenter.IPresenter;
 
 import java.util.List;
 
@@ -52,7 +51,7 @@ public class AlbumSongDisplayFragment extends BaseDisplayFragment<AlbumSongDispl
     @Override
     protected AlbumSongDisplayContract.AlbumSongBaseDisplayPresenter getPresenter() {
         if (mSongDisplayPresenter == null) {
-            mSongDisplayPresenter = new AlbumSongBaseDisplayPresenterImpl(this);
+            mSongDisplayPresenter = new LocalAlbumSongDisplayPresenterImpl(this);
         }
         return mSongDisplayPresenter;
     }

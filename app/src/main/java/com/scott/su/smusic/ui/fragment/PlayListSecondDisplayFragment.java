@@ -11,7 +11,7 @@ import com.scott.su.smusic.adapter.PlayListSecondDisplayAdapter;
 import com.scott.su.smusic.adapter.holder.PlayListSecondViewHolder;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.PlayListSecondDisplayContract;
-import com.scott.su.smusic.mvp.presenter.impl.PlayListSecondBaseDisplayPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.PlayListSecondDisplayPresenterImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
@@ -121,7 +121,7 @@ public class PlayListSecondDisplayFragment extends BaseDisplayFragment<PlayListS
     @Override
     protected PlayListSecondDisplayContract.PlayListSecondBaseDisplayPresenter getPresenter() {
         if (mDisplayPresenter == null) {
-            mDisplayPresenter = new PlayListSecondBaseDisplayPresenterImpl(this);
+            mDisplayPresenter = new PlayListSecondDisplayPresenterImpl(this);
         }
         return mDisplayPresenter;
     }

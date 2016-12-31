@@ -15,7 +15,7 @@ import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.BillSongDisplayContract;
-import com.scott.su.smusic.mvp.presenter.impl.BillSongBaseDisplayPresenterImpl;
+import com.scott.su.smusic.mvp.presenter.impl.LocalBillSongDisplayPresenterImpl;
 import com.su.scott.slibrary.adapter.BaseDisplayAdapter;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseDisplayFragment;
@@ -51,14 +51,14 @@ public class BillSongDisplayFragment extends BaseDisplayFragment<BillSongDisplay
     @Override
     protected BillSongDisplayContract.BillSongBaseDisplayPresenter getPresenter() {
         if (mSongDisplayPresenter == null) {
-            mSongDisplayPresenter = new BillSongBaseDisplayPresenterImpl(this);
+            mSongDisplayPresenter = new LocalBillSongDisplayPresenterImpl(this);
         }
         return mSongDisplayPresenter;
     }
 
     @Override
     protected void onFirstTimeCreateView() {
-        mSongDisplayPresenter = new BillSongBaseDisplayPresenterImpl(this);
+        mSongDisplayPresenter = new LocalBillSongDisplayPresenterImpl(this);
         mSongDisplayPresenter.onViewFirstTimeCreated();
     }
 
