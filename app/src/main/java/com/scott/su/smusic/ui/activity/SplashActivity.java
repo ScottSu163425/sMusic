@@ -19,7 +19,8 @@ import com.su.scott.slibrary.util.ScreenUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
 public class SplashActivity extends BaseActivity {
-    private TextView mAppNameTextView;
+    private static final long DURATION_STATY = 1500;
+    private TextView mAppNameTextView, mCopyRightTextView;
     private Animator mAppNameInAnimator, mAppNameOutAnimator, mCopyRightInAnimator, mCopyRightOutAnimator;
 
 
@@ -36,6 +37,11 @@ public class SplashActivity extends BaseActivity {
         initView();
         initData();
 
+        startAnim();
+    }
+
+    private void startAnim() {
+        mAppNameInAnimator.setStartDelay(AnimUtil.DURATION_SHORT);
         mAppNameInAnimator.start();
     }
 
@@ -52,14 +58,16 @@ public class SplashActivity extends BaseActivity {
     @Override
     public void initView() {
         mAppNameTextView = (TextView) findViewById(R.id.tv_app_name_activity_splash);
+        mCopyRightTextView = (TextView) findViewById(R.id.tv_copy_right_activity_splash);
 
         ViewUtil.setViewInVisiable(mAppNameTextView);
+        ViewUtil.setViewInVisiable(mCopyRightTextView);
     }
 
     @Override
     public void initData() {
         mAppNameInAnimator = AnimUtil.translateX(mAppNameTextView, ScreenUtil.getScreenWidth(this), 0,
-                AnimUtil.DURATION_NORMAL, new LinearOutSlowInInterpolator(), new AnimUtil.SimpleAnimListener() {
+                AnimUtil.DURATION_NORMAL, new FastOutSlowInInterpolator(), new AnimUtil.SimpleAnimListener() {
                     @Override
                     public void onAnimStart() {
                         ViewUtil.setViewVisiable(mAppNameTextView);
@@ -67,7 +75,7 @@ public class SplashActivity extends BaseActivity {
 
                     @Override
                     public void onAnimEnd() {
-                        mAppNameOutAnimator.start();
+                        mCopyRightInAnimator.start();
                     }
                 });
 
@@ -84,6 +92,34 @@ public class SplashActivity extends BaseActivity {
                         overridePendingTransition(R.anim.in_east, R.anim.out_west);
                     }
                 });
+
+        mCopyRightInAnimator = AnimUtil.translateX(mCopyRightTextView, -ScreenUtil.getScreenWidth(this), 0,
+                AnimUtil.DURATION_NORMAL, new FastOutSlowInInterpolator(), new AnimUtil.SimpleAnimListener() {
+                    @Override
+                    public void onAnimStart() {
+                        ViewUtil.setViewVisiable(mAppNameTextView);
+                    }
+
+                    @Override
+                    public void onAnimEnd() {
+                        mCopyRightOutAnimator.setStartDelay(DURATION_STATY);
+                        mCopyRightOutAnimator.start();
+                    }
+                });
+
+        mCopyRightOutAnimator = AnimUtil.translateX(mCopyRightTextView, 0, ScreenUtil.getScreenWidth(this),
+                AnimUtil.DURATION_NORMAL, new FastOutSlowInInterpolator(), new AnimUtil.SimpleAnimListener() {
+                    @Override
+                    public void onAnimStart() {
+                        mAppNameOutAnimator.setStartDelay(AnimUtil.DURATION_NORMAL_HALF);
+                        mAppNameOutAnimator.start();
+                    }
+
+                    @Override
+                    public void onAnimEnd() {
+
+                    }
+                });
     }
 
     @Override
@@ -91,5 +127,9 @@ public class SplashActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
 
 }

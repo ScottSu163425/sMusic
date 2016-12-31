@@ -94,5 +94,6 @@
     <string name="label_thurday">周四</string>
     <string name="label_friday">周五</string>
     <string name="label_saturday">周六</string>
+    <string name="copy_right">Copyright © 2016 Scott Inc. All Rights Reserved.</string>
 
 </resources>

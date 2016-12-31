@@ -21,6 +21,7 @@
     <dimen name="margin_m">32dp</dimen>
     <dimen name="margin_l">56dp</dimen>
     <dimen name="margin_xl">72dp</dimen>
+    <dimen name="margin_xxl">96dp</dimen>
 
     <!--height-->
     <dimen name="height_divider_line">0.5px</dimen>
