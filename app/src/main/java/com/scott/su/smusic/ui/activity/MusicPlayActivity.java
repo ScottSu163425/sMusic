@@ -1,14 +1,9 @@
 package com.scott.su.smusic.ui.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.design.internal.BottomNavigationPresenter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +24,6 @@ import com.scott.su.smusic.ui.fragment.MusicPlaySecondFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.SdkUtil;
-import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.ArrayList;
 
@@ -39,12 +33,12 @@ import java.util.ArrayList;
 public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayView, MusicPlayContract.MusicPlayPresenter>
         implements MusicPlayContract.MusicPlayView, View.OnClickListener {
     private final int ID_CONTAINER = R.id.fl_container_music_play_main;
-
     private MusicPlayContract.MusicPlayPresenter mMusicPlayPresenter;
     private Toolbar mToolbar;
     private ImageView mBlurCoverImageView;
     private MusicPlayMainFragment mMusicPlayMainFragment;
     private MusicPlaySecondFragment mMusicPlaySecondFragment;
+    private boolean mEnter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,23 +145,30 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
 
     @Override
     public void loadBlurCover(final Bitmap bitmap) {
+        if (mEnter) {
+            mBlurCoverImageView.setImageBitmap(bitmap);
+            mEnter = false;
+            return;
+        }
+
+        //By switching songs.
         AnimUtil.alphaOut(mBlurCoverImageView,
                 AnimUtil.DURATION_NORMAL,
                 new FastOutLinearInInterpolator(),
                 new AnimUtil.SimpleAnimListener() {
-            @Override
-            public void onAnimStart() {
-            }
+                    @Override
+                    public void onAnimStart() {
+                    }
 
-            @Override
-            public void onAnimEnd() {
-                mBlurCoverImageView.setImageBitmap(bitmap);
-                AnimUtil.alphaIn(mBlurCoverImageView,
-                        AnimUtil.DURATION_NORMAL,
-                        new AccelerateDecelerateInterpolator(),
-                        null).start();
-            }
-        }).start();
+                    @Override
+                    public void onAnimEnd() {
+                        mBlurCoverImageView.setImageBitmap(bitmap);
+                        AnimUtil.alphaIn(mBlurCoverImageView,
+                                AnimUtil.DURATION_NORMAL,
+                                new AccelerateDecelerateInterpolator(),
+                                null).start();
+                    }
+                }).start();
     }
 
     @Override
