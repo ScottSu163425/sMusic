@@ -7,6 +7,10 @@ import android.view.View;
  */
 
 public interface DrawerMenuCallback {
+    void onDrawerUserHeadClick(View sharedElement, String transitionName);
+
+    void onDrawerMenuUserCenterClick(View v, View sharedElement, String transitionName);
+
     void onDrawerMenuNightModeOn();
 
     void onDrawerMenuNightModeOff();

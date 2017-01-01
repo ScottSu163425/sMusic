@@ -2,6 +2,7 @@
     <string name="transition_name_card">transition_name_card</string>
     <string name="transition_name_cover">transition_name_cover</string>
     <string name="transition_name_fab">transition_name_fab</string>
+    <string name="transition_name_head">transition_name_head</string>
 
 
     <string name="app_name">SMusic</string>
@@ -67,7 +68,7 @@
     <string name="edit_bill">编辑歌单</string>
     <string name="edit_successfully">修改成功</string>
     <string name="empty_keyword">你输入的关键字是空的?</string>
-    <string name="song_bill_album">歌曲/歌单/专辑</string>
+    <string name="song_bill_album">歌曲/歌手/歌单/专辑</string>
     <string name="delete_local_song_successfully">删除成功</string>
     <string name="delete_local_song_unsuccessfully">删除失败</string>
     <string name="empty_local_song">没有任何本地音乐</string>
@@ -95,5 +96,6 @@
     <string name="label_friday">周五</string>
     <string name="label_saturday">周六</string>
     <string name="copy_right">Copyright © 2016 Scott Inc. All Rights Reserved.</string>
+    <string name="user_center">个人中心</string>
 
 </resources>

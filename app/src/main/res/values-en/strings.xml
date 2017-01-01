@@ -63,7 +63,7 @@
     <string name="edit_bill">Edit Bill</string>
     <string name="edit_successfully">Edit successfully</string>
     <string name="empty_keyword">The keyword is empty?</string>
-    <string name="song_bill_album">song/bill/album</string>
+    <string name="song_bill_album">song/artist/bill/album</string>
     <string name="delete_local_song_successfully">Delete successfully</string>
     <string name="delete_local_song_unsuccessfully">Delete unsuccessfully</string>
     <string name="empty_local_song">Empty local music</string>
@@ -90,4 +90,5 @@
     <string name="label_thurday">Thur</string>
     <string name="label_friday">Fri</string>
     <string name="label_saturday">Sat</string>
+    <string name="user_center">User Center</string>
 </resources>

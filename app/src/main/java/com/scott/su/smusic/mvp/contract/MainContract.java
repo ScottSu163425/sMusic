@@ -55,7 +55,7 @@ public interface MainContract {
 
         void updateAlbumDisplay();
 
-        void playSongInPosition(int position,boolean needOpenMusicPlay);
+        void playSongInPosition(int position, boolean needOpenMusicPlay);
 
         void playRandomSong();
 
@@ -91,6 +91,7 @@ public interface MainContract {
 
         void goToPlayStatistic();
 
+        void goToUserCenter(View sharedElement, String transitionName);
     }
 
     interface MainPresenterI extends IPresenter<MainView>, ILocalSongBottomSheetPresenter, DrawerMenuCallback {

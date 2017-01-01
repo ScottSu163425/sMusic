@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.scott.su.smusic.R;
@@ -31,7 +32,8 @@ public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMe
         implements View.OnClickListener {
     public static final float PERCENTAGE_OF_SCREEN_WIDTH = 0.82f;
     private View mRootView;
-    private View mStatisticMenuItem, mTimerMenuItem, mLanguageMenuItem, mUpdateMenuItem, mAboutMenuItem;
+    private ImageView mUserHeadImageView;
+    private View mUserCenterItem, mStatisticMenuItem, mTimerMenuItem, mLanguageMenuItem, mUpdateMenuItem, mAboutMenuItem;
     private TextView mTimerTimeTextView;
     private SwitchCompat mNightModeSwitch;
     private DrawerMenuCallback mMenuCallback;
@@ -60,6 +62,9 @@ public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMe
 
     @Override
     public void initView() {
+        mUserHeadImageView = (ImageView) mRootView.findViewById(R.id.iv_user_head_fragment_drawer_menu);
+        mUserCenterItem = mRootView.findViewById(R.id.rl_item_user_center_drawer_menu);
+        mStatisticMenuItem = mRootView.findViewById(R.id.rl_item_statistic_drawer_menu);
         mTimerMenuItem = mRootView.findViewById(R.id.rl_item_timer_drawer_menu);
         mUpdateMenuItem = mRootView.findViewById(R.id.rl_item_update_drawer_menu);
         mAboutMenuItem = mRootView.findViewById(R.id.rl_item_about_drawer_menu);
@@ -76,6 +81,8 @@ public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMe
 
     @Override
     public void initListener() {
+        mUserHeadImageView.setOnClickListener(this);
+        mUserCenterItem.setOnClickListener(this);
         mStatisticMenuItem.setOnClickListener(this);
         mTimerMenuItem.setOnClickListener(this);
         mLanguageMenuItem.setOnClickListener(this);
@@ -93,7 +100,6 @@ public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMe
                 }
             }
         });
-
     }
 
     @Override
@@ -107,7 +113,12 @@ public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMe
         }
 
         int id = view.getId();
-        if (id == mStatisticMenuItem.getId()) {
+
+        if (id == mUserHeadImageView.getId()) {
+            mMenuCallback.onDrawerUserHeadClick(view, getString(R.string.transition_name_head));
+        } else if (id == mUserCenterItem.getId()) {
+            mMenuCallback.onDrawerMenuUserCenterClick(view, mUserHeadImageView, getString(R.string.transition_name_head));
+        } else if (id == mStatisticMenuItem.getId()) {
             mMenuCallback.onDrawerMenuStaticticClick(view);
         } else if (id == mTimerMenuItem.getId()) {
             popTimerMenu();

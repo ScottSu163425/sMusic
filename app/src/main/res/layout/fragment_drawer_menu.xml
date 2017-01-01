@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundContent"
     android:clickable="true"
     android:orientation="vertical">
 
@@ -18,10 +17,14 @@
             android:id="@+id/iv_user_head_fragment_drawer_menu"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginLeft="@dimen/margin_xs"
+            android:layout_marginLeft="@dimen/margin_s"
+            android:clickable="true"
             android:src="@drawable/ic_user_head"
+            android:stateListAnimator="@drawable/selector_card_elevation_s"
+            android:transitionName="@string/transition_name_head"
+            android:translationZ="@dimen/margin_xs"
             app:layout_aspectRatio="100%"
-            app:layout_marginTopPercent="30%"
+            app:layout_marginTopPercent="25%"
             app:layout_widthPercent="25%" />
 
         <LinearLayout
@@ -29,21 +32,25 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_user_head_fragment_drawer_menu"
             android:layout_marginLeft="@dimen/margin_s"
-            android:layout_marginTop="@dimen/margin_xs"
+            android:layout_marginTop="@dimen/margin_s"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:text="Scott Su"
-                android:textColor="@color/textColorWhite"
+                android:textColor="#deffffff"
                 android:textSize="@dimen/text_size_title" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:text="“The only way to do great job is to love what you do.”"
-                android:textColor="@color/textColorWhiteSecondary"
+                android:textColor="#9affffff"
                 android:textSize="@dimen/text_size_caption" />
 
         </LinearLayout>
@@ -60,6 +67,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/rl_item_user_center_drawer_menu"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_item_s"
                 android:clickable="true"
@@ -71,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/margin_s"
-                    android:src="@drawable/ic_menu_item_drawer_statistic" />
+                    android:src="@drawable/ic_menu_item_drawer_user_center" />
 
                 <TextView
                     style="@style/TextAppearanceMenuSecondary"
@@ -79,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/margin_xl"
-                    android:text="个人中心" />
+                    android:text="@string/user_center" />
             </RelativeLayout>
 
             <RelativeLayout

@@ -44,9 +44,9 @@ import com.scott.su.smusic.mvp.contract.MainContract;
 import com.scott.su.smusic.mvp.presenter.impl.MainPresenterImpl;
 import com.scott.su.smusic.service.MusicPlayService;
 import com.scott.su.smusic.service.ShutDownTimerService;
-import com.scott.su.smusic.ui.fragment.LocalBillCreationDialogFragment;
 import com.scott.su.smusic.ui.fragment.DrawerMenuFragment;
 import com.scott.su.smusic.ui.fragment.LocalAlbumDisplayFragment;
+import com.scott.su.smusic.ui.fragment.LocalBillCreationDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
@@ -102,7 +102,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         mMainPresenter.onViewFirstTimeCreated();
     }
@@ -280,6 +279,17 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     @Override
     public void initListener() {
         mDrawerMenuFragment.setMenuCallback(new DrawerMenuCallback() {
+
+
+            @Override
+            public void onDrawerUserHeadClick(View sharedElement, String transitionName) {
+                mMainPresenter.onDrawerUserHeadClick(sharedElement, transitionName);
+            }
+
+            @Override
+            public void onDrawerMenuUserCenterClick(View v, View sharedElement, String transitionName) {
+                mMainPresenter.onDrawerUserHeadClick(sharedElement, transitionName);
+            }
 
             @Override
             public void onDrawerMenuNightModeOn() {
@@ -834,6 +844,11 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     @Override
     public void goToPlayStatistic() {
         goToWithTransition(PlayStatisticActivity.class);
+    }
+
+    @Override
+    public void goToUserCenter(View sharedElement, String transitionName) {
+        goToWithSharedElement(UserCenterActivity.class, sharedElement, transitionName);
     }
 
     private void recreateActivity(boolean isForNightMode) {

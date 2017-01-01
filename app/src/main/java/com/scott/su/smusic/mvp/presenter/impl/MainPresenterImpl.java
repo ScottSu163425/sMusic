@@ -73,7 +73,7 @@ public class MainPresenterImpl extends BasePresenter<MainContract.MainView>
             }
         } else if (getView().isCurrentTabBill()) {
             getView().showCreateBillDialog();
-        }else if (getView().isCurrentTabAlbum()) {
+        } else if (getView().isCurrentTabAlbum()) {
 
         }
 
@@ -148,6 +148,16 @@ public class MainPresenterImpl extends BasePresenter<MainContract.MainView>
             }
         }.execute();
 
+    }
+
+    @Override
+    public void onDrawerUserHeadClick(View sharedElement, String transitionName) {
+        getView().goToUserCenter(sharedElement, transitionName);
+    }
+
+    @Override
+    public void onDrawerMenuUserCenterClick(View v, View sharedElement, String transitionName) {
+        getView().goToUserCenter(sharedElement, transitionName);
     }
 
     @Override
