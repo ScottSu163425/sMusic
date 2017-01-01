@@ -70,10 +70,10 @@
     <string name="chinese_language">Chinese</string>
     <string name="english_language">English</string>
     <string name="cancel_timer">Stop Timer</string>
-    <string name="timer_min_15">15 minutes</string>
-    <string name="timer_min_30">30 minutes</string>
-    <string name="timer_min_60">60 minutes</string>
-    <string name="timer_min_120">120 minutes</string>
+    <string name="timer_min_15">15 min</string>
+    <string name="timer_min_30">30 min</string>
+    <string name="timer_min_60">60 min</string>
+    <string name="timer_min_120">120 min</string>
     <string name="play_list">Play List</string>
     <string name="clear">clear</string>
     <string name="ask_clear_play_list">Clear the play list?</string>

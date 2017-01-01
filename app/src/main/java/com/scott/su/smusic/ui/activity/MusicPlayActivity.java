@@ -6,6 +6,9 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.internal.BottomNavigationPresenter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -148,7 +151,10 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
 
     @Override
     public void loadBlurCover(final Bitmap bitmap) {
-        AnimUtil.alphaOut(mBlurCoverImageView, AnimUtil.DURATION_LONG, null, new AnimUtil.SimpleAnimListener() {
+        AnimUtil.alphaOut(mBlurCoverImageView,
+                AnimUtil.DURATION_NORMAL,
+                new FastOutLinearInInterpolator(),
+                new AnimUtil.SimpleAnimListener() {
             @Override
             public void onAnimStart() {
             }
@@ -156,7 +162,10 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
             @Override
             public void onAnimEnd() {
                 mBlurCoverImageView.setImageBitmap(bitmap);
-                AnimUtil.alphaIn(mBlurCoverImageView, AnimUtil.DURATION_LONG, null, null).start();
+                AnimUtil.alphaIn(mBlurCoverImageView,
+                        AnimUtil.DURATION_NORMAL,
+                        new AccelerateDecelerateInterpolator(),
+                        null).start();
             }
         }).start();
     }

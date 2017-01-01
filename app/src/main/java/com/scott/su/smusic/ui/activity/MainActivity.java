@@ -251,7 +251,8 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
                 pageFragments,
                 getResources().getStringArray(R.array.titles_tab_main)));
         mViewPager.setOffscreenPageLimit(pageFragments.size());
-        mTabLayout.setupWithViewPager(mViewPager);
+
+        mTabLayout.setupWithViewPager(mViewPager,false);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_container_drawer_menu_main, mDrawerMenuFragment).commitNow();
 
