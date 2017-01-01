@@ -244,9 +244,9 @@ public class AnimUtil {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                if (action == ACTION.OUT) {
-                    ViewUtil.setViewGone(view);
-                }
+//                if (action == ACTION.OUT) {
+//                    ViewUtil.setViewGone(view);
+//                }
 
                 if (listener != null) {
                     listener.onAnimEnd();
@@ -274,9 +274,9 @@ public class AnimUtil {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                if (action == ACTION.OUT) {
-                    ViewUtil.setViewGone(view);
-                }
+//                if (action == ACTION.OUT) {
+//                    ViewUtil.setViewGone(view);
+//                }
 
                 if (listener != null) {
                     listener.onAnimEnd();

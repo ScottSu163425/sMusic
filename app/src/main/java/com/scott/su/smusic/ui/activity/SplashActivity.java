@@ -83,13 +83,19 @@ public class SplashActivity extends BaseActivity {
                 AnimUtil.DURATION_NORMAL, new FastOutSlowInInterpolator(), new AnimUtil.SimpleAnimListener() {
                     @Override
                     public void onAnimStart() {
+                        mAppNameTextView.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                goTo(MainActivity.class);
+                                finish();
+                                overridePendingTransition(R.anim.in_east, R.anim.out_west);
+                            }
+                        }, AnimUtil.DURATION_NORMAL_HALF);
                     }
 
                     @Override
                     public void onAnimEnd() {
-                        goTo(MainActivity.class);
-                        finish();
-                        overridePendingTransition(R.anim.in_east, R.anim.out_west);
+
                     }
                 });
 
