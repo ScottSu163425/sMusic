@@ -20,7 +20,7 @@ import com.su.scott.slibrary.util.CirclarRevealUtil;
 /**
  * Created by asus on 2016/8/23.
  */
-public class CreateBillDialogFragment extends DialogFragment {
+public class LocalBillCreationDialogFragment extends DialogFragment {
     private View mRootView;
     private TextInputLayout mInputLayout;
     private Button mConfirmButton;

@@ -26,13 +26,13 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public class MainPresenterImplI extends BasePresenter<MainContract.MainView>
+public class MainPresenterImpl extends BasePresenter<MainContract.MainView>
         implements MainContract.MainPresenterI {
     private LocalSongModel mSongModel;
     private LocalBillModel mBillModel;
     private LocalAlbumModel mAlbumModel;
 
-    public MainPresenterImplI(MainContract.MainView mView) {
+    public MainPresenterImpl(MainContract.MainView mView) {
         super(mView);
         this.mSongModel = new LocalSongModelImpl();
         this.mBillModel = new LocalBillModelImpl();
@@ -74,7 +74,7 @@ public class MainPresenterImplI extends BasePresenter<MainContract.MainView>
         } else if (getView().isCurrentTabBill()) {
             getView().showCreateBillDialog();
         }else if (getView().isCurrentTabAlbum()) {
-//            getView().showCreateBillDialog();
+
         }
 
     }

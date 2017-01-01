@@ -41,10 +41,10 @@ import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.MainContract;
-import com.scott.su.smusic.mvp.presenter.impl.MainPresenterImplI;
+import com.scott.su.smusic.mvp.presenter.impl.MainPresenterImpl;
 import com.scott.su.smusic.service.MusicPlayService;
 import com.scott.su.smusic.service.ShutDownTimerService;
-import com.scott.su.smusic.ui.fragment.CreateBillDialogFragment;
+import com.scott.su.smusic.ui.fragment.LocalBillCreationDialogFragment;
 import com.scott.su.smusic.ui.fragment.DrawerMenuFragment;
 import com.scott.su.smusic.ui.fragment.LocalAlbumDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillDisplayFragment;
@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     private LocalSongDisplayFragment mSongDisplayFragment;
     private LocalBillDisplayFragment mBillDisplayFragment;
     private LocalAlbumDisplayFragment mAlbumDisplayFragment;
-    private CreateBillDialogFragment mCreateBillDialogFragment;
+    private LocalBillCreationDialogFragment mLocalBillCreationDialogFragment;
     private ServiceConnection mMusicPlayServiceConnection;
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
     private ServiceConnection mShutDownTimerServiceConnection;
@@ -110,7 +110,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     @Override
     protected MainContract.MainPresenterI getPresenter() {
         if (mMainPresenter == null) {
-            mMainPresenter = new MainPresenterImplI(this);
+            mMainPresenter = new MainPresenterImpl(this);
         }
         return mMainPresenter;
     }
@@ -252,7 +252,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
                 getResources().getStringArray(R.array.titles_tab_main)));
         mViewPager.setOffscreenPageLimit(pageFragments.size());
 
-        mTabLayout.setupWithViewPager(mViewPager,false);
+        mTabLayout.setupWithViewPager(mViewPager, false);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_container_drawer_menu_main, mDrawerMenuFragment).commitNow();
 
@@ -669,22 +669,20 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
     @Override
     public void showCreateBillDialog() {
-//        if (mCreateBillDialogFragment == null) {
-        mCreateBillDialogFragment = new CreateBillDialogFragment();
-        mCreateBillDialogFragment.setCallback(new CreateBillDialogFragment.CreateBillDialogCallback() {
+        mLocalBillCreationDialogFragment = new LocalBillCreationDialogFragment();
+        mLocalBillCreationDialogFragment.setCallback(new LocalBillCreationDialogFragment.CreateBillDialogCallback() {
             @Override
             public void onConfirmClick(String text) {
                 mMainPresenter.onCreateBillConfirm(text);
             }
         });
-//        }
-        mCreateBillDialogFragment.show(getSupportFragmentManager(), "");
+        mLocalBillCreationDialogFragment.show(getSupportFragmentManager(), "");
     }
 
     @Override
     public void dismissCreateBillDialog() {
-        if (mCreateBillDialogFragment != null && mCreateBillDialogFragment.isVisible()) {
-            mCreateBillDialogFragment.dismiss();
+        if (mLocalBillCreationDialogFragment != null && mLocalBillCreationDialogFragment.isVisible()) {
+            mLocalBillCreationDialogFragment.dismiss();
         }
     }
 

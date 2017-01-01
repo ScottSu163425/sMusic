@@ -19,7 +19,7 @@ import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.SearchContract;
-import com.scott.su.smusic.mvp.presenter.impl.SearchPresenterImplI;
+import com.scott.su.smusic.mvp.presenter.impl.SearchPresenterImpl;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
@@ -49,7 +49,7 @@ public class SearchActivity extends BaseActivity<SearchContract.SearchView,Searc
     @Override
     protected SearchContract.SearchPresenterI getPresenter() {
         if (mSearchPresenter == null) {
-            mSearchPresenter = new SearchPresenterImplI(this);
+            mSearchPresenter = new SearchPresenterImpl(this);
         }
         return mSearchPresenter;
     }

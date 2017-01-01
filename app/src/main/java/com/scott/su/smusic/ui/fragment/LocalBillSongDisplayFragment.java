@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Created by asus on 2016/11/05.
  */
-public class BillSongDisplayFragment extends BaseDisplayFragment<BillSongDisplayContract.BillSongDisplayView ,BillSongDisplayContract.BillSongBaseDisplayPresenter,LocalSongEntity, BillSongViewHolder>
+public class LocalBillSongDisplayFragment extends BaseDisplayFragment<BillSongDisplayContract.BillSongDisplayView ,BillSongDisplayContract.BillSongBaseDisplayPresenter,LocalSongEntity, BillSongViewHolder>
         implements BillSongDisplayContract.BillSongDisplayView {
     private BillSongDisplayContract.BillSongBaseDisplayPresenter mSongDisplayPresenter;
     private BillSongDisplayAdapter mSongDisplayAdapter;
@@ -34,8 +34,8 @@ public class BillSongDisplayFragment extends BaseDisplayFragment<BillSongDisplay
     private LocalSongDisplayCallback mDisplayCallback;
 
 
-    public static BillSongDisplayFragment newInstance(@NonNull LocalBillEntity entity) {
-        BillSongDisplayFragment instance = new BillSongDisplayFragment();
+    public static LocalBillSongDisplayFragment newInstance(@NonNull LocalBillEntity entity) {
+        LocalBillSongDisplayFragment instance = new LocalBillSongDisplayFragment();
         Bundle arguments = new Bundle();
         arguments.putParcelable(Constants.KEY_EXTRA_BILL, entity);
         instance.setArguments(arguments);

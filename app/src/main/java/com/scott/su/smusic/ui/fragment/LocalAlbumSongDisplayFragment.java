@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Created by asus on 2016/11/05.
  */
-public class AlbumSongDisplayFragment extends BaseDisplayFragment<AlbumSongDisplayContract.AlbumSongDisplayView, AlbumSongDisplayContract.AlbumSongBaseDisplayPresenter, LocalSongEntity, AlbumSongViewHolder>
+public class LocalAlbumSongDisplayFragment extends BaseDisplayFragment<AlbumSongDisplayContract.AlbumSongDisplayView, AlbumSongDisplayContract.AlbumSongBaseDisplayPresenter, LocalSongEntity, AlbumSongViewHolder>
         implements AlbumSongDisplayContract.AlbumSongDisplayView {
     private AlbumSongDisplayContract.AlbumSongBaseDisplayPresenter mSongDisplayPresenter;
     private AlbumSongDisplayAdapter mSongDisplayAdapter;
@@ -34,8 +34,8 @@ public class AlbumSongDisplayFragment extends BaseDisplayFragment<AlbumSongDispl
     private LocalSongDisplayCallback mDisplayCallback;
 
 
-    public static AlbumSongDisplayFragment newInstance(@NonNull LocalAlbumEntity entity) {
-        AlbumSongDisplayFragment instance = new AlbumSongDisplayFragment();
+    public static LocalAlbumSongDisplayFragment newInstance(@NonNull LocalAlbumEntity entity) {
+        LocalAlbumSongDisplayFragment instance = new LocalAlbumSongDisplayFragment();
         Bundle arguments = new Bundle();
         arguments.putParcelable(Constants.KEY_EXTRA_ALBUM, entity);
         instance.setArguments(arguments);

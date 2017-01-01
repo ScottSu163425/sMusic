@@ -55,10 +55,6 @@
         <activity
             android:name=".ui.activity.SearchActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activity.PlayStatisticActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.LocalBillCreationActivity"></activity>
     </application>
 
 </manifest>

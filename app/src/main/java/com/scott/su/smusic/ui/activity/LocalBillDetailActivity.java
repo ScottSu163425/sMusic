@@ -24,7 +24,7 @@ import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.LocalBillDetailContract;
 import com.scott.su.smusic.mvp.presenter.impl.LocalBillDetailPresenterImpl;
-import com.scott.su.smusic.ui.fragment.BillSongDisplayFragment;
+import com.scott.su.smusic.ui.fragment.LocalBillSongDisplayFragment;
 import com.scott.su.smusic.ui.fragment.CommonInputDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
@@ -47,7 +47,7 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
     private LocalBillEntity mBillEntity;
     private AppBarLayout mAppBarLayout;
     private ImageView mCoverImageView;
-    private BillSongDisplayFragment mBillSongDisplayFragment;
+    private LocalBillSongDisplayFragment mLocalBillSongDisplayFragment;
     private FloatingActionButton mPlayFAB;
     private CommonInputDialogFragment mEditDialogFragment;
 
@@ -138,11 +138,11 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
 
     @Override
     public void initData() {
-        mBillSongDisplayFragment = BillSongDisplayFragment.newInstance(mBillEntity);
+        mLocalBillSongDisplayFragment = LocalBillSongDisplayFragment.newInstance(mBillEntity);
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fl_container_display_songs_local_bill_detail, mBillSongDisplayFragment)
+                .replace(R.id.fl_container_display_songs_local_bill_detail, mLocalBillSongDisplayFragment)
                 .commitNow();
     }
 
@@ -159,13 +159,13 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
                 if (scrollDistance > 0) {
                     //Scrolling down.
                     if (Math.abs(verticalOffset) < (totalScrollRange / 3)) {
-                        if (!mBillSongDisplayFragment.getDisplayDataList().isEmpty()) {
+                        if (!mLocalBillSongDisplayFragment.getDisplayDataList().isEmpty()) {
                             showFab();
                         }
                     }
                 } else {
                     //Scrolling up.
-                    if (!mBillSongDisplayFragment.getDisplayDataList().isEmpty()) {
+                    if (!mLocalBillSongDisplayFragment.getDisplayDataList().isEmpty()) {
                         if (Math.abs(verticalOffset) > (totalScrollRange / 3)) {
                             hideFab();
                         }
@@ -176,7 +176,7 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
             }
         });
 
-        mBillSongDisplayFragment.setDisplayCallback(new LocalSongDisplayCallback() {
+        mLocalBillSongDisplayFragment.setDisplayCallback(new LocalSongDisplayCallback() {
 
             @Override
             public void onItemClick(View itemView, LocalSongEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
@@ -340,8 +340,8 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
                 CirclarRevealUtil.revealIn(mPlayFAB, CirclarRevealUtil.DIRECTION.CENTER);
             }
         }
-        mBillSongDisplayFragment.setSongBillEntity(billEntity);
-        mBillSongDisplayFragment.reInitialize();
+        mLocalBillSongDisplayFragment.setSongBillEntity(billEntity);
+        mLocalBillSongDisplayFragment.reInitialize();
     }
 
     @Override
@@ -411,7 +411,7 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
     public void goToMusicPlayWithCoverSharedElement(LocalSongEntity songEntity) {
         Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
-        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mBillSongDisplayFragment.getDisplayDataList());
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mLocalBillSongDisplayFragment.getDisplayDataList());
 
         goToWithSharedElement(intent, mCoverImageView, getString(R.string.transition_name_cover));
     }
@@ -420,7 +420,7 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
     public void goToMusicPlayWithCoverAndFabSharedElement(LocalSongEntity entity) {
         Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, entity);
-        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mBillSongDisplayFragment.getDisplayDataList());
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mLocalBillSongDisplayFragment.getDisplayDataList());
 
         goToWithSharedElements(intent,
                 new View[]{mPlayFAB, mCoverImageView},
@@ -432,7 +432,7 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
     public void goToMusicPlayWithFab(LocalSongEntity songEntity) {
         Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
-        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mBillSongDisplayFragment.getDisplayDataList());
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mLocalBillSongDisplayFragment.getDisplayDataList());
 
         goToWithSharedElement(intent, mPlayFAB, getString(R.string.transition_name_fab));
     }
@@ -474,7 +474,7 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
     public void goToMusicPlayWithoutFab(LocalSongEntity songEntity) {
         Intent intent = new Intent(LocalBillDetailActivity.this, MusicPlayActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
-        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mBillSongDisplayFragment.getDisplayDataList());
+        intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mLocalBillSongDisplayFragment.getDisplayDataList());
 
         goToWithTransition(intent);
     }
