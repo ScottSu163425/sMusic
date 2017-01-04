@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
@@ -19,10 +20,16 @@ import com.su.scott.slibrary.util.ScreenUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
 public class SplashActivity extends BaseActivity {
+
     private static final long DURATION_STATY = 1500;
     private TextView mAppNameTextView, mCopyRightTextView;
     private Animator mAppNameInAnimator, mAppNameOutAnimator, mCopyRightInAnimator, mCopyRightOutAnimator;
 
+
+    @Override
+    protected int getContentLayoutResId() {
+        return R.layout.activity_splash;
+    }
 
     @Override
     protected IPresenter getPresenter() {
@@ -30,10 +37,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-
+    protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         initView();
         initData();
 

@@ -60,7 +60,7 @@
         <activity
             android:name=".ui.activity.UserCenterActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.PrimaryColorStatusBar" />
+            android:theme="@style/AppTheme.FullScreenStatusBar" />
     </application>
 
 </manifest>

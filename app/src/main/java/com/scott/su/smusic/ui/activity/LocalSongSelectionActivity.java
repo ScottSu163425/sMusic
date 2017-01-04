@@ -2,6 +2,7 @@ package com.scott.su.smusic.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.transition.TransitionInflater;
 import android.view.Menu;
@@ -24,6 +25,7 @@ import com.su.scott.slibrary.util.SdkUtil;
  */
 public class LocalSongSelectionActivity extends BaseActivity<LocalSongSelectionContract.LocalSongSelectionView, LocalSongSelectionContract.LocalSongSelectionPresenter>
         implements LocalSongSelectionContract.LocalSongSelectionView {
+
     private LinearLayout mRootLayout;
     private Button mFinishSelectionButton;
     private LocalSongSelectionContract.LocalSongSelectionPresenter mSongSelectionPresenter;
@@ -31,11 +33,8 @@ public class LocalSongSelectionActivity extends BaseActivity<LocalSongSelectionC
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_local_song_selection);
-
-        mSongSelectionPresenter.onViewFirstTimeCreated();
+    protected int getContentLayoutResId() {
+        return R.layout.activity_local_song_selection;
     }
 
     @Override
@@ -44,6 +43,11 @@ public class LocalSongSelectionActivity extends BaseActivity<LocalSongSelectionC
             mSongSelectionPresenter = new LocalSongSelectionPresenterImp(this);
         }
         return mSongSelectionPresenter;
+    }
+
+    @Override
+    protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        mSongSelectionPresenter.onViewFirstTimeCreated();
     }
 
     @Override

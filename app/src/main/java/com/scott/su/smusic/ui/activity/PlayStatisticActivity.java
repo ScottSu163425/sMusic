@@ -2,6 +2,7 @@ package com.scott.su.smusic.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -27,18 +28,17 @@ import java.util.List;
 
 public class PlayStatisticActivity extends BaseActivity<PlayStatisticContract.PlayStatisticView,PlayStatisticContract.PlayStatisticPresenter>
         implements PlayStatisticContract.PlayStatisticView {
+
     private PlayStatisticContract.PlayStatisticPresenter mPlayStatisticPresenter;
     private PlayStatisticWeekFragment mPlayStatisticWeekFragment;
     private PlayStatisticDisplayFragment mPlayStatisticDisplayFragment;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play_statistic);
 
-        mPlayStatisticPresenter.onViewFirstTimeCreated();
+    @Override
+    protected int getContentLayoutResId() {
+        return R.layout.activity_play_statistic;
     }
 
     @Override
@@ -47,6 +47,11 @@ public class PlayStatisticActivity extends BaseActivity<PlayStatisticContract.Pl
             mPlayStatisticPresenter = new PlayStatisticPresenterImpl(this);
         }
         return mPlayStatisticPresenter;
+    }
+
+    @Override
+    protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        mPlayStatisticPresenter.onViewFirstTimeCreated();
     }
 
     @Override

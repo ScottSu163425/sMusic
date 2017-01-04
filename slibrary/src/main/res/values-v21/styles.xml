@@ -15,8 +15,7 @@
     <style name="BaseTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="BaseTheme.ImmersiveStatusBar" parent="BaseTheme">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:statusBarColor">@color/status_bar</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="BaseTheme.FullScreenStatusBar" parent="BaseTheme">

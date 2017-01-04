@@ -30,6 +30,7 @@ import java.util.List;
 
 public class LocalAlbumDetailActivity extends BaseActivity<LocalAlbumDetailContract.LocalAlbumDetailView, LocalAlbumDetailContract.ILocalAlbumDetailPresenter>
         implements LocalAlbumDetailContract.LocalAlbumDetailView {
+
     private LocalAlbumDetailContract.ILocalAlbumDetailPresenter mPresenter;
     private LocalAlbumEntity mAlbumEntity;
     private CardView mAlbumInfoCard;
@@ -39,11 +40,8 @@ public class LocalAlbumDetailActivity extends BaseActivity<LocalAlbumDetailContr
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_local_album_detail);
-
-        mPresenter.onViewFirstTimeCreated();
+    protected int getContentLayoutResId() {
+        return R.layout.activity_local_album_detail;
     }
 
     @Override
@@ -52,6 +50,11 @@ public class LocalAlbumDetailActivity extends BaseActivity<LocalAlbumDetailContr
             mPresenter = new LocalAlbumDetailPresenterImpl(this);
         }
         return mPresenter;
+    }
+
+    @Override
+    protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        mPresenter.onViewFirstTimeCreated();
     }
 
     @Override

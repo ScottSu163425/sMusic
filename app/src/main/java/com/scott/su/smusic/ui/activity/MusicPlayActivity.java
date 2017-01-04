@@ -2,6 +2,7 @@ package com.scott.su.smusic.ui.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v7.widget.Toolbar;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
  */
 public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayView, MusicPlayContract.MusicPlayPresenter>
         implements MusicPlayContract.MusicPlayView, View.OnClickListener {
+
     private final int ID_CONTAINER = R.id.fl_container_music_play_main;
     private MusicPlayContract.MusicPlayPresenter mMusicPlayPresenter;
     private Toolbar mToolbar;
@@ -40,12 +42,10 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
     private MusicPlaySecondFragment mMusicPlaySecondFragment;
     private boolean mEnter = true;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_music_play);
 
-        mMusicPlayPresenter.onViewFirstTimeCreated();
+    @Override
+    protected int getContentLayoutResId() {
+        return R.layout.activity_music_play;
     }
 
     @Override
@@ -54,6 +54,11 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
             mMusicPlayPresenter = new MusicPlayPresenterImpl(this);
         }
         return mMusicPlayPresenter;
+    }
+
+    @Override
+    protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        mMusicPlayPresenter.onViewFirstTimeCreated();
     }
 
     @Override

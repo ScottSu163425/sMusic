@@ -43,6 +43,8 @@ import java.util.List;
  */
 public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContract.LocalBillDetailView, LocalBillDetailContract.ILocalBillDetailPresenter>
         implements LocalBillDetailContract.LocalBillDetailView {
+
+    private static final int REQUESt_CODE_LOCAL_SONG_SELECTION = 123;
     private LocalBillDetailContract.ILocalBillDetailPresenter mBillDetailPresenter;
     private LocalBillEntity mBillEntity;
     private AppBarLayout mAppBarLayout;
@@ -50,18 +52,25 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
     private LocalBillSongDisplayFragment mLocalBillSongDisplayFragment;
     private FloatingActionButton mPlayFAB;
     private CommonInputDialogFragment mEditDialogFragment;
-
-    private static final int REQUESt_CODE_LOCAL_SONG_SELECTION = 123;
-
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_local_bill_detail);
+    protected int getContentLayoutResId() {
+        return R.layout.activity_local_bill_detail;
+    }
 
+    @Override
+    protected LocalBillDetailContract.ILocalBillDetailPresenter getPresenter() {
+        if (mBillDetailPresenter == null) {
+            mBillDetailPresenter = new LocalBillDetailPresenterImpl(this);
+        }
+        return mBillDetailPresenter;
+    }
+
+    @Override
+    protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mBillDetailPresenter.onViewFirstTimeCreated();
-
         if (SdkUtil.isLolipopOrLatter()) {
             if (getWindow().getSharedElementEnterTransition() != null) {
                 getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
@@ -96,14 +105,6 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
         } else {
             mBillDetailPresenter.onTransitionEnd();
         }
-    }
-
-    @Override
-    protected LocalBillDetailContract.ILocalBillDetailPresenter getPresenter() {
-        if (mBillDetailPresenter == null) {
-            mBillDetailPresenter = new LocalBillDetailPresenterImpl(this);
-        }
-        return mBillDetailPresenter;
     }
 
     @Override

@@ -69,9 +69,9 @@ import java.util.Random;
  */
 public class MainActivity extends BaseActivity<MainContract.MainView, MainContract.MainPresenterI>
         implements MainContract.MainView {
+
     private static final String NEED_OPEN_DRAWER = "NEED_OPEN_DRAWE";
     private static final String CURRENT_TAB_POSITION = "CURRENT_TAB_POSITION";
-
     private static final int REQUEST_CODE_LOCAL_SONG_SELECTION = 1111;
     private static final int REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE = 123;
     private static final int REQUEST_CODE_PERMISSION_WRITE_EXTERNAL_STORAGE = 321;
@@ -99,11 +99,8 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        mMainPresenter.onViewFirstTimeCreated();
+    protected int getContentLayoutResId() {
+        return R.layout.activity_main;
     }
 
     @Override
@@ -112,6 +109,11 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
             mMainPresenter = new MainPresenterImpl(this);
         }
         return mMainPresenter;
+    }
+
+    @Override
+    protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        mMainPresenter.onViewFirstTimeCreated();
     }
 
     @Override

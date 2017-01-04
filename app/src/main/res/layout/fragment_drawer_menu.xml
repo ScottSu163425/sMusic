@@ -10,8 +10,13 @@
         android:id="@+id/prl_top_area_fragment_drawer_menu"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/bg_header_drawer"
         app:layout_heightPercent="40%">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_header_drawer"
+            android:scaleType="centerCrop" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_user_head_fragment_drawer_menu"
@@ -24,7 +29,7 @@
             android:transitionName="@string/transition_name_head"
             android:translationZ="@dimen/margin_xs"
             app:layout_aspectRatio="100%"
-            app:layout_marginTopPercent="25%"
+            app:layout_marginTopPercent="28%"
             app:layout_widthPercent="25%" />
 
         <LinearLayout

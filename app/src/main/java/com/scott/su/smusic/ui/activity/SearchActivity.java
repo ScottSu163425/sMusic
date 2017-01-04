@@ -2,6 +2,7 @@ package com.scott.su.smusic.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +32,7 @@ import java.util.List;
 
 public class SearchActivity extends BaseActivity<SearchContract.SearchView,SearchContract.SearchPresenterI>
         implements SearchContract.SearchView {
+
     private SearchContract.SearchPresenterI mSearchPresenter;
     private View mLoadingLayout, mEmptyLayout;
     private EditText mInputEditText;
@@ -38,12 +40,10 @@ public class SearchActivity extends BaseActivity<SearchContract.SearchView,Searc
     private RecyclerView mResultRecyclerView;
     private SearchResultAdapter mResultAdapter;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
 
-        mSearchPresenter.onViewFirstTimeCreated();
+    @Override
+    protected int getContentLayoutResId() {
+        return R.layout.activity_search;
     }
 
     @Override
@@ -52,6 +52,11 @@ public class SearchActivity extends BaseActivity<SearchContract.SearchView,Searc
             mSearchPresenter = new SearchPresenterImpl(this);
         }
         return mSearchPresenter;
+    }
+
+    @Override
+    protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        mSearchPresenter.onViewFirstTimeCreated();
     }
 
     @Override

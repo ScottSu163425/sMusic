@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -36,14 +37,24 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
     private String mNetworkErrorTip;
 
 
+    protected abstract
+    @LayoutRes
+    int getContentLayoutResId();
+
     protected abstract P getPresenter();
+
+    protected abstract void onActivityCreated(@Nullable Bundle savedInstanceState);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(getContentLayoutResId());
+
         mPresenter = getPresenter();
         mNetworkErrorTip = getString(R.string.network_error);
+
+        onActivityCreated(savedInstanceState);
     }
 
     @Override
