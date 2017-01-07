@@ -1,5 +1,6 @@
 package com.scott.su.smusic.ui.activity;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
@@ -16,6 +17,7 @@ import com.scott.su.smusic.R;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.mvp.presenter.IPresenter;
 import com.su.scott.slibrary.util.AnimUtil;
+import com.su.scott.slibrary.util.PermissionUtil;
 import com.su.scott.slibrary.util.ScreenUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
@@ -90,9 +92,13 @@ public class SplashActivity extends BaseActivity {
                         mAppNameTextView.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                goTo(MainActivity.class);
-                                finish();
-                                overridePendingTransition(R.anim.in_east, R.anim.out_west);
+                                if (PermissionUtil.isPermissionGranted(SplashActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                                    goTo(MainActivity.class);
+                                    finish();
+                                    overridePendingTransition(R.anim.in_east, R.anim.out_west);
+                                } else {
+                                    PermissionUtil.requestPermission(SplashActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE, 1);
+                                }
                             }
                         }, AnimUtil.DURATION_NORMAL_HALF);
                     }

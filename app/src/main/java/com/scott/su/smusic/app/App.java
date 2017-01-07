@@ -11,6 +11,7 @@ import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.cache.BitmapLruCache;
 import com.scott.su.smusic.cache.CoverPathCache;
 import com.scott.su.smusic.cache.LocalSongEntityCache;
+import com.scott.su.smusic.db.GreenDaoHelper;
 
 import org.xutils.x;
 
@@ -51,6 +52,8 @@ public class App extends Application {
 
         //Initialize for xUtils;
         x.Ext.init(this);
+
+        GreenDaoHelper.init(this, "sMusic.db");
     }
 
     @Override

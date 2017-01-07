@@ -4,49 +4,53 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by asus on 2016/11/13.
  */
-@Table(name = "PlayStatisticEntity")
+@Entity
 public class PlayStatisticEntity implements Parcelable {
 
-    @Column(name = "id", isId = true)
-    private int id;
+    @Id
+    private Long id;
 
-    @Column(name = "songId")
+    @Property(nameInDb = "songId")
     private long songId;
 
-    @Column(name = "title")
+    @Property(nameInDb = "title")
     private String title;
 
-    @Column(name = "artist")
+    @Property(nameInDb = "artist")
     private String artist;
 
-    @Column(name = "album")
+    @Property(nameInDb = "album")
     private String album;
 
-    @Column(name = "albumId")
+    @Property(nameInDb = "albumId")
     private long albumId;
 
-    @Column(name = "duration")
+    @Property(nameInDb = "duration")
     private long duration;
 
-    @Column(name = "size")
+    @Property(nameInDb = "size")
     private long size;
 
-    @Column(name = "path")
+    @Property(nameInDb = "path")
     private String path;
 
-    @Column(name = "coverPath")
+    @Property(nameInDb = "coverPath")
     private String coverPath;
 
-    @Column(name = "playCount")
+    @Property(nameInDb = "playCount")
     private int playCount;
 
-    @Column(name = "lastPlayTime")
+    @Property(nameInDb = "lastPlayTime")
     private String lastPlayTime;
 
 
@@ -78,11 +82,11 @@ public class PlayStatisticEntity implements Parcelable {
         return songEntity;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -185,7 +189,7 @@ public class PlayStatisticEntity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
+//        dest.writeLong(this.id);
         dest.writeLong(this.songId);
         dest.writeString(this.title);
         dest.writeString(this.artist);
@@ -203,7 +207,7 @@ public class PlayStatisticEntity implements Parcelable {
     }
 
     protected PlayStatisticEntity(Parcel in) {
-        this.id = in.readInt();
+//        this.id = in.readLong();
         this.songId = in.readLong();
         this.title = in.readString();
         this.artist = in.readString();
@@ -215,6 +219,24 @@ public class PlayStatisticEntity implements Parcelable {
         this.coverPath = in.readString();
         this.playCount = in.readInt();
         this.lastPlayTime = in.readString();
+    }
+
+    @Generated(hash = 85455696)
+    public PlayStatisticEntity(Long id, long songId, String title, String artist, String album,
+            long albumId, long duration, long size, String path, String coverPath, int playCount,
+            String lastPlayTime) {
+        this.id = id;
+        this.songId = songId;
+        this.title = title;
+        this.artist = artist;
+        this.album = album;
+        this.albumId = albumId;
+        this.duration = duration;
+        this.size = size;
+        this.path = path;
+        this.coverPath = coverPath;
+        this.playCount = playCount;
+        this.lastPlayTime = lastPlayTime;
     }
 
     public static final Creator<PlayStatisticEntity> CREATOR = new Creator<PlayStatisticEntity>() {
@@ -232,7 +254,7 @@ public class PlayStatisticEntity implements Parcelable {
     @Override
     public String toString() {
         return "PlayStatisticEntity{" +
-                "id=" + id +
+                "id=" + (id == null ? "" : id) +
                 ", songId=" + songId +
                 ", title='" + title + '\'' +
                 ", artist='" + artist + '\'' +

@@ -4,13 +4,11 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.db.GreenDaoHelper;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
-import com.su.scott.slibrary.manager.DbUtilHelper;
 import com.su.scott.slibrary.util.StringUtil;
-
-import org.xutils.ex.DbException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,23 +67,16 @@ public class LocalBillModelImpl implements LocalBillModel {
 
     @Override
     public void saveOrUpdateBill(Context context, LocalBillEntity billEntity) {
-        try {
-            DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+        GreenDaoHelper.getDaoSession().getLocalBillEntityDao().insertOrReplace(billEntity);
     }
 
     @Override
     public List<LocalSongEntity> getBillSongs(Context context) {
-        List<LocalSongEntity> billSongs = new ArrayList<>();
-        try {
-            billSongs = DbUtilHelper.getDefaultDbManager().findAll(LocalSongEntity.class);
-            if (billSongs == null) {
-                billSongs = new ArrayList<>();
-            }
-        } catch (DbException e) {
-            e.printStackTrace();
+        List<LocalSongEntity> billSongs;
+
+        billSongs = GreenDaoHelper.getDaoSession().getLocalSongEntityDao().loadAll();
+        if (billSongs == null) {
+            billSongs = new ArrayList<>();
         }
         return billSongs;
     }
@@ -121,22 +112,17 @@ public class LocalBillModelImpl implements LocalBillModel {
     @Override
     public List<LocalBillEntity> getBills(Context context) {
         List<LocalBillEntity> result = null;
-        try {
-            result = DbUtilHelper.getDefaultDbManager().findAll(LocalBillEntity.class);
-            if (result == null || result.size() == 0) {
-                //If it is the first time to open, create one bill automatically;
-                result = new ArrayList<>();
-                LocalBillEntity defaultBill = new LocalBillEntity();
-                defaultBill.setBillTitle(context.getString(R.string.my_favourite));
-                defaultBill.setBillId(BILL_ID_DEFAULT_BILL);
-                saveOrUpdateBill(context, defaultBill);
-                result.add(defaultBill);
-            }
+        result = GreenDaoHelper.getDaoSession().getLocalBillEntityDao().loadAll();
 
-        } catch (DbException e) {
-            e.printStackTrace();
+        if (result == null || result.size() == 0) {
+            //If it is the first time to open, create one bill automatically;
+            result = new ArrayList<>();
+            LocalBillEntity defaultBill = new LocalBillEntity();
+            defaultBill.setBillTitle(context.getString(R.string.my_favourite));
+            defaultBill.setBillId(BILL_ID_DEFAULT_BILL);
+            saveOrUpdateBill(context, defaultBill);
+            result.add(defaultBill);
         }
-
         return result;
     }
 
@@ -154,12 +140,8 @@ public class LocalBillModelImpl implements LocalBillModel {
         bill.appendBillSongId(song.getSongId());
         song.appendBillId(bill.getBillId());
 
-        try {
-            DbUtilHelper.getDefaultDbManager().saveOrUpdate(bill);
-            DbUtilHelper.getDefaultDbManager().saveOrUpdate(song);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+        GreenDaoHelper.getDaoSession().getLocalBillEntityDao().insertOrReplace(bill);
+        GreenDaoHelper.getDaoSession().getLocalSongEntityDao().insertOrReplace(songEntity);
     }
 
     @Override
@@ -217,14 +199,10 @@ public class LocalBillModelImpl implements LocalBillModel {
             return;
         }
 
-        try {
-            DbUtilHelper.getDefaultDbManager().delete(billEntity);
-            if (!billEntity.isBillEmpty()) {
-                clearBillSongs(context, billEntity);
-            }
+        GreenDaoHelper.getDaoSession().getLocalBillEntityDao().delete(billEntity);
 
-        } catch (DbException e) {
-            e.printStackTrace();
+        if (!billEntity.isBillEmpty()) {
+            clearBillSongs(context, billEntity);
         }
     }
 
@@ -238,15 +216,12 @@ public class LocalBillModelImpl implements LocalBillModel {
         billSongEntity.removeBillId(billEntity.getBillId());
         billEntity.removeSongId(billSongEntity.getSongId());
 
-        try {
-            DbUtilHelper.getDefaultDbManager().saveOrUpdate(billSongEntity);
-            DbUtilHelper.getDefaultDbManager().saveOrUpdate(billEntity);
-            //optional
-            if (!billSongEntity.isBelongingToAnyBill()) {
-                DbUtilHelper.getDefaultDbManager().delete(billSongEntity);
-            }
-        } catch (DbException e) {
-            e.printStackTrace();
+        GreenDaoHelper.getDaoSession().getLocalBillEntityDao().insertOrReplace(billEntity);
+        GreenDaoHelper.getDaoSession().getLocalSongEntityDao().insertOrReplace(billSongEntity);
+
+        //optional
+        if (!billSongEntity.isBelongingToAnyBill()) {
+            GreenDaoHelper.getDaoSession().getLocalSongEntityDao().delete(billSongEntity);
         }
     }
 

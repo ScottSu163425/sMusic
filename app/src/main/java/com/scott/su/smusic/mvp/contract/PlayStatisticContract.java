@@ -19,6 +19,8 @@ public interface PlayStatisticContract {
         void goToMusicPlay(LocalSongEntity songEntity, ArrayList<LocalSongEntity> songEntityList);
 
         void goToMusicPlayWithCover(LocalSongEntity songEntity, ArrayList<LocalSongEntity> songEntityList, View sharedElement, String transitionName);
+
+        void refreshPlayStatisticList();
     }
 
     interface PlayStatisticPresenter extends IPresenter<PlayStatisticView>,PlayStatisticItemClickCallback {

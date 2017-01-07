@@ -20,7 +20,7 @@ import com.su.scott.slibrary.fragment.BaseDisplayFragment;
  * Created by asus on 2016/11/19.
  */
 
-public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatisticDisplayContract.PlayStatisticDisplayView ,PlayStatisticDisplayContract.PlayStatisticBaseDisplayPresenter, PlayStatisticEntity, RecyclerView.ViewHolder>
+public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatisticDisplayContract.PlayStatisticDisplayView, PlayStatisticDisplayContract.PlayStatisticBaseDisplayPresenter, PlayStatisticEntity, RecyclerView.ViewHolder>
         implements PlayStatisticDisplayContract.PlayStatisticDisplayView {
     private PlayStatisticDisplayContract.PlayStatisticBaseDisplayPresenter mDisplayPresenter;
     private PlayStatisticDisplayAdapter mDisplayAdapter;
@@ -111,7 +111,7 @@ public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatis
 
     @Override
     public void reInitialize() {
-
+        mDisplayPresenter.onViewFirstTimeCreated();
     }
 
     @Override

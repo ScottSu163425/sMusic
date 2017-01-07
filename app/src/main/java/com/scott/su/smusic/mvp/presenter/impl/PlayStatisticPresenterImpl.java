@@ -16,12 +16,12 @@ import java.util.ArrayList;
  */
 
 public class PlayStatisticPresenterImpl extends BasePresenter<PlayStatisticContract.PlayStatisticView>
-        implements PlayStatisticContract.PlayStatisticPresenter{
+        implements PlayStatisticContract.PlayStatisticPresenter {
     private PlayStatisticModel mPlayStatisticModel;
 
 
     public PlayStatisticPresenterImpl(PlayStatisticContract.PlayStatisticView view) {
-    super(view);
+        super(view);
         this.mPlayStatisticModel = new PlayStatisticModelImpl();
     }
 
@@ -37,7 +37,7 @@ public class PlayStatisticPresenterImpl extends BasePresenter<PlayStatisticContr
 
     @Override
     public void onViewResume() {
-
+        getView().refreshPlayStatisticList();
     }
 
     @Override

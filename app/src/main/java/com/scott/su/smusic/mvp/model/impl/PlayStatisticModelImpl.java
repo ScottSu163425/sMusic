@@ -2,10 +2,11 @@ package com.scott.su.smusic.mvp.model.impl;
 
 import android.content.Context;
 
+import com.scott.su.smusic.db.GreenDaoHelper;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.entity.PlayStatisticEntity;
+import com.scott.su.smusic.entity.PlayStatisticEntityDao;
 import com.scott.su.smusic.mvp.model.PlayStatisticModel;
-import com.su.scott.slibrary.manager.DbUtilHelper;
 import com.su.scott.slibrary.util.DateUtil;
 
 import org.xutils.DbManager;
@@ -26,25 +27,21 @@ public class PlayStatisticModelImpl implements PlayStatisticModel {
 
     @Override
     public void saveOrAddPlayRecord(Context context, LocalSongEntity songEntity) {
-        DbManager dbManager = DbUtilHelper.getDefaultDbManager();
+        PlayStatisticEntity entity = GreenDaoHelper.getDaoSession().getPlayStatisticEntityDao()
+                .queryBuilder()
+                .where(PlayStatisticEntityDao.Properties.SongId.eq(songEntity.getSongId()))
+                .unique();
 
-        try {
-            PlayStatisticEntity entity = dbManager.selector(PlayStatisticEntity.class)
-                    .where("songId", "=", songEntity.getSongId())
-                    .findFirst();
-            if (entity == null) {
-                entity = new PlayStatisticEntity();
-                entity.copy(songEntity);
-                entity.setPlayCount(1);
-            } else {
-                entity.setPlayCount(entity.getPlayCount() + 1);
-            }
-            entity.setLastPlayTime(DateUtil.getCurrentYear() + DIVIDER_DATE + DateUtil.getCurrentMonth() + DIVIDER_DATE + DateUtil.getCurrentDay());
-
-            dbManager.saveOrUpdate(entity);
-        } catch (DbException e) {
-            e.printStackTrace();
+        if (entity == null) {
+            entity = new PlayStatisticEntity();
+            entity.copy(songEntity);
+            entity.setPlayCount(1);
+        } else {
+            entity.setPlayCount(entity.getPlayCount() + 1);
         }
+        entity.setLastPlayTime(DateUtil.getCurrentYear() + DIVIDER_DATE + DateUtil.getCurrentMonth() + DIVIDER_DATE + DateUtil.getCurrentDay());
+
+        GreenDaoHelper.getDaoSession().getPlayStatisticEntityDao().insertOrReplace(entity);
     }
 
     @Override
@@ -74,20 +71,12 @@ public class PlayStatisticModelImpl implements PlayStatisticModel {
     public List<PlayStatisticEntity> getTotalPlayStatistic(Context context) {
         List<PlayStatisticEntity> result;
 
-        try {
-            result = DbUtilHelper.getDefaultDbManager().findAll(PlayStatisticEntity.class);
-            sortDes(result);
-        } catch (DbException e) {
-            e.printStackTrace();
-
-            result = new ArrayList<>();
-            return result;
-        }
+        result = GreenDaoHelper.getDaoSession().getPlayStatisticEntityDao().loadAll();
+        sortDes(result);
 
         if (result == null) {
             result = new ArrayList<>();
         }
-
         return result;
     }
 

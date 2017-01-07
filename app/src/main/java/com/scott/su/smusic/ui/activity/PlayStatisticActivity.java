@@ -26,7 +26,7 @@ import com.su.scott.slibrary.util.SdkUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayStatisticActivity extends BaseActivity<PlayStatisticContract.PlayStatisticView,PlayStatisticContract.PlayStatisticPresenter>
+public class PlayStatisticActivity extends BaseActivity<PlayStatisticContract.PlayStatisticView, PlayStatisticContract.PlayStatisticPresenter>
         implements PlayStatisticContract.PlayStatisticView {
 
     private PlayStatisticContract.PlayStatisticPresenter mPlayStatisticPresenter;
@@ -34,7 +34,7 @@ public class PlayStatisticActivity extends BaseActivity<PlayStatisticContract.Pl
     private PlayStatisticDisplayFragment mPlayStatisticDisplayFragment;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
-
+    private boolean mShouldRefreshList;
 
     @Override
     protected int getContentLayoutResId() {
@@ -52,6 +52,12 @@ public class PlayStatisticActivity extends BaseActivity<PlayStatisticContract.Pl
     @Override
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mPlayStatisticPresenter.onViewFirstTimeCreated();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPlayStatisticPresenter.onViewResume();
     }
 
     @Override
@@ -91,7 +97,6 @@ public class PlayStatisticActivity extends BaseActivity<PlayStatisticContract.Pl
                 getResources().getStringArray(R.array.titles_tab_play_statistic)));
         mViewPager.setOffscreenPageLimit(pageFragments.size());
         mTabLayout.setupWithViewPager(mViewPager);
-
     }
 
     @Override
@@ -126,6 +131,7 @@ public class PlayStatisticActivity extends BaseActivity<PlayStatisticContract.Pl
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
         intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, songEntityList);
         goToWithTransition(intent);
+        mShouldRefreshList=true;
     }
 
     @Override
@@ -134,6 +140,14 @@ public class PlayStatisticActivity extends BaseActivity<PlayStatisticContract.Pl
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, songEntity);
         intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, songEntityList);
         goToWithSharedElement(intent, sharedElement, transitionName);
+        mShouldRefreshList=true;
+    }
+
+    @Override
+    public void refreshPlayStatisticList() {
+        if (mShouldRefreshList) {
+            getPlayStatisticDisplayFragment().reInitialize();
+        }
     }
 
 

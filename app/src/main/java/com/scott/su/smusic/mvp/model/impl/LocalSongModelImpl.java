@@ -13,7 +13,6 @@ import com.scott.su.smusic.mvp.model.LocalSongModel;
 import com.scott.su.smusic.cache.CoverPathCache;
 import com.scott.su.smusic.cache.LocalSongEntityCache;
 
-import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.StringUtil;
 
 import java.io.File;

@@ -4,33 +4,38 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
+import org.greenrobot.greendao.annotation.Transient;
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.greenrobot.greendao.annotation.Generated;
+
 /**
  * Created by asus on 2016/8/21.
  */
-@Table(name = "LocalBillEntity")
+@Entity
 public class LocalBillEntity implements Parcelable {
 
+    @Transient
     public static final String ID_DIVIDER = "~";
 
-    @Column(name = "id", isId = true)
-    private int id;
+    @Id
+    private Long id;
 
-    @Column(name = "billId")
+    @Property(nameInDb = "billId")
     private long billId;
 
-    @Column(name = "billTitle")
+    @Property(nameInDb = "billTitle")
     private String billTitle;
 
-    @Column(name = "billSongIds")
+    @Property(nameInDb = "billSongIds")
     private String billSongIds;
-
-//    private List<LocalSongEntity> billSongs; //Songs in this bill;
 
 
     public LocalBillEntity() {
@@ -43,11 +48,11 @@ public class LocalBillEntity implements Parcelable {
         setBillId(System.currentTimeMillis());
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -119,25 +124,6 @@ public class LocalBillEntity implements Parcelable {
         return idsLongArr;
     }
 
-//    public List<LocalSongEntity> getBillSongs() {
-//        //Keep billSongs not null;
-//        if (billSongs == null) {
-//            billSongs = new ArrayList<>();
-//        }
-//        return billSongs;
-//    }
-
-//    public void setBillSongs(List<LocalSongEntity> billSongs) {
-//        this.billSongs = billSongs;
-//    }
-
-//    public LocalSongEntity getLatestSong() {
-//        if (isBillEmpty()) {
-//            return null;
-//        }
-//        return getBillSongs().get(getBillSongs().size() - 1);
-//    }
-
     public long getLatestSongId() {
         if (isBillEmpty()) {
             return -1;
@@ -156,19 +142,25 @@ public class LocalBillEntity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
+//        dest.writeLong(this.id);
         dest.writeLong(this.billId);
         dest.writeString(this.billTitle);
         dest.writeString(this.billSongIds);
-//        dest.writeTypedList(this.billSongs);
     }
 
     protected LocalBillEntity(Parcel in) {
-        this.id = in.readInt();
+//        this.id = in.readLong();
         this.billId = in.readLong();
         this.billTitle = in.readString();
         this.billSongIds = in.readString();
-//        this.billSongs = in.createTypedArrayList(LocalSongEntity.CREATOR);
+    }
+
+    @Generated(hash = 144524664)
+    public LocalBillEntity(Long id, long billId, String billTitle, String billSongIds) {
+        this.id = id;
+        this.billId = billId;
+        this.billTitle = billTitle;
+        this.billSongIds = billSongIds;
     }
 
     public static final Parcelable.Creator<LocalBillEntity> CREATOR = new Parcelable.Creator<LocalBillEntity>() {
@@ -186,11 +178,10 @@ public class LocalBillEntity implements Parcelable {
     @Override
     public String toString() {
         return "LocalBillEntity{" +
-                "id=" + id +
+                "id=" + (id == null ? "" : id) +
                 ", billId=" + billId +
                 ", billTitle='" + billTitle + '\'' +
                 ", billSongIds='" + billSongIds + '\'' +
-//                ", billSongs=" + billSongs +
                 '}';
     }
 }
