@@ -9,9 +9,6 @@ import com.scott.su.smusic.entity.PlayStatisticEntityDao;
 import com.scott.su.smusic.mvp.model.PlayStatisticModel;
 import com.su.scott.slibrary.util.DateUtil;
 
-import org.xutils.DbManager;
-import org.xutils.ex.DbException;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

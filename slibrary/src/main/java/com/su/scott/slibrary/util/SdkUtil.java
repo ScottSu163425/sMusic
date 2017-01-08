@@ -7,8 +7,12 @@ import android.os.Build;
  */
 public class SdkUtil {
 
+    public static int getSdkVersionCode() {
+        return Build.VERSION.PREVIEW_SDK_INT;
+    }
+
     /**
-     * return true if the android version of device is above 5.0;
+     * return true if the android version of device is above 5.0(21);
      *
      * @return
      */
@@ -16,7 +20,13 @@ public class SdkUtil {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 
-    public static int getSdkVersionCode() {
-        return Build.VERSION.PREVIEW_SDK_INT;
+    /**
+     * return true if the android version of device is above 6.0(23);
+     *
+     * @return
+     */
+    public static boolean isMarshmallowOrLatter() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
+
 }

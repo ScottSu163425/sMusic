@@ -5,16 +5,10 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Transient;
-import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by asus on 2016/8/21.

@@ -5,11 +5,9 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
-import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by asus on 2016/11/13.

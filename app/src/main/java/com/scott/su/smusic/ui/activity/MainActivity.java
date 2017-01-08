@@ -1,6 +1,5 @@
 package com.scott.su.smusic.ui.activity;
 
-import android.Manifest;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -56,7 +55,6 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.callback.SimpleCallback;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.DialogUtil;
-import com.su.scott.slibrary.util.PermissionUtil;
 import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.TimeUtil;
 import com.su.scott.slibrary.util.ViewUtil;
@@ -116,9 +114,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     @Override
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mMainPresenter.onViewFirstTimeCreated();
-
-        PermissionUtil.requestPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE,1);
-        PermissionUtil.requestPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE,2);
     }
 
     @Override

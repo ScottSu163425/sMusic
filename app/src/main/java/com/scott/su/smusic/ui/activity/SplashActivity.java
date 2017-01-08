@@ -2,24 +2,21 @@ package com.scott.su.smusic.ui.activity;
 
 import android.Manifest;
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
-import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.scott.su.smusic.R;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.mvp.presenter.IPresenter;
 import com.su.scott.slibrary.util.AnimUtil;
-import com.su.scott.slibrary.util.PermissionUtil;
 import com.su.scott.slibrary.util.ScreenUtil;
 import com.su.scott.slibrary.util.ViewUtil;
+import com.tbruyelle.rxpermissions.Permission;
+import com.tbruyelle.rxpermissions.RxPermissions;
+
+import rx.functions.Action1;
 
 public class SplashActivity extends BaseActivity {
 
@@ -92,13 +89,7 @@ public class SplashActivity extends BaseActivity {
                         mAppNameTextView.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (PermissionUtil.isPermissionGranted(SplashActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                                    goTo(MainActivity.class);
-                                    finish();
-                                    overridePendingTransition(R.anim.in_east, R.anim.out_west);
-                                } else {
-                                    PermissionUtil.requestPermission(SplashActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE, 1);
-                                }
+                                requestPermission();
                             }
                         }, AnimUtil.DURATION_NORMAL_HALF);
                     }
@@ -138,6 +129,31 @@ public class SplashActivity extends BaseActivity {
                 });
     }
 
+    private void requestPermission() {
+        getRxPermissionManager().requestEach(Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(new Action1<Permission>() {
+                    @Override
+                    public void call(Permission permission) {
+                        if (permission.name.equals(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                            if (permission.granted) {
+                                goTo(MainActivity.class);
+                                finish();
+                                overridePendingTransition(R.anim.in_east, R.anim.out_west);
+                            } else {
+                                if (permission.shouldShowRequestPermissionRationale) {
+                                    showToastLong("你拒绝了权限" + permission.name + ",但这是应用必要的权限");
+                                    requestPermission();
+                                } else {
+                                    showToastLong("你永久拒绝了权限" + permission.name + ",请前往设置界面开启");
+                                    finish();
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
     @Override
     public void initListener() {
 
@@ -145,7 +161,6 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-
     }
 
 }

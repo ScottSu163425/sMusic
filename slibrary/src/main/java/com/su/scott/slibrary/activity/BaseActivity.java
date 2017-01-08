@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.su.scott.slibrary.R;
-import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 import com.su.scott.slibrary.mvp.presenter.IPresenter;
 import com.su.scott.slibrary.mvp.view.IBaseView;
 import com.su.scott.slibrary.mvp.view.IView;
@@ -25,6 +23,7 @@ import com.su.scott.slibrary.util.NetworkUtil;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.Snack;
 import com.su.scott.slibrary.util.T;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 
 /**
@@ -35,6 +34,7 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
     private P mPresenter;
     private ProgressDialog mLoadingDialog;
     private String mNetworkErrorTip;
+    private RxPermissions mRxPermissions;
 
 
     protected abstract
@@ -53,6 +53,7 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
 
         mPresenter = getPresenter();
         mNetworkErrorTip = getString(R.string.network_error);
+        mRxPermissions = new RxPermissions(this);
 
         onActivityCreated(savedInstanceState);
     }
@@ -292,6 +293,10 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    protected RxPermissions getRxPermissionManager() {
+        return this.mRxPermissions;
     }
 
 
