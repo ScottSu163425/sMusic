@@ -199,11 +199,6 @@ public class MainPresenterImpl extends BasePresenter<MainContract.MainView>
     }
 
     @Override
-    public void onDrawerMenuUpdateClick(View v) {
-
-    }
-
-    @Override
     public void onDrawerMenuAboutClick(View v) {
 
     }
@@ -257,11 +252,6 @@ public class MainPresenterImpl extends BasePresenter<MainContract.MainView>
                 AppConfig.setNeedToRefreshLocalAlbumDisplay(getView().getViewContext(), false);
             }
         }
-    }
-
-    @Override
-    public void onViewWillDestroy() {
-
     }
 
     @Override

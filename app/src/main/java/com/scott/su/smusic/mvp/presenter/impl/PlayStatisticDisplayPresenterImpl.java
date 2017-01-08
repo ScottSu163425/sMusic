@@ -97,14 +97,5 @@ public class PlayStatisticDisplayPresenterImpl extends BasePresenter<PlayStatist
                 });
     }
 
-    @Override
-    public void onViewResume() {
-
-    }
-
-    @Override
-    public void onViewWillDestroy() {
-
-    }
 
 }

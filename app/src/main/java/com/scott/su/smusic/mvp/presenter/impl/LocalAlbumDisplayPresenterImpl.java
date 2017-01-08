@@ -62,16 +62,6 @@ public class LocalAlbumDisplayPresenterImpl extends BasePresenter<LocalAlbumDisp
         getAndDisplayLocalSongs(false);
     }
 
-    @Override
-    public void onViewResume() {
-
-    }
-
-    @Override
-    public void onViewWillDestroy() {
-
-    }
-
     private void getAndDisplayLocalSongs(boolean isRefresh) {
         if (!isRefresh) {
             getView().showLoading();

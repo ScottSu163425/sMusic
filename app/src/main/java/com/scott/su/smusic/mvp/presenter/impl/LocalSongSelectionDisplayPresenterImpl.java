@@ -62,16 +62,6 @@ public class LocalSongSelectionDisplayPresenterImpl extends BasePresenter<LocalS
         getAndDisplayLocalSongs();
     }
 
-    @Override
-    public void onViewResume() {
-
-    }
-
-    @Override
-    public void onViewWillDestroy() {
-
-    }
-
     private void getAndDisplayLocalSongs() {
         getView().showLoading();
 

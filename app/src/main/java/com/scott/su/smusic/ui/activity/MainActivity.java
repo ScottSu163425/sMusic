@@ -314,11 +314,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
             }
 
             @Override
-            public void onDrawerMenuUpdateClick(View v) {
-                mMainPresenter.onDrawerMenuUpdateClick(v);
-            }
-
-            @Override
             public void onDrawerMenuAboutClick(View v) {
                 mMainPresenter.onDrawerMenuAboutClick(v);
             }

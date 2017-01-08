@@ -37,15 +37,4 @@ public class LocalSongSelectionPresenterImp extends BasePresenter<LocalSongSelec
         getView().initListener();
     }
 
-    @Override
-    public void onViewResume() {
-
-    }
-
-    @Override
-    public void onViewWillDestroy() {
-
-    }
-
-
 }

@@ -53,6 +53,7 @@ public class LocalSongEntity implements Parcelable {
     private String billIds;
 
     public LocalSongEntity() {
+        setId(System.currentTimeMillis());
     }
 
     public Long getId() {

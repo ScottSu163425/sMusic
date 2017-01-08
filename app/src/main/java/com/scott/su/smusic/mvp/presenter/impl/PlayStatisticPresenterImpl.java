@@ -32,17 +32,11 @@ public class PlayStatisticPresenterImpl extends BasePresenter<PlayStatisticContr
         getView().initView();
         getView().initData();
         getView().initListener();
-
     }
 
     @Override
     public void onViewResume() {
         getView().refreshPlayStatisticList();
-    }
-
-    @Override
-    public void onViewWillDestroy() {
-
     }
 
     @Override

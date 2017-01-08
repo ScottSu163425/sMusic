@@ -62,16 +62,6 @@ public class LocalBillDisplayPresenterImpl extends BasePresenter<LocalBillDispla
         getAndDisplayLocalSongBills(false);
     }
 
-    @Override
-    public void onViewResume() {
-
-    }
-
-    @Override
-    public void onViewWillDestroy() {
-
-    }
-
     private void getAndDisplayLocalSongBills(boolean isRefresh) {
         if (!isRefresh) {
             getView().showLoading();

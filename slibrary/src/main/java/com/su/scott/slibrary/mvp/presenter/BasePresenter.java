@@ -17,6 +17,16 @@ public abstract class BasePresenter<V extends IView> implements IPresenter<V> {
     }
 
     @Override
+    public void onViewResume() {
+
+    }
+
+    @Override
+    public void onViewWillDestroy() {
+
+    }
+
+    @Override
     public void attachView(V view) {
         if (!isViewAttaching()) {
             mViewReference = new WeakReference<>(view);

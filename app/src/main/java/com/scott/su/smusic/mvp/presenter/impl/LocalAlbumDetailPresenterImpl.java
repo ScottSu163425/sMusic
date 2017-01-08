@@ -40,16 +40,6 @@ public class LocalAlbumDetailPresenterImpl extends BasePresenter<LocalAlbumDetai
     }
 
     @Override
-    public void onViewResume() {
-
-    }
-
-    @Override
-    public void onViewWillDestroy() {
-
-    }
-
-    @Override
     public void onBottomSheetAddToBillClick(LocalSongEntity songEntity) {
         getView().showBillSelectionDialog(songEntity);
     }

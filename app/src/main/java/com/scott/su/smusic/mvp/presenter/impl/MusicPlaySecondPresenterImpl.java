@@ -24,11 +24,6 @@ public class MusicPlaySecondPresenterImpl extends BasePresenter<MusicPlaySecondC
     }
 
     @Override
-    public void onViewResume() {
-
-    }
-
-    @Override
     public void onViewWillDestroy() {
         getView().unregisterVolumeReceiver();
         getView().unbindMusicPlayService();

@@ -49,15 +49,5 @@ public class PlayListSecondDisplayPresenterImpl extends BasePresenter<PlayListSe
     public void onViewFirstTimeCreated() {
     }
 
-    @Override
-    public void onViewResume() {
-
-    }
-
-    @Override
-    public void onViewWillDestroy() {
-
-    }
-
 
 }

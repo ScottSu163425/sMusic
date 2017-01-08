@@ -30,10 +30,10 @@ import com.su.scott.slibrary.util.ViewUtil;
  */
 public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMenuView, DrawerMenuContract.DrawerMenuPresenter>
         implements View.OnClickListener {
-    public static final float PERCENTAGE_OF_SCREEN_WIDTH = 0.82f;
+    public static final float PERCENTAGE_OF_SCREEN_WIDTH = 0.85f;
     private View mRootView;
     private ImageView mUserHeadImageView;
-    private View mUserCenterItem, mStatisticMenuItem, mTimerMenuItem, mLanguageMenuItem, mUpdateMenuItem, mAboutMenuItem;
+    private View mUserCenterItem, mStatisticMenuItem, mTimerMenuItem, mLanguageMenuItem, mAboutMenuItem;
     private TextView mTimerTimeTextView;
     private SwitchCompat mNightModeSwitch;
     private DrawerMenuCallback mMenuCallback;
@@ -66,7 +66,6 @@ public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMe
         mUserCenterItem = mRootView.findViewById(R.id.rl_item_user_center_drawer_menu);
         mStatisticMenuItem = mRootView.findViewById(R.id.rl_item_statistic_drawer_menu);
         mTimerMenuItem = mRootView.findViewById(R.id.rl_item_timer_drawer_menu);
-        mUpdateMenuItem = mRootView.findViewById(R.id.rl_item_update_drawer_menu);
         mAboutMenuItem = mRootView.findViewById(R.id.rl_item_about_drawer_menu);
         mNightModeSwitch = (SwitchCompat) mRootView.findViewById(R.id.swtich_night_mode_drawer_menu);
         mLanguageMenuItem = mRootView.findViewById(R.id.rl_item_language_drawer_menu);
@@ -86,7 +85,6 @@ public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMe
         mStatisticMenuItem.setOnClickListener(this);
         mTimerMenuItem.setOnClickListener(this);
         mLanguageMenuItem.setOnClickListener(this);
-        mUpdateMenuItem.setOnClickListener(this);
         mAboutMenuItem.setOnClickListener(this);
         mNightModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -124,8 +122,6 @@ public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMe
             popTimerMenu();
         } else if (id == mLanguageMenuItem.getId()) {
             popLanguageMenu();
-        } else if (id == mUpdateMenuItem.getId()) {
-            mMenuCallback.onDrawerMenuUpdateClick(view);
         } else if (id == mAboutMenuItem.getId()) {
             mMenuCallback.onDrawerMenuAboutClick(view);
         }

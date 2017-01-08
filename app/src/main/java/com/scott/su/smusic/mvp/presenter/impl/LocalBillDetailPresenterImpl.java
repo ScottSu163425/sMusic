@@ -16,6 +16,13 @@ import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 
 import java.util.List;
 
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
 /**
  * Created by asus on 2016/8/29.
  */
@@ -123,7 +130,7 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
             }, new AsyncTaskHelper.SimpleAsyncTaskCallback() {
                 @Override
                 public void onPreExecute() {
-                    getView().showLoadingDialog(getView().getViewContext());
+                    getView().showLoadingDialog(getView().getViewContext(), false);
                 }
 
                 @Override
@@ -166,6 +173,37 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
 
     @Override
     public void onClearBillConfirmed() {
+//        Observable.create(new Observable.OnSubscribe<Void>() {
+//            @Override
+//            public void call(Subscriber<? super Void> subscriber) {
+//                mBillModel.clearBillSongs(getView().getViewContext(), getView().getBillEntity());
+//            }
+//        })
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .doOnSubscribe(new Action0() {
+//                    @Override
+//                    public void call() {
+//                        getView().showLoadingDialog(getView().getViewContext(), false);
+//                    }
+//                })
+//                .subscribe(new Action1<Void>() {
+//                    @Override
+//                    public void call(Void aVoid) {
+//                        if (!isViewAttaching()) {
+//                            return;
+//                        }
+//
+//                        getView().dismissLoadingDialog();
+//                        LocalBillEntity billAfterClear = mBillModel.getBill(getView().getViewContext(), getView().getBillEntity().getBillId());
+//                        getView().refreshBillSongDisplay(billAfterClear);
+//                        getView().setBillEntity(billAfterClear);
+//                        loadCover(true);
+//                        AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
+//                        AppConfig.setNeedToRefreshSearchResult(getView().getViewContext(), true);
+//                    }
+//                });
+
         AsyncTaskHelper.excuteSimpleTask(new Runnable() {
             @Override
             public void run() {
@@ -174,7 +212,7 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
         }, new AsyncTaskHelper.SimpleAsyncTaskCallback() {
             @Override
             public void onPreExecute() {
-                getView().showLoadingDialog(getView().getViewContext());
+                getView().showLoadingDialog(getView().getViewContext(),false);
             }
 
             @Override
@@ -266,16 +304,6 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
     }
 
     @Override
-    public void onViewResume() {
-
-    }
-
-    @Override
-    public void onViewWillDestroy() {
-
-    }
-
-    @Override
     public void onBottomSheetAddToBillClick(LocalSongEntity songEntity) {
         getView().showBillSelectionDialog(songEntity);
     }
@@ -320,7 +348,5 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
         loadCover(lastSongIDBeforeDelete == songEntity.getSongId());
         AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
         AppConfig.setNeedToRefreshSearchResult(getView().getViewContext(), true);
-//        getView().showSnackbarShort(getView().getSnackbarParent(),
-//                getView().getViewContext().getString(R.string.success_delete));
     }
 }

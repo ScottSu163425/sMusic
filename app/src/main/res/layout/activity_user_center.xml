@@ -3,36 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/background">
 
     <android.support.percent.PercentRelativeLayout
-        android:id="@+id/prl_top_area_fragment_drawer_menu"
+        android:id="@+id/prl_top_area_activity_user_center"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_heightPercent="40%">
+        android:background="@drawable/bg_user_center"
+        app:layout_heightPercent="45%">
 
-        <ImageView
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tool_bar_activity_user_center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_header_drawer"
-            android:scaleType="centerCrop" />
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:theme="@style/AppTheme.AppBarOverlay" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_user_head_fragment_drawer_menu"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_below="@+id/tool_bar_activity_user_center"
             android:layout_centerHorizontal="true"
             android:src="@drawable/ic_user_head"
             android:transitionName="@string/transition_name_head"
             app:layout_aspectRatio="100%"
-            app:layout_marginTopPercent="15%"
-            app:layout_widthPercent="30%" />
+            app:layout_widthPercent="25%" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_user_head_fragment_drawer_menu"
-            android:layout_marginTop="@dimen/margin_s"
+            android:layout_marginTop="@dimen/margin_xs"
             android:orientation="vertical">
 
             <TextView
@@ -41,7 +44,7 @@
                 android:layout_gravity="center"
                 android:text="Scott Su"
                 android:textColor="#deffffff"
-                android:textSize="@dimen/text_size_title" />
+                android:textSize="@dimen/text_size_headline" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -49,9 +52,19 @@
                 android:layout_gravity="center"
                 android:text="“The only way to do great job is to love what you do.”"
                 android:textColor="#9affffff"
-                android:textSize="@dimen/text_size_caption" />
+                android:textSize="@dimen/text_size_body" />
 
         </LinearLayout>
     </android.support.percent.PercentRelativeLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/prl_top_area_activity_user_center"
+        android:layout_marginBottom="@dimen/margin_s"
+        android:layout_marginLeft="@dimen/margin_s"
+        android:layout_marginRight="@dimen/margin_s"
+        android:layout_marginTop="-40dp"
+        android:translationZ="5dp" />
 
 </android.support.percent.PercentRelativeLayout>

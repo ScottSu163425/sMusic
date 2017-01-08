@@ -62,16 +62,6 @@ public class LocalAlbumSongDisplayPresenterImpl extends BasePresenter<AlbumSongD
         getAndDisplayLocalSongs();
     }
 
-    @Override
-    public void onViewResume() {
-
-    }
-
-    @Override
-    public void onViewWillDestroy() {
-
-    }
-
     private void getAndDisplayLocalSongs() {
         getView().showLoading();
         Observable.just(getView().getSongAlbumEntity().getAlbumSongIdsLongArray())

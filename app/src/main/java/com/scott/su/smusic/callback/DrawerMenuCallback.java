@@ -19,8 +19,6 @@ public interface DrawerMenuCallback {
 
     void onDrawerMenuLanguageModeOff();
 
-    void onDrawerMenuUpdateClick(View v);
-
     void onDrawerMenuAboutClick(View v);
 
     void onDrawerMenuTimerCancelClick();

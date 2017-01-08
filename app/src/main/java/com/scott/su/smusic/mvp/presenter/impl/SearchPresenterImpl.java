@@ -70,11 +70,6 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.SearchView
     }
 
     @Override
-    public void onViewWillDestroy() {
-
-    }
-
-    @Override
     public void onSearchTextChanged(final String keyword) {
         searchAndSetResult(keyword);
     }
