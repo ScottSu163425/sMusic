@@ -6,8 +6,11 @@ import android.support.annotation.NonNull;
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.db.GreenDaoHelper;
 import com.scott.su.smusic.entity.LocalBillEntity;
+import com.scott.su.smusic.entity.LocalBillEntityDao;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.entity.LocalSongEntityDao;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
+import com.su.scott.slibrary.util.L;
 import com.su.scott.slibrary.util.StringUtil;
 
 import java.util.ArrayList;
@@ -67,7 +70,12 @@ public class LocalBillModelImpl implements LocalBillModel {
 
     @Override
     public void saveOrUpdateBill(Context context, LocalBillEntity billEntity) {
-        GreenDaoHelper.getDaoSession().getLocalBillEntityDao().insertOrReplace(billEntity);
+        // FIXME: 2017/1/8 Something Wrong when creating bill.
+//        if (isBillExist(context, billEntity)) {
+//            GreenDaoHelper.getDaoSession().getLocalBillEntityDao().update(billEntity);
+//        } else {
+            GreenDaoHelper.getDaoSession().getLocalBillEntityDao().insertOrReplace(billEntity);
+//        }
     }
 
     @Override
@@ -111,7 +119,7 @@ public class LocalBillModelImpl implements LocalBillModel {
 
     @Override
     public List<LocalBillEntity> getBills(Context context) {
-        List<LocalBillEntity> result = null;
+        List<LocalBillEntity> result;
         result = GreenDaoHelper.getDaoSession().getLocalBillEntityDao().loadAll();
 
         if (result == null || result.size() == 0) {
@@ -140,7 +148,7 @@ public class LocalBillModelImpl implements LocalBillModel {
         bill.appendBillSongId(song.getSongId());
         song.appendBillId(bill.getBillId());
 
-        GreenDaoHelper.getDaoSession().getLocalBillEntityDao().insertOrReplace(bill);
+        GreenDaoHelper.getDaoSession().getLocalBillEntityDao().update(bill);
         GreenDaoHelper.getDaoSession().getLocalSongEntityDao().insertOrReplace(songEntity);
     }
 
@@ -209,6 +217,7 @@ public class LocalBillModelImpl implements LocalBillModel {
     @Override
     public void removeBillSong(Context context, LocalBillEntity billEntity, LocalSongEntity songEntity) {
         LocalSongEntity billSongEntity = getBillSong(context, songEntity.getSongId());
+
         if (!isBillContainsSong(billEntity, billSongEntity)) {
             return;
         }
@@ -216,8 +225,8 @@ public class LocalBillModelImpl implements LocalBillModel {
         billSongEntity.removeBillId(billEntity.getBillId());
         billEntity.removeSongId(billSongEntity.getSongId());
 
-        GreenDaoHelper.getDaoSession().getLocalBillEntityDao().insertOrReplace(billEntity);
-        GreenDaoHelper.getDaoSession().getLocalSongEntityDao().insertOrReplace(billSongEntity);
+        GreenDaoHelper.getDaoSession().getLocalBillEntityDao().update(billEntity);
+        GreenDaoHelper.getDaoSession().getLocalSongEntityDao().update(billSongEntity);
 
         //optional
         if (!billSongEntity.isBelongingToAnyBill()) {

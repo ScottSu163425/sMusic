@@ -8,6 +8,7 @@ import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.mvp.contract.LocalBillDisplayContract;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.su.scott.slibrary.mvp.presenter.BasePresenter;
+import com.su.scott.slibrary.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class LocalBillDisplayPresenterImpl extends BasePresenter<LocalBillDispla
         implements LocalBillDisplayContract.LocalBillBaseDisplayPresenter {
     private LocalBillModelImpl mBillModel;
 
-    
+
     public LocalBillDisplayPresenterImpl(LocalBillDisplayContract.LocalBillDisplayView localBillDisplayView) {
         super(localBillDisplayView);
         this.mBillModel = new LocalBillModelImpl();
