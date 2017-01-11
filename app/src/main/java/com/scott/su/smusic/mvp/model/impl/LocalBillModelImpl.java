@@ -70,12 +70,11 @@ public class LocalBillModelImpl implements LocalBillModel {
 
     @Override
     public void saveOrUpdateBill(Context context, LocalBillEntity billEntity) {
-        // FIXME: 2017/1/8 Something Wrong when creating bill.
-//        if (isBillExist(context, billEntity)) {
-//            GreenDaoHelper.getDaoSession().getLocalBillEntityDao().update(billEntity);
-//        } else {
-            GreenDaoHelper.getDaoSession().getLocalBillEntityDao().insertOrReplace(billEntity);
-//        }
+        if (isBillExist(context, billEntity)) {
+            GreenDaoHelper.getDaoSession().getLocalBillEntityDao().update(billEntity);
+        } else {
+            GreenDaoHelper.getDaoSession().getLocalBillEntityDao().insert(billEntity);
+        }
     }
 
     @Override
@@ -128,7 +127,8 @@ public class LocalBillModelImpl implements LocalBillModel {
             LocalBillEntity defaultBill = new LocalBillEntity();
             defaultBill.setBillTitle(context.getString(R.string.my_favourite));
             defaultBill.setBillId(BILL_ID_DEFAULT_BILL);
-            saveOrUpdateBill(context, defaultBill);
+//            saveOrUpdateBill(context, defaultBill);
+            GreenDaoHelper.getDaoSession().getLocalBillEntityDao().insert(defaultBill);
             result.add(defaultBill);
         }
         return result;
@@ -225,7 +225,7 @@ public class LocalBillModelImpl implements LocalBillModel {
         billSongEntity.removeBillId(billEntity.getBillId());
         billEntity.removeSongId(billSongEntity.getSongId());
 
-        GreenDaoHelper.getDaoSession().getLocalBillEntityDao().update(billEntity);
+        GreenDaoHelper.getDaoSession().getLocalBillEntityDao().getKey(billEntity);
         GreenDaoHelper.getDaoSession().getLocalSongEntityDao().update(billSongEntity);
 
         //optional

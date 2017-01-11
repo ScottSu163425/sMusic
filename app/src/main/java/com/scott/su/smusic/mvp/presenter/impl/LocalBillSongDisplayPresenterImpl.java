@@ -9,6 +9,7 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.BillSongDisplayContract;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.su.scott.slibrary.mvp.presenter.BasePresenter;
+import com.su.scott.slibrary.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +90,7 @@ public class LocalBillSongDisplayPresenterImpl extends BasePresenter<BillSongDis
                         }
 
                         getView().setDisplayData(result);
+                        L.e("===>billsongs:", result.toString());
 
                         if (result.size() == 0) {
                             getView().showEmpty();

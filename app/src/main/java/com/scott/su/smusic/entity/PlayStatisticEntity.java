@@ -15,7 +15,7 @@ import org.greenrobot.greendao.annotation.Property;
 @Entity
 public class PlayStatisticEntity implements Parcelable {
 
-    @Id
+    @Id(autoincrement = true)
     private Long id;
 
     @Property(nameInDb = "songId")

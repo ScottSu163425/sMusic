@@ -19,7 +19,7 @@ public class LocalBillEntity implements Parcelable {
     @Transient
     public static final String ID_DIVIDER = "~";
 
-    @Id
+    @Id(autoincrement = true)
     private Long id;
 
     @Property(nameInDb = "billId")
@@ -33,7 +33,6 @@ public class LocalBillEntity implements Parcelable {
 
 
     public LocalBillEntity() {
-        setId(System.currentTimeMillis());
         //Auto set bill id with unique number;
         setBillId(System.currentTimeMillis());
     }

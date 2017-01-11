@@ -19,7 +19,7 @@ public class LocalSongEntity implements Parcelable {
     @Transient
     public static final String ID_DIVIDER = "~";
 
-    @Id
+    @Id(autoincrement = true)
     private Long id;
 
     @Property(nameInDb = "songId")
@@ -53,7 +53,6 @@ public class LocalSongEntity implements Parcelable {
     private String billIds;
 
     public LocalSongEntity() {
-        setId(System.currentTimeMillis());
     }
 
     public Long getId() {
