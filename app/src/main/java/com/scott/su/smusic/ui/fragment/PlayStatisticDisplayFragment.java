@@ -117,7 +117,7 @@ public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatis
     @Override
     public void handleItemClick(View itemView, PlayStatisticEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
         if (mItemClickCallback != null) {
-            if (getDisplayDataList().size() > 3 && position < 3) {
+            if (position < 3) {
                 mItemClickCallback.onPlayStatisticItemClick(position, entity, getDisplayDataList(), sharedElements[0], transitionNames[0]);
             } else {
                 mItemClickCallback.onPlayStatisticItemClick(position, entity, getDisplayDataList(), null, null);

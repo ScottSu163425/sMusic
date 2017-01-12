@@ -90,7 +90,6 @@ public class LocalBillSongDisplayPresenterImpl extends BasePresenter<BillSongDis
                         }
 
                         getView().setDisplayData(result);
-                        L.e("===>billsongs:", result.toString());
 
                         if (result.size() == 0) {
                             getView().showEmpty();

@@ -91,8 +91,6 @@ public class LocalBillDisplayPresenterImpl extends BasePresenter<LocalBillDispla
 
                         getView().setDisplayData(result);
 
-                        L.e("===>bill:", result.toString());
-
                         if (result.size() == 0) {
                             getView().showEmpty();
                         } else {

@@ -34,9 +34,9 @@ public class PlayStatisticDisplayAdapter extends BaseDisplayAdapter<RecyclerView
 
     @Override
     public int getItemViewType(int position) {
-        if (getItemCount() < 3) {
-            return VIEW_TYPE_NORMAL;
-        }
+//        if (getItemCount() < 3) {
+//            return VIEW_TYPE_NORMAL;
+//        }
 
         if (position < 3) {
             return VIEW_TYPE_TOP_3;
