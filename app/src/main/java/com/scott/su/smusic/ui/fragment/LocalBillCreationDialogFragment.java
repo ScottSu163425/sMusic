@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 
@@ -29,6 +30,8 @@ public class LocalBillCreationDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         if (mRootView == null) {
             mRootView = inflater.inflate(R.layout.fragment_dialog_create_bill, container, false);
             mInputLayout = (TextInputLayout) mRootView.findViewById(R.id.input_layout_bill_name_fragment_dialog_create_bill);

@@ -19,7 +19,7 @@ public class LocalBillEntity implements Parcelable {
     @Transient
     public static final String ID_DIVIDER = "~";
 
-    @Id(autoincrement = true)
+    @Id
     private Long id;
 
     @Property(nameInDb = "billId")
@@ -129,6 +129,7 @@ public class LocalBillEntity implements Parcelable {
         return TextUtils.isEmpty(getBillSongIds());
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -136,14 +137,14 @@ public class LocalBillEntity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeLong(this.id);
+        dest.writeValue(this.id);
         dest.writeLong(this.billId);
         dest.writeString(this.billTitle);
         dest.writeString(this.billSongIds);
     }
 
     protected LocalBillEntity(Parcel in) {
-//        this.id = in.readLong();
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.billId = in.readLong();
         this.billTitle = in.readString();
         this.billSongIds = in.readString();
@@ -168,14 +169,4 @@ public class LocalBillEntity implements Parcelable {
             return new LocalBillEntity[size];
         }
     };
-
-    @Override
-    public String toString() {
-        return "LocalBillEntity{" +
-                "id=" + (id == null ? "" : id) +
-                ", billId=" + billId +
-                ", billTitle='" + billTitle + '\'' +
-                ", billSongIds='" + billSongIds + '\'' +
-                '}';
-    }
 }

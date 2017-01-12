@@ -19,7 +19,7 @@ public class LocalSongEntity implements Parcelable {
     @Transient
     public static final String ID_DIVIDER = "~";
 
-    @Id(autoincrement = true)
+    @Id
     private Long id;
 
     @Property(nameInDb = "songId")
@@ -173,7 +173,7 @@ public class LocalSongEntity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeLong(this.id);
+        dest.writeValue(this.id);
         dest.writeLong(this.songId);
         dest.writeString(this.title);
         dest.writeString(this.artist);
@@ -187,7 +187,7 @@ public class LocalSongEntity implements Parcelable {
     }
 
     protected LocalSongEntity(Parcel in) {
-//        this.id = in.readLong();
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.songId = in.readLong();
         this.title = in.readString();
         this.artist = in.readString();

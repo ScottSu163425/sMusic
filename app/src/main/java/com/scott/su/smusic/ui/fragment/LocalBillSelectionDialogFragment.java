@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.LocalBillSelectionDisplayAdapter;
@@ -29,6 +30,8 @@ public class LocalBillSelectionDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         if (mRootView == null) {
             mRootView = inflater.inflate(R.layout.fragment_dialog_local_bill_selection, container, false);
             mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_fragment_dialog_local_bill_selection);

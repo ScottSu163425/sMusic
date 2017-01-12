@@ -70,11 +70,7 @@ public class LocalBillModelImpl implements LocalBillModel {
 
     @Override
     public void saveOrUpdateBill(Context context, LocalBillEntity billEntity) {
-        if (isBillExist(context, billEntity)) {
-            GreenDaoHelper.getDaoSession().getLocalBillEntityDao().update(billEntity);
-        } else {
-            GreenDaoHelper.getDaoSession().getLocalBillEntityDao().insert(billEntity);
-        }
+        GreenDaoHelper.getDaoSession().getLocalBillEntityDao().insertOrReplace(billEntity);
     }
 
     @Override
@@ -225,7 +221,7 @@ public class LocalBillModelImpl implements LocalBillModel {
         billSongEntity.removeBillId(billEntity.getBillId());
         billEntity.removeSongId(billSongEntity.getSongId());
 
-        GreenDaoHelper.getDaoSession().getLocalBillEntityDao().getKey(billEntity);
+        GreenDaoHelper.getDaoSession().getLocalBillEntityDao().update(billEntity);
         GreenDaoHelper.getDaoSession().getLocalSongEntityDao().update(billSongEntity);
 
         //optional

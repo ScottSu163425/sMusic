@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -32,6 +33,8 @@ public class CommonInputDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         if (mRootView == null) {
             mRootView = inflater.inflate(R.layout.fragment_dialog_common_input, container, false);
             mTitleTextView = (TextView) mRootView.findViewById(R.id.tv_title_fragment_dialog_common_input);

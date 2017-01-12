@@ -15,7 +15,7 @@ import org.greenrobot.greendao.annotation.Property;
 @Entity
 public class PlayStatisticEntity implements Parcelable {
 
-    @Id(autoincrement = true)
+    @Id
     private Long id;
 
     @Property(nameInDb = "songId")
@@ -187,7 +187,7 @@ public class PlayStatisticEntity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeLong(this.id);
+        dest.writeValue(this.id);
         dest.writeLong(this.songId);
         dest.writeString(this.title);
         dest.writeString(this.artist);
@@ -205,7 +205,7 @@ public class PlayStatisticEntity implements Parcelable {
     }
 
     protected PlayStatisticEntity(Parcel in) {
-//        this.id = in.readLong();
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.songId = in.readLong();
         this.title = in.readString();
         this.artist = in.readString();
@@ -221,8 +221,8 @@ public class PlayStatisticEntity implements Parcelable {
 
     @Generated(hash = 85455696)
     public PlayStatisticEntity(Long id, long songId, String title, String artist, String album,
-            long albumId, long duration, long size, String path, String coverPath, int playCount,
-            String lastPlayTime) {
+                               long albumId, long duration, long size, String path, String coverPath, int playCount,
+                               String lastPlayTime) {
         this.id = id;
         this.songId = songId;
         this.title = title;
