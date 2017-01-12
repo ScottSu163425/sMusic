@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -55,6 +56,7 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.callback.SimpleCallback;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.DialogUtil;
+import com.su.scott.slibrary.util.StatusBarUtil;
 import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.TimeUtil;
 import com.su.scott.slibrary.util.ViewUtil;
@@ -114,6 +116,10 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     @Override
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mMainPresenter.onViewFirstTimeCreated();
+
+        StatusBarUtil.setColorForDrawerLayout(MainActivity.this,
+                mDrawerLayout,
+                Color.parseColor("#22222222"));
     }
 
     @Override

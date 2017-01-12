@@ -357,7 +357,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         builder.setContentIntent(pendingIntentGoToMusicPlay);
         builder.setContent(generateContentRemoteView());
         builder.setCustomBigContentView(generateBigContentRemoteView());
-        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
+//        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
         builder.setPriority(NotificationCompat.PRIORITY_MAX);
         builder.setOngoing(true);
 

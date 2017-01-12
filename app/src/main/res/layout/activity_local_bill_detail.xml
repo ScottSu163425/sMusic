@@ -19,7 +19,6 @@
             android:id="@+id/collapsing_toolbar_layout_bill_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
             app:collapsedTitleGravity="left"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleGravity="left|bottom"
@@ -37,7 +36,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_widthPercent="100%"
-                    app:layout_aspectRatio="110%"
+                    app:layout_aspectRatio="120%"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_cover_default_song_bill"
                     android:transitionName="@string/transition_name_cover" />

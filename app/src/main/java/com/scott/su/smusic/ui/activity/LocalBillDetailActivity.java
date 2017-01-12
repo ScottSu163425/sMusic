@@ -24,9 +24,9 @@ import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.LocalBillDetailContract;
 import com.scott.su.smusic.mvp.presenter.impl.LocalBillDetailPresenterImpl;
-import com.scott.su.smusic.ui.fragment.LocalBillSongDisplayFragment;
 import com.scott.su.smusic.ui.fragment.CommonInputDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
+import com.scott.su.smusic.ui.fragment.LocalBillSongDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.manager.ImageLoader;
@@ -34,6 +34,7 @@ import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.DialogUtil;
 import com.su.scott.slibrary.util.SdkUtil;
+import com.su.scott.slibrary.util.StatusBarUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
 import java.util.List;
@@ -71,6 +72,10 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
     @Override
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mBillDetailPresenter.onViewFirstTimeCreated();
+
+        StatusBarUtil.setTranslucentForCoordinatorLayout(LocalBillDetailActivity.this, 50);
+
+
         if (SdkUtil.isLolipopOrLatter()) {
             if (getWindow().getSharedElementEnterTransition() != null) {
                 getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {

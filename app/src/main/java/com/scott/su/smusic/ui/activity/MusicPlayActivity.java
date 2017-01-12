@@ -25,6 +25,7 @@ import com.scott.su.smusic.ui.fragment.MusicPlaySecondFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.SdkUtil;
+import com.su.scott.slibrary.util.StatusBarUtil;
 
 import java.util.ArrayList;
 
@@ -59,6 +60,9 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
     @Override
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mMusicPlayPresenter.onViewFirstTimeCreated();
+
+
+        StatusBarUtil.setTransparentForImageView(MusicPlayActivity.this, mBlurCoverImageView);
     }
 
     @Override
@@ -187,7 +191,7 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
         } else if (!mMusicPlayMainFragment.isVisible()) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .show(mMusicPlayMainFragment)
                     .commitNow();
         }
@@ -198,7 +202,7 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
         if (mMusicPlayMainFragment.isAdded() && mMusicPlayMainFragment.isVisible()) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                     .hide(mMusicPlayMainFragment)
                     .commitNow();
         }

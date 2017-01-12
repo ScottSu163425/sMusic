@@ -12,6 +12,7 @@ import com.scott.su.smusic.mvp.contract.UserCenterContract;
 import com.scott.su.smusic.mvp.presenter.impl.UserCenterPresenterImpl;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.SdkUtil;
+import com.su.scott.slibrary.util.StatusBarUtil;
 
 public class UserCenterActivity extends BaseActivity<UserCenterContract.UserCenterView, UserCenterContract.UserCenterPresenter>
         implements UserCenterContract.UserCenterView {
@@ -34,6 +35,8 @@ public class UserCenterActivity extends BaseActivity<UserCenterContract.UserCent
     @Override
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mPresenter.onViewFirstTimeCreated();
+
+        StatusBarUtil.setTranslucent(UserCenterActivity.this, 30);
     }
 
     @Override

@@ -34,20 +34,17 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.ImmersiveStatusBar" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.LocalSongSelectionActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.LocalBillDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.ImmersiveStatusBar" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activity.MusicPlayActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreenStatusBar" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.LocalAlbumDetailActivity"
             android:screenOrientation="portrait" />
@@ -59,8 +56,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.UserCenterActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreenStatusBar" />
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

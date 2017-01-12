@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/background">
 
     <android.support.percent.PercentRelativeLayout
@@ -10,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/bg_user_center"
+        android:fitsSystemWindows="true"
         app:layout_heightPercent="45%">
 
         <android.support.v7.widget.Toolbar
