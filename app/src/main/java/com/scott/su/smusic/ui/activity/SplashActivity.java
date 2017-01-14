@@ -5,6 +5,8 @@ import android.animation.Animator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.transition.TransitionManager;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.scott.su.smusic.R;
@@ -12,6 +14,7 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.mvp.presenter.IPresenter;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.ScreenUtil;
+import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.StatusBarUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 import com.tbruyelle.rxpermissions.Permission;
@@ -21,7 +24,7 @@ import rx.functions.Action1;
 public class SplashActivity extends BaseActivity {
 
     private static final long DURATION_STAY = 1500;
-    private TextView mAppNameTextView, mCopyRightTextView;
+    private TextView mAppNameTextView, mAppDecribeTextView, mCopyRightTextView;
     private Animator mAppNameInAnimator, mAppNameOutAnimator, mCopyRightInAnimator, mCopyRightOutAnimator;
 
 
@@ -63,6 +66,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     public void initView() {
         mAppNameTextView = (TextView) findViewById(R.id.tv_app_name_activity_splash);
+        mAppDecribeTextView = (TextView) findViewById(R.id.tv_app_describe_activity_splash);
         mCopyRightTextView = (TextView) findViewById(R.id.tv_copy_right_activity_splash);
 
         ViewUtil.setViewInVisiable(mAppNameTextView);
@@ -80,6 +84,12 @@ public class SplashActivity extends BaseActivity {
 
                     @Override
                     public void onAnimEnd() {
+                        if (SdkUtil.isLolipopOrLatter()) {
+                            TransitionManager.beginDelayedTransition((ViewGroup) getContentView());
+                        }
+
+                        ViewUtil.setViewVisiable(mAppDecribeTextView);
+
                         mCopyRightInAnimator.start();
                     }
                 });
