@@ -204,6 +204,11 @@ public class MainPresenterImpl extends BasePresenter<MainContract.MainView>
     }
 
     @Override
+    public void onDrawerMenuSettingsClick(View v) {
+        getView().goToSettings();
+    }
+
+    @Override
     public void onDrawerMenuTimerCancelClick() {
         getView().cancelShutDownTimer();
     }

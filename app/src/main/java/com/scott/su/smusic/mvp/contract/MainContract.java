@@ -92,6 +92,8 @@ public interface MainContract {
         void goToPlayStatistic();
 
         void goToUserCenter(View sharedElement, String transitionName);
+
+        void goToSettings();
     }
 
     interface MainPresenterI extends IPresenter<MainView>, ILocalSongBottomSheetPresenter, DrawerMenuCallback {

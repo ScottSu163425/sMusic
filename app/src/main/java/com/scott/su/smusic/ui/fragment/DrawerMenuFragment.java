@@ -33,7 +33,7 @@ public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMe
     public static final float PERCENTAGE_OF_SCREEN_WIDTH = 0.85f;
     private View mRootView;
     private ImageView mUserHeadImageView;
-    private View mUserCenterItem, mStatisticMenuItem, mTimerMenuItem, mLanguageMenuItem, mAboutMenuItem;
+    private View mUserCenterItem, mStatisticMenuItem, mTimerMenuItem, mLanguageMenuItem, mSettingsMenuItem, mAboutMenuItem;
     private TextView mTimerTimeTextView;
     private SwitchCompat mNightModeSwitch;
     private DrawerMenuCallback mMenuCallback;
@@ -71,6 +71,7 @@ public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMe
         mLanguageMenuItem = mRootView.findViewById(R.id.rl_item_language_drawer_menu);
         mTimerTimeTextView = (TextView) mRootView.findViewById(R.id.tv_time_timer_drawer_menu);
         mStatisticMenuItem = mRootView.findViewById(R.id.rl_item_statistic_drawer_menu);
+        mSettingsMenuItem = mRootView.findViewById(R.id.rl_item_settings_drawer_menu);
     }
 
     @Override
@@ -86,6 +87,7 @@ public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMe
         mTimerMenuItem.setOnClickListener(this);
         mLanguageMenuItem.setOnClickListener(this);
         mAboutMenuItem.setOnClickListener(this);
+        mSettingsMenuItem.setOnClickListener(this);
         mNightModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
@@ -124,6 +126,8 @@ public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMe
             popLanguageMenu();
         } else if (id == mAboutMenuItem.getId()) {
             mMenuCallback.onDrawerMenuAboutClick(view);
+        } else if (id == mSettingsMenuItem.getId()) {
+            mMenuCallback.onDrawerMenuSettingsClick(view);
         }
     }
 

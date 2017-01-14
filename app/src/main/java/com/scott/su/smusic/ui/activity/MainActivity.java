@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -76,8 +75,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     private static final String NEED_OPEN_DRAWER = "NEED_OPEN_DRAWE";
     private static final String CURRENT_TAB_POSITION = "CURRENT_TAB_POSITION";
     private static final int REQUEST_CODE_LOCAL_SONG_SELECTION = 1111;
-    private static final int REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE = 123;
-    private static final int REQUEST_CODE_PERMISSION_WRITE_EXTERNAL_STORAGE = 321;
     private static final int TAB_POSITION_SONG = 0;
     private static final int TAB_POSITION_BILL = 1;
     private static final int TAB_POSITION_ALBUM = 2;
@@ -324,6 +321,11 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
             @Override
             public void onDrawerMenuAboutClick(View v) {
                 mMainPresenter.onDrawerMenuAboutClick(v);
+            }
+
+            @Override
+            public void onDrawerMenuSettingsClick(View v) {
+                mMainPresenter.onDrawerMenuSettingsClick(v);
             }
 
             @Override
@@ -854,6 +856,11 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     @Override
     public void goToUserCenter(View sharedElement, String transitionName) {
         goToWithSharedElement(UserCenterActivity.class, sharedElement, transitionName);
+    }
+
+    @Override
+    public void goToSettings() {
+        goToWithTransition(SettingsActivity.class);
     }
 
     private void recreateActivity(boolean isForNightMode) {

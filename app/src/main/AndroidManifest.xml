@@ -39,7 +39,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.LocalBillDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MusicPlayActivity"
             android:launchMode="singleTask"
@@ -56,6 +56,7 @@
         <activity
             android:name=".ui.activity.UserCenterActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.SettingsActivity"></activity>
     </application>
 
 </manifest>
