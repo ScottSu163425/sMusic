@@ -54,6 +54,7 @@ import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.callback.SimpleCallback;
+import com.su.scott.slibrary.constant.BaseConstants;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.DialogUtil;
 import com.su.scott.slibrary.util.StatusBarUtil;
@@ -119,7 +120,8 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
         StatusBarUtil.setColorForDrawerLayout(MainActivity.this,
                 mDrawerLayout,
-                Color.parseColor("#22222222"));
+                getResources().getColor(R.color.colorPrimaryDark),
+                BaseConstants.ALPHA_TRANSLUCENT_STATUS_BAR);
     }
 
     @Override

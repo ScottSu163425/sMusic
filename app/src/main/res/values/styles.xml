@@ -12,21 +12,4 @@
 
     <style name="AppTheme.PopupOverlay" parent="BaseTheme.PopupOverlay"/>
 
-    <style name="AppTheme.PrimaryColorStatusBar" parent="BaseTheme.PrimaryColorStatusBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="AppTheme.ImmersiveStatusBar" parent="BaseTheme.ImmersiveStatusBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="AppTheme.FullScreenStatusBar" parent="BaseTheme.FullScreenStatusBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
 </resources>

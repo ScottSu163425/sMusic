@@ -23,6 +23,7 @@ import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.MusicPlayMainFragment;
 import com.scott.su.smusic.ui.fragment.MusicPlaySecondFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.constant.BaseConstants;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.StatusBarUtil;
@@ -61,8 +62,9 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mMusicPlayPresenter.onViewFirstTimeCreated();
 
-
-        StatusBarUtil.setTransparentForImageView(MusicPlayActivity.this, mBlurCoverImageView);
+        StatusBarUtil.setTranslucentForImageView(MusicPlayActivity.this,
+                BaseConstants.ALPHA_TRANSLUCENT_STATUS_BAR,
+                mToolbar);
     }
 
     @Override

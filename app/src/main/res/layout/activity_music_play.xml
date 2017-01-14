@@ -6,22 +6,19 @@
     android:animateLayoutChanges="true"
     android:background="@color/background_music_play"
     android:clipChildren="false"
-    android:clipToPadding="false"
-    android:fitsSystemWindows="true">
+    android:clipToPadding="false">
 
     <ImageView
         android:id="@+id/iv_cover_blur_music_play"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         android:scaleType="centerCrop" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
-        android:clipToPadding="false"
-        android:fitsSystemWindows="true">
+        android:clipToPadding="false">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/tool_bar_music_play"

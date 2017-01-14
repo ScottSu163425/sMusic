@@ -11,6 +11,7 @@ import com.scott.su.smusic.R;
 import com.scott.su.smusic.mvp.contract.UserCenterContract;
 import com.scott.su.smusic.mvp.presenter.impl.UserCenterPresenterImpl;
 import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.constant.BaseConstants;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.StatusBarUtil;
 
@@ -36,7 +37,9 @@ public class UserCenterActivity extends BaseActivity<UserCenterContract.UserCent
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mPresenter.onViewFirstTimeCreated();
 
-        StatusBarUtil.setTranslucent(UserCenterActivity.this, 30);
+        StatusBarUtil.setTranslucentForImageView(UserCenterActivity.this,
+                BaseConstants.ALPHA_TRANSLUCENT_STATUS_BAR,
+                findViewById(R.id.tool_bar_activity_user_center));
     }
 
     @Override

@@ -12,13 +12,4 @@
 
     <style name="BaseTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="BaseTheme.ImmersiveStatusBar" parent="BaseTheme">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-    </style>
-
-    <style name="BaseTheme.PrimaryColorStatusBar" parent="BaseTheme">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-    </style>
 </resources>

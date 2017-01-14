@@ -12,15 +12,15 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.mvp.presenter.IPresenter;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.ScreenUtil;
+import com.su.scott.slibrary.util.StatusBarUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 import com.tbruyelle.rxpermissions.Permission;
-import com.tbruyelle.rxpermissions.RxPermissions;
 
 import rx.functions.Action1;
 
 public class SplashActivity extends BaseActivity {
 
-    private static final long DURATION_STATY = 1500;
+    private static final long DURATION_STAY = 1500;
     private TextView mAppNameTextView, mCopyRightTextView;
     private Animator mAppNameInAnimator, mAppNameOutAnimator, mCopyRightInAnimator, mCopyRightOutAnimator;
 
@@ -37,6 +37,8 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.colorPrimary));
+
         initView();
         initData();
 
@@ -109,7 +111,7 @@ public class SplashActivity extends BaseActivity {
 
                     @Override
                     public void onAnimEnd() {
-                        mCopyRightOutAnimator.setStartDelay(DURATION_STATY);
+                        mCopyRightOutAnimator.setStartDelay(DURATION_STAY);
                         mCopyRightOutAnimator.start();
                     }
                 });
@@ -161,6 +163,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        //Disable the back press;
     }
 
 }

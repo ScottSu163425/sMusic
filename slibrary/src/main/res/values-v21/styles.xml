@@ -14,23 +14,4 @@
 
     <style name="BaseTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="BaseTheme.ImmersiveStatusBar" parent="BaseTheme">
-        <item name="android:windowTranslucentStatus">true</item>
-    </style>
-
-    <style name="BaseTheme.FullScreenStatusBar" parent="BaseTheme">
-        <item name="android:windowTranslucentStatus">true</item>
-    </style>
-
-    <style name="BaseTheme.PrimaryColorStatusBar" parent="BaseTheme">
-        <!--需要指定主题色
-         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        -->
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">false</item>
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
-    </style>
-
 </resources>

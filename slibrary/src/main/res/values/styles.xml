@@ -12,9 +12,6 @@
 
     <style name="BaseTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="BaseTheme.ImmersiveStatusBar" parent="BaseTheme"></style>
-
-    <style name="BaseTheme.PrimaryColorStatusBar" parent="BaseTheme"></style>
 
     <style name="TextAppearanceDisplay4">
         <item name="android:textSize">@dimen/text_size_display_4</item>
