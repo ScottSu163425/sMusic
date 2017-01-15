@@ -23,8 +23,8 @@ import rx.functions.Action1;
 
 public class SplashActivity extends BaseActivity {
 
-    private static final long DURATION_STAY = 1500;
-    private TextView mAppNameTextView, mAppDecribeTextView, mCopyRightTextView;
+    private static final long DURATION_STAY = 3000;
+    private TextView mAppNameTextView, mAppDescribeTextView, mCopyRightTextView;
     private Animator mAppNameInAnimator, mAppNameOutAnimator, mCopyRightInAnimator, mCopyRightOutAnimator;
 
 
@@ -66,7 +66,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     public void initView() {
         mAppNameTextView = (TextView) findViewById(R.id.tv_app_name_activity_splash);
-        mAppDecribeTextView = (TextView) findViewById(R.id.tv_app_describe_activity_splash);
+        mAppDescribeTextView = (TextView) findViewById(R.id.tv_app_describe_activity_splash);
         mCopyRightTextView = (TextView) findViewById(R.id.tv_copy_right_activity_splash);
 
         ViewUtil.setViewInVisiable(mAppNameTextView);
@@ -84,12 +84,6 @@ public class SplashActivity extends BaseActivity {
 
                     @Override
                     public void onAnimEnd() {
-                        if (SdkUtil.isLolipopOrLatter()) {
-                            TransitionManager.beginDelayedTransition((ViewGroup) getContentView());
-                        }
-
-                        ViewUtil.setViewVisiable(mAppDecribeTextView);
-
                         mCopyRightInAnimator.start();
                     }
                 });
@@ -116,11 +110,15 @@ public class SplashActivity extends BaseActivity {
                 AnimUtil.DURATION_NORMAL, new FastOutSlowInInterpolator(), new AnimUtil.SimpleAnimListener() {
                     @Override
                     public void onAnimStart() {
-                        ViewUtil.setViewVisiable(mAppNameTextView);
                     }
 
                     @Override
                     public void onAnimEnd() {
+                        if (SdkUtil.isLolipopOrLatter()) {
+                            TransitionManager.beginDelayedTransition((ViewGroup) getContentView());
+                        }
+                        ViewUtil.setViewVisiable(mAppDescribeTextView);
+
                         mCopyRightOutAnimator.setStartDelay(DURATION_STAY);
                         mCopyRightOutAnimator.start();
                     }
@@ -130,6 +128,7 @@ public class SplashActivity extends BaseActivity {
                 AnimUtil.DURATION_NORMAL, new FastOutSlowInInterpolator(), new AnimUtil.SimpleAnimListener() {
                     @Override
                     public void onAnimStart() {
+                        AnimUtil.alphaOut(mAppDescribeTextView,AnimUtil.DURATION_SHORT).start();
                         mAppNameOutAnimator.setStartDelay(AnimUtil.DURATION_NORMAL_HALF);
                         mAppNameOutAnimator.start();
                     }

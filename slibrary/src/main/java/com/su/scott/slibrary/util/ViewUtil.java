@@ -61,4 +61,8 @@ public class ViewUtil {
         editText.setText(text);
     }
 
+    public static void runDelay(@NonNull View view, @NonNull Runnable action, long delayMills) {
+        view.postDelayed(action, delayMills);
+    }
+
 }

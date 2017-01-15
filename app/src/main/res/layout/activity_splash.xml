@@ -10,9 +10,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:orientation="vertical"
-    android:paddingBottom="@dimen/margin_xl"
-        android:layout_centerInParent="true">
+        android:paddingBottom="@dimen/margin_xl">
 
         <TextView
             android:id="@+id/tv_app_name_activity_splash"
@@ -29,11 +29,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:paddingBottom="@dimen/margin_l"
             android:text="@string/listen_to_the_music"
             android:textColor="@color/white"
+            android:textSize="@dimen/text_size_body"
             android:textStyle="italic"
-            android:paddingBottom="@dimen/margin_m"
-            android:textSize="@dimen/text_size_subhead"
             android:visibility="gone" />
     </LinearLayout>
 
