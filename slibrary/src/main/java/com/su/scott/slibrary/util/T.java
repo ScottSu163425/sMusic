@@ -14,6 +14,7 @@ import android.widget.Toast;
 public class T {
 
     private static final int GRAVITY_DEFAULT = Gravity.BOTTOM;
+    private static Toast sToast;
 
     private T() {
 
@@ -35,7 +36,7 @@ public class T {
      * @param context
      * @param msg
      */
-    public static void showShort(Context context,@StringRes int msg) {
+    public static void showShort(Context context, @StringRes int msg) {
         showToast(context, msg, Toast.LENGTH_SHORT, GRAVITY_DEFAULT);
     }
 
@@ -55,7 +56,7 @@ public class T {
      * @param context
      * @param msg
      */
-    public static void showShortCenter(Context context,@StringRes int msg) {
+    public static void showShortCenter(Context context, @StringRes int msg) {
         showToast(context, msg, Toast.LENGTH_SHORT, Gravity.CENTER);
     }
 
@@ -95,19 +96,30 @@ public class T {
      * @param context
      * @param msg
      */
-    public static void showLongCenter(Context context,@StringRes int msg) {
+    public static void showLongCenter(Context context, @StringRes int msg) {
         showToast(context, msg, Toast.LENGTH_LONG, Gravity.CENTER);
     }
 
     private static void showToast(Context context, CharSequence msg, int duration, int gravity) {
-        Toast toast = Toast.makeText(context, msg, duration);
-        toast.setGravity(gravity, 0, 0);
-        toast.show();
+        if (sToast == null) {
+            sToast = Toast.makeText(context, msg, duration);
+            sToast.setGravity(gravity, 0, 0);
+        } else {
+            sToast.setText(msg);
+        }
+
+        sToast.show();
     }
 
-    private static void showToast(Context context,@StringRes int msg, int duration, int gravity) {
-        Toast toast = Toast.makeText(context, msg, duration);
-        toast.setGravity(gravity, 0, 0);
-        toast.show();
+    private static void showToast(Context context, @StringRes int msg, int duration, int gravity) {
+        if (sToast == null) {
+            sToast = Toast.makeText(context, msg, duration);
+            sToast.setGravity(gravity, 0, 0);
+        } else {
+            sToast.setText(msg);
+        }
+        sToast.show();
     }
+
+
 }

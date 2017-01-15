@@ -248,13 +248,13 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
 
             if (!mMusicPlayMainFragment.isSameSong()) {
                 finish();
-                overridePendingTransition(R.anim.in_alpha, R.anim.out_east);
+                overridePendingTransition(R.anim.in_alpha, R.anim.out_right);
             } else {
                 if (SdkUtil.isLolipopOrLatter()) {
                     finishAfterTransition();
                 } else {
                     finish();
-                    overridePendingTransition(R.anim.in_alpha, R.anim.out_east);
+                    overridePendingTransition(R.anim.in_alpha, R.anim.out_right);
                 }
             }
         }

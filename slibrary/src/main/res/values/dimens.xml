@@ -35,10 +35,10 @@
     <dimen name="elevation_fab_pressed">12dp</dimen>
     <dimen name="elevation_card_pressed">6dp</dimen>
 
-    <integer name="duration_anim_default">300</integer>
+    <integer name="duration_anim_short_x">300</integer>
     <integer name="duration_anim_short">400</integer>
-    <integer name="duration_anim_normal">600</integer>
-    <integer name="duration_anim_long">800</integer>
+    <integer name="duration_anim_normal">500</integer>
+    <integer name="duration_anim_long">600</integer>
 
 
 </resources>

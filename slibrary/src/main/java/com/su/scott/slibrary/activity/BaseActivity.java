@@ -85,7 +85,7 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
             finish();
 
             if (SdkUtil.isLolipopOrLatter()) {
-                overridePendingTransition(R.anim.in_alpha, R.anim.out_east);
+                overridePendingTransition(R.anim.in_alpha, R.anim.out_right);
             }
         }
     }
@@ -95,7 +95,7 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
         super.finish();
 
         if (!SdkUtil.isLolipopOrLatter()) {
-            overridePendingTransition(R.anim.in_alpha, R.anim.out_east);
+            overridePendingTransition(R.anim.in_alpha, R.anim.out_right);
         }
     }
 
@@ -104,7 +104,7 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
         super.startActivity(intent);
 
         if (!SdkUtil.isLolipopOrLatter()) {
-            overridePendingTransition(R.anim.in_east, R.anim.out_alpha);
+            overridePendingTransition(R.anim.in_right, R.anim.out_alpha);
         }
     }
 

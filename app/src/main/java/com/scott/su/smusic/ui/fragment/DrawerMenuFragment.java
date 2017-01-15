@@ -30,7 +30,7 @@ import com.su.scott.slibrary.util.ViewUtil;
  */
 public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMenuView, DrawerMenuContract.DrawerMenuPresenter>
         implements View.OnClickListener {
-    public static final float PERCENTAGE_OF_SCREEN_WIDTH = 0.85f;
+    public static final float PERCENTAGE_OF_SCREEN_WIDTH = 0.83f;
     private View mRootView;
     private ImageView mUserHeadImageView;
     private View mUserCenterItem, mStatisticMenuItem, mTimerMenuItem, mLanguageMenuItem, mSettingsMenuItem;

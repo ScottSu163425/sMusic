@@ -150,7 +150,7 @@ public class SplashActivity extends BaseActivity {
                             if (permission.granted) {
                                 goTo(MainActivity.class);
                                 finish();
-                                overridePendingTransition(R.anim.in_east, R.anim.out_west);
+                                overridePendingTransition(R.anim.in_right, R.anim.out_left);
                             } else {
                                 if (permission.shouldShowRequestPermissionRationale) {
                                     showToastLong("你拒绝了权限" + permission.name + ",但这是应用必要的权限");

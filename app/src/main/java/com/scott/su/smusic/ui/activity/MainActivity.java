@@ -878,15 +878,15 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
         if (isForNightMode) {
             if (AppConfig.isNightModeOn(MainActivity.this)) {
-                overridePendingTransition(R.anim.in_north, R.anim.out_south);
+                overridePendingTransition(R.anim.in_top, R.anim.out_bottom);
             } else {
-                overridePendingTransition(R.anim.in_south, R.anim.out_north);
+                overridePendingTransition(R.anim.in_bottom, R.anim.out_top);
             }
         } else {
             if (AppConfig.isLanguageModeOn(MainActivity.this)) {
-                overridePendingTransition(R.anim.in_west, R.anim.out_east);
+                overridePendingTransition(R.anim.in_left, R.anim.out_right);
             } else {
-                overridePendingTransition(R.anim.in_east, R.anim.out_west);
+                overridePendingTransition(R.anim.in_right, R.anim.out_left);
             }
         }
     }

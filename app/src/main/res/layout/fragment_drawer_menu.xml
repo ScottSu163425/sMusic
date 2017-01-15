@@ -25,9 +25,9 @@
             android:layout_marginLeft="@dimen/margin_s"
             android:clickable="true"
             android:src="@drawable/ic_user_head"
-            android:stateListAnimator="@drawable/selector_card_elevation_s"
             android:transitionName="@string/transition_name_head"
-            android:translationZ="@dimen/margin_xs"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp"
             app:layout_aspectRatio="100%"
             app:layout_marginTopPercent="28%"
             app:layout_widthPercent="25%" />
@@ -196,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/margin_s"
-                        android:src="@drawable/ic_menu_item_drawer_language_mode" />
+                    android:src="@drawable/ic_menu_item_drawer_language_mode" />
 
                 <TextView
                     style="@style/TextAppearanceMenuSecondary"
