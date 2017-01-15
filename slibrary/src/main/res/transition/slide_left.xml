@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
     <slide
-        android:duration="@integer/duration_anim_defatul"
+        android:duration="@integer/duration_anim_default"
         android:interpolator="@android:interpolator/accelerate_decelerate"
         android:slideEdge="left" />
 </transitionSet>

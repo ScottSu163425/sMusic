@@ -230,30 +230,6 @@
                     android:layout_marginLeft="@dimen/margin_xl"
                     android:text="@string/settings" />
             </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_item_about_drawer_menu"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_item_s"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/margin_s"
-                    android:src="@drawable/ic_menu_item_drawer_about" />
-
-                <TextView
-                    style="@style/TextAppearanceMenuSecondary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/margin_xl"
-                    android:text="@string/about" />
-            </RelativeLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.percent.PercentRelativeLayout>

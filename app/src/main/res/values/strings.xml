@@ -93,11 +93,21 @@
     <string name="label_monday">周一</string>
     <string name="label_tuesday">周二</string>
     <string name="label_wednesday">周三</string>
-    <string name="label_thurday">周四</string>
+    <string name="label_thursday">周四</string>
     <string name="label_friday">周五</string>
     <string name="label_saturday">周六</string>
     <string name="copy_right">Copyright © 2016 Scott Inc. All Rights Reserved.</string>
     <string name="user_center">个人中心</string>
     <string name="listen_to_the_music">Listen to the Music.</string>
+
+    <string name="menu_item_settings_recognization">听歌识曲</string>
+    <string name="menu_item_settings_alarm">音乐闹钟</string>
+    <string name="menu_item_settings_drive_mode">驾驶模式</string>
+    <string name="menu_item_settings_effects">音效调节</string>
+    <string name="menu_item_settings_more">更多设置</string>
+
+    <string name="menu_item_settings_upgrade">检测更新</string>
+    <string name="menu_item_settings_feedback">意见反馈</string>
+    <string name="menu_item_settings_about">关于SMusic</string>
 
 </resources>

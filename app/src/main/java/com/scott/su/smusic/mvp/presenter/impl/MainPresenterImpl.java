@@ -199,11 +199,6 @@ public class MainPresenterImpl extends BasePresenter<MainContract.MainView>
     }
 
     @Override
-    public void onDrawerMenuAboutClick(View v) {
-
-    }
-
-    @Override
     public void onDrawerMenuSettingsClick(View v) {
         getView().goToSettings();
     }
@@ -219,7 +214,7 @@ public class MainPresenterImpl extends BasePresenter<MainContract.MainView>
     }
 
     @Override
-    public void onDrawerMenuStaticticClick(View v) {
+    public void onDrawerMenuStatisticClick(View v) {
         getView().goToPlayStatistic();
     }
 

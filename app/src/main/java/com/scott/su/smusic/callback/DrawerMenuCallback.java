@@ -19,14 +19,12 @@ public interface DrawerMenuCallback {
 
     void onDrawerMenuLanguageModeOff();
 
-    void onDrawerMenuAboutClick(View v);
-
     void onDrawerMenuSettingsClick(View v);
 
     void onDrawerMenuTimerCancelClick();
 
     void onDrawerMenuTimerMinutesClick(long millisOfmin);
 
-    void onDrawerMenuStaticticClick(View v);
+    void onDrawerMenuStatisticClick(View v);
 
 }

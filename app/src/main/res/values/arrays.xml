@@ -17,7 +17,7 @@
         <item>@string/label_monday</item>
         <item>@string/label_tuesday</item>
         <item>@string/label_wednesday</item>
-        <item>@string/label_thurday</item>
+        <item>@string/label_thursday</item>
         <item>@string/label_friday</item>
         <item>@string/label_saturday</item>
     </string-array>

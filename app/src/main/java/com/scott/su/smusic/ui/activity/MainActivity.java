@@ -318,10 +318,10 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
                 mMainPresenter.onDrawerMenuLanguageModeOff();
             }
 
-            @Override
-            public void onDrawerMenuAboutClick(View v) {
-                mMainPresenter.onDrawerMenuAboutClick(v);
-            }
+//            @Override
+//            public void onDrawerMenuAboutClick(View v) {
+//                mMainPresenter.onDrawerMenuAboutClick(v);
+//            }
 
             @Override
             public void onDrawerMenuSettingsClick(View v) {
@@ -339,8 +339,8 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
             }
 
             @Override
-            public void onDrawerMenuStaticticClick(View v) {
-                mMainPresenter.onDrawerMenuStaticticClick(v);
+            public void onDrawerMenuStatisticClick(View v) {
+                mMainPresenter.onDrawerMenuStatisticClick(v);
             }
         });
 
