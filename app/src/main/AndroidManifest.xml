@@ -56,7 +56,13 @@
         <activity
             android:name=".ui.activity.UserCenterActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.SettingsActivity"></activity>
+        <activity
+            android:name=".ui.activity.SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.LocalBillCreationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent" />
     </application>
 
 </manifest>

@@ -84,7 +84,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     private DrawerLayout mDrawerLayout;     //Content drawer;
     private ViewPager mViewPager;   //Content ViewPager;
     private TabLayout mTabLayout;   //Tabs for ViewPager;
-    private FloatingActionButton mFloatingActionButton; //FAB;
+    private FloatingActionButton mFAB;
     private DrawerMenuFragment mDrawerMenuFragment;
     private LocalSongDisplayFragment mSongDisplayFragment;
     private LocalBillDisplayFragment mBillDisplayFragment;
@@ -234,7 +234,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_main);
         mViewPager = (ViewPager) findViewById(R.id.view_pager_main);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout_main);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab_main);
+        mFAB = (FloatingActionButton) findViewById(R.id.fab_main);
 
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.addDrawerListener(drawerToggle);
@@ -270,13 +270,13 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
         mViewPager.setCurrentItem(tabPosition, true);
 
         if (tabPosition == TAB_POSITION_SONG) {
-            ViewUtil.setViewVisiable(mFloatingActionButton);
-            mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow__white_24dp);
+            ViewUtil.setViewVisiable(mFAB);
+            mFAB.setImageResource(R.drawable.ic_play_arrow__white_24dp);
         } else if (tabPosition == TAB_POSITION_BILL) {
-            ViewUtil.setViewVisiable(mFloatingActionButton);
-            mFloatingActionButton.setImageResource(R.drawable.ic_add_fab_24dp);
+            ViewUtil.setViewVisiable(mFAB);
+            mFAB.setImageResource(R.drawable.ic_add_fab_24dp);
         } else if (tabPosition == TAB_POSITION_ALBUM) {
-            ViewUtil.setViewGone(mFloatingActionButton);
+            ViewUtil.setViewGone(mFAB);
         }
 
         mInitDataComplete = true;
@@ -410,11 +410,11 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
                     }
                 } else if (position == TAB_POSITION_BILL) {
                     showFab(true);
-                    AnimUtil.rotate2DPositive(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT).start();
-                    mFloatingActionButton.postDelayed(new Runnable() {
+                    AnimUtil.rotate2DPositive(mFAB, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT).start();
+                    mFAB.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            mFloatingActionButton.setImageResource(R.drawable.ic_add_fab_24dp);
+                            mFAB.setImageResource(R.drawable.ic_add_fab_24dp);
                         }
                     }, AnimUtil.DURATION_SHORT_HALF);
                 } else if (position == TAB_POSITION_ALBUM) {
@@ -428,14 +428,14 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
             }
         });
 
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+        mFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mMainPresenter.onFabClick();
             }
         });
 
-        mFloatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
+        mFAB.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 mMainPresenter.onFabLongClick();
@@ -651,7 +651,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mSongDisplayFragment.getDisplayDataList().get(position));
         intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
         goToWithSharedElements(intent,
-                new View[]{mSongDisplayFragment.getViewHolder(position).getCoverImageView(), mFloatingActionButton},
+                new View[]{mSongDisplayFragment.getViewHolder(position).getCoverImageView(), mFAB},
                 new String[]{getString(R.string.transition_name_cover), getString(R.string.transition_name_fab)});
     }
 
@@ -660,11 +660,11 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
      */
     @Override
     public void showFab(boolean needAnim) {
-        if (!ViewUtil.isViewVisiable(mFloatingActionButton)) {
+        if (!ViewUtil.isViewVisiable(mFAB)) {
             if (needAnim) {
-                AnimUtil.scaleIn(mFloatingActionButton, AnimUtil.DURATION_SHORT);
+                AnimUtil.scaleIn(mFAB, AnimUtil.DURATION_SHORT);
             } else {
-                ViewUtil.setViewVisiable(mFloatingActionButton);
+                ViewUtil.setViewVisiable(mFAB);
             }
         }
     }
@@ -674,26 +674,27 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
      */
     @Override
     public void hideFab(boolean needAnim) {
-        if (ViewUtil.isViewVisiable(mFloatingActionButton)) {
+        if (ViewUtil.isViewVisiable(mFAB)) {
             if (needAnim) {
-                AnimUtil.scaleOut(mFloatingActionButton, AnimUtil.DURATION_SHORT);
-                AnimUtil.rotate2DNegative(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT).start();
+                AnimUtil.scaleOut(mFAB, AnimUtil.DURATION_SHORT);
+                AnimUtil.rotate2DNegative(mFAB, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT).start();
             } else {
-                ViewUtil.setViewGone(mFloatingActionButton);
+                ViewUtil.setViewGone(mFAB);
             }
         }
     }
 
     @Override
     public void showCreateBillDialog() {
-        mLocalBillCreationDialogFragment = new LocalBillCreationDialogFragment();
-        mLocalBillCreationDialogFragment.setCallback(new LocalBillCreationDialogFragment.CreateBillDialogCallback() {
-            @Override
-            public void onConfirmClick(String text) {
-                mMainPresenter.onCreateBillConfirm(text);
-            }
-        });
-        mLocalBillCreationDialogFragment.show(getSupportFragmentManager(), "");
+//        mLocalBillCreationDialogFragment = new LocalBillCreationDialogFragment();
+//        mLocalBillCreationDialogFragment.setCallback(new LocalBillCreationDialogFragment.CreateBillDialogCallback() {
+//            @Override
+//            public void onConfirmClick(String text) {
+//                mMainPresenter.onCreateBillConfirm(text);
+//            }
+//        });
+//        mLocalBillCreationDialogFragment.show(getSupportFragmentManager(), "");
+        goToWithSharedElement(LocalBillCreationActivity.class, mFAB, getString(R.string.transition_name_fab));
     }
 
     @Override
@@ -779,7 +780,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
         intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
 //        goToWithSharedElement(intent, sharedElement, transitionName);
         goToWithSharedElements(intent,
-                new View[]{sharedElement, mFloatingActionButton},
+                new View[]{sharedElement, mFAB},
                 new String[]{transitionName, getString(R.string.transition_name_fab)});
     }
 
@@ -826,11 +827,11 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
     @Override
     public void setFabPlayRandom() {
-        AnimUtil.rotate2DPositive(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT).start();
-        mFloatingActionButton.postDelayed(new Runnable() {
+        AnimUtil.rotate2DPositive(mFAB, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT).start();
+        mFAB.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mFloatingActionButton.setImageResource(R.drawable.ic_shuffle_white_24dp);
+                mFAB.setImageResource(R.drawable.ic_shuffle_white_24dp);
             }
         }, AnimUtil.DURATION_SHORT_HALF);
         mFabPlayRandom = true;
@@ -838,11 +839,11 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
     @Override
     public void setFabPlayCurrent() {
-        AnimUtil.rotate2DPositive(mFloatingActionButton, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT).start();
-        mFloatingActionButton.postDelayed(new Runnable() {
+        AnimUtil.rotate2DPositive(mFAB, AnimUtil.ROTATION_DEGREE_ROUND, AnimUtil.DURATION_SHORT).start();
+        mFAB.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mFloatingActionButton.setImageResource(R.drawable.ic_play_arrow__white_24dp);
+                mFAB.setImageResource(R.drawable.ic_play_arrow__white_24dp);
             }
         }, AnimUtil.DURATION_SHORT_HALF);
         mFabPlayRandom = false;
