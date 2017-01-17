@@ -2,12 +2,15 @@ package com.scott.su.smusic.ui.activity;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.transition.TransitionManager;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 
 import com.scott.su.smusic.R;
@@ -22,6 +25,8 @@ public class LocalBillCreationActivity extends AppCompatActivity {
     private CardView mBodyCardView;
     private FloatingActionButton mFAB;
     private LinearLayout mBodyLayout;
+    private boolean mAnimating;
+    private boolean mExiting;   //To handle onBackPressed.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +52,18 @@ public class LocalBillCreationActivity extends AppCompatActivity {
             getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
                 @Override
                 public void onTransitionStart(Transition transition) {
+                    mAnimating = true;
 
+                    if (mExiting) {
+
+                    } else {
+                        ViewUtil.runDelay(mFAB, new Runnable() {
+                            @Override
+                            public void run() {
+                                AnimUtil.scaleOut(mFAB);
+                            }
+                        }, AnimUtil.DURATION_SHORT_HALF);
+                    }
                 }
 
                 @Override
@@ -64,7 +80,21 @@ public class LocalBillCreationActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onAnimEnd() {
-                                    AnimUtil.alphaIn(mBodyLayout).start();
+                                    CirclarRevealUtil.revealIn(mBodyLayout,
+                                            CirclarRevealUtil.DIRECTION.CENTER_TOP,
+                                            AnimUtil.DURATION_SHORT,
+                                            null,
+                                            new AnimUtil.SimpleAnimListener() {
+                                                @Override
+                                                public void onAnimStart() {
+
+                                                }
+
+                                                @Override
+                                                public void onAnimEnd() {
+                                                    mAnimating = false;
+                                                }
+                                            });
                                 }
                             });
                 }
@@ -85,6 +115,67 @@ public class LocalBillCreationActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (ViewUtil.isFastClick()) {
+            return;
+        }
+
+        if (mAnimating) {
+            return;
+        }
+
+        if (mExiting) {
+            super.onBackPressed();
+        }
+
+        if (SdkUtil.isLolipopOrLatter()) {
+            CirclarRevealUtil.revealOut(mBodyLayout, CirclarRevealUtil.DIRECTION.CENTER_TOP,
+                    AnimUtil.DURATION_SHORT,
+                    new FastOutLinearInInterpolator(),
+                    new AnimUtil.SimpleAnimListener() {
+                        @Override
+                        public void onAnimStart() {
+
+                        }
+
+                        @Override
+                        public void onAnimEnd() {
+                            CirclarRevealUtil.revealOut(mBodyCardView, CirclarRevealUtil.DIRECTION.CENTER,
+                                    AnimUtil.DURATION_SHORT, null,
+                                    new AnimUtil.SimpleAnimListener() {
+                                        @Override
+                                        public void onAnimStart() {
+
+                                        }
+
+                                        @Override
+                                        public void onAnimEnd() {
+                                            AnimUtil.scaleIn(mFAB, AnimUtil.DURATION_SHORT_HALF,
+                                                    new OvershootInterpolator(),
+                                                    new AnimUtil.SimpleAnimListener() {
+                                                        @Override
+                                                        public void onAnimStart() {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onAnimEnd() {
+                                                            mExiting = true;
+                                                            LocalBillCreationActivity.this.onBackPressed();
+                                                        }
+                                                    });
+                                        }
+                                    }, true);
+                        }
+                    },
+                    true);
+        } else {
+            super.onBackPressed();
+        }
+
     }
 
 
