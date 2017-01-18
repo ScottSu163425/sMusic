@@ -161,4 +161,6 @@ public class ScreenUtil {
         }
         return (pxVal / context.getResources().getDisplayMetrics().scaledDensity);
     }
+
+
 }

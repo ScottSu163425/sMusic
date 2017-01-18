@@ -1,5 +1,8 @@
 package com.scott.su.smusic.ui.activity;
 
+import android.app.Activity;
+import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.transition.TransitionManager;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
@@ -11,15 +14,19 @@ import android.transition.TransitionInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 
 import com.scott.su.smusic.R;
+import com.su.scott.slibrary.activity.BaseActivity;
+import com.su.scott.slibrary.mvp.presenter.IPresenter;
 import com.su.scott.slibrary.util.AnimUtil;
 import com.su.scott.slibrary.util.CirclarRevealUtil;
 import com.su.scott.slibrary.util.SdkUtil;
+import com.su.scott.slibrary.util.StatusBarUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
-public class LocalBillCreationActivity extends AppCompatActivity {
+public class LocalBillCreationActivity extends BaseActivity {
 
     private View mBackgroundView;
     private CardView mBodyCardView;
@@ -29,22 +36,47 @@ public class LocalBillCreationActivity extends AppCompatActivity {
     private boolean mExiting;   //To handle onBackPressed.
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_local_bill_creation);
+    protected int getContentLayoutResId() {
+        return R.layout.activity_local_bill_creation;
+    }
 
+    @Override
+    protected IPresenter getPresenter() {
+        return null;
+    }
+
+    @Override
+    protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        initView();
+        initListener();
+    }
+
+    @Override
+    public void initPreData() {
+
+    }
+
+    @Override
+    public void initToolbar() {
+
+    }
+
+    @Override
+    public void initView() {
         mBackgroundView = findViewById(R.id.view_background_activity_local_bill_creation);
         mBodyCardView = (CardView) findViewById(R.id.card_body_activity_local_bill_creation);
         mFAB = (FloatingActionButton) findViewById(R.id.fab_activity_local_bill_creation);
         mBodyLayout = (LinearLayout) findViewById(R.id.ll_body_activity_local_bill_creation);
 
-        mBackgroundView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LocalBillCreationActivity.this.onBackPressed();
-            }
-        });
+    }
 
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initListener() {
         if (SdkUtil.isLolipopOrLatter()) {
             getWindow().setSharedElementEnterTransition(TransitionInflater.from(this)
                     .inflateTransition(R.transition.changebounds_with_arcmotion));
@@ -115,10 +147,20 @@ public class LocalBillCreationActivity extends AppCompatActivity {
                 }
             });
         }
+
+        mBackgroundView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocalBillCreationActivity.this.onBackPressed();
+            }
+        });
     }
+
 
     @Override
     public void onBackPressed() {
+        closeKeyboard();
+
         if (ViewUtil.isFastClick()) {
             return;
         }
@@ -177,6 +219,5 @@ public class LocalBillCreationActivity extends AppCompatActivity {
         }
 
     }
-
 
 }

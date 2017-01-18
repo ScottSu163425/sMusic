@@ -62,7 +62,8 @@
         <activity
             android:name=".ui.activity.LocalBillCreationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Transparent" />
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
