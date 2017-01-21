@@ -877,8 +877,8 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
     @Override
     public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(Gravity.START)) {
-            mDrawerLayout.closeDrawer(Gravity.START);
+        if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            mDrawerLayout.closeDrawer(Gravity.LEFT);
             return;
         }
 
