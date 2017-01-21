@@ -877,6 +877,11 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
     @Override
     public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(Gravity.START)) {
+            mDrawerLayout.closeDrawer(Gravity.START);
+            return;
+        }
+
         showSnackbarShort(getString(R.string.ask_exit_app), getString(R.string.confirm_positive),
                 new View.OnClickListener() {
                     @Override

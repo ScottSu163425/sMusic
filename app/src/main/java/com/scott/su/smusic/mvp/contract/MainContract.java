@@ -90,7 +90,6 @@ public interface MainContract {
         void goToSettings();
 
         void goToLocalBillCreation();
-
     }
 
     interface MainPresenter extends IPresenter<MainView>, ILocalSongBottomSheetPresenter, DrawerMenuCallback {
