@@ -69,7 +69,7 @@ import java.util.Random;
 /**
  * 2016-8-18
  */
-public class MainActivity extends BaseActivity<MainContract.MainView, MainContract.MainPresenterI>
+public class MainActivity extends BaseActivity<MainContract.MainView, MainContract.MainPresenter>
         implements MainContract.MainView {
 
     private static final String NEED_OPEN_DRAWER = "NEED_OPEN_DRAWE";
@@ -79,7 +79,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     private static final int TAB_POSITION_BILL = 1;
     private static final int TAB_POSITION_ALBUM = 2;
 
-    private MainContract.MainPresenterI mMainPresenter; //Presenter of mvp;
+    private MainContract.MainPresenter mMainPresenter; //Presenter of mvp;
     private Toolbar mToolbar;   //Title bar;
     private DrawerLayout mDrawerLayout;     //Content drawer;
     private ViewPager mViewPager;   //Content ViewPager;
@@ -89,7 +89,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     private LocalSongDisplayFragment mSongDisplayFragment;
     private LocalBillDisplayFragment mBillDisplayFragment;
     private LocalAlbumDisplayFragment mAlbumDisplayFragment;
-    private LocalBillCreationDialogFragment mLocalBillCreationDialogFragment;
     private ServiceConnection mMusicPlayServiceConnection;
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
     private ServiceConnection mShutDownTimerServiceConnection;
@@ -104,7 +103,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     }
 
     @Override
-    protected MainContract.MainPresenterI getPresenter() {
+    protected MainContract.MainPresenter getPresenter() {
         if (mMainPresenter == null) {
             mMainPresenter = new MainPresenterImpl(this);
         }
@@ -685,40 +684,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     }
 
     @Override
-    public void showCreateBillDialog() {
-//        mLocalBillCreationDialogFragment = new LocalBillCreationDialogFragment();
-//        mLocalBillCreationDialogFragment.setCallback(new LocalBillCreationDialogFragment.CreateBillDialogCallback() {
-//            @Override
-//            public void onConfirmClick(String text) {
-//                mMainPresenter.onCreateBillConfirm(text);
-//            }
-//        });
-//        mLocalBillCreationDialogFragment.show(getSupportFragmentManager(), "");
-        goToWithSharedElement(LocalBillCreationActivity.class, mFAB, getString(R.string.transition_name_fab));
-    }
-
-    @Override
-    public void dismissCreateBillDialog() {
-        if (mLocalBillCreationDialogFragment != null && mLocalBillCreationDialogFragment.isVisible()) {
-            mLocalBillCreationDialogFragment.dismiss();
-        }
-    }
-
-    @Override
-    public void showCreateBillSuccessfully(final LocalBillEntity billEntity) {
-        showSnackbarLong(getString(R.string.success_create_bill), getString(R.string.ok),
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(MainActivity.this, LocalSongSelectionActivity.class);
-                        intent.setExtrasClassLoader(LocalBillEntity.class.getClassLoader());
-                        intent.putExtra(Constants.KEY_EXTRA_BILL, billEntity);
-                        goToForResultWithTransition(intent, REQUEST_CODE_LOCAL_SONG_SELECTION);
-                    }
-                });
-    }
-
-    @Override
     public void goToBillDetailWithSharedElement(LocalBillEntity entity, View sharedElement, String transitionName) {
         Intent intent = new Intent(MainActivity.this, LocalBillDetailActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_BILL, entity);
@@ -862,6 +827,11 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     @Override
     public void goToSettings() {
         goToWithTransition(SettingsActivity.class);
+    }
+
+    @Override
+    public void goToLocalBillCreation() {
+        goToWithSharedElement(LocalBillCreationActivity.class, mFAB, getString(R.string.transition_name_fab));
     }
 
     private void recreateActivity(boolean isForNightMode) {

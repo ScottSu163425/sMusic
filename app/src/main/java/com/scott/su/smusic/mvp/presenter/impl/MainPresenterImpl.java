@@ -26,8 +26,9 @@ import java.util.List;
 /**
  * Created by asus on 2016/8/19.
  */
-public class MainPresenterImpl extends BasePresenter<MainContract.MainView>
-        implements MainContract.MainPresenterI {
+public class MainPresenterImpl
+        extends BasePresenter<MainContract.MainView>
+        implements MainContract.MainPresenter {
     private LocalSongModel mSongModel;
     private LocalBillModel mBillModel;
     private LocalAlbumModel mAlbumModel;
@@ -72,7 +73,7 @@ public class MainPresenterImpl extends BasePresenter<MainContract.MainView>
                 getView().playSongInPosition(currentPlayingSongPositon, true);
             }
         } else if (getView().isCurrentTabBill()) {
-            getView().showCreateBillDialog();
+            getView().goToLocalBillCreation();
         } else if (getView().isCurrentTabAlbum()) {
 
         }
@@ -88,22 +89,6 @@ public class MainPresenterImpl extends BasePresenter<MainContract.MainView>
                 getView().setFabPlayRandom();
             }
         }
-    }
-
-    @Override
-    public void onCreateBillConfirm(String text) {
-        LocalBillEntity billEntity = new LocalBillEntity(text);
-
-        if (mBillModel.isBillTitleExist(getView().getViewContext(), billEntity)) {
-            getView().showSnackbarShort(getView().getViewContext().getString(R.string.error_already_exist));
-            return;
-        }
-
-        mBillModel.saveOrUpdateBill(getView().getViewContext(), billEntity);
-        getView().updateBillDisplay();
-        AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), false);
-        getView().dismissCreateBillDialog();
-        getView().showCreateBillSuccessfully(billEntity);
     }
 
     @Override

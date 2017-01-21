@@ -32,7 +32,7 @@
     <string name="ask_exit_app">退出应用?</string>
     <string name="confirm_positive">确定</string>
 
-    <string name="success_create_bill">歌单创建成功，马上去添加歌曲?</string>
+    <string name="success_create_bill">歌单创建成功</string>
     <string name="success_add_songs_to_bill"> 添加成功</string>
     <string name="success_delete">删除成功</string>
     <string name="unit_song">首</string>

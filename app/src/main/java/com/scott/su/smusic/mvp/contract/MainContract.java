@@ -59,12 +59,6 @@ public interface MainContract {
 
         void playRandomSong();
 
-        void showCreateBillDialog();
-
-        void dismissCreateBillDialog();
-
-        void showCreateBillSuccessfully(LocalBillEntity billEntity);
-
         void goToBillDetailWithSharedElement(LocalBillEntity entity, View sharedElement, String transitionName);
 
         void goToAlbumDetail(LocalAlbumEntity entity);
@@ -94,9 +88,12 @@ public interface MainContract {
         void goToUserCenter(View sharedElement, String transitionName);
 
         void goToSettings();
+
+        void goToLocalBillCreation();
+
     }
 
-    interface MainPresenterI extends IPresenter<MainView>, ILocalSongBottomSheetPresenter, DrawerMenuCallback {
+    interface MainPresenter extends IPresenter<MainView>, ILocalSongBottomSheetPresenter, DrawerMenuCallback {
 
         void onInitDataComplete();
 
@@ -107,8 +104,6 @@ public interface MainContract {
         void onFabClick();
 
         void onFabLongClick();
-
-        void onCreateBillConfirm(String text);
 
         void onBillItemClick(View itemView, LocalBillEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
 

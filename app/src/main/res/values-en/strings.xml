@@ -27,7 +27,7 @@
 
     <string name="ask_exit_app">Exit?</string>
     <string name="confirm_positive">YES</string>
-    <string name="success_create_bill">Bill created!Add song to it right now?</string>
+    <string name="success_create_bill">Bill created!</string>
     <string name="success_add_songs_to_bill">Added successfully</string>
     <string name="success_delete">Deleted successfully</string>
     <string name="unit_song">songs</string>
