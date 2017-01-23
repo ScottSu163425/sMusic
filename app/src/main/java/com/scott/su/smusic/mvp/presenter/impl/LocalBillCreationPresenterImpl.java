@@ -34,7 +34,7 @@ public class LocalBillCreationPresenterImpl
         }
 
         mBillModel.saveOrUpdateBill(getView().getViewContext(), billEntity);
-        AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
+        getView().notifyLocalBillChanged();
         getView().onCreateBillSuccessfully();
     }
 

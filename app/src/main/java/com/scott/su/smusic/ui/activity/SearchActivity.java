@@ -19,6 +19,7 @@ import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.event.LocalBillChangedEvent;
 import com.scott.su.smusic.mvp.contract.SearchContract;
 import com.scott.su.smusic.mvp.presenter.impl.SearchPresenterImpl;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
@@ -27,10 +28,14 @@ import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends BaseActivity<SearchContract.SearchView,SearchContract.SearchPresenterI>
+public class SearchActivity extends BaseActivity<SearchContract.SearchView, SearchContract.SearchPresenterI>
         implements SearchContract.SearchView {
 
     private SearchContract.SearchPresenterI mSearchPresenter;
@@ -57,6 +62,15 @@ public class SearchActivity extends BaseActivity<SearchContract.SearchView,Searc
     @Override
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mSearchPresenter.onViewFirstTimeCreated();
+
+        registerEventBus();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unregisterEventBus();
     }
 
     @Override
@@ -259,6 +273,11 @@ public class SearchActivity extends BaseActivity<SearchContract.SearchView,Searc
 
                 })
                 .show(getSupportFragmentManager(), "");
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLocalBillChangedEvent(LocalBillChangedEvent event) {
+        mSearchPresenter.onLocalBillChangedEvent(event);
     }
 
 

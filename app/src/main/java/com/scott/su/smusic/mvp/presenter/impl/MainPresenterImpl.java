@@ -10,6 +10,7 @@ import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.event.LocalBillChangedEvent;
 import com.scott.su.smusic.mvp.contract.MainContract;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
@@ -136,6 +137,11 @@ public class MainPresenterImpl
     }
 
     @Override
+    public void onLocalBillChangedEvent(LocalBillChangedEvent event) {
+        getView().updateBillDisplay();
+    }
+
+    @Override
     public void onDrawerUserHeadClick(View sharedElement, String transitionName) {
         getView().goToUserCenter(sharedElement, transitionName);
     }
@@ -221,22 +227,22 @@ public class MainPresenterImpl
 
     @Override
     public void onViewResume() {
-        if (getView().isInitDataComplete()) {
-            if (AppConfig.isNeedToRefreshLocalSongDisplay(getView().getViewContext())) {
-                getView().updateSongDisplay();
-                AppConfig.setNeedToRefreshLocalSongDisplay(getView().getViewContext(), false);
-            }
-
-            if (AppConfig.isNeedToRefreshLocalBillDisplay(getView().getViewContext())) {
-                getView().updateBillDisplay();
-                AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), false);
-            }
-
-            if (AppConfig.isNeedToRefreshLocalAlbumDisplay(getView().getViewContext())) {
-                getView().updateAlbumDisplay();
-                AppConfig.setNeedToRefreshLocalAlbumDisplay(getView().getViewContext(), false);
-            }
-        }
+//        if (getView().isInitDataComplete()) {
+//            if (AppConfig.isNeedToRefreshLocalSongDisplay(getView().getViewContext())) {
+//                getView().updateSongDisplay();
+//                AppConfig.setNeedToRefreshLocalSongDisplay(getView().getViewContext(), false);
+//            }
+//
+//            if (AppConfig.isNeedToRefreshLocalBillDisplay(getView().getViewContext())) {
+//                getView().updateBillDisplay();
+//                AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), false);
+//            }
+//
+//            if (AppConfig.isNeedToRefreshLocalAlbumDisplay(getView().getViewContext())) {
+//                getView().updateAlbumDisplay();
+//                AppConfig.setNeedToRefreshLocalAlbumDisplay(getView().getViewContext(), false);
+//            }
+//        }
     }
 
     @Override

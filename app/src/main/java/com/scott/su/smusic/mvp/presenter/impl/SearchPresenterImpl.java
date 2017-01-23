@@ -8,6 +8,7 @@ import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.event.LocalBillChangedEvent;
 import com.scott.su.smusic.mvp.contract.SearchContract;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
@@ -38,7 +39,7 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.SearchView
     private LocalAlbumModel mAlbumModel;
 
     public SearchPresenterImpl(SearchContract.SearchView view) {
-       super(view);
+        super(view);
         this.mSongModel = new LocalSongModelImpl();
         this.mBillModel = new LocalBillModelImpl();
         this.mAlbumModel = new LocalAlbumModelImpl();
@@ -51,22 +52,6 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.SearchView
         getView().initView();
         getView().initData();
         getView().initListener();
-
-        if (AppConfig.isNeedToRefreshSearchResult(getView().getViewContext())) {
-            AppConfig.setNeedToRefreshSearchResult(getView().getViewContext(), false);
-        }
-    }
-
-    @Override
-    public void onViewResume() {
-        //To update the result,when back to the search activity  after user click result and go to other activity,
-        //and made some changes.
-        if (!TextUtils.isEmpty(getView().getCurrentKeyword())) {
-            if (AppConfig.isNeedToRefreshSearchResult(getView().getViewContext())) {
-                searchAndSetResult(getView().getCurrentKeyword());
-                AppConfig.setNeedToRefreshSearchResult(getView().getViewContext(), false);
-            }
-        }
     }
 
     @Override
@@ -102,7 +87,7 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.SearchView
                 .subscribe(new Action1<List[]>() {
                     @Override
                     public void call(List[] lists) {
-                        if (!isViewAttaching()){
+                        if (!isViewAttaching()) {
                             return;
                         }
 
@@ -158,6 +143,13 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.SearchView
     }
 
     @Override
+    public void onLocalBillChangedEvent(LocalBillChangedEvent event) {
+        //To update the result,when back to the search activity  after user click result and go to other activity,
+        //and made some changes.
+        searchAndSetResult(getView().getCurrentKeyword());
+    }
+
+    @Override
     public void onBottomSheetAddToBillClick(LocalSongEntity songEntity) {
         getView().showBillSelectionDialog(songEntity);
     }
@@ -175,14 +167,14 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.SearchView
     @Override
     public void onBottomSheetAddToBillConfirmed(LocalBillEntity billEntity, LocalSongEntity songEntity) {
         if (mBillModel.isBillContainsSong(billEntity, songEntity)) {
-            getView().showSnackbarShort( getView().getViewContext().getString(R.string.already_exist_in_bill));
+            getView().showSnackbarShort(getView().getViewContext().getString(R.string.already_exist_in_bill));
             return;
         }
 
         mBillModel.addSongToBill(getView().getViewContext(), songEntity, billEntity);
-        AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
+//        AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
         searchAndSetResult(getView().getCurrentKeyword());
-        getView().showSnackbarShort(  getView().getViewContext().getString(R.string.add_successfully));
+        getView().showSnackbarShort(getView().getViewContext().getString(R.string.add_successfully));
     }
 
     @Override

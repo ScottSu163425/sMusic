@@ -5,6 +5,7 @@ import android.view.View;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.event.LocalBillChangedEvent;
 import com.scott.su.smusic.mvp.presenter.ILocalSongBottomSheetPresenter;
 import com.scott.su.smusic.mvp.view.LocalSongBottomSheetView;
 import com.su.scott.slibrary.mvp.presenter.IPresenter;
@@ -37,6 +38,7 @@ public interface SearchContract {
         void goToAlbumDetailWithSharedElement(LocalAlbumEntity entity, View sharedElement, String transitionName);
 
         void showLocalSongBottomSheet(LocalSongEntity songEntity);
+
     }
 
     interface SearchPresenterI extends IPresenter<SearchView>, ILocalSongBottomSheetPresenter {
@@ -50,6 +52,8 @@ public interface SearchContract {
         void onLocalBillClick(LocalBillEntity entity, View sharedElement, String transitionName);
 
         void onLocalAlbumClick(LocalAlbumEntity entity, View sharedElement, String transitionName);
+
+        void onLocalBillChangedEvent(LocalBillChangedEvent event);
     }
 
 }

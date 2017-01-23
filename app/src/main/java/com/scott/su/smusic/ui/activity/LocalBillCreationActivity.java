@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.scott.su.smusic.R;
+import com.scott.su.smusic.event.LocalBillChangedEvent;
 import com.scott.su.smusic.mvp.contract.LocalBillCreationContract;
 import com.scott.su.smusic.mvp.presenter.impl.LocalBillCreationPresenterImpl;
 import com.su.scott.slibrary.activity.BaseActivity;
@@ -274,6 +275,11 @@ public class LocalBillCreationActivity extends BaseActivity
     public void onCreateBillSuccessfully() {
         showToastLong(getString(R.string.success_create_bill));
         onBackPressed();
+    }
+
+    @Override
+    public void notifyLocalBillChanged() {
+        postEvent(new LocalBillChangedEvent());
     }
 
 }

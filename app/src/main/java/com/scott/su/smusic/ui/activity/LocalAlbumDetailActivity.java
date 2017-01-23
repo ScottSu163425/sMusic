@@ -17,6 +17,7 @@ import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.event.LocalBillChangedEvent;
 import com.scott.su.smusic.mvp.contract.LocalAlbumDetailContract;
 import com.scott.su.smusic.mvp.presenter.impl.LocalAlbumDetailPresenterImpl;
 import com.scott.su.smusic.ui.fragment.LocalAlbumSongDisplayFragment;
@@ -182,6 +183,11 @@ public class LocalAlbumDetailActivity extends BaseActivity<LocalAlbumDetailContr
 
                 })
                 .show(getSupportFragmentManager(), "");
+    }
+
+    @Override
+    public void notifyLocalBillChanged() {
+        postEvent(new LocalBillChangedEvent());
     }
 
     @Override

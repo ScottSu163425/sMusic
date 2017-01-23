@@ -16,13 +16,6 @@ import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
-
 /**
  * Created by asus on 2016/8/29.
  */
@@ -112,9 +105,8 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
             loadCover(true);
             getView().onAddSongsToBillSuccessfully();
             //When back to main activity ,the bill display show be updated
-            AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
             //When back to search activity ,the bill display show be updated
-            AppConfig.setNeedToRefreshSearchResult(getView().getViewContext(), true);
+            getView().notifyBillChanged();
         } else {
             //More than one song was selected to be added into current bill;
             if (mBillModel.isBillContainsSongs(billToAddSong, songsToAdd)) {
@@ -149,8 +141,7 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
                     loadCover(true);
                     getView().onAddSongsToBillSuccessfully();
                     //When back to main activity ,the bill display show be updated
-                    AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
-                    AppConfig.setNeedToRefreshSearchResult(getView().getViewContext(), true);
+                    getView().notifyBillChanged();
                 }
             });
         }
@@ -167,8 +158,7 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
         getView().updateBillInfo();
         getView().dismissEditBillNameDialog();
         getView().showSnackbarShort(getView().getViewContext().getString(R.string.edit_successfully));
-        AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
-        AppConfig.setNeedToRefreshSearchResult(getView().getViewContext(), true);
+        getView().notifyBillChanged();
     }
 
     @Override
@@ -212,7 +202,7 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
         }, new AsyncTaskHelper.SimpleAsyncTaskCallback() {
             @Override
             public void onPreExecute() {
-                getView().showLoadingDialog(getView().getViewContext(),false);
+                getView().showLoadingDialog(getView().getViewContext(), false);
             }
 
             @Override
@@ -226,8 +216,7 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
                 getView().refreshBillSongDisplay(billAfterClear);
                 getView().setBillEntity(billAfterClear);
                 loadCover(true);
-                AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
-                AppConfig.setNeedToRefreshSearchResult(getView().getViewContext(), true);
+                getView().notifyBillChanged();
             }
         });
 
@@ -252,7 +241,7 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
                     return;
                 }
 
-                AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
+                getView().notifyBillChanged();
                 getView().onDeleteBillSuccessfully();
             }
         });
@@ -286,13 +275,13 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
 
         loadCover(false);
 
-        AsyncTaskHelper.excuteSimpleTask(new Runnable() {
-            @Override
-            public void run() {
-                AppConfig.setPositionOfBillToRefresh(getView().getViewContext(),
-                        mBillModel.getBillPosition(getView().getViewContext(), getView().getBillEntity()));
-            }
-        }, null);
+//        AsyncTaskHelper.excuteSimpleTask(new Runnable() {
+//            @Override
+//            public void run() {
+//                AppConfig.setPositionOfBillToRefresh(getView().getViewContext(),
+//                        mBillModel.getBillPosition(getView().getViewContext(), getView().getBillEntity()));
+//            }
+//        }, null);
 
     }
 
@@ -332,8 +321,7 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
         }
 
         mBillModel.addSongToBill(getView().getViewContext(), songEntity, billEntity);
-        AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
-        AppConfig.setNeedToRefreshSearchResult(getView().getViewContext(), true);
+        getView().notifyBillChanged();
         getView().showSnackbarShort(getView().getViewContext().getString(R.string.add_successfully));
     }
 
@@ -346,7 +334,6 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
         getView().setBillEntity(billAfterDelete);
         //Only when the deleted song is the latest song of the bill,should the bill cover perform reveal animation;
         loadCover(lastSongIDBeforeDelete == songEntity.getSongId());
-        AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
-        AppConfig.setNeedToRefreshSearchResult(getView().getViewContext(), true);
+        getView().notifyBillChanged();
     }
 }

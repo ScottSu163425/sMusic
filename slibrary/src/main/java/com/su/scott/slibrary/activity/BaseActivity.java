@@ -25,6 +25,8 @@ import com.su.scott.slibrary.util.Snack;
 import com.su.scott.slibrary.util.T;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
+import org.greenrobot.eventbus.EventBus;
+
 
 /**
  * Created by Administrator on 2016/8/4.
@@ -297,6 +299,18 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
 
     protected RxPermissions getRxPermissionManager() {
         return this.mRxPermissions;
+    }
+
+    protected void registerEventBus() {
+        EventBus.getDefault().register(this);
+    }
+
+    protected void unregisterEventBus() {
+        EventBus.getDefault().unregister(this);
+    }
+
+    protected void postEvent(@NonNull Object event) {
+        EventBus.getDefault().post(event);
     }
 
 

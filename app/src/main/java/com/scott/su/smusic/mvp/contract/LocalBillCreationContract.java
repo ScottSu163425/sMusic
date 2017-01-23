@@ -11,6 +11,8 @@ public interface LocalBillCreationContract {
 
     interface LocalBillCreationView extends IBaseView {
         void onCreateBillSuccessfully();
+
+        void notifyLocalBillChanged();
     }
 
     interface LocalBillCreationPresenter extends IPresenter<LocalBillCreationView> {

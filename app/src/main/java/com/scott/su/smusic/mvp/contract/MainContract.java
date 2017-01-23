@@ -8,6 +8,7 @@ import com.scott.su.smusic.callback.DrawerMenuCallback;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.event.LocalBillChangedEvent;
 import com.scott.su.smusic.mvp.presenter.ILocalSongBottomSheetPresenter;
 import com.scott.su.smusic.mvp.view.LocalSongBottomSheetView;
 import com.scott.su.smusic.mvp.view.MusicPlayServiceView;
@@ -109,6 +110,8 @@ public interface MainContract {
         void onAlbumItemClick(View itemView, LocalAlbumEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
 
         void onSelectedLocalSongsResult(LocalBillEntity billToAddSong, List<LocalSongEntity> songsToAdd);
+
+        void onLocalBillChangedEvent(LocalBillChangedEvent event);
 
     }
 

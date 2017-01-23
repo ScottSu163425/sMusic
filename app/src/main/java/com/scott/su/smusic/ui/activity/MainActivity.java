@@ -40,13 +40,13 @@ import com.scott.su.smusic.constant.TimerStatus;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.event.LocalBillChangedEvent;
 import com.scott.su.smusic.mvp.contract.MainContract;
 import com.scott.su.smusic.mvp.presenter.impl.MainPresenterImpl;
 import com.scott.su.smusic.service.MusicPlayService;
 import com.scott.su.smusic.service.ShutDownTimerService;
 import com.scott.su.smusic.ui.fragment.DrawerMenuFragment;
 import com.scott.su.smusic.ui.fragment.LocalAlbumDisplayFragment;
-import com.scott.su.smusic.ui.fragment.LocalBillCreationDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillDisplayFragment;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
 import com.scott.su.smusic.ui.fragment.LocalSongBottomSheetMenuFragment;
@@ -60,6 +60,10 @@ import com.su.scott.slibrary.util.StatusBarUtil;
 import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.TimeUtil;
 import com.su.scott.slibrary.util.ViewUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,6 +122,8 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
                 mDrawerLayout,
                 getResources().getColor(R.color.colorPrimaryDark),
                 BaseConstants.ALPHA_TRANSLUCENT_STATUS_BAR);
+
+        registerEventBus();
     }
 
     @Override
@@ -316,11 +322,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
             public void onDrawerMenuLanguageModeOff() {
                 mMainPresenter.onDrawerMenuLanguageModeOff();
             }
-
-//            @Override
-//            public void onDrawerMenuAboutClick(View v) {
-//                mMainPresenter.onDrawerMenuAboutClick(v);
-//            }
 
             @Override
             public void onDrawerMenuSettingsClick(View v) {
@@ -834,6 +835,11 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
         goToWithSharedElement(LocalBillCreationActivity.class, mFAB, getString(R.string.transition_name_fab));
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLocalBillChangedEvent(LocalBillChangedEvent event) {
+        mMainPresenter.onLocalBillChangedEvent(event);
+    }
+
     private void recreateActivity(boolean isForNightMode) {
 //        getSupportFragmentManager().beginTransaction().remove(mAlbumDisplayFragment).commitAllowingStateLoss();
 //        getSupportFragmentManager().beginTransaction().remove(mSongDisplayFragment).commitAllowingStateLoss();
@@ -901,6 +907,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
             unbindService(mShutDownTimerServiceConnection);
         }
 
+        unregisterEventBus();
         super.onDestroy();
     }
 

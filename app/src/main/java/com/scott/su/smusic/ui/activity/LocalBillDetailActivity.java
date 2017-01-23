@@ -22,6 +22,7 @@ import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.event.LocalBillChangedEvent;
 import com.scott.su.smusic.mvp.contract.LocalBillDetailContract;
 import com.scott.su.smusic.mvp.presenter.impl.LocalBillDetailPresenterImpl;
 import com.scott.su.smusic.ui.fragment.CommonInputDialogFragment;
@@ -36,6 +37,8 @@ import com.su.scott.slibrary.util.DialogUtil;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.StatusBarUtil;
 import com.su.scott.slibrary.util.ViewUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -487,6 +490,10 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
         goToWithTransition(intent);
     }
 
+    @Override
+    public void notifyBillChanged() {
+        postEvent(new LocalBillChangedEvent());
+    }
 
     @Override
     public void showBillSelectionDialog(final LocalSongEntity songToBeAdd) {

@@ -64,6 +64,8 @@ public interface LocalBillDetailContract {
 
         void goToMusicPlayWithoutFab(LocalSongEntity entity);
 
+        void notifyBillChanged();
+
     }
 
     interface ILocalBillDetailPresenter extends IPresenter<LocalBillDetailView>, ILocalSongBottomSheetPresenter {
