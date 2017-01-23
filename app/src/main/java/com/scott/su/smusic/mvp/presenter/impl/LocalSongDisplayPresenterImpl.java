@@ -33,7 +33,7 @@ public class LocalSongDisplayPresenterImpl extends BasePresenter<LocalSongDispla
     }
 
     @Override
-    public void onSwipRefresh() {
+    public void onSwipeRefresh() {
         LocalSongEntityCache.getInstance().release();
         getAndDisplayLocalSongs(true);
     }

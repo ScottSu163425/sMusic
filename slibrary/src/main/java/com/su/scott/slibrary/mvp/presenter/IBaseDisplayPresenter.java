@@ -11,7 +11,7 @@ import com.su.scott.slibrary.mvp.view.IView;
  */
 public interface IBaseDisplayPresenter<V extends IView,E> extends IPresenter<V> {
 
-    void onSwipRefresh();
+    void onSwipeRefresh();
 
     void onLoadMore();
 

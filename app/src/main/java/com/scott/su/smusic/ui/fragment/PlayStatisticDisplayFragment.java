@@ -78,7 +78,7 @@ public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatis
 
     @Override
     protected void onSwipeRefresh() {
-        mDisplayPresenter.onSwipRefresh();
+        mDisplayPresenter.onSwipeRefresh();
     }
 
     @Override

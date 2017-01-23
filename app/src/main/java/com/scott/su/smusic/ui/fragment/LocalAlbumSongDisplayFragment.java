@@ -121,7 +121,7 @@ public class LocalAlbumSongDisplayFragment extends BaseDisplayFragment<AlbumSong
 
     @Override
     protected void onSwipeRefresh() {
-        mSongDisplayPresenter.onSwipRefresh();
+        mSongDisplayPresenter.onSwipeRefresh();
     }
 
     @Override

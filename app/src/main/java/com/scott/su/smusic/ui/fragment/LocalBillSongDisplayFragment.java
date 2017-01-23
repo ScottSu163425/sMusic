@@ -122,7 +122,7 @@ public class LocalBillSongDisplayFragment extends BaseDisplayFragment<BillSongDi
 
     @Override
     protected void onSwipeRefresh() {
-        mSongDisplayPresenter.onSwipRefresh();
+        mSongDisplayPresenter.onSwipeRefresh();
     }
 
     @Override

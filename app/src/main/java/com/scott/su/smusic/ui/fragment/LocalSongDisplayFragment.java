@@ -116,7 +116,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongDispl
 
     @Override
     protected void onSwipeRefresh() {
-        mSongDisplayPresenter.onSwipRefresh();
+        mSongDisplayPresenter.onSwipeRefresh();
     }
 
     @Override

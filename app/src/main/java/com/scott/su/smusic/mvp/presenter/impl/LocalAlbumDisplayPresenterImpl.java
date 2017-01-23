@@ -33,7 +33,7 @@ public class LocalAlbumDisplayPresenterImpl extends BasePresenter<LocalAlbumDisp
     }
 
     @Override
-    public void onSwipRefresh() {
+    public void onSwipeRefresh() {
         getAndDisplayLocalSongs(true);
     }
 

@@ -21,7 +21,7 @@ public class PlayListSecondDisplayPresenterImpl extends BasePresenter<PlayListSe
     }
 
     @Override
-    public void onSwipRefresh() {
+    public void onSwipeRefresh() {
 
     }
 

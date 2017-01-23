@@ -33,7 +33,7 @@ public class PlayStatisticDisplayPresenterImpl extends BasePresenter<PlayStatist
     }
 
     @Override
-    public void onSwipRefresh() {
+    public void onSwipeRefresh() {
         getAndDisplayData(true);
     }
 

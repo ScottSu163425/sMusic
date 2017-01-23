@@ -32,7 +32,7 @@ public class LocalSongSelectionDisplayPresenterImpl extends BasePresenter<LocalS
     }
 
     @Override
-    public void onSwipRefresh() {
+    public void onSwipeRefresh() {
 
     }
 

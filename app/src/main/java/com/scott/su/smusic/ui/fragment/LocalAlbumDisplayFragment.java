@@ -103,7 +103,7 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumDis
 
     @Override
     protected void onSwipeRefresh() {
-        mLocalAlbumDisplayPresenter.onSwipRefresh();
+        mLocalAlbumDisplayPresenter.onSwipeRefresh();
     }
 
     @Override

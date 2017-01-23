@@ -34,7 +34,7 @@ public class LocalBillDisplayPresenterImpl extends BasePresenter<LocalBillDispla
     }
 
     @Override
-    public void onSwipRefresh() {
+    public void onSwipeRefresh() {
     }
 
     @Override
