@@ -17,9 +17,9 @@ import com.su.scott.slibrary.util.ScreenUtil;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.StatusBarUtil;
 import com.su.scott.slibrary.util.ViewUtil;
-import com.tbruyelle.rxpermissions.Permission;
+import com.tbruyelle.rxpermissions2.Permission;
 
-import rx.functions.Action1;
+import io.reactivex.functions.Consumer;
 
 public class SplashActivity extends BaseActivity {
 
@@ -148,9 +148,9 @@ public class SplashActivity extends BaseActivity {
     private void requestPermission() {
         getRxPermissionManager().requestEach(Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe(new Action1<Permission>() {
+                .subscribe(new Consumer<Permission>() {
                     @Override
-                    public void call(Permission permission) {
+                    public void accept(Permission permission) throws Exception {
                         if (permission.name.equals(Manifest.permission.READ_EXTERNAL_STORAGE)) {
                             if (permission.granted) {
                                 goTo(MainActivity.class);

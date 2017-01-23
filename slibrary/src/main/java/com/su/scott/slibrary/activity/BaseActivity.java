@@ -23,7 +23,7 @@ import com.su.scott.slibrary.util.NetworkUtil;
 import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.Snack;
 import com.su.scott.slibrary.util.T;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.greenrobot.eventbus.EventBus;
 
