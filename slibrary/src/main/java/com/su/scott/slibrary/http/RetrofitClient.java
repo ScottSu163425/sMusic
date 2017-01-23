@@ -1,10 +1,11 @@
 package com.su.scott.slibrary.http;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -12,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitClient {
-//    public static final String URL_BASE = "http://192.168.1.18/RtpService.asmx/";
+    //    public static final String URL_BASE = "http://192.168.1.18/RtpService.asmx/";
     public static final String URL_BASE = "http://220.250.12.233/RtpService.asmx/"; //外网
     public static final int TIMEOUT_SECOND_CONNECT = 10;
     public static final int TIMEOUT_SECOND_READ = 10;
@@ -32,7 +33,8 @@ public class RetrofitClient {
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(URL_BASE)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(mOkHttpClient)
                 .build();
     }
