@@ -50,6 +50,11 @@ public class PlayStatisticActivity extends BaseActivity<PlayStatisticContract.Pl
     }
 
     @Override
+    protected boolean subscribeEvents() {
+        return false;
+    }
+
+    @Override
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mPlayStatisticPresenter.onViewFirstTimeCreated();
     }

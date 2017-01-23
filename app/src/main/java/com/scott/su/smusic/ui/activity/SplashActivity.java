@@ -39,6 +39,11 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean subscribeEvents() {
+        return false;
+    }
+
+    @Override
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.colorPrimary));
 

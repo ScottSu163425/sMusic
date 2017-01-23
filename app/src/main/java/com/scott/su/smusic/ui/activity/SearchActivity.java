@@ -60,17 +60,13 @@ public class SearchActivity extends BaseActivity<SearchContract.SearchView, Sear
     }
 
     @Override
-    protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        mSearchPresenter.onViewFirstTimeCreated();
-
-        registerEventBus();
+    protected boolean subscribeEvents() {
+        return true;
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        unregisterEventBus();
+    protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        mSearchPresenter.onViewFirstTimeCreated();
     }
 
     @Override

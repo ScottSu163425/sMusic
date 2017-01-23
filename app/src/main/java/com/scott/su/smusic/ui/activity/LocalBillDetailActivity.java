@@ -38,8 +38,6 @@ import com.su.scott.slibrary.util.SdkUtil;
 import com.su.scott.slibrary.util.StatusBarUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.List;
 
 /**
@@ -70,6 +68,11 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
             mBillDetailPresenter = new LocalBillDetailPresenterImpl(this);
         }
         return mBillDetailPresenter;
+    }
+
+    @Override
+    protected boolean subscribeEvents() {
+        return false;
     }
 
     @Override

@@ -45,6 +45,8 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
 
     protected abstract P getPresenter();
 
+    protected abstract boolean subscribeEvents();
+
     protected abstract void onActivityCreated(@Nullable Bundle savedInstanceState);
 
     @Override
@@ -56,6 +58,10 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
         mPresenter = getPresenter();
         mNetworkErrorTip = getString(R.string.network_error);
         mRxPermissions = new RxPermissions(this);
+
+        if (subscribeEvents()) {
+            registerEventBus();
+        }
 
         onActivityCreated(savedInstanceState);
     }
@@ -70,6 +76,10 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
         if (mPresenter != null) {
             getPresenter().detachView();
             mPresenter = null;
+        }
+
+        if (subscribeEvents()) {
+            unregisterEventBus();
         }
 
         super.onDestroy();

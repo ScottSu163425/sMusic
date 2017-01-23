@@ -59,6 +59,11 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
     }
 
     @Override
+    protected boolean subscribeEvents() {
+        return false;
+    }
+
+    @Override
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mMusicPlayPresenter.onViewFirstTimeCreated();
 

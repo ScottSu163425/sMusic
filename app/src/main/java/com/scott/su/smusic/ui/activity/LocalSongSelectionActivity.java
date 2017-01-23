@@ -16,7 +16,7 @@ import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.mvp.contract.LocalSongSelectionContract;
 import com.scott.su.smusic.mvp.presenter.impl.LocalSongSelectionPresenterImp;
-import com.scott.su.smusic.ui.fragment.LocalSongSlectionDisplayFragment;
+import com.scott.su.smusic.ui.fragment.LocalSongSelectionDisplayFragment;
 import com.su.scott.slibrary.activity.BaseActivity;
 import com.su.scott.slibrary.util.SdkUtil;
 
@@ -29,7 +29,7 @@ public class LocalSongSelectionActivity extends BaseActivity<LocalSongSelectionC
     private LinearLayout mRootLayout;
     private Button mFinishSelectionButton;
     private LocalSongSelectionContract.LocalSongSelectionPresenter mSongSelectionPresenter;
-    private LocalSongSlectionDisplayFragment mLocalSongSlectionDisplayFragment;
+    private LocalSongSelectionDisplayFragment mLocalSongSelectionDisplayFragment;
 
 
     @Override
@@ -43,6 +43,11 @@ public class LocalSongSelectionActivity extends BaseActivity<LocalSongSelectionC
             mSongSelectionPresenter = new LocalSongSelectionPresenterImp(this);
         }
         return mSongSelectionPresenter;
+    }
+
+    @Override
+    protected boolean subscribeEvents() {
+        return false;
     }
 
     @Override
@@ -86,8 +91,8 @@ public class LocalSongSelectionActivity extends BaseActivity<LocalSongSelectionC
 
     @Override
     public void initData() {
-        mLocalSongSlectionDisplayFragment = new LocalSongSlectionDisplayFragment();
-        mLocalSongSlectionDisplayFragment.setOnSelectedSongChangedListener(new LocalSongSlectionDisplayFragment.OnSelectedSongChangedListener() {
+        mLocalSongSelectionDisplayFragment = new LocalSongSelectionDisplayFragment();
+        mLocalSongSelectionDisplayFragment.setOnSelectedSongChangedListener(new LocalSongSelectionDisplayFragment.OnSelectedSongChangedListener() {
             @Override
             public void onSelectedCountChanged(boolean isEmpty) {
                 mSongSelectionPresenter.onSelectedCountChanged(isEmpty);
@@ -96,7 +101,7 @@ public class LocalSongSelectionActivity extends BaseActivity<LocalSongSelectionC
 
         getSupportFragmentManager().
                 beginTransaction().
-                replace(R.id.fl_container_display_local_song_selection, mLocalSongSlectionDisplayFragment)
+                replace(R.id.fl_container_display_local_song_selection, mLocalSongSelectionDisplayFragment)
                 .commitNow();
     }
 
@@ -112,7 +117,7 @@ public class LocalSongSelectionActivity extends BaseActivity<LocalSongSelectionC
 
     @Override
     public void selectAll() {
-        mLocalSongSlectionDisplayFragment.selectAll();
+        mLocalSongSelectionDisplayFragment.selectAll();
     }
 
     @Override
@@ -121,7 +126,7 @@ public class LocalSongSelectionActivity extends BaseActivity<LocalSongSelectionC
         Intent intent = new Intent();
         Bundle data = new Bundle();
         data.putParcelable(Constants.KEY_EXTRA_BILL, getIntent().getParcelableExtra(Constants.KEY_EXTRA_BILL));
-        data.putParcelableArrayList(Constants.KEY_EXTRA_LOCAL_SONGS, mLocalSongSlectionDisplayFragment.getSelectedSongs());
+        data.putParcelableArrayList(Constants.KEY_EXTRA_LOCAL_SONGS, mLocalSongSelectionDisplayFragment.getSelectedSongs());
         intent.setExtrasClassLoader(LocalBillEntity.class.getClassLoader());
         intent.putExtras(data);
         setResult(RESULT_OK, intent);
@@ -147,7 +152,7 @@ public class LocalSongSelectionActivity extends BaseActivity<LocalSongSelectionC
     public boolean onPrepareOptionsMenu(Menu menu) {
         //If the local song list is empty, hide the menu;
         menu.findItem(R.id.action_done_all_local_song_selection)
-                .setVisible(mLocalSongSlectionDisplayFragment.getSelectedSongs().size() == 0);
+                .setVisible(mLocalSongSelectionDisplayFragment.getSelectedSongs().size() == 0);
 
         return super.onPrepareOptionsMenu(menu);
     }

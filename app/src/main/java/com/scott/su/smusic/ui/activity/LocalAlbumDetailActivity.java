@@ -54,6 +54,11 @@ public class LocalAlbumDetailActivity extends BaseActivity<LocalAlbumDetailContr
     }
 
     @Override
+    protected boolean subscribeEvents() {
+        return false;
+    }
+
+    @Override
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mPresenter.onViewFirstTimeCreated();
     }

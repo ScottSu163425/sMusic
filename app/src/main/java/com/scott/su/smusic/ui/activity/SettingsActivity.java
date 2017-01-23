@@ -1,8 +1,7 @@
 package com.scott.su.smusic.ui.activity;
 
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.transition.TransitionInflater;
 import android.view.View;
@@ -23,6 +22,11 @@ public class SettingsActivity extends BaseActivity {
     @Override
     protected IPresenter getPresenter() {
         return null;
+    }
+
+    @Override
+    protected boolean subscribeEvents() {
+        return false;
     }
 
     @Override

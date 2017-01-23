@@ -2,7 +2,6 @@ package com.scott.su.smusic.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.TransitionInflater;
 import android.view.View;
@@ -31,6 +30,11 @@ public class UserCenterActivity extends BaseActivity<UserCenterContract.UserCent
             mPresenter = new UserCenterPresenterImpl(this);
         }
         return mPresenter;
+    }
+
+    @Override
+    protected boolean subscribeEvents() {
+        return false;
     }
 
     @Override

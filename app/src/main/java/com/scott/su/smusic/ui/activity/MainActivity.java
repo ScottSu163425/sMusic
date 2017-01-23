@@ -115,6 +115,11 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     }
 
     @Override
+    protected boolean subscribeEvents() {
+        return true;
+    }
+
+    @Override
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mMainPresenter.onViewFirstTimeCreated();
 
@@ -122,8 +127,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
                 mDrawerLayout,
                 getResources().getColor(R.color.colorPrimaryDark),
                 BaseConstants.ALPHA_TRANSLUCENT_STATUS_BAR);
-
-        registerEventBus();
     }
 
     @Override
@@ -906,8 +909,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
         if (mShutDownTimerServiceConnection != null) {
             unbindService(mShutDownTimerServiceConnection);
         }
-
-        unregisterEventBus();
         super.onDestroy();
     }
 

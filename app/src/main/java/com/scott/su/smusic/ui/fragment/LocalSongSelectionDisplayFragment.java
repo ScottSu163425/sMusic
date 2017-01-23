@@ -21,7 +21,7 @@ import java.util.ArrayList;
 /**
  * Created by asus on 2016/8/27.
  */
-public class LocalSongSlectionDisplayFragment extends BaseDisplayFragment<LocalSongSelectionDisplayContract.LocalSongSelectionDisplayView ,LocalSongSelectionDisplayContract.LocalSongSelectionBaseDisplayPresenter ,LocalSongEntity, LocalSongSelectionViewHolder>
+public class LocalSongSelectionDisplayFragment extends BaseDisplayFragment<LocalSongSelectionDisplayContract.LocalSongSelectionDisplayView ,LocalSongSelectionDisplayContract.LocalSongSelectionBaseDisplayPresenter ,LocalSongEntity, LocalSongSelectionViewHolder>
         implements LocalSongSelectionDisplayContract.LocalSongSelectionDisplayView {
     private LocalSongSelectionDisplayContract.LocalSongSelectionBaseDisplayPresenter mSongSelectionDisplayPresenter;
     private LocalSongSelectionDisplayAdapter mSongSelectionDisplayAdapter;

@@ -54,6 +54,11 @@ public class LocalBillCreationActivity extends BaseActivity
     }
 
     @Override
+    protected boolean subscribeEvents() {
+        return false;
+    }
+
+    @Override
     protected void onActivityCreated(@Nullable Bundle savedInstanceState) {
         mPresenter.onViewFirstTimeCreated();
     }
