@@ -8,16 +8,17 @@ import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.mvp.contract.LocalBillDisplayContract;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.su.scott.slibrary.mvp.presenter.BasePresenter;
-import com.su.scott.slibrary.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -63,22 +64,26 @@ public class LocalBillDisplayPresenterImpl extends BasePresenter<LocalBillDispla
         getAndDisplayLocalSongBills(false);
     }
 
-    private void getAndDisplayLocalSongBills(boolean isRefresh) {
-        if (!isRefresh) {
-            getView().showLoading();
-        }
-
-        Observable.create(new Observable.OnSubscribe<List<LocalBillEntity>>() {
+    private void getAndDisplayLocalSongBills(final boolean isRefresh) {
+        Observable.create(new ObservableOnSubscribe<List<LocalBillEntity>>() {
             @Override
-            public void call(Subscriber<? super List<LocalBillEntity>> subscriber) {
-                subscriber.onNext(mBillModel.getBills(getView().getViewContext()));
+            public void subscribe(ObservableEmitter<List<LocalBillEntity>> e) throws Exception {
+                e.onNext(mBillModel.getBills(getView().getViewContext()));
             }
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<LocalBillEntity>>() {
+                .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
-                    public void call(List<LocalBillEntity> localBillEntities) {
+                    public void accept(Disposable disposable) throws Exception {
+                        if (!isRefresh) {
+                            getView().showLoading();
+                        }
+                    }
+                })
+                .subscribe(new Consumer<List<LocalBillEntity>>() {
+                    @Override
+                    public void accept(List<LocalBillEntity> localBillEntities) throws Exception {
                         if (!isViewAttaching()) {
                             return;
                         }
@@ -98,6 +103,7 @@ public class LocalBillDisplayPresenterImpl extends BasePresenter<LocalBillDispla
                         }
                     }
                 });
+
     }
 
 

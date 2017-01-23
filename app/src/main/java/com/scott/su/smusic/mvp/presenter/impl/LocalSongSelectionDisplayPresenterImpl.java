@@ -13,11 +13,14 @@ import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by asus on 2016/8/27.
@@ -65,17 +68,23 @@ public class LocalSongSelectionDisplayPresenterImpl extends BasePresenter<LocalS
     private void getAndDisplayLocalSongs() {
         getView().showLoading();
 
-        Observable.create(new Observable.OnSubscribe<List<LocalSongEntity>>() {
+        Observable.create(new ObservableOnSubscribe<List<LocalSongEntity>>() {
             @Override
-            public void call(Subscriber<? super List<LocalSongEntity>> subscriber) {
-                subscriber.onNext(mLocalSongModel.getLocalSongs(getView().getViewContext()));
+            public void subscribe(ObservableEmitter<List<LocalSongEntity>> e) throws Exception {
+                e.onNext(mLocalSongModel.getLocalSongs(getView().getViewContext()));
             }
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<LocalSongEntity>>() {
+                .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
-                    public void call(List<LocalSongEntity> songEntities) {
+                    public void accept(Disposable disposable) throws Exception {
+                        getView().showLoading();
+                    }
+                })
+                .subscribe(new Consumer<List<LocalSongEntity>>() {
+                    @Override
+                    public void accept(List<LocalSongEntity> songEntities) throws Exception {
                         if (!isViewAttaching()) {
                             return;
                         }

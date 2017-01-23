@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.view.View;
 
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.MusicPlayContract;

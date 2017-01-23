@@ -4,7 +4,6 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.entity.LocalAlbumEntity;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
@@ -22,11 +21,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by Administrator on 2016/9/27.
@@ -67,11 +68,10 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.SearchView
             return;
         }
 
-        getView().showLoading();
         Observable.just(keyword)
-                .map(new Func1<String, List[]>() {
+                .map(new Function<String, List[]>() {
                     @Override
-                    public List[] call(String s) {
+                    public List[] apply(String s) throws Exception {
                         List<LocalSongEntity> localSongEntities = mSongModel.searchLocalSong(getView().getViewContext(), keyword);
                         List<LocalBillEntity> localBillEntities = mBillModel.searchBill(getView().getViewContext(), keyword);
                         List<LocalAlbumEntity> localAlbumEntities = mAlbumModel.searchLocalAlbum(getView().getViewContext(), keyword);
@@ -84,9 +84,15 @@ public class SearchPresenterImpl extends BasePresenter<SearchContract.SearchView
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List[]>() {
+                .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
-                    public void call(List[] lists) {
+                    public void accept(Disposable disposable) throws Exception {
+                        getView().showLoading();
+                    }
+                })
+                .subscribe(new Consumer<List[]>() {
+                    @Override
+                    public void accept(List[] lists) throws Exception {
                         if (!isViewAttaching()) {
                             return;
                         }

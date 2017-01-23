@@ -9,16 +9,16 @@ import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.BillSongDisplayContract;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.su.scott.slibrary.mvp.presenter.BasePresenter;
-import com.su.scott.slibrary.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -28,7 +28,7 @@ public class LocalBillSongDisplayPresenterImpl extends BasePresenter<BillSongDis
         implements BillSongDisplayContract.BillSongBaseDisplayPresenter {
     private LocalSongModelImpl mSongModel;
 
-    
+
     public LocalBillSongDisplayPresenterImpl(BillSongDisplayContract.BillSongDisplayView billSongDisplayView) {
         super(billSongDisplayView);
         this.mSongModel = new LocalSongModelImpl();
@@ -65,20 +65,24 @@ public class LocalBillSongDisplayPresenterImpl extends BasePresenter<BillSongDis
     }
 
     private void getAndDisplayLocalSongs() {
-        getView().showLoading();
-
         Observable.just(getView().getSongBillEntity().getBillSongIdsLongArray())
-                .map(new Func1<long[], List<LocalSongEntity>>() {
+                .map(new Function<long[], List<LocalSongEntity>>() {
                     @Override
-                    public List<LocalSongEntity> call(long[] songIds) {
+                    public List<LocalSongEntity> apply(long[] songIds) throws Exception {
                         return mSongModel.getLocalSongsBySongIds(getView().getViewContext(), songIds);
                     }
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<LocalSongEntity>>() {
+                .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
-                    public void call(List<LocalSongEntity> songEntities) {
+                    public void accept(Disposable disposable) throws Exception {
+                        getView().showLoading();
+                    }
+                })
+                .subscribe(new Consumer<List<LocalSongEntity>>() {
+                    @Override
+                    public void accept(List<LocalSongEntity> songEntities) throws Exception {
                         if (!isViewAttaching()) {
                             return;
                         }

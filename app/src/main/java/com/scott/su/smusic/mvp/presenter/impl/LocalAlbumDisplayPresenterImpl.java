@@ -13,11 +13,13 @@ import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -28,7 +30,7 @@ public class LocalAlbumDisplayPresenterImpl extends BasePresenter<LocalAlbumDisp
     private LocalAlbumModel mLocalAlbumModel;
 
     public LocalAlbumDisplayPresenterImpl(LocalAlbumDisplayContract.LocalAlbumDisplayView localAlbumDisplayView) {
-       super(localAlbumDisplayView);
+        super(localAlbumDisplayView);
         this.mLocalAlbumModel = new LocalAlbumModelImpl();
     }
 
@@ -62,22 +64,26 @@ public class LocalAlbumDisplayPresenterImpl extends BasePresenter<LocalAlbumDisp
         getAndDisplayLocalSongs(false);
     }
 
-    private void getAndDisplayLocalSongs(boolean isRefresh) {
-        if (!isRefresh) {
-            getView().showLoading();
-        }
-
-        Observable.create(new Observable.OnSubscribe<List<LocalAlbumEntity>>() {
+    private void getAndDisplayLocalSongs(final boolean isRefresh) {
+        Observable.create(new ObservableOnSubscribe<List<LocalAlbumEntity>>() {
             @Override
-            public void call(Subscriber<? super List<LocalAlbumEntity>> subscriber) {
-                subscriber.onNext(mLocalAlbumModel.getLocalAlbums(getView().getViewContext()));
+            public void subscribe(ObservableEmitter<List<LocalAlbumEntity>> e) throws Exception {
+                e.onNext(mLocalAlbumModel.getLocalAlbums(getView().getViewContext()));
             }
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<LocalAlbumEntity>>() {
+                .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
-                    public void call(List<LocalAlbumEntity> localAlbumEntities) {
+                    public void accept(Disposable disposable) throws Exception {
+                        if (!isRefresh) {
+                            getView().showLoading();
+                        }
+                    }
+                })
+                .subscribe(new Consumer<List<LocalAlbumEntity>>() {
+                    @Override
+                    public void accept(List<LocalAlbumEntity> localAlbumEntities) throws Exception {
                         if (!isViewAttaching()) {
                             return;
                         }
@@ -97,6 +103,7 @@ public class LocalAlbumDisplayPresenterImpl extends BasePresenter<LocalAlbumDisp
                         }
                     }
                 });
+
     }
 
 

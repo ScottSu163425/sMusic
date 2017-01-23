@@ -13,11 +13,12 @@ import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 import com.su.scott.slibrary.util.TimeUtil;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by asus on 2016/9/4.
@@ -166,17 +167,17 @@ public class MusicPlayMainPresenterImpl extends BasePresenter<MusicPlayMainContr
 
         if (!AppConfig.isNightModeOn(getView().getViewContext())) {
             Observable.just(getView().getCurrentPlayingSong().getAlbumId())
-                    .map(new Func1<Long, Bitmap>() {
+                    .map(new Function<Long, Bitmap>() {
                         @Override
-                        public Bitmap call(Long albumId) {
+                        public Bitmap apply(Long albumId) throws Exception {
                             return mAlbumModel.getAlbumCoverBitmapBlur(getView().getViewContext(), albumId);
                         }
                     })
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<Bitmap>() {
+                    .subscribe(new Consumer<Bitmap>() {
                         @Override
-                        public void call(Bitmap bitmap) {
+                        public void accept(Bitmap bitmap) throws Exception {
                             if (!isViewAttaching()) {
                                 return;
                             }
