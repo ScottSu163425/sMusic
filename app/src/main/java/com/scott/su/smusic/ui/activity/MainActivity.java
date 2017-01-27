@@ -448,11 +448,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     }
 
     @Override
-    public boolean isInitDataComplete() {
-        return mInitDataComplete;
-    }
-
-    @Override
     public void showLocalSongBottomSheet(LocalSongEntity songEntity) {
         LocalSongBottomSheetMenuFragment.newInstance()
                 .setLocalSongEntity(songEntity)
@@ -732,13 +727,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
                         mMainPresenter.onBottomSheetDeleteConfirmed(songEntity);
                     }
                 }, null, null);
-    }
-
-    @Override
-    public void goToBillDetail(LocalBillEntity entity) {
-        Intent intent = new Intent(MainActivity.this, LocalBillDetailActivity.class);
-        intent.putExtra(Constants.KEY_EXTRA_BILL, entity);
-        goToWithTransition(intent);
     }
 
     @Override

@@ -28,8 +28,6 @@ public interface MainContract {
 
     interface MainView extends IBaseView, LocalSongBottomSheetView, MusicPlayServiceView, ShutDownTimerServiceView {
 
-        boolean isInitDataComplete();
-
         void bindMusicPlayService();
 
         void bindShutDownTimerService();
@@ -65,8 +63,6 @@ public interface MainContract {
         void goToAlbumDetail(LocalAlbumEntity entity);
 
         void goToAlbumDetailWithSharedElement(LocalAlbumEntity entity, View sharedElement, String transitionName);
-
-        void goToBillDetail(LocalBillEntity entity);
 
         void goToMusicWithSharedElement(LocalSongEntity entity, View sharedElement, String transitionName);
 
