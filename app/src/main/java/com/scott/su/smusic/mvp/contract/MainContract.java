@@ -109,8 +109,6 @@ public interface MainContract {
 
         void onAlbumItemClick(View itemView, LocalAlbumEntity entity, int position, @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data);
 
-        void onSelectedLocalSongsResult(LocalBillEntity billToAddSong, List<LocalSongEntity> songsToAdd);
-
         void onLocalBillChangedEvent(LocalBillChangedEvent event);
 
     }

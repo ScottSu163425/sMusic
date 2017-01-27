@@ -24,6 +24,14 @@ import com.su.scott.slibrary.util.TimeUtil;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 /**
  * Created by asus on 2016/8/19.
  */
@@ -102,38 +110,6 @@ public class MainPresenterImpl
     public void onAlbumItemClick(View itemView, LocalAlbumEntity entity, int position,
                                  @Nullable View[] sharedElements, @Nullable String[] transitionNames, @Nullable Bundle data) {
         getView().goToAlbumDetailWithSharedElement(entity, sharedElements[0], transitionNames[0]);
-    }
-
-    @Override
-    public void onSelectedLocalSongsResult(final LocalBillEntity billToAddSong,
-                                           final List<LocalSongEntity> songsToAdd) {
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                getView().showLoadingDialog(getView().getViewContext(), getView().getViewContext().getString(R.string.please_waiting), false);
-            }
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                mBillModel.addSongsToBill(getView().getViewContext(), songsToAdd, billToAddSong);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                if (!isViewAttaching()) {
-                    return;
-                }
-
-                getView().updateBillDisplay();
-                getView().dismissLoadingDialog();
-                getView().showToastShort(getView().getViewContext().getString(R.string.add_successfully));
-                getView().goToBillDetail(mBillModel.getBill(getView().getViewContext(), billToAddSong.getBillId()));
-            }
-        }.execute();
-
     }
 
     @Override

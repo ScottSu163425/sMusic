@@ -61,7 +61,6 @@ import com.su.scott.slibrary.util.T;
 import com.su.scott.slibrary.util.TimeUtil;
 import com.su.scott.slibrary.util.ViewUtil;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -869,19 +868,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
                 overridePendingTransition(R.anim.in_right, R.anim.out_left);
             }
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_CODE_LOCAL_SONG_SELECTION && data != null) {
-                List<LocalSongEntity> selectedSongs = data.getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS);
-                LocalBillEntity billToAddSong = data.getParcelableExtra(Constants.KEY_EXTRA_BILL);
-                mMainPresenter.onSelectedLocalSongsResult(billToAddSong, selectedSongs);
-            }
-        }
-
     }
 
     @Override
