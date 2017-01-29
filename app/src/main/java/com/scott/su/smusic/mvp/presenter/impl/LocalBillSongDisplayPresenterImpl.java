@@ -14,10 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -65,14 +66,13 @@ public class LocalBillSongDisplayPresenterImpl extends BasePresenter<BillSongDis
     }
 
     private void getAndDisplayLocalSongs() {
-        Observable.just(getView().getSongBillEntity().getBillSongIdsLongArray())
-                .map(new Function<long[], List<LocalSongEntity>>() {
-                    @Override
-                    public List<LocalSongEntity> apply(long[] songIds) throws Exception {
-                        return mSongModel.getLocalSongsBySongIds(getView().getViewContext(), songIds);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
+        Observable.create(new ObservableOnSubscribe<List<LocalSongEntity>>() {
+            @Override
+            public void subscribe(ObservableEmitter<List<LocalSongEntity>> e) throws Exception {
+                e.onNext(mSongModel.getLocalSongsBySongIds(getView().getViewContext(),
+                        getView().getSongBillEntity().getBillSongIdsLongArray()));
+            }
+        }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override

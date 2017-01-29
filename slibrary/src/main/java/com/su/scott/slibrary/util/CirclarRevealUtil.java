@@ -17,6 +17,9 @@ import android.view.animation.AccelerateDecelerateInterpolator;
  * Created by Administrator on 2016/8/11.
  */
 public class CirclarRevealUtil {
+    private static final int START_RADIUS_DEFAULT = 33;
+    private static final float END_RADIUS_RATIO_DEFAULT = 1.5f;
+
 
     public enum DIRECTION {
         LEFT_TOP,
@@ -39,57 +42,46 @@ public class CirclarRevealUtil {
     public static final long DURATION_REVEAL_NORMAL = AnimUtil.DURATION_NORMAL;
     public static final long DURATION_REVEAL_SHORT = AnimUtil.DURATION_SHORT;
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static Animator createReveal(@NonNull View view, DIRECTION direction, ACTION action) {
         return createCirclarReveal(view, direction, action);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealIn(@NonNull View view, DIRECTION direction) {
         revealIn(view, direction, DURATION_REVEAL_SHORT, null, null);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealIn(@NonNull View view, DIRECTION direction, long duration) {
         revealIn(view, direction, duration, null, null);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealIn(@NonNull View view, DIRECTION direction, long duration, @Nullable TimeInterpolator interpolator) {
         revealIn(view, direction, duration, interpolator, null);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealOut(@NonNull View view, DIRECTION direction, boolean autoHide) {
         revealOut(view, direction, DURATION_REVEAL_SHORT, null, null, autoHide);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealOut(@NonNull View view, DIRECTION direction, long duration, boolean autoHide) {
         revealOut(view, direction, duration, null, null, autoHide);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealOut(@NonNull View view, DIRECTION direction, boolean autoHide, @Nullable final AnimUtil.SimpleAnimListener listener) {
         revealOut(view, direction, DURATION_REVEAL_SHORT, null, listener, autoHide);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealOut(@NonNull View view, DIRECTION direction, long duration, @Nullable TimeInterpolator interpolator, boolean autoHide) {
         revealOut(view, direction, duration, interpolator, null, autoHide);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealIn(@NonNull View view, DIRECTION direction, long duration, @Nullable TimeInterpolator interpolator, @Nullable final AnimUtil.SimpleAnimListener listener) {
         reveal(view, direction, ACTION.REVEAL_IN, duration, interpolator, listener, false);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void revealOut(@NonNull View view, DIRECTION direction, long duration, @Nullable TimeInterpolator interpolator, @Nullable final AnimUtil.SimpleAnimListener listener, boolean autoHide) {
         reveal(view, direction, ACTION.REVEAL_OUT, duration, interpolator, listener, autoHide);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private static void reveal(@NonNull final View view, DIRECTION direction, final ACTION action, long duration, @Nullable TimeInterpolator interpolator, @Nullable final AnimUtil.SimpleAnimListener listener, final boolean autoHide) {
         Animator animator = createCirclarReveal(view, direction, action);
         animator.setDuration(duration);
@@ -124,7 +116,6 @@ public class CirclarRevealUtil {
         animator.start();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private static Animator createCirclarReveal(View view, DIRECTION direction, ACTION action) {
         if (!SdkUtil.isLolipopOrLatter()) {
             return ObjectAnimator.ofFloat(view, "alpha", 1, 1);
@@ -133,12 +124,13 @@ public class CirclarRevealUtil {
         int cy = 0;
         float startRadius = 0;
         float endRadius = 0;
+        float viewMaxRadius =  (float) (Math.hypot(view.getWidth(), view.getHeight()));
 
         if (action == ACTION.REVEAL_IN) {
-            startRadius = 0;
-            endRadius = (float) Math.hypot(view.getWidth(), view.getHeight());
+            startRadius = START_RADIUS_DEFAULT;
+            endRadius =  viewMaxRadius* END_RADIUS_RATIO_DEFAULT;
         } else if (action == ACTION.REVEAL_OUT) {
-            startRadius = (float) Math.hypot(view.getWidth(), view.getHeight());
+            startRadius = viewMaxRadius* END_RADIUS_RATIO_DEFAULT;
             endRadius = 0;
         }
 
