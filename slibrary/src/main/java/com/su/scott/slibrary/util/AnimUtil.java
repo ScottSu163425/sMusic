@@ -24,6 +24,7 @@ import com.su.scott.slibrary.R;
  */
 public class AnimUtil {
 
+    public static final long DURATION_XSHORT = 300;
     public static final long DURATION_SHORT = 400;
     public static final long DURATION_NORMAL = 600;
     public static final long DURATION_LONG = 800;

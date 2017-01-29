@@ -212,7 +212,6 @@ public class LocalBillCreationActivity extends BaseActivity
         });
     }
 
-
     @Override
     public void onBackPressed() {
         closeKeyboard();

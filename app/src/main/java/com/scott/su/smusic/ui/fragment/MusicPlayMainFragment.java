@@ -154,7 +154,7 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
                     } else {
                         CirclarRevealUtil.revealIn(mPlayControlCard,
                                 CirclarRevealUtil.DIRECTION.CENTER,
-                                CirclarRevealUtil.DURATION_REVEAL_NORMAL);
+                                CirclarRevealUtil.DURATION_REVEAL_LONG);
                     }
                 }
 
@@ -319,10 +319,6 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
 
     @Override
     public void loadCover(final String path, boolean needReveal) {
-//        if (isFragmentDestroyed()) {
-//            return;
-//        }
-
         if (needReveal) {
             CirclarRevealUtil.revealOut(mCoverImageView,
                     CirclarRevealUtil.DIRECTION.CENTER,
@@ -341,7 +337,9 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
                                     R.color.transparent,
                                     R.color.background_music_play
                             );
-                            CirclarRevealUtil.revealIn(mCoverImageView, CirclarRevealUtil.DIRECTION.CENTER);
+                            CirclarRevealUtil.revealIn(mCoverImageView,
+                                    CirclarRevealUtil.DIRECTION.CENTER,
+                                    AnimUtil.DURATION_NORMAL);
                         }
                     }, false);
         } else {
