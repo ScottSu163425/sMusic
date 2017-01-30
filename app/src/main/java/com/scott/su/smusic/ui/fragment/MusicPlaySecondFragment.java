@@ -25,7 +25,6 @@ import com.scott.su.smusic.service.MusicPlayService;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseFragment;
 import com.su.scott.slibrary.mvp.presenter.IPresenter;
-import com.su.scott.slibrary.util.L;
 
 /**
  * Created by asus on 2016/11/20.
@@ -93,7 +92,7 @@ public class MusicPlaySecondFragment extends BaseFragment
         mVolumeSeekBar.setProgress(current);
 
         if (mMusicPlayServiceBinder != null) {
-            mPlayListSecondDisplayFragment.setCurrentPosition(mMusicPlayServiceBinder.getCurrentPositon());
+            mPlayListSecondDisplayFragment.setCurrentPosition(mMusicPlayServiceBinder.getCurrentPosition());
             mPlayListSecondDisplayFragment.setPlayingSongEntityList(mMusicPlayServiceBinder.getServicePlayListSongs());
         }
 

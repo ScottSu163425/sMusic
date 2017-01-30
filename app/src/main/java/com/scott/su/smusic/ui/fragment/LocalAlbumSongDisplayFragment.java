@@ -174,13 +174,6 @@ public class LocalAlbumSongDisplayFragment extends BaseDisplayFragment<AlbumSong
         return mAlbumEntity;
     }
 
-    @Override
-    public void setLoading() {
-        if (mDisplayCallback != null) {
-            mDisplayCallback.onDataLoading();
-        }
-    }
-
     public void setSongAlbumEntity(LocalAlbumEntity albumEntity) {
         this.mAlbumEntity = albumEntity;
     }

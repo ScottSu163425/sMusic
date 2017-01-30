@@ -13,8 +13,6 @@ public interface BillSongDisplayContract {
 
     interface BillSongDisplayView extends IBaseDisplayView<LocalSongEntity> {
         LocalBillEntity getSongBillEntity();
-
-        void setLoading();
     }
 
     interface BillSongBaseDisplayPresenter extends IBaseDisplayPresenter<BillSongDisplayView, LocalSongEntity> {

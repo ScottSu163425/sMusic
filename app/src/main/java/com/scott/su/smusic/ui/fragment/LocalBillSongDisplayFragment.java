@@ -175,13 +175,6 @@ public class LocalBillSongDisplayFragment extends BaseDisplayFragment<BillSongDi
         return mSongsBillEntity;
     }
 
-    @Override
-    public void setLoading() {
-        if (mDisplayCallback != null) {
-            mDisplayCallback.onDataLoading();
-        }
-    }
-
     public void setSongBillEntity(LocalBillEntity billEntity) {
         this.mSongsBillEntity = billEntity;
     }

@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Created by asus on 2016/9/15.
  */
 public interface MusicPlayServiceView {
-    int getCurrentPositon();
+    int getCurrentPosition();
 
     PlayStatus getServiceCurrentPlayStatus();
 

@@ -480,7 +480,7 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
     }
 
     @Override
-    public boolean isFabVisiable() {
+    public boolean isFabVisible() {
         return ViewUtil.isViewVisiable(mPlayFAB);
     }
 
@@ -491,11 +491,6 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mLocalBillSongDisplayFragment.getDisplayDataList());
 
         goToWithTransition(intent);
-    }
-
-    @Override
-    public void notifyBillChanged() {
-        postEvent(new LocalBillChangedEvent());
     }
 
     @Override
@@ -541,4 +536,8 @@ public class LocalBillDetailActivity extends BaseActivity<LocalBillDetailContrac
     }
 
 
+    @Override
+    public void notifyLocalBillChanged() {
+        postEvent(new LocalBillChangedEvent());
+    }
 }

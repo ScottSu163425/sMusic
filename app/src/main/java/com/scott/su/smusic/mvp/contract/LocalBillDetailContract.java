@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.presenter.ILocalSongBottomSheetPresenter;
+import com.scott.su.smusic.mvp.view.ChangeLocalBillView;
 import com.scott.su.smusic.mvp.view.LocalSongBottomSheetView;
 import com.su.scott.slibrary.mvp.presenter.IPresenter;
 import com.su.scott.slibrary.mvp.view.IBaseView;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public interface LocalBillDetailContract {
 
-    interface LocalBillDetailView extends IBaseView, LocalSongBottomSheetView {
+    interface LocalBillDetailView extends IBaseView, LocalSongBottomSheetView, ChangeLocalBillView {
 
         LocalBillEntity getBillEntity();
 
@@ -60,12 +61,9 @@ public interface LocalBillDetailContract {
 
         void updateBillInfo();
 
-        boolean isFabVisiable();
+        boolean isFabVisible();
 
         void goToMusicPlayWithoutFab(LocalSongEntity entity);
-
-        void notifyBillChanged();
-
     }
 
     interface ILocalBillDetailPresenter extends IPresenter<LocalBillDetailView>, ILocalSongBottomSheetPresenter {

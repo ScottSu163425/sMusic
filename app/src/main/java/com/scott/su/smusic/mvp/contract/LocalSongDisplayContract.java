@@ -11,7 +11,6 @@ import com.su.scott.slibrary.mvp.view.IBaseDisplayView;
 public interface LocalSongDisplayContract {
 
     interface LocalSongDisplayView extends IBaseDisplayView<LocalSongEntity> {
-        void setLoading();
     }
 
     interface LocalSongBaseDisplayPresenter extends IBaseDisplayPresenter<LocalSongDisplayView, LocalSongEntity> {

@@ -13,8 +13,6 @@ public interface AlbumSongDisplayContract {
 
     interface AlbumSongDisplayView extends IBaseDisplayView<LocalSongEntity> {
         LocalAlbumEntity getSongAlbumEntity();
-
-        void setLoading();
     }
 
     interface AlbumSongBaseDisplayPresenter extends IBaseDisplayPresenter<AlbumSongDisplayView, LocalSongEntity> {

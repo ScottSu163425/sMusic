@@ -47,7 +47,7 @@ public class MusicPlayPresenterImpl extends BasePresenter<MusicPlayContract.Musi
         }
 
         mBillModel.addSongToBill(getView().getViewContext(), songEntity, billEntity);
-//        AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
+        getView().notifyLocalBillChanged();
         getView().showSnackbarShort(getView().getViewContext().getString(R.string.add_successfully));
     }
 

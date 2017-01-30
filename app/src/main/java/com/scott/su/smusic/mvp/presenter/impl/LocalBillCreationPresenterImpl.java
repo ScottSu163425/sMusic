@@ -1,7 +1,6 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.mvp.contract.LocalBillCreationContract;
 import com.scott.su.smusic.mvp.model.LocalBillModel;

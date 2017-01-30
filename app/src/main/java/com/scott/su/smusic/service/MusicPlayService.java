@@ -437,7 +437,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     }
 
     @Override
-    public int getCurrentPositon() {
+    public int getCurrentPosition() {
         if (mPlayListSongs == null || mPlayListSongs.isEmpty() || mCurrentPlayingSong == null) {
             return -1;
         }
@@ -479,8 +479,8 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
     public class MusicPlayServiceBinder extends Binder implements MusicPlayServiceView {
 
         @Override
-        public int getCurrentPositon() {
-            return MusicPlayService.this.getCurrentPositon();
+        public int getCurrentPosition() {
+            return MusicPlayService.this.getCurrentPosition();
         }
 
         @Override

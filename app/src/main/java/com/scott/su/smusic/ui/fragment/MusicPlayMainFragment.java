@@ -499,7 +499,7 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
     }
 
     @Override
-    public int getCurrentPositon() {
+    public int getCurrentPosition() {
         return 0;
     }
 

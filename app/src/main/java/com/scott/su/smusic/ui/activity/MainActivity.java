@@ -96,7 +96,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
     private ServiceConnection mShutDownTimerServiceConnection;
     private ShutDownTimerService.ShutDownTimerServiceBinder mShutDownTimerServiceBinder;
-    private boolean mInitDataComplete = false;
     private boolean mFabPlayRandom = false;
 
 
@@ -286,7 +285,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
             ViewUtil.setViewGone(mFAB);
         }
 
-        mInitDataComplete = true;
         mMainPresenter.onInitDataComplete();
     }
 
@@ -490,8 +488,8 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     }
 
     @Override
-    public int getCurrentPositon() {
-        return mMusicPlayServiceBinder.getCurrentPositon();
+    public int getCurrentPosition() {
+        return mMusicPlayServiceBinder.getCurrentPosition();
     }
 
     @Override

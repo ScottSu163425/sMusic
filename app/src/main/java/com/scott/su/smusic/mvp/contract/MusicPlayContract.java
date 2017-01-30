@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.scott.su.smusic.callback.MusicPlayMainFragmentCallback;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.mvp.view.ChangeLocalBillView;
 import com.su.scott.slibrary.mvp.presenter.IPresenter;
 import com.su.scott.slibrary.mvp.view.IBaseView;
 
@@ -14,7 +15,7 @@ import com.su.scott.slibrary.mvp.view.IBaseView;
 
 public interface MusicPlayContract {
 
-    interface MusicPlayView extends IBaseView {
+    interface MusicPlayView extends IBaseView, ChangeLocalBillView {
         void showBillSelectionDialog(LocalSongEntity songEntity);
 
         LocalSongEntity getCurrentPlayingSong();
@@ -28,6 +29,7 @@ public interface MusicPlayContract {
         void showMusicPlaySecondFragment();
 
         void hideMusicPlaySecondFragment();
+
     }
 
     interface MusicPlayPresenter extends IPresenter<MusicPlayView>, MusicPlayMainFragmentCallback {

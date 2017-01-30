@@ -17,6 +17,7 @@ import com.scott.su.smusic.callback.MusicPlayMainFragmentCallback;
 import com.scott.su.smusic.constant.Constants;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
+import com.scott.su.smusic.event.LocalBillChangedEvent;
 import com.scott.su.smusic.mvp.contract.MusicPlayContract;
 import com.scott.su.smusic.mvp.presenter.impl.MusicPlayPresenterImpl;
 import com.scott.su.smusic.ui.fragment.LocalBillSelectionDialogFragment;
@@ -265,5 +266,9 @@ public class MusicPlayActivity extends BaseActivity<MusicPlayContract.MusicPlayV
         }
     }
 
+    @Override
+    public void notifyLocalBillChanged() {
+        postEvent(new LocalBillChangedEvent());
+    }
 
 }

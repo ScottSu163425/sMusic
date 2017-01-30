@@ -169,13 +169,6 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongDispl
         }
     }
 
-    @Override
-    public void setLoading() {
-        if (mDisplayCallback != null) {
-            mDisplayCallback.onDataLoading();
-        }
-    }
-
     public void setDisplayCallback(LocalSongDisplayCallback callback) {
         this.mDisplayCallback = callback;
     }

@@ -83,8 +83,4 @@ public class LocalAlbumDetailPresenterImpl extends BasePresenter<LocalAlbumDetai
         getView().showAlbumSongBottomSheet(entity);
     }
 
-    @Override
-    public void onPlayFabClick() {
-        getView().goToMusicPlayWithCover(getView().getCurrentAlbumEntity().getAlbumSongs().get(0));
-    }
 }

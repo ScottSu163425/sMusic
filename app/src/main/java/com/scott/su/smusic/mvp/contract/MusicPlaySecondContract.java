@@ -21,7 +21,7 @@ public interface MusicPlaySecondContract {
 
         void backToMusicPlayMain();
 
-        void updateVolume(int realVoume);
+        void updateVolume(int realVolume);
 
         void bindMusicPlayService();
 

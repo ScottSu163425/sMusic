@@ -3,7 +3,6 @@ package com.scott.su.smusic.mvp.presenter.impl;
 import android.view.View;
 
 import com.scott.su.smusic.R;
-import com.scott.su.smusic.config.AppConfig;
 import com.scott.su.smusic.entity.LocalBillEntity;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.mvp.contract.LocalBillDetailContract;
@@ -106,7 +105,7 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
             getView().onAddSongsToBillSuccessfully();
             //When back to main activity ,the bill display show be updated
             //When back to search activity ,the bill display show be updated
-            getView().notifyBillChanged();
+            getView().notifyLocalBillChanged();
         } else {
             //More than one song was selected to be added into current bill;
             if (mBillModel.isBillContainsSongs(billToAddSong, songsToAdd)) {
@@ -141,7 +140,7 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
                     loadCover(true);
                     getView().onAddSongsToBillSuccessfully();
                     //When back to main activity ,the bill display show be updated
-                    getView().notifyBillChanged();
+                    getView().notifyLocalBillChanged();
                 }
             });
         }
@@ -158,7 +157,7 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
         getView().updateBillInfo();
         getView().dismissEditBillNameDialog();
         getView().showSnackbarShort(getView().getViewContext().getString(R.string.edit_successfully));
-        getView().notifyBillChanged();
+        getView().notifyLocalBillChanged();
     }
 
     @Override
@@ -216,7 +215,7 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
                 getView().refreshBillSongDisplay(billAfterClear);
                 getView().setBillEntity(billAfterClear);
                 loadCover(true);
-                getView().notifyBillChanged();
+                getView().notifyLocalBillChanged();
             }
         });
 
@@ -241,7 +240,7 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
                     return;
                 }
 
-                getView().notifyBillChanged();
+                getView().notifyLocalBillChanged();
                 getView().onDeleteBillSuccessfully();
             }
         });
@@ -250,13 +249,13 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
     @Override
     public void onBillSongItemClick(View view, int position, LocalSongEntity entity) {
         if (position == 0) {
-            if (getView().isFabVisiable()) {
+            if (getView().isFabVisible()) {
                 getView().goToMusicPlayWithCoverAndFabSharedElement(entity);
             } else {
                 getView().goToMusicPlayWithCoverSharedElement(entity);
             }
         } else {
-            if (getView().isFabVisiable()) {
+            if (getView().isFabVisible()) {
                 getView().goToMusicPlayWithFab(entity);
             } else {
                 getView().goToMusicPlayWithoutFab(entity);
@@ -321,7 +320,7 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
         }
 
         mBillModel.addSongToBill(getView().getViewContext(), songEntity, billEntity);
-        getView().notifyBillChanged();
+        getView().notifyLocalBillChanged();
         getView().showSnackbarShort(getView().getViewContext().getString(R.string.add_successfully));
     }
 
@@ -334,6 +333,6 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
         getView().setBillEntity(billAfterDelete);
         //Only when the deleted song is the latest song of the bill,should the bill cover perform reveal animation;
         loadCover(lastSongIDBeforeDelete == songEntity.getSongId());
-        getView().notifyBillChanged();
+        getView().notifyLocalBillChanged();
     }
 }

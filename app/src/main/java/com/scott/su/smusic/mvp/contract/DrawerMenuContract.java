@@ -8,11 +8,11 @@ import com.su.scott.slibrary.mvp.view.IView;
  */
 
 public interface DrawerMenuContract {
-    public interface DrawerMenuView extends IView {
+     interface DrawerMenuView extends IView {
 
     }
 
-    public interface DrawerMenuPresenter extends IPresenter<DrawerMenuView> {
+   interface DrawerMenuPresenter extends IPresenter<DrawerMenuView> {
 
     }
 
