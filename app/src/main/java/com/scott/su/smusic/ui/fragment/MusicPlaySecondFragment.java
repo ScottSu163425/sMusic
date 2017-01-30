@@ -25,6 +25,7 @@ import com.scott.su.smusic.service.MusicPlayService;
 import com.su.scott.slibrary.callback.ItemClickCallback;
 import com.su.scott.slibrary.fragment.BaseFragment;
 import com.su.scott.slibrary.mvp.presenter.IPresenter;
+import com.su.scott.slibrary.util.L;
 
 /**
  * Created by asus on 2016/11/20.
@@ -68,6 +69,14 @@ public class MusicPlaySecondFragment extends BaseFragment
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        //Locate the position of current playing song, after the fragment shown from hidden state.
+        updatePlayList(mPlayListSecondDisplayFragment.getAdapter().getSelectedPosition());
+    }
+
+    @Override
     public void initView() {
         mVolumeSeekBar = (AppCompatSeekBar) mRootView.findViewById(R.id.seek_bar_volume_fragment_music_play_second);
     }
@@ -102,7 +111,7 @@ public class MusicPlaySecondFragment extends BaseFragment
                 mMusicPlaySecondPresenter.onPlayListItemClick(itemView, entity, position);
             }
         });
-        
+
         mVolumeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -143,7 +152,7 @@ public class MusicPlaySecondFragment extends BaseFragment
 
     @Override
     public void updatePlayList(int currentPosition) {
-       mPlayListSecondDisplayFragment.setCurrentPosition(currentPosition);
+        mPlayListSecondDisplayFragment.setCurrentPosition(currentPosition);
     }
 
     @Override
@@ -152,8 +161,8 @@ public class MusicPlaySecondFragment extends BaseFragment
     }
 
     @Override
-    public void updateVolume(int realVoume) {
-        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, realVoume, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+    public void updateVolume(int realVolume) {
+        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, realVolume, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
     }
 
     @Override
