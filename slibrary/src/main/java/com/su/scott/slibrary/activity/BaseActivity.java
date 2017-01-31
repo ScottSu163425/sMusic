@@ -37,7 +37,7 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
     private ProgressDialog mLoadingDialog;
     private String mNetworkErrorTip;
     private RxPermissions mRxPermissions;
-
+    protected boolean mActivityResume;
 
     protected abstract
     @LayoutRes
@@ -83,6 +83,22 @@ public abstract class BaseActivity<V extends IView, P extends IPresenter<V>> ext
         }
 
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mActivityResume = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mActivityResume = false;
+    }
+
+    protected boolean isActivityResume() {
+        return mActivityResume;
     }
 
     @Override

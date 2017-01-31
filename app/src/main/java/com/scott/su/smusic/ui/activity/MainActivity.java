@@ -77,7 +77,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
     private static final String NEED_OPEN_DRAWER = "NEED_OPEN_DRAWE";
     private static final String CURRENT_TAB_POSITION = "CURRENT_TAB_POSITION";
-    private static final int REQUEST_CODE_LOCAL_SONG_SELECTION = 1111;
     private static final int TAB_POSITION_SONG = 0;
     private static final int TAB_POSITION_BILL = 1;
     private static final int TAB_POSITION_ALBUM = 2;
@@ -96,7 +95,12 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     private MusicPlayService.MusicPlayServiceBinder mMusicPlayServiceBinder;
     private ServiceConnection mShutDownTimerServiceConnection;
     private ShutDownTimerService.ShutDownTimerServiceBinder mShutDownTimerServiceBinder;
-    private boolean mFabPlayRandom = false;
+    private boolean mFabPlayRandom;
+
+    /*To fix the problem that the item position of return shared element transition will be wrong,
+     * after created(added) local bill and changed a bill to trigger update.
+      * */
+    private boolean mNeedRefreshBill;
 
 
     @Override
@@ -130,7 +134,10 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
     @Override
     protected void onResume() {
         super.onResume();
-        mMainPresenter.onViewResume();
+
+        if (mNeedRefreshBill) {
+            updateBillDisplay();
+        }
     }
 
     @Override
@@ -162,7 +169,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
                     getIntent().getParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS));
             goTo(intent);
 
-            //Set the enterance value false, to avoid to excute duplicated logic when switch day-night mode.
+            //Set the entrance value false, to avoid to excute duplicated logic when switch day-night mode.
             Intent getIntent = getIntent();
             getIntent.putExtra(Constants.KEY_IS_FROM_NOTIFICATION, false);
             setIntent(getIntent);
@@ -357,7 +364,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
             @Override
             public void onDataLoading() {
-                // FIXME: 2016/10/24 
+                // FIXME: 2016/10/24
 //                hideFab(false);
             }
 
@@ -605,8 +612,13 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
     @Override
     public void updateBillDisplay() {
-        if (mBillDisplayFragment.isVisible()) {
-            mBillDisplayFragment.reInitialize();
+        if (isActivityResume()) {
+            if (mBillDisplayFragment.isVisible()) {
+                mBillDisplayFragment.reInitialize();
+                mNeedRefreshBill = false;
+            }
+        } else {
+            mNeedRefreshBill = true;
         }
     }
 

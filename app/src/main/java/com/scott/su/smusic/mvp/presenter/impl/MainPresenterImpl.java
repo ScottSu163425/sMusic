@@ -202,26 +202,6 @@ public class MainPresenterImpl
     }
 
     @Override
-    public void onViewResume() {
-//        if (getView().isInitDataComplete()) {
-//            if (AppConfig.isNeedToRefreshLocalSongDisplay(getView().getViewContext())) {
-//                getView().updateSongDisplay();
-//                AppConfig.setNeedToRefreshLocalSongDisplay(getView().getViewContext(), false);
-//            }
-//
-//            if (AppConfig.isNeedToRefreshLocalBillDisplay(getView().getViewContext())) {
-//                getView().updateBillDisplay();
-//                AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), false);
-//            }
-//
-//            if (AppConfig.isNeedToRefreshLocalAlbumDisplay(getView().getViewContext())) {
-//                getView().updateAlbumDisplay();
-//                AppConfig.setNeedToRefreshLocalAlbumDisplay(getView().getViewContext(), false);
-//            }
-//        }
-    }
-
-    @Override
     public void onBottomSheetAddToBillClick(LocalSongEntity songEntity) {
         getView().showBillSelectionDialog(songEntity);
     }
@@ -244,7 +224,6 @@ public class MainPresenterImpl
         }
 
         mBillModel.addSongToBill(getView().getViewContext(), songEntity, billEntity);
-//        mAppConfigModel.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
         getView().updateBillDisplay();
         getView().showSnackbarShort(getView().getViewContext().getString(R.string.add_successfully));
     }
