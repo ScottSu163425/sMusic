@@ -99,6 +99,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
     /*To fix the problem that the item position of return shared element transition will be wrong,
      * after created(added) local bill and changed a bill to trigger update.
+     * Maybe it caused by the change of item count,and it remains to be improved in the future.
       * */
     private boolean mNeedRefreshBill;
 
@@ -744,7 +745,6 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
         Intent intent = new Intent(MainActivity.this, MusicPlayActivity.class);
         intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, entity);
         intent.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mSongDisplayFragment.getDisplayDataList());
-//        goToWithSharedElement(intent, sharedElement, transitionName);
         goToWithSharedElements(intent,
                 new View[]{sharedElement, mFAB},
                 new String[]{transitionName, getString(R.string.transition_name_fab)});
