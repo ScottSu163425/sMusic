@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/bg_user_center"
-            app:layout_heightPercent="43%">
+            app:layout_heightPercent="55%">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/tool_bar_activity_user_center"
@@ -57,7 +57,85 @@
                     android:layout_gravity="center"
                     android:text="@string/test_user_description"
                     android:textColor="#9affffff"
-                    android:textSize="@dimen/text_size_body" />
+                    android:textSize="@dimen/text_size_body"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_s"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="68"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_display_1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="歌曲"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_caption" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginLeft="@dimen/margin_s"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="9"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_display_1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="歌单"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_caption" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginLeft="@dimen/margin_s"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="689"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_display_1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="累计听歌"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_caption" />
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
         </android.support.percent.PercentRelativeLayout>
