@@ -40,21 +40,43 @@
             android:layout_marginTop="@dimen/margin_s"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="Scott Su"
-                android:textColor="#deffffff"
-                android:textSize="@dimen/text_size_title" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@string/test_user_name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_title" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginLeft="@dimen/margin_s"
+                    android:src="@drawable/ic_place_white_18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_xxs"
+                    android:text="@string/test_user_location"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_body" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="“The only way to do great job is to love what you do.”"
+                android:text="@string/test_user_description"
                 android:textColor="#9affffff"
                 android:textSize="@dimen/text_size_caption" />
 
