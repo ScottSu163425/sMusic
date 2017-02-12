@@ -347,7 +347,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
         Intent intentGoToMusicPlay = new Intent(this, MainActivity.class);
-        intentGoToMusicPlay.putExtra(Constants.KEY_IS_FROM_NOTIFICATION, true);
+        intentGoToMusicPlay.putExtra(Constants.KEY_EXTRA_IS_FROM_NOTIFICATION, true);
         intentGoToMusicPlay.putExtra(Constants.KEY_EXTRA_LOCAL_SONG, mCurrentPlayingSong);
         intentGoToMusicPlay.putParcelableArrayListExtra(Constants.KEY_EXTRA_LOCAL_SONGS, mPlayListSongs);
         intentGoToMusicPlay.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -162,7 +162,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
     @Override
     public void initPreData() {
-        if (getIntent().getBooleanExtra(Constants.KEY_IS_FROM_NOTIFICATION, false)) {
+        if (getIntent().getBooleanExtra(Constants.KEY_EXTRA_IS_FROM_NOTIFICATION, false)) {
             Intent intent = new Intent(this, MusicPlayActivity.class);
             intent.putExtra(Constants.KEY_EXTRA_LOCAL_SONG,
                     getIntent().getParcelableExtra(Constants.KEY_EXTRA_LOCAL_SONG));
@@ -172,7 +172,7 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
             //Set the entrance value false, to avoid to excute duplicated logic when switch day-night mode.
             Intent getIntent = getIntent();
-            getIntent.putExtra(Constants.KEY_IS_FROM_NOTIFICATION, false);
+            getIntent.putExtra(Constants.KEY_EXTRA_IS_FROM_NOTIFICATION, false);
             setIntent(getIntent);
         }
     }

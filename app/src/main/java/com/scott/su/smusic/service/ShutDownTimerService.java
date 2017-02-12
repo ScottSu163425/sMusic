@@ -72,15 +72,15 @@ public class ShutDownTimerService extends Service implements ShutDownTimerServic
                     mTimerCallback.onFinish();
                 }
                 mCurrentShutDownTimerStatus = TimerStatus.Stop;
-                sendStopBrocast();
+                sendStopBroadcast();
             }
         };
     }
 
     /**
-     * Send a brocast to Music play service to stop it.
+     * Send a broadcast to Music play service to stop it.
      */
-    private void sendStopBrocast() {
+    private void sendStopBroadcast() {
         Intent intent = new Intent();
         intent.setAction(Constants.ACTION_STOP_MUSIC_PLAY_SERVICE);
         sendBroadcast(intent);

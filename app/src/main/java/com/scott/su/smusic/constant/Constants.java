@@ -8,7 +8,7 @@ public class Constants {
     public static final String KEY_EXTRA_LOCAL_SONG = "KEY_EXTRA_LOCAL_SONG";
     public static final String KEY_EXTRA_BILL = "KEY_EXTRA_BILL";
     public static final String KEY_EXTRA_ALBUM = "KEY_EXTRA_ALBUM";
-    public static final String KEY_IS_FROM_NOTIFICATION = "KEY_IS_FROM_NOTIFICATION";
+    public static final String KEY_EXTRA_IS_FROM_NOTIFICATION = "KEY_EXTRA_IS_FROM_NOTIFICATION";
     public static final String ACTION_STOP_MUSIC_PLAY_SERVICE = "ACTION_STOP_MUSIC_PLAY_SERVICE";
 
 }
