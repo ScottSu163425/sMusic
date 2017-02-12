@@ -41,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_user_head_fragment_drawer_menu"
                 android:layout_marginTop="@dimen/margin_xs"
+                android:layoutAnimation="@anim/layout_slide_in_bottom"
                 android:orientation="vertical">
 
                 <TextView
@@ -84,7 +85,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="歌曲"
+                            android:text="@string/song"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_caption" />
                     </LinearLayout>
@@ -107,7 +108,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="歌单"
+                            android:text="@string/local_bill"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_caption" />
                     </LinearLayout>
@@ -130,7 +131,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="累计听歌"
+                            android:text="@string/total_listen"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_size_caption" />
                     </LinearLayout>
@@ -146,6 +147,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_s"
+        android:elevation="@dimen/margin_m"
         android:src="@drawable/ic_menu_item_edit_24dp"
         app:backgroundTint="@color/colorImpact"
         app:fabSize="normal"
