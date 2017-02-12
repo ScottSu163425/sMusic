@@ -12,8 +12,8 @@ public class CoverPathCache {
     private static CoverPathCache instance;
 
     private CoverPathCache() {
-        //2M cache space;
-        coverPathCache = new LruCache<>(2 * 1024 * 1024);
+        //1M cache space;
+        coverPathCache = new LruCache<>(1 * 1024 * 1024);
     }
 
     public static CoverPathCache getInstance() {
