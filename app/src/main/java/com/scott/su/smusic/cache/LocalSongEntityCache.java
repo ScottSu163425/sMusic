@@ -14,8 +14,8 @@ public class LocalSongEntityCache {
     private static LocalSongEntityCache mInstance;
 
     private LocalSongEntityCache() {
-        //2M com.scott.su.smusic.cache space;
-        mEntityCache = new LruCache<>(2 * 1024 * 1024);
+        //1M space;
+        mEntityCache = new LruCache<>(1 * 1024 * 1024);
     }
 
     public static LocalSongEntityCache getInstance() {

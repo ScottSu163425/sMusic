@@ -14,7 +14,7 @@ public class BitmapLruCache {
 
 
     private BitmapLruCache() {
-        //3M cache space;
+        //4M cache space;
         blurCache = new LruCache<String, Bitmap>(4 * 1024 * 1024) {
             @Override
             protected int sizeOf(String key, Bitmap value) {

@@ -29,24 +29,19 @@ public class App extends Application {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
+        Resources resources = getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
         if (AppConfig.isLanguageModeOn(this)) {
-            Resources resources = getResources();
-            DisplayMetrics dm = resources.getDisplayMetrics();
-            Configuration config = resources.getConfiguration();
-            // 应用用户选择语言
             config.locale = Locale.ENGLISH;
-            resources.updateConfiguration(config, dm);
         } else {
-            Resources resources = getResources();
-            DisplayMetrics dm = resources.getDisplayMetrics();
-            Configuration config = resources.getConfiguration();
-            // 应用用户选择语言
             config.locale = Locale.CHINESE;
-            resources.updateConfiguration(config, dm);
         }
+        resources.updateConfiguration(config, dm);
 
         super.onCreate();
 
+        //Init greenDao
         GreenDaoHelper.init(this, "sMusic.db");
     }
 

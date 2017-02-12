@@ -10,8 +10,21 @@ import android.preference.PreferenceManager;
  * @时间 2016年7月
  */
 public class ConfigManager {
+    private static ConfigManager instance;
+
 
     private ConfigManager() {
+    }
+
+    public static ConfigManager getInstance() {
+        if (instance == null) {
+            synchronized (ConfigManager.class) {
+                if (instance == null) {
+                    instance = new ConfigManager();
+                }
+            }
+        }
+        return instance;
     }
 
     /**
@@ -21,7 +34,7 @@ public class ConfigManager {
      * @param key
      * @param value
      */
-    private static void putBoolean(Context context, String key, boolean value) {
+    public void putBoolean(Context context, String key, boolean value) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(key, value).apply();
     }
 
@@ -32,7 +45,7 @@ public class ConfigManager {
      * @param key
      * @param value
      */
-    private static void putInt(Context context, String key, int value) {
+    public void putInt(Context context, String key, int value) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(key, value).apply();
     }
 
@@ -43,7 +56,7 @@ public class ConfigManager {
      * @param key
      * @param value
      */
-    private static void putString(Context context, String key, String value) {
+    public void putString(Context context, String key, String value) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putString(key, value).apply();
     }
 
@@ -54,7 +67,7 @@ public class ConfigManager {
      * @param key
      * @param value
      */
-    private static void putLong(Context context, String key, long value) {
+    public void putLong(Context context, String key, long value) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putLong(key, value).apply();
     }
 
@@ -65,8 +78,8 @@ public class ConfigManager {
      * @param key
      * @param valueDefault
      */
-    private static void getBoolean(Context context, String key, boolean valueDefault) {
-        PreferenceManager.getDefaultSharedPreferences(context).getBoolean(key, valueDefault);
+    public boolean getBoolean(Context context, String key, boolean valueDefault) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(key, valueDefault);
     }
 
     /**
@@ -76,8 +89,8 @@ public class ConfigManager {
      * @param key
      * @param valueDefault
      */
-    private static void getInt(Context context, String key, int valueDefault) {
-        PreferenceManager.getDefaultSharedPreferences(context).getInt(key, valueDefault);
+    public int getInt(Context context, String key, int valueDefault) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(key, valueDefault);
     }
 
     /**
@@ -87,8 +100,8 @@ public class ConfigManager {
      * @param key
      * @param valueDefault
      */
-    private static void getString(Context context, String key, String valueDefault) {
-        PreferenceManager.getDefaultSharedPreferences(context).getString(key, valueDefault);
+    public String getString(Context context, String key, String valueDefault) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(key, valueDefault);
     }
 
     /**
@@ -98,8 +111,8 @@ public class ConfigManager {
      * @param key
      * @param valueDefault
      */
-    private static void getLong(Context context, String key, long valueDefault) {
-        PreferenceManager.getDefaultSharedPreferences(context).getLong(key, valueDefault);
+    public long getLong(Context context, String key, long valueDefault) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getLong(key, valueDefault);
     }
 
 

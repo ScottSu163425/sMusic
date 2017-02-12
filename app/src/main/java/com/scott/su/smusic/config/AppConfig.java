@@ -3,6 +3,8 @@ package com.scott.su.smusic.config;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
+import com.su.scott.slibrary.manager.ConfigManager;
+
 /**
  * Created by asus on 2016/9/15.
  */
@@ -15,82 +17,49 @@ public class AppConfig {
 
 
     public static boolean isNightModeOn(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(IS_NIGHT_MODE_ON, false);
+        return ConfigManager.getInstance().getBoolean(context,IS_NIGHT_MODE_ON,false);
     }
 
     public static boolean isLanguageModeOn(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(IS_LANGUAGE_MODE_ON, false);
+        return ConfigManager.getInstance().getBoolean(context,IS_LANGUAGE_MODE_ON,false);
     }
 
     public static void setNightMode(Context context, boolean isOn) {
-        PreferenceManager.getDefaultSharedPreferences(context)
-                .edit()
-                .putBoolean(IS_NIGHT_MODE_ON, isOn)
-                .apply();
+        ConfigManager.getInstance().putBoolean(context,IS_NIGHT_MODE_ON,isOn);
     }
 
     public static void setLanguageMode(Context context, boolean isOn) {
-        PreferenceManager.getDefaultSharedPreferences(context)
-                .edit()
-                .putBoolean(IS_LANGUAGE_MODE_ON, isOn)
-                .apply();
+        ConfigManager.getInstance().putBoolean(context,IS_LANGUAGE_MODE_ON,isOn);
     }
 
     public static boolean isPlayRepeatOne(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PLAY_MODE_REPEAT_ONE, false);
+        return ConfigManager.getInstance().getBoolean(context,PLAY_MODE_REPEAT_ONE,false);
     }
 
     public static boolean isPlayRepeatAll(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PLAY_MODE_REPEAT_ALL, false);
+        return ConfigManager.getInstance().getBoolean(context,PLAY_MODE_REPEAT_ALL,false);
     }
 
     public static boolean isPlayShuffle(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PLAY_MODE_SHUFFLE, false);
+        return ConfigManager.getInstance().getBoolean(context,PLAY_MODE_SHUFFLE, false);
     }
 
     public static void setPlayRepeatOne(Context context) {
-        PreferenceManager
-                .getDefaultSharedPreferences(context)
-                .edit()
-                .putBoolean(PLAY_MODE_REPEAT_ONE, true).apply();
-        PreferenceManager
-                .getDefaultSharedPreferences(context)
-                .edit()
-                .putBoolean(PLAY_MODE_REPEAT_ALL, false).apply();
-        PreferenceManager
-                .getDefaultSharedPreferences(context)
-                .edit()
-                .putBoolean(PLAY_MODE_SHUFFLE, false).apply();
+        ConfigManager.getInstance().putBoolean(context,PLAY_MODE_REPEAT_ONE, true);
+        ConfigManager.getInstance().putBoolean(context,PLAY_MODE_REPEAT_ALL, false);
+        ConfigManager.getInstance().putBoolean(context,PLAY_MODE_SHUFFLE, false);
     }
 
     public static void setPlayRepeatAll(Context context) {
-        PreferenceManager
-                .getDefaultSharedPreferences(context)
-                .edit()
-                .putBoolean(PLAY_MODE_REPEAT_ONE, false).apply();
-        PreferenceManager
-                .getDefaultSharedPreferences(context)
-                .edit()
-                .putBoolean(PLAY_MODE_REPEAT_ALL, true).apply();
-        PreferenceManager
-                .getDefaultSharedPreferences(context)
-                .edit()
-                .putBoolean(PLAY_MODE_SHUFFLE, false).apply();
+        ConfigManager.getInstance().putBoolean(context,PLAY_MODE_REPEAT_ONE, false);
+        ConfigManager.getInstance().putBoolean(context,PLAY_MODE_REPEAT_ALL, true);
+        ConfigManager.getInstance().putBoolean(context,PLAY_MODE_SHUFFLE, false);
     }
 
     public static void setPlayRepeatShuffle(Context context) {
-        PreferenceManager
-                .getDefaultSharedPreferences(context)
-                .edit()
-                .putBoolean(PLAY_MODE_REPEAT_ONE, false).apply();
-        PreferenceManager
-                .getDefaultSharedPreferences(context)
-                .edit()
-                .putBoolean(PLAY_MODE_REPEAT_ALL, false).apply();
-        PreferenceManager
-                .getDefaultSharedPreferences(context)
-                .edit()
-                .putBoolean(PLAY_MODE_SHUFFLE, true).apply();
+        ConfigManager.getInstance().putBoolean(context,PLAY_MODE_REPEAT_ONE, false);
+        ConfigManager.getInstance().putBoolean(context,PLAY_MODE_REPEAT_ALL, false);
+        ConfigManager.getInstance().putBoolean(context,PLAY_MODE_SHUFFLE, true);
     }
 
 }
