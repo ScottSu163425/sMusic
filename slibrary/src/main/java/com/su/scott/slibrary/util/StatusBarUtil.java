@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.su.scott.slibrary.R;
 import com.su.scott.slibrary.widget.StatusBarView;
 
 
@@ -25,8 +26,8 @@ import com.su.scott.slibrary.widget.StatusBarView;
 public class StatusBarUtil {
 
     public static final int DEFAULT_STATUS_BAR_ALPHA = 112;
-    public static final int FAKE_STATUS_BAR_VIEW_ID = com.su.scott.slibrary.R.id.statusbarutil_fake_status_bar_view;
-    public static final int FAKE_TRANSLUCENT_VIEW_ID = com.su.scott.slibrary.R.id.statusbarutil_translucent_view;
+    public static final int FAKE_STATUS_BAR_VIEW_ID = R.id.statusbarutil_fake_status_bar_view;
+    public static final int FAKE_TRANSLUCENT_VIEW_ID =R.id.statusbarutil_translucent_view;
 
     /**
      * 设置状态栏颜色
