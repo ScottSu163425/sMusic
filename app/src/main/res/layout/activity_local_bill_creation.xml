@@ -94,6 +94,6 @@
         android:transitionName="@string/transition_name_fab"
         app:backgroundTint="@color/colorImpact"
         app:elevation="@dimen/elevation_fab_pressed"
-        app:fabSize="normal"
+        app:fabSize="mini"
         app:pressedTranslationZ="@dimen/elevation_fab_pressed" />
 </RelativeLayout>
