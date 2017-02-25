@@ -650,8 +650,8 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
     @Override
     public void playRandomSong() {
-        final int randomPositon = new Random().nextInt(mSongDisplayFragment.getDisplayDataList().size());
-        playSongInPosition(randomPositon, true);
+        final int randomPosition = new Random().nextInt(mSongDisplayFragment.getDisplayDataList().size());
+        playSongInPosition(randomPosition, true);
     }
 
     private void goToMusicWithSharedElementInPosition(int position) {

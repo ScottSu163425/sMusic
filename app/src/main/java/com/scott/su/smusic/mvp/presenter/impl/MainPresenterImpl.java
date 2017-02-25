@@ -1,6 +1,5 @@
 package com.scott.su.smusic.mvp.presenter.impl;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -21,16 +20,6 @@ import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
 import com.scott.su.smusic.util.MusicPlayUtil;
 import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 import com.su.scott.slibrary.util.TimeUtil;
-
-import java.util.List;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by asus on 2016/8/19.
@@ -78,8 +67,8 @@ public class MainPresenterImpl
                 getView().playRandomSong();
             } else {
                 //A song is playing or paused;
-                final int currentPlayingSongPositon = MusicPlayUtil.getSongPosition(getView().getServiceCurrentPlayingSong(), getView().getDisplaySongs());
-                getView().playSongInPosition(currentPlayingSongPositon, true);
+                final int currentPlayingSongPosition = MusicPlayUtil.getSongPosition(getView().getServiceCurrentPlayingSong(), getView().getDisplaySongs());
+                getView().playSongInPosition(currentPlayingSongPosition, true);
             }
         } else if (getView().isCurrentTabBill()) {
             getView().goToLocalBillCreation();
