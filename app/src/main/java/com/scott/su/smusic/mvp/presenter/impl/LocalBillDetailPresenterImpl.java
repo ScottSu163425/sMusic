@@ -10,10 +10,17 @@ import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
-import com.su.scott.slibrary.manager.AsyncTaskHelper;
 import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by asus on 2016/8/29.
@@ -113,36 +120,41 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
                 getView().showSnackbarShort(getView().getViewContext().getString(R.string.error_already_exist));
                 return;
             }
-            AsyncTaskHelper.excuteSimpleTask(new Runnable() {
+
+            Observable.create(new ObservableOnSubscribe<Boolean>() {
                 @Override
-                public void run() {
+                public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                     mBillModel.addSongsToBill(getView().getViewContext(), songsToAdd, billToAddSong);
+                    e.onNext(true);
                 }
-            }, new AsyncTaskHelper.SimpleAsyncTaskCallback() {
-                @Override
-                public void onPreExecute() {
-                    getView().showLoadingDialog(getView().getViewContext(), false);
-                }
+            }).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe(new Consumer<Disposable>() {
+                        @Override
+                        public void accept(Disposable disposable) throws Exception {
+                            getView().showLoadingDialog(getView().getViewContext(), false);
+                        }
+                    })
+                    .subscribe(new Consumer<Boolean>() {
+                        @Override
+                        public void accept(Boolean aBoolean) throws Exception {
+                            if (!isViewAttaching()) {
+                                return;
+                            }
 
-                @Override
-                public void onPostExecute() {
-                    if (!isViewAttaching()) {
-                        return;
-                    }
-
-                    getView().dismissLoadingDialog();
-                    LocalBillEntity billAfterAddSong = mBillModel.getBill(getView().getViewContext(), billToAddSong.getBillId());
-                    //Update the bill entitiy of the activity;
-                    getView().setBillEntity(billAfterAddSong);
-                    //Update the bill songs display;
-                    getView().refreshBillSongDisplay(billAfterAddSong);
-                    //Update the bill cover;
-                    loadCover(true);
-                    getView().onAddSongsToBillSuccessfully();
-                    //When back to main activity ,the bill display show be updated
-                    getView().notifyLocalBillChanged();
-                }
-            });
+                            getView().dismissLoadingDialog();
+                            LocalBillEntity billAfterAddSong = mBillModel.getBill(getView().getViewContext(), billToAddSong.getBillId());
+                            //Update the bill entitiy of the activity;
+                            getView().setBillEntity(billAfterAddSong);
+                            //Update the bill songs display;
+                            getView().refreshBillSongDisplay(billAfterAddSong);
+                            //Update the bill cover;
+                            loadCover(true);
+                            getView().onAddSongsToBillSuccessfully();
+                            //When back to main activity ,the bill display show be updated
+                            getView().notifyLocalBillChanged();
+                        }
+                    });
         }
     }
 
@@ -162,88 +174,59 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
 
     @Override
     public void onClearBillConfirmed() {
-//        Observable.create(new Observable.OnSubscribe<Void>() {
-//            @Override
-//            public void call(Subscriber<? super Void> subscriber) {
-//                mBillModel.clearBillSongs(getView().getViewContext(), getView().getBillEntity());
-//            }
-//        })
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnSubscribe(new Action0() {
-//                    @Override
-//                    public void call() {
-//                        getView().showLoadingDialog(getView().getViewContext(), false);
-//                    }
-//                })
-//                .subscribe(new Action1<Void>() {
-//                    @Override
-//                    public void call(Void aVoid) {
-//                        if (!isViewAttaching()) {
-//                            return;
-//                        }
-//
-//                        getView().dismissLoadingDialog();
-//                        LocalBillEntity billAfterClear = mBillModel.getBill(getView().getViewContext(), getView().getBillEntity().getBillId());
-//                        getView().refreshBillSongDisplay(billAfterClear);
-//                        getView().setBillEntity(billAfterClear);
-//                        loadCover(true);
-//                        AppConfig.setNeedToRefreshLocalBillDisplay(getView().getViewContext(), true);
-//                        AppConfig.setNeedToRefreshSearchResult(getView().getViewContext(), true);
-//                    }
-//                });
-
-        AsyncTaskHelper.excuteSimpleTask(new Runnable() {
+        Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
-            public void run() {
+            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                 mBillModel.clearBillSongs(getView().getViewContext(), getView().getBillEntity());
+                e.onNext(true);
             }
-        }, new AsyncTaskHelper.SimpleAsyncTaskCallback() {
-            @Override
-            public void onPreExecute() {
-                getView().showLoadingDialog(getView().getViewContext(), false);
-            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        getView().showLoadingDialog(getView().getViewContext(), false);
+                    }
+                })
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (!isViewAttaching()) {
+                            return;
+                        }
 
-            @Override
-            public void onPostExecute() {
-                if (!isViewAttaching()) {
-                    return;
-                }
-
-                getView().dismissLoadingDialog();
-                LocalBillEntity billAfterClear = mBillModel.getBill(getView().getViewContext(), getView().getBillEntity().getBillId());
-                getView().refreshBillSongDisplay(billAfterClear);
-                getView().setBillEntity(billAfterClear);
-                loadCover(true);
-                getView().notifyLocalBillChanged();
-            }
-        });
-
+                        getView().dismissLoadingDialog();
+                        LocalBillEntity billAfterClear = mBillModel.getBill(getView().getViewContext(), getView().getBillEntity().getBillId());
+                        getView().refreshBillSongDisplay(billAfterClear);
+                        getView().setBillEntity(billAfterClear);
+                        loadCover(true);
+                        getView().notifyLocalBillChanged();
+                    }
+                });
     }
 
     @Override
     public void onDeleteBillMenuItemConfirmed() {
-        AsyncTaskHelper.excuteSimpleTask(new Runnable() {
+        Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
-            public void run() {
+            public void subscribe(ObservableEmitter<Boolean> e) throws Exception {
                 mBillModel.deleteBill(getView().getViewContext(), getView().getBillEntity());
+                e.onNext(true);
             }
-        }, new AsyncTaskHelper.SimpleAsyncTaskCallback() {
-            @Override
-            public void onPreExecute() {
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (!isViewAttaching()) {
+                            return;
+                        }
 
-            }
+                        getView().notifyLocalBillChanged();
+                        getView().onDeleteBillSuccessfully();
+                    }
+                });
 
-            @Override
-            public void onPostExecute() {
-                if (!isViewAttaching()) {
-                    return;
-                }
-
-                getView().notifyLocalBillChanged();
-                getView().onDeleteBillSuccessfully();
-            }
-        });
     }
 
     @Override
@@ -273,15 +256,6 @@ public class LocalBillDetailPresenterImpl extends BasePresenter<LocalBillDetailC
         getView().initListener();
 
         loadCover(false);
-
-//        AsyncTaskHelper.excuteSimpleTask(new Runnable() {
-//            @Override
-//            public void run() {
-//                AppConfig.setPositionOfBillToRefresh(getView().getViewContext(),
-//                        mBillModel.getBillPosition(getView().getViewContext(), getView().getBillEntity()));
-//            }
-//        }, null);
-
     }
 
     private void loadCover(boolean needReveal) {
