@@ -29,9 +29,6 @@ import com.su.scott.slibrary.util.T;
  */
 public abstract class BaseFragment<V extends IView, P extends IPresenter<V>> extends Fragment
         implements IBaseView {
-    private P mPresenter;
-    private ProgressDialog mLoadingDialog;
-    private String mNetworkErrorTip;
 
     private boolean mFirstTimeViewCreated = true;
 
@@ -41,6 +38,10 @@ public abstract class BaseFragment<V extends IView, P extends IPresenter<V>> ext
     *
     * */
     private boolean mShouldTriggerFirstTimeViewCreated = false;
+
+    private P mPresenter;
+    private ProgressDialog mLoadingDialog;
+    private String mNetworkErrorTip;
 
     protected abstract P getPresenter();
 
