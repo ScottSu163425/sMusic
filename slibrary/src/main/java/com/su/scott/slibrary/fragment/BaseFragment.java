@@ -58,29 +58,31 @@ public abstract class BaseFragment<V extends IView, P extends IPresenter<V>> ext
     @Override
     public void onResume() {
         super.onResume();
-        if (mShouldTriggerFirstTimeViewCreated) {
+
+        if (mFirstTimeViewCreated) {
             onFirstTimeViewResumed();
-            mShouldTriggerFirstTimeViewCreated = false;
+            mFirstTimeViewCreated = false;
         }
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if (getUserVisibleHint()) {
-            if (mFirstTimeViewCreated) {
-                if (isResumed()) {
-                    onFirstTimeViewResumed();
-                    mFirstTimeViewCreated = false;
-                    mShouldTriggerFirstTimeViewCreated = false;
-                } else {
-                    mFirstTimeViewCreated = false;
-                    mShouldTriggerFirstTimeViewCreated = true;
-                }
-            }
-        }
-    }
+/*For lazy load*/
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//
+//        if (getUserVisibleHint()) {
+//            if (mFirstTimeViewCreated) {
+//                if (isResumed()) {
+//                    onFirstTimeViewResumed();
+//                    mFirstTimeViewCreated = false;
+//                    mShouldTriggerFirstTimeViewCreated = false;
+//                } else {
+//                    mFirstTimeViewCreated = false;
+//                    mShouldTriggerFirstTimeViewCreated = true;
+//                }
+//            }
+//        }
+//    }
 
     @Override
     public void onDestroy() {
