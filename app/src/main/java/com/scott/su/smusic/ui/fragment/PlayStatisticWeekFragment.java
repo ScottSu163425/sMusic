@@ -43,7 +43,7 @@ public class PlayStatisticWeekFragment extends BaseFragment<PlayStatisticWeekCon
     }
 
     @Override
-    protected void onFirstTimeCreateView() {
+    protected void onFirstTimeViewResumed() {
         mChart = (LineChartView) mRootView.findViewById(R.id.chart_fragment_play_statistic_week);
 
         LineSet dataset = new LineSet(getResources().getStringArray(R.array.labels_play_statistic), mValues);

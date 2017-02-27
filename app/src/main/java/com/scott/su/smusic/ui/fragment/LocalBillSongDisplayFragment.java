@@ -57,7 +57,7 @@ public class LocalBillSongDisplayFragment extends BaseDisplayFragment<BillSongDi
     }
 
     @Override
-    protected void onFirstTimeCreateView() {
+    protected void onFirstTimeViewResumed() {
         mSongDisplayPresenter = new LocalBillSongDisplayPresenterImpl(this);
         mSongDisplayPresenter.onViewFirstTimeCreated();
     }

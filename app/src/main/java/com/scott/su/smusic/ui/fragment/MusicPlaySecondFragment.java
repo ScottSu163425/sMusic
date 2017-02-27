@@ -59,7 +59,7 @@ public class MusicPlaySecondFragment extends BaseFragment
     }
 
     @Override
-    protected void onFirstTimeCreateView() {
+    protected void onFirstTimeViewResumed() {
         mMusicPlaySecondPresenter.onViewFirstTimeCreated();
     }
 

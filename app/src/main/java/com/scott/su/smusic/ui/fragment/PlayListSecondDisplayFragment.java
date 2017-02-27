@@ -127,7 +127,7 @@ public class PlayListSecondDisplayFragment extends BaseDisplayFragment<PlayListS
     }
 
     @Override
-    protected void onFirstTimeCreateView() {
+    protected void onFirstTimeViewResumed() {
         display();
     }
 

@@ -32,11 +32,19 @@ public abstract class BaseFragment<V extends IView, P extends IPresenter<V>> ext
     private P mPresenter;
     private ProgressDialog mLoadingDialog;
     private String mNetworkErrorTip;
-    private boolean mFirstTimeCreateView = true;
+
+    private boolean mFirstTimeViewCreated = true;
+
+    /*To make sure that the sub-Fragment will (and only for once) call "onFirstTimeViewResumed".
+    *Trigger "onFirstTimeViewResumed()" again in "onResume()", after first time view shown but has
+    * not resume yet.
+    *
+    * */
+    private boolean mShouldTriggerFirstTimeViewCreated = false;
 
     protected abstract P getPresenter();
 
-    protected abstract void onFirstTimeCreateView();
+    protected abstract void onFirstTimeViewResumed();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,9 +57,27 @@ public abstract class BaseFragment<V extends IView, P extends IPresenter<V>> ext
     @Override
     public void onResume() {
         super.onResume();
-        if (mFirstTimeCreateView) {
-            onFirstTimeCreateView();
-            mFirstTimeCreateView = false;
+        if (mShouldTriggerFirstTimeViewCreated) {
+            onFirstTimeViewResumed();
+            mShouldTriggerFirstTimeViewCreated = false;
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (getUserVisibleHint()) {
+            if (mFirstTimeViewCreated) {
+                if (isResumed()) {
+                    onFirstTimeViewResumed();
+                    mFirstTimeViewCreated = false;
+                    mShouldTriggerFirstTimeViewCreated = false;
+                } else {
+                    mFirstTimeViewCreated = false;
+                    mShouldTriggerFirstTimeViewCreated = true;
+                }
+            }
         }
     }
 

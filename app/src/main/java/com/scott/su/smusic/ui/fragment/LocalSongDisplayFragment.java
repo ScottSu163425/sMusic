@@ -51,7 +51,7 @@ public class LocalSongDisplayFragment extends BaseDisplayFragment<LocalSongDispl
     }
 
     @Override
-    protected void onFirstTimeCreateView() {
+    protected void onFirstTimeViewResumed() {
         mSongDisplayPresenter.onViewFirstTimeCreated();
     }
 

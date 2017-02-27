@@ -45,7 +45,7 @@ public class LocalAlbumDisplayFragment extends BaseDisplayFragment<LocalAlbumDis
     }
 
     @Override
-    protected void onFirstTimeCreateView() {
+    protected void onFirstTimeViewResumed() {
         mLocalAlbumDisplayPresenter.onViewFirstTimeCreated();
     }
 

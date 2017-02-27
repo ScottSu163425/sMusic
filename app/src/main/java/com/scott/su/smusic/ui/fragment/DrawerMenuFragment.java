@@ -196,7 +196,7 @@ public class DrawerMenuFragment extends BaseFragment<DrawerMenuContract.DrawerMe
     }
 
     @Override
-    protected void onFirstTimeCreateView() {
+    protected void onFirstTimeViewResumed() {
 
     }
 }

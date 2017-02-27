@@ -105,7 +105,7 @@ public class PlayStatisticDisplayFragment extends BaseDisplayFragment<PlayStatis
     }
 
     @Override
-    protected void onFirstTimeCreateView() {
+    protected void onFirstTimeViewResumed() {
         mDisplayPresenter.onViewFirstTimeCreated();
     }
 

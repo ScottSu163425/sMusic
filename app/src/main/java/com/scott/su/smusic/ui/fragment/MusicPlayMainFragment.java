@@ -98,7 +98,7 @@ public class MusicPlayMainFragment extends BaseFragment implements MusicPlayMain
     }
 
     @Override
-    protected void onFirstTimeCreateView() {
+    protected void onFirstTimeViewResumed() {
         mMusicPlayPresenter.onViewFirstTimeCreated();
     }
 
