@@ -67,7 +67,7 @@ public class PlayStatisticDisplayPresenterImpl extends BasePresenter<PlayStatist
         Observable.create(new ObservableOnSubscribe<List<PlayStatisticEntity>>() {
             @Override
             public void subscribe(ObservableEmitter<List<PlayStatisticEntity>> e) throws Exception {
-                e.onNext(mPlayStatisticModel.getTotalPlayStatistic(getView().getViewContext()));
+                e.onNext(mPlayStatisticModel.getTotalPlayStatistic());
             }
         })
                 .subscribeOn(Schedulers.io())

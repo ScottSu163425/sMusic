@@ -14,9 +14,11 @@ import com.scott.su.smusic.mvp.contract.MainContract;
 import com.scott.su.smusic.mvp.model.LocalAlbumModel;
 import com.scott.su.smusic.mvp.model.LocalBillModel;
 import com.scott.su.smusic.mvp.model.LocalSongModel;
+import com.scott.su.smusic.mvp.model.PlayStatisticModel;
 import com.scott.su.smusic.mvp.model.impl.LocalAlbumModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalBillModelImpl;
 import com.scott.su.smusic.mvp.model.impl.LocalSongModelImpl;
+import com.scott.su.smusic.mvp.model.impl.PlayStatisticModelImpl;
 import com.scott.su.smusic.util.MusicPlayUtil;
 import com.su.scott.slibrary.mvp.presenter.BasePresenter;
 import com.su.scott.slibrary.util.TimeUtil;
@@ -30,12 +32,14 @@ public class MainPresenterImpl
     private LocalSongModel mSongModel;
     private LocalBillModel mBillModel;
     private LocalAlbumModel mAlbumModel;
+    private PlayStatisticModel mPlayStatisticModel;
 
     public MainPresenterImpl(MainContract.MainView mView) {
         super(mView);
         this.mSongModel = new LocalSongModelImpl();
         this.mBillModel = new LocalBillModelImpl();
         this.mAlbumModel = new LocalAlbumModelImpl();
+        this.mPlayStatisticModel = new PlayStatisticModelImpl();
     }
 
     @Override
@@ -226,6 +230,8 @@ public class MainPresenterImpl
             getView().removeServiceSong(songEntity);
             //To update info of bill;
             mBillModel.deleteSong(getView().getViewContext(), songEntity);
+            mPlayStatisticModel.deletePlayRecord(songEntity);
+
             getView().dismissLoadingDialog();
             getView().showToastShort(getView().getViewContext().getString(R.string.delete_local_song_successfully));
             getView().updateSongDisplay();

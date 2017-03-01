@@ -1,7 +1,5 @@
 package com.scott.su.smusic.mvp.model.impl;
 
-import android.content.Context;
-
 import com.scott.su.smusic.db.GreenDaoHelper;
 import com.scott.su.smusic.entity.LocalSongEntity;
 import com.scott.su.smusic.entity.PlayStatisticEntity;
@@ -23,7 +21,7 @@ public class PlayStatisticModelImpl implements PlayStatisticModel {
 
 
     @Override
-    public void saveOrAddPlayRecord(Context context, LocalSongEntity songEntity) {
+    public void saveOrAddPlayRecord(LocalSongEntity songEntity) {
         PlayStatisticEntity entity = GreenDaoHelper.getDaoSession().getPlayStatisticEntityDao()
                 .queryBuilder()
                 .where(PlayStatisticEntityDao.Properties.SongId.eq(songEntity.getSongId()))
@@ -42,8 +40,8 @@ public class PlayStatisticModelImpl implements PlayStatisticModel {
     }
 
     @Override
-    public int getMaxPlayCount(Context context) {
-        List<PlayStatisticEntity> list = getTotalPlayStatistic(context);
+    public int getMaxPlayCount() {
+        List<PlayStatisticEntity> list = getTotalPlayStatistic();
 
         if (list.isEmpty()) {
             return 0;
@@ -60,20 +58,21 @@ public class PlayStatisticModelImpl implements PlayStatisticModel {
     }
 
     @Override
-    public List<PlayStatisticEntity> getRecent7DaysStatistic(Context context) {
+    public List<PlayStatisticEntity> getRecent7DaysStatistic() {
         return null;
     }
 
     @Override
-    public List<PlayStatisticEntity> getTotalPlayStatistic(Context context) {
+    public List<PlayStatisticEntity> getTotalPlayStatistic() {
         List<PlayStatisticEntity> result;
 
         result = GreenDaoHelper.getDaoSession().getPlayStatisticEntityDao().loadAll();
         sortDes(result);
 
         if (result == null) {
-            result = new ArrayList<>();
+            result = Collections.EMPTY_LIST;
         }
+
         return result;
     }
 
@@ -90,11 +89,65 @@ public class PlayStatisticModelImpl implements PlayStatisticModel {
         return songEntityList;
     }
 
-    private static void sortDes(List<PlayStatisticEntity> result) {
+    @Override
+    public void deletePlayRecord(LocalSongEntity songEntity) {
+        if (songEntity == null) {
+            return;
+        }
+
+        if (!contains(songEntity)) {
+            return;
+        }
+
+        GreenDaoHelper.getDaoSession().getPlayStatisticEntityDao().delete(getPlayStatisticEntity(songEntity));
+    }
+
+    @Override
+    public boolean contains(LocalSongEntity songEntity) {
+        if (songEntity == null) {
+            return false;
+        }
+
+        List<PlayStatisticEntity> list = getTotalPlayStatistic();
+
+        if (list.isEmpty()) {
+            return false;
+        }
+
+        for (PlayStatisticEntity entity : list) {
+            if (entity.getSongId() == songEntity.getSongId()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private PlayStatisticEntity getPlayStatisticEntity(LocalSongEntity songEntity) {
+        if (songEntity == null) {
+            return null;
+        }
+
+        List<PlayStatisticEntity> list = getTotalPlayStatistic();
+
+        if (list.isEmpty()) {
+            return null;
+        }
+
+        for (PlayStatisticEntity entity : list) {
+            if (entity.getSongId() == songEntity.getSongId()) {
+                return entity;
+            }
+        }
+
+        return null;
+    }
+
+    private void sortDes(List<PlayStatisticEntity> result) {
         Collections.sort(result, new Comparator<PlayStatisticEntity>() {
             @Override
             public int compare(PlayStatisticEntity o1, PlayStatisticEntity o2) {
-                return -(o1.getPlayCount() - o2.getPlayCount());
+                return o2.getPlayCount() - o1.getPlayCount();
             }
         });
     }

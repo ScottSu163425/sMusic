@@ -334,7 +334,7 @@ public class MusicPlayService extends Service implements MusicPlayServiceView {
             updateNotifycation();
 
             //Save to play statistic;
-            mPlayStatisticModel.saveOrAddPlayRecord(this, mCurrentPlayingSong);
+            mPlayStatisticModel.saveOrAddPlayRecord(mCurrentPlayingSong);
         } catch (IOException e) {
             e.printStackTrace();
         }

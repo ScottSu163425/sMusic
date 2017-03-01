@@ -13,19 +13,24 @@ import java.util.List;
  */
 
 public interface PlayStatisticModel {
-    void saveOrAddPlayRecord(Context context,LocalSongEntity songEntity);
+    void saveOrAddPlayRecord( LocalSongEntity songEntity);
 
-    int getMaxPlayCount(Context context);
+    int getMaxPlayCount();
 
-    List<PlayStatisticEntity> getRecent7DaysStatistic(Context context);
+    List<PlayStatisticEntity> getRecent7DaysStatistic();
 
     /**
      * Return all play statistic order by play count descending.
+     *
      * @param context
      * @return
      */
-    List<PlayStatisticEntity> getTotalPlayStatistic(Context context);
+    List<PlayStatisticEntity> getTotalPlayStatistic();
 
     List<LocalSongEntity> getLocalSongsByPlayStatistic(@NonNull List<PlayStatisticEntity> playStatisticEntityList);
+
+    void deletePlayRecord(LocalSongEntity songEntity);
+
+    boolean contains(LocalSongEntity songEntity);
 
 }
