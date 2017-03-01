@@ -27,4 +27,5 @@ public interface PlayStatisticModel {
     List<PlayStatisticEntity> getTotalPlayStatistic(Context context);
 
     List<LocalSongEntity> getLocalSongsByPlayStatistic(@NonNull List<PlayStatisticEntity> playStatisticEntityList);
+
 }
