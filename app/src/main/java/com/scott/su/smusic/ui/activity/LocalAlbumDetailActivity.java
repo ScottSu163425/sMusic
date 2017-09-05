@@ -9,6 +9,7 @@ import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.callback.LocalSongBottomSheetCallback;
@@ -182,8 +183,9 @@ public class LocalAlbumDetailActivity extends BaseActivity<LocalAlbumDetailContr
 
                     @Override
                     public void onDeleteClick(LocalSongBottomSheetMenuFragment fragment, LocalSongEntity songEntity) {
-                        mPresenter.onBottomSheetDeleteClick(songEntity);
-                        fragment.dismissAllowingStateLoss();
+//                        mPresenter.onBottomSheetDeleteClick(songEntity);
+//                        fragment.dismissAllowingStateLoss();
+                        Toast.makeText(LocalAlbumDetailActivity.this, "暂时关闭", Toast.LENGTH_SHORT).show();
                     }
 
                 })

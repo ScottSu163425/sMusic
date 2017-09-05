@@ -24,6 +24,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.MainPagerAdapter;
@@ -472,8 +473,10 @@ public class MainActivity extends BaseActivity<MainContract.MainView, MainContra
 
                     @Override
                     public void onDeleteClick(LocalSongBottomSheetMenuFragment fragment, LocalSongEntity songEntity) {
-                        mMainPresenter.onBottomSheetDeleteClick(songEntity);
-                        fragment.dismissAllowingStateLoss();
+//                        mMainPresenter.onBottomSheetDeleteClick(songEntity);
+//                        fragment.dismissAllowingStateLoss();
+
+                        Toast.makeText(MainActivity.this, "暂时关闭", Toast.LENGTH_SHORT).show();
                     }
 
                 })

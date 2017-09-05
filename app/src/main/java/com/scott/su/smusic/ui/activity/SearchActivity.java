@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.transition.TransitionInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.scott.su.smusic.R;
 import com.scott.su.smusic.adapter.SearchResultAdapter;
@@ -263,8 +264,10 @@ public class SearchActivity extends BaseActivity<SearchContract.SearchView, Sear
 
                     @Override
                     public void onDeleteClick(LocalSongBottomSheetMenuFragment fragment, LocalSongEntity songEntity) {
-                        mSearchPresenter.onBottomSheetDeleteClick(songEntity);
-                        fragment.dismissAllowingStateLoss();
+//                        mSearchPresenter.onBottomSheetDeleteClick(songEntity);
+//                        fragment.dismissAllowingStateLoss();
+
+                        Toast.makeText(SearchActivity.this, "暂时关闭", Toast.LENGTH_SHORT).show();
                     }
 
                 })
