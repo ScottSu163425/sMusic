@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
@@ -225,7 +226,8 @@ public class LocalBillCreationActivity extends BaseActivity
         }
 
         if (mExiting) {
-            super.onBackPressed();
+            ActivityCompat.finishAfterTransition(LocalBillCreationActivity.this);
+            return;
         }
 
         if (SdkUtil.isLolipopOrLatter()) {

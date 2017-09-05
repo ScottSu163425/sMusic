@@ -1,6 +1,7 @@
 package com.scott.su.smusic.adapter;
 
 import android.app.Activity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,18 +76,19 @@ public class PlayStatisticDisplayAdapter extends BaseDisplayAdapter<RecyclerView
 
         } else {
             final PlayStatisticTop3ViewHolder holder = (PlayStatisticTop3ViewHolder) viewHolder;
-            ViewUtil.setText(holder.getNumberTextView(), (position + 1) + "", "");
+            holder.getNumberTextView().setText(String.valueOf(position + 1));
+
             ViewUtil.setText(holder.getTitleTextView(), entity.getTitle(), "");
             ViewUtil.setText(holder.getArtistTextView(), entity.getArtist(), "");
             ViewUtil.setText(holder.getAlbumTextView(), entity.getAlbum(), "");
             ViewUtil.setText(holder.getCountTextView(), entity.getPlayCount() + " " + context.getString(R.string.unit_play_count), "");
 
             if (position == 0) {
-                holder.getNumberTextView().setBackgroundResource(R.drawable.shape_circle_yellow);
+                holder.getNumberTextView().setSlantedBackgroundColor(ContextCompat.getColor(context,R.color.md_yellow_600));
             } else if (position == 1) {
-                holder.getNumberTextView().setBackgroundResource(R.drawable.shape_circle_grey);
+                holder.getNumberTextView().setSlantedBackgroundColor(ContextCompat.getColor(context,R.color.md_grey_400));
             } else if (position == 2) {
-                holder.getNumberTextView().setBackgroundResource(R.drawable.shape_circle_green);
+                holder.getNumberTextView().setSlantedBackgroundColor(ContextCompat.getColor(context,R.color.md_green_600));
             }
 
             ImageLoader.load(context, entity.getCoverPath(), holder.getCoverImageView(),

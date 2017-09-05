@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.haozhang.lib.SlantedTextView;
 import com.scott.su.smusic.R;
 
 /**
@@ -12,7 +13,8 @@ import com.scott.su.smusic.R;
  */
 public class PlayStatisticTop3ViewHolder extends RecyclerView.ViewHolder {
     private ImageView coverImageView;
-    private TextView titleTextView, artistTextView, albumTextView, numberTextView, countTextView;
+    private TextView titleTextView, artistTextView, albumTextView,  countTextView;
+    private SlantedTextView numberTextView;
 
     public PlayStatisticTop3ViewHolder(View itemView) {
         super(itemView);
@@ -21,7 +23,7 @@ public class PlayStatisticTop3ViewHolder extends RecyclerView.ViewHolder {
         titleTextView = (TextView) itemView.findViewById(R.id.tv_title_view_holder_play_statistic);
         artistTextView = (TextView) itemView.findViewById(R.id.tv_artist_view_holder_play_statistic);
         albumTextView = (TextView) itemView.findViewById(R.id.tv_ablum_view_holder_play_statistic);
-        numberTextView = (TextView) itemView.findViewById(R.id.tv_number_view_holder_play_statistic);
+        numberTextView = (SlantedTextView) itemView.findViewById(R.id.tv_number_view_holder_play_statistic);
         countTextView = (TextView) itemView.findViewById(R.id.tv_count_view_holder_play_statistic);
     }
 
@@ -37,7 +39,7 @@ public class PlayStatisticTop3ViewHolder extends RecyclerView.ViewHolder {
         return albumTextView;
     }
 
-    public TextView getNumberTextView() {
+    public SlantedTextView getNumberTextView() {
         return numberTextView;
     }
 
